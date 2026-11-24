@@ -11,6 +11,8 @@ describe('Landing', () => {
       </MemoryRouter>,
     );
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Try the demo' })).toHaveAttribute('href', '/demo');
+    for (const link of screen.getAllByRole('link', { name: /Try the demo/ })) {
+      expect(link).toHaveAttribute('href', '/demo');
+    }
   });
 });

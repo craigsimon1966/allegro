@@ -51,7 +51,7 @@ Follow TECH_SPEC section 1. Things that block later milestones:
 5. **SMTP for magic links** (Resend by default). Supabase's built-in email is fine for testing but rate limited.
 6. Repo location is settled: it stays at `craigsimon1966/allegro`.
 
-## M0: Foundations
+## M0: Foundations (built 24 November 2026, see CHANGELOG)
 
 Build (TECH_SPEC 14, M0 prompt; the scaffold parts are already done):
 

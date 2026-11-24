@@ -24,3 +24,84 @@
     box-shadow: 0 0 0 2px var(--white);
   }
 }
+
+@layer components {
+  /* Highlighter behind the lower 42% of the line (SPEC 10.1) */
+  .highlight {
+    background: linear-gradient(transparent 58%, var(--highlighter) 58%);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* The plum margin line, 2px, at the edge of the 52px margin column */
+  .margin-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--margin-col);
+    width: 2px;
+    background: var(--margin);
+    pointer-events: none;
+  }
+
+  /* Graph paper: learning screens and maths blocks only (SPEC 10.6a) */
+  .graph-paper {
+    background-color: var(--surface);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Loading: the four circles fill in sequence (SPEC 10.7) */
+  .allegro-mark-loading circle {
+    animation: allegro-fill 1.6s var(--ease) infinite;
+  }
+  .allegro-mark-loading circle:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  .allegro-mark-loading circle:nth-child(3) {
+    animation-delay: 0.8s;
+  }
+  .allegro-mark-loading circle:nth-child(4) {
+    animation-delay: 1.2s;
+  }
+  @keyframes allegro-fill {
+    0%,
+    20% {
+      fill: transparent;
+    }
+    25%,
+    60% {
+      fill: currentColor;
+    }
+    65%,
+    100% {
+      fill: transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .allegro-mark-loading circle {
+      animation: none;
+    }
+    .allegro-mark-loading circle:first-child {
+      fill: currentColor;
+    }
+  }
+
+  .math-text p + p {
+    margin-top: 0.75em;
+  }
+  .math-text ul {
+    list-style: disc;
+    padding-left: 1.25em;
+  }
+  .math-text ol {
+    list-style: decimal;
+    padding-left: 1.25em;
+  }
+  .math-text .katex-display {
+    margin: 0.75em 0;
+    overflow-x: auto;
+  }
+}

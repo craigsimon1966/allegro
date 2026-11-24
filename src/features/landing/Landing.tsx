@@ -1,32 +1,192 @@
-import { Link } from 'react-router-dom';
+import { AllegroMark, type Product } from '@/components/AllegroMark';
+import { ButtonLink } from '@/components/Button';
+import { Label, SectionRule } from '@/components/Label';
+import { MarginNote } from '@/components/MarginNote';
+import { SiteFooter } from '@/components/SiteFooter';
+import { SiteHeader } from '@/components/SiteHeader';
 
-// Minimal scaffold of SPEC 7.1. The full landing page (hero illustration, how it works strip,
-// product rows with AllegroMark, honesty strip) is built in M0.
+// SPEC 7.1. Product outcomes come from the v3 proposition (SPEC 1 and P2).
+const STEPS = [
+  {
+    title: 'Understand your needs',
+    body: 'Tell us what you teach and what feels hard. We show you, kindly and honestly, where to start.',
+  },
+  {
+    title: 'Learn in 5 minutes',
+    body: 'Short units on the maths and the teaching, fitted around your week.',
+  },
+  {
+    title: "Plan tomorrow's lesson",
+    body: 'Turn what you learned into a lesson plan you can edit, print and teach.',
+  },
+];
+
+const PRODUCTS: {
+  product: Exclude<Product, 'all'>;
+  name: string;
+  job: string;
+  outcome: string;
+  note?: string;
+}[] = [
+  {
+    product: 'equip',
+    name: 'Equip',
+    job: 'Targeted learning on content and general teaching practice.',
+    outcome: 'Walk into the classroom with confidence.',
+  },
+  {
+    product: 'embed',
+    name: 'Embed',
+    job: 'Turn learning into lessons: sequencing, design and common misconceptions.',
+    outcome: 'Better lessons in less planning time.',
+  },
+  {
+    product: 'evaluate',
+    name: 'Evaluate',
+    job: 'Assessment, feedback and reflection on your practice.',
+    outcome: 'See your impact and keep improving.',
+  },
+  {
+    product: 'elevate',
+    name: 'Elevate',
+    job: 'Leadership and career growth.',
+    outcome: 'Grow capability across a school.',
+    note: 'preview',
+  },
+];
+
+function HeroMark() {
+  // The four circles with product names, clockwise from top-left (SPEC 10.4).
+  const labels = [
+    { x: 22, y: 22, text: 'Equip' },
+    { x: 66, y: 22, text: 'Embed' },
+    { x: 66, y: 69, text: 'Evaluate' },
+    { x: 22, y: 69, text: 'Elevate' },
+  ];
+  return (
+    <svg
+      viewBox="0 0 88 92"
+      className="h-auto w-full max-w-[320px]"
+      role="img"
+      aria-label="Four overlapping circles: Equip, Embed, Evaluate and Elevate"
+    >
+      {[
+        [30, 30],
+        [58, 30],
+        [58, 60],
+        [30, 60],
+      ].map(([cx, cy]) => (
+        <circle
+          key={`${cx}-${cy}`}
+          cx={cx}
+          cy={cy}
+          r={22}
+          fill="none"
+          stroke="var(--ink)"
+          strokeWidth={1.5}
+        />
+      ))}
+      {labels.map((l) => (
+        <text
+          key={l.text}
+          x={l.x}
+          y={l.y}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={5}
+          fontFamily="var(--font-heading)"
+          fontWeight={600}
+          fill="var(--ink)"
+        >
+          {l.text}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
 export function Landing() {
   return (
     <>
-      <header className="bg-sage-500 px-4 pb-8 pt-10 sm:px-content">
-        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-ink">
-          Allegro Learning
-        </p>
-        <h1 className="mt-3 max-w-prose text-[32px] leading-tight text-ink">
-          Learn it in five minutes. Teach it with confidence.
-        </h1>
-        <p className="mt-3 max-w-prose text-ink">
-          Professional learning that fits your week and turns into tomorrow&apos;s lesson.
-        </p>
-        <Link
-          to="/demo"
-          className="mt-6 inline-flex min-h-tap items-center rounded bg-green-700 px-5 font-bold text-white hover:bg-green-800"
-        >
-          Try the demo
-        </Link>
-      </header>
-      <main className="px-4 py-8 sm:px-content">
-        <p className="max-w-prose text-muted">
-          Built with teachers. AI helps, humans write the content.
-        </p>
+      <SiteHeader />
+      <main id="main">
+        <section className="bg-sage-500 text-ink" aria-labelledby="hero-title">
+          <div className="mx-auto grid max-w-[1200px] items-center gap-6 px-4 py-8 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <div className="flex flex-col gap-4">
+              <h1
+                id="hero-title"
+                className="max-w-[18ch] text-[32px] leading-[1.15] sm:text-[44px]"
+              >
+                Learn it in five minutes. Teach it with confidence.
+              </h1>
+              <p className="max-w-prose text-[17px] leading-normal">
+                Professional learning built around your class, your topic and your week, then turned
+                into tomorrow&apos;s lesson.
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <ButtonLink to="/demo" variant="ink">
+                  Try the demo <span aria-hidden="true">→</span>
+                </ButtonLink>
+                <span className="text-[15px]">About 15 minutes. No sign-up needed.</span>
+              </div>
+            </div>
+            <div className="hidden justify-self-center lg:block">
+              <HeroMark />
+            </div>
+          </div>
+        </section>
+
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-12 px-4 py-10 sm:px-8">
+          <section aria-labelledby="how-it-works" className="flex flex-col">
+            <SectionRule id="how-it-works">How it works</SectionRule>
+            <ol className="grid gap-x-8 sm:grid-cols-3">
+              {STEPS.map((s, i) => (
+                <li key={s.title} className="flex gap-3 border-b border-rule py-4">
+                  <span className="w-6 shrink-0 font-heading text-[22px] font-semibold text-green-700">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="text-[20px] leading-snug">{s.title}</h3>
+                    <p className="mt-1 text-muted">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section aria-labelledby="products" className="flex flex-col">
+            <SectionRule id="products">Four ways Allegro helps</SectionRule>
+            <ul>
+              {PRODUCTS.map((p) => (
+                <li key={p.product} className="flex items-start gap-4 border-b border-rule py-4">
+                  <AllegroMark product={p.product} size={40} className="mt-1 shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline gap-3">
+                      <h3 className="text-[22px]">{p.name}</h3>
+                      {p.note && <MarginNote tone="plum">{p.note}</MarginNote>}
+                    </div>
+                    <p className="mt-1">{p.job}</p>
+                    <p className="mt-1 font-bold text-green-700">{p.outcome}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section aria-label="How Allegro is made" className="border-y-2 border-rule-strong py-5">
+            <Label>Honesty note</Label>
+            <p className="mt-1 font-heading text-[22px] leading-snug">
+              Built with teachers. AI helps, humans write the content.
+            </p>
+            <p className="mt-2 max-w-prose text-muted">
+              Every learning unit is checked by an experienced maths educator before teachers see
+              it. AI helps understand your situation, choose what fits and draft lesson ideas, and
+              it always says so.
+            </p>
+          </section>
+        </div>
       </main>
+      <SiteFooter />
     </>
   );
 }
