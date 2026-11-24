@@ -199,7 +199,7 @@ Each screen lists purpose, key components, states and acceptance criteria (AC).
 
 ### 7.2 Persona picker `/demo`
 
-- **Components:** access code field (if `DEMO_ACCESS_CODE` is set), three persona rows (initial in the margin, name, one-line situation), a "Start as me" sign-in form, note that data stays in this browser in Phase 1.
+- **Components:** access code field (if `DEMO_ACCESS_CODE` is set), three persona rows (initial in the margin, name, one-line situation), a "Start as me" sign-in form, note that persona demo data stays in this browser, and a signed-in teacher's data is saved securely in Australia.
 - **AC:** choosing a persona pre-fills intake and jumps to `/needs` with a cached diagnosis (no AI call needed, so the demo works even if the API is down).
 
 ### 7.3 Situation intake `/start`
@@ -310,7 +310,7 @@ Each screen lists purpose, key components, states and acceptance criteria (AC).
 | `POST /api/pathway` | Select and sequence micro-units from the catalogue | JSON list of unit IDs with reasons and schedule |
 | `POST /api/explain` | Re-explain a unit's core idea | Short text, grounded in unit content |
 | `POST /api/lesson` | Draft a lesson plan | JSON blocks (schema 8.4) |
-| `POST /api/lesson/block` | Regenerate one block | One JSON block |
+| `POST /api/lesson-block` | Regenerate one block | One JSON block |
 | `POST /api/help` | Quick Help answer | Short text plus optional unit ID |
 | `POST /api/reflect` | Observation and next-step suggestion | Short text plus unit ID |
 | `POST /api/feedback` | Store pilot feedback | 204 |
@@ -398,13 +398,13 @@ Rules:
 - Respond with JSON only, matching the schema.
 ```
 
-Write equivalent prompts for each endpoint and keep them in `server/prompts/*.md` so non-developers can edit them.
+Write equivalent prompts for each endpoint and keep them in `prompts/*.md` so non-developers can edit them.
 
 ### 8.7 Model and limits
 
 - Model set by env var `ANTHROPIC_MODEL` (default `claude-sonnet-5-5`; use `claude-haiku-5-5` for Quick Help and Explain to keep latency low).
 - Max output tokens per endpoint configured in one file.
-- Rate limit per IP and per session (default 40 AI calls per hour).
+- Rate limit per signed-in teacher and per demo session (default 40 and 15 AI calls per hour). No IP addresses are stored.
 - Every persona path has cached responses so the demo still runs if the API fails.
 
 ---
@@ -640,10 +640,12 @@ Decided 24 November 2026 (exercise book direction):
     curriculum-todo.md
   functions/
     api/
-      diagnose.ts  pathway.ts  explain.ts  lesson.ts  help.ts  reflect.ts  feedback.ts
+      diagnose.ts  pathway.ts  explain.ts  lesson.ts  lesson-block.ts  help.ts  reflect.ts  feedback.ts
     _lib/
-      anthropic.ts  ratelimit.ts  schemas.ts  catalogue.ts
-  server/prompts/*.md
+      anthropic.ts  auth.ts  ratelimit.ts  prompts.ts  respond.ts
+  shared/
+    schemas.ts  types.ts  catalogue.ts   (used by both the app and the Functions)
+  prompts/*.md
   public/brand/*
   src/
     app/        (routes and layout)
@@ -662,9 +664,10 @@ Decided 24 November 2026 (exercise book direction):
 | `ANTHROPIC_MODEL` | Default `claude-sonnet-5-5` |
 | `ANTHROPIC_MODEL_FAST` | Default `claude-haiku-5-5` |
 | `DEMO_ACCESS_CODE` | Optional gate for pilot |
-| `RATE_LIMIT_PER_HOUR` | Default 40 |
-| `SUPABASE_URL` | Supabase project URL |
-| `SUPABASE_ANON_KEY` | Public anon key (browser) |
+| `RATE_LIMIT_USER_PER_HOUR` | Default 40 (signed-in teachers) |
+| `RATE_LIMIT_DEMO_PER_HOUR` | Default 15 (persona demo sessions) |
+| `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` | Supabase project URL and public anon key (browser) |
+| `SUPABASE_URL`, `SUPABASE_ANON_KEY` | Same values, used by the Functions to verify sign-in |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only, for admin feedback export |
 
 ### 12.4 Performance
@@ -723,7 +726,7 @@ Build in order. Do not start a milestone until the previous one's checks pass.
 
 ### M4. Reflect, growth, Quick Help
 - Reflection flow, growth view with accessible chart, Quick Help panel and page.
-- **Checks:** reflections stay local; Quick Help answers under 120 words by default.
+- **Checks:** reflections are private to their owner (another teacher can never read them); Quick Help answers under 120 words by default.
 
 ### M5. Leader preview, feedback, hardening, deploy
 - Supabase auth and persistence are built in M1 (sign-in screen, profile) and used by every later milestone.

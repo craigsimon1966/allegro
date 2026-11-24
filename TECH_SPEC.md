@@ -494,10 +494,10 @@ Implement SPEC 10.1 to 10.3 as CSS variables in `src/styles/tokens.css` and map 
 | `MarginNote` | Caveat annotation; enforces one line and 20px minimum |
 | `TabBar` / `Sidebar` | Phone bottom tabs (Week, Lessons, Growth, Me) and the laptop Contents sidebar |
 | `VoiceInputButton` | Web Speech API where available; hidden when unsupported |
-| `AIBlock` | Full-width Plum 100 band, "AI" or "AI DRAFT" label, "Drafted by Allegro AI. Check before using." line, Regenerate and Edit actions, "Maths checked" tick where relevant |
+| `AIBlock` | Full-width Plum 100 band, "AI" or "AI DRAFT" label, "Drafted by Allegro AI. Please check before using." line, Regenerate and Edit actions, "Maths checked" tick where relevant |
 | `DraftBadge` | Shown on any unit with `reviewedBy: null` |
 | `MathText` | Renders Markdown with KaTeX (MathML output for screen readers) |
-| `QuickHelpButton` | Fixed bottom-right, opens a Radix Dialog slide-over |
+| `QuickHelpButton` | "Ask a question" button sitting above the tab bar on phone and tablet (SPEC 10.6); opens a Radix Dialog slide-over. On laptop, Quick Help docks on the right instead |
 
 ### 9.4 Print and PDF
 
@@ -505,7 +505,7 @@ Implement SPEC 10.1 to 10.3 as CSS variables in `src/styles/tokens.css` and map 
 
 ### 9.5 Accessibility checks in code
 
-- `@axe-core/playwright` runs on every route in the e2e suite and fails on any serious or critical violation.
+- `@axe-core/playwright` runs on every route in the e2e suite and fails on any violation.
 - A unit test checks that every colour pair used for text in `tokens.css` meets 4.5:1 (or 3:1 for tokens marked large-only).
 
 ---
@@ -593,7 +593,7 @@ Build milestone M0 from SPEC.md section 15 and TECH_SPEC.md.
 - Set up wrangler for local Pages Functions with GET /api/health.
 - Add npm scripts: dev, build, check, e2e. Add the colour contrast unit test and the no-raw-hex rule.
 - Add the GitHub Action for check + e2e.
-Done when: npm run check passes, axe shows no serious violations on / and /styleguide, landing hero and CTA are above the fold at 375px wide.
+Done when: npm run check passes, axe shows zero violations on / and /styleguide, landing hero and CTA are above the fold at 375px wide.
 ```
 
 ### M1. Auth, intake and diagnosis
