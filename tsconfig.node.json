@@ -11,6 +11,10 @@
     "tailwind.config.ts",
     "playwright.config.ts",
     "scripts",
-    "tests/e2e"
+    "tests/e2e",
+    "tests/server",
+    "functions/_lib",
+    "shared",
+    "content/**/*.json"
   ]
 }

@@ -66,6 +66,46 @@ const NOT_NAMES = new Set([
   'Specialist',
   'Further',
   'Foundation',
+  // Maths and school words teachers often write in Title Case ("Linear Relationships").
+  'Linear',
+  'Relationships',
+  'Algebra',
+  'Number',
+  'Fractions',
+  'Decimals',
+  'Percentages',
+  'Ratio',
+  'Ratios',
+  'Rates',
+  'Index',
+  'Laws',
+  'Theorem',
+  'Pythagoras',
+  'Probability',
+  'Statistics',
+  'Measurement',
+  'Geometry',
+  'Trigonometry',
+  'Equations',
+  'Place',
+  'Value',
+  'Times',
+  'Tables',
+  'Unit',
+  'Lesson',
+  'Plan',
+  'Assessment',
+  'Task',
+  'Exam',
+  'Test',
+  'Quiz',
+  'Homework',
+  'Library',
+  'Room',
+  'Block',
+  'Day',
+  'Sports',
+  'Carnival',
   'The',
   'I',
   'We',
@@ -83,12 +123,16 @@ const NOT_NAMES = new Set([
   'So',
 ]);
 
+// Endings that are common for nouns and rare for names, e.g. "Relationships", "Division".
+const NOUN_ENDINGS = /(tion|sion|ships?|ment|ness|ity|ics|ology|ions)$/;
+
 export function findLikelyStudentNames(text: string): string[] {
   if (!CHILD_WORDS.test(text)) return [];
   const found: string[] = [];
   for (const m of text.matchAll(FULL_NAME)) {
     const [, first, last] = m as unknown as [string, string, string];
     if (NOT_NAMES.has(first) || NOT_NAMES.has(last.split('-')[0] ?? '')) continue;
+    if (NOUN_ENDINGS.test(first) || NOUN_ENDINGS.test(last)) continue;
     found.push(`${first} ${last}`);
   }
   return [...new Set(found)];

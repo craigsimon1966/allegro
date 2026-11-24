@@ -82,6 +82,7 @@ export default function Needs() {
           <AIBlock
             label="AI"
             title="Your situation"
+            headingLevel={2}
             onEdit={
               editing
                 ? undefined

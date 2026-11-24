@@ -13,6 +13,8 @@ interface Props {
   /** When set, shows the "Check the maths" step until the teacher ticks it. */
   mathsChecked?: boolean;
   onMathsCheckedChange?: (checked: boolean) => void;
+  /** Heading level for the title, so the page outline stays in order. */
+  headingLevel?: 2 | 3;
 }
 
 /**
@@ -27,7 +29,9 @@ export function AIBlock({
   onEdit,
   mathsChecked,
   onMathsCheckedChange,
+  headingLevel = 3,
 }: Props) {
+  const H = headingLevel === 2 ? 'h2' : 'h3';
   const checkId = useId();
   const needsCheck = mathsChecked !== undefined;
   return (
@@ -36,7 +40,7 @@ export function AIBlock({
       aria-label={`${label}: ${typeof title === 'string' ? title : 'AI content'}`}
     >
       <div className="text-[13px] font-bold tracking-[0.1em] text-plum-700">{label}</div>
-      {title && <h3 className="mt-1 text-lg text-ink">{title}</h3>}
+      {title && <H className="mt-1 text-lg text-ink">{title}</H>}
       <div className="mt-2 text-ink">{children}</div>
       <p className="mt-2 text-sm text-plum-700">{AI_DISCLOSURE}</p>
       {needsCheck && (

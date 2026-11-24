@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { AllegroMark } from '@/components/AllegroMark';
 import { Button } from '@/components/Button';
@@ -161,7 +161,12 @@ export default function Intake() {
                 <VoiceInputButton onText={(t) => setText((prev) => (prev ? `${prev} ${t}` : t))} />
               </div>
               <p id="privacy-note" className="mt-1.5 text-sm text-muted">
-                Please don&apos;t include student names or personal details.
+                Please don&apos;t include student names or personal details. If you use the
+                microphone, your browser&apos;s speech service turns it into text (
+                <Link to="/about-demo" className="font-bold text-green-700 underline">
+                  more about this
+                </Link>
+                ).
               </p>
               {names.length > 0 && (
                 <div role="alert" className="mt-2 border-l-4 border-warning bg-surface py-2 pl-3">

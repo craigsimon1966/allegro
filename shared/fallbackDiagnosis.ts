@@ -99,6 +99,12 @@ const RULES: Rule[] = [
   },
 ];
 
+const DEFAULT_TAGS = [
+  'pk.checking-understanding',
+  'pk.explicit-instruction',
+  'assessment.success-criteria',
+];
+
 export function fallbackDiagnosis(situationText: string, guided: Guided = {}): Diagnosis {
   const matched = RULES.filter((r) => r.test(situationText, guided));
   // Keep 3 to 6 needs and at most 3 "now", as the AI is asked to (SPEC 8.6).
@@ -116,14 +122,18 @@ export function fallbackDiagnosis(situationText: string, guided: Guided = {}): D
       priority,
     };
   });
-  if (needs.length === 0) {
+  // Pad to at least 3 with needs that help any teacher new to a class.
+  for (const tag of DEFAULT_TAGS) {
+    if (needs.length >= 3) break;
+    if (needs.some((n) => n.catalogue_tags.includes(tag))) continue;
+    const t = tagById(tag);
     needs.push({
-      id: 'fb-1',
-      domain: 'PK',
-      topic: tagById('pk.checking-understanding')?.label ?? 'Checking for understanding',
-      catalogue_tags: ['pk.checking-understanding'],
+      id: `fb-${needs.length + 1}`,
+      domain: t?.domain ?? 'PK',
+      topic: t?.label ?? tag,
+      catalogue_tags: [tag],
       evidence: 'A good starting point for any teacher.',
-      priority: 'now',
+      priority: needs.some((n) => n.priority === 'now') ? 'soon' : 'now',
     });
   }
   return {
