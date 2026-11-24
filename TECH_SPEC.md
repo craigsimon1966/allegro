@@ -22,7 +22,7 @@ All accounts are created under **ZOMO Consulting Pty Ltd**, using a ZOMO email a
 
 | Step | Where | What to do | Output to keep |
 |---|---|---|---|
-| 1 | GitHub | Create private repo `zomo/allegro-demo` (or your org name) | Repo URL |
+| 1 | GitHub | Done: the repo is `craigsimon1966/allegro` on Craig's personal GitHub account (decided 24 Nov 2026 to keep it there rather than move it to a ZOMO org) | Repo URL |
 | 2 | Cloudflare | In the ZOMO Cloudflare account: Workers & Pages, Create, Pages, Connect to Git, pick the repo. Build command `npm run build`, output `dist` | Pages project name, `*.pages.dev` URL |
 | 3 | Supabase | New project `allegro-demo`, region **Sydney (ap-southeast-2)**, strong DB password saved in your password manager | Project URL, anon key, service role key |
 | 4 | Supabase Auth | Authentication, Providers: make sure Email is enabled (magic links use it; teachers never set a password). URL Configuration: Site URL = the Pages URL; add `http://localhost:5173` and the Pages preview pattern to Redirect URLs | |

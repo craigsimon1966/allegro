@@ -49,7 +49,7 @@ Follow TECH_SPEC section 1. Things that block later milestones:
 3. **Anthropic API key with a monthly spend limit** (blocks real AI in M1; mocks work without it).
 4. **Cloudflare Pages project** connected to this repo (gives preview URLs for each PR).
 5. **SMTP for magic links** (Resend by default). Supabase's built-in email is fine for testing but rate limited.
-6. Decide whether the repo should move under a ZOMO GitHub org (spec-issues #9). Easier now than later.
+6. Repo location is settled: it stays at `craigsimon1966/allegro`.
 
 ## M0: Foundations
 
