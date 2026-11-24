@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "note": "Draft diagnostic items, 4 per CK topic (SPEC 9.2). Every item needs human review before the pilot. Results are shown as solid / worth a refresh / start here, never as a score.",
+  "items": [
+    {
+      "id": "dx-linear-1",
+      "topicTag": "algebra.linear",
+      "stemMd": "A straight line passes through $(0, 3)$ and $(2, 7)$. What is its gradient?",
+      "type": "numeric",
+      "answer": "2",
+      "feedbackCorrect": "Yes. $y$ goes up by 4 while $x$ goes up by 2, so it rises 2 for every 1 across.",
+      "feedbackIncorrect": "The gradient is the rise divided by the run: $y$ goes up by 4 while $x$ goes up by 2, so the gradient is $4 \\div 2 = 2$.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-linear-2",
+      "topicTag": "algebra.linear",
+      "stemMd": "In the rule $y = 5 - 2x$, what does the $-2$ tell you?",
+      "type": "mcq",
+      "options": [
+        "$y$ goes down by 2 each time $x$ goes up by 1",
+        "The line crosses the $y$-axis at $-2$",
+        "$y$ goes up by 2 each time $x$ goes up by 1",
+        "$x$ goes down by 2 each time $y$ goes up by 1"
+      ],
+      "answer": "$y$ goes down by 2 each time $x$ goes up by 1",
+      "feedbackCorrect": "Right. The number multiplying $x$ is the rate of change, and a negative rate means the line goes down.",
+      "feedbackIncorrect": "The number multiplying $x$ is the gradient (rate of change). Here it is $-2$, so $y$ goes down by 2 for every 1 step in $x$. The $y$-intercept is 5.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-linear-3",
+      "topicTag": "algebra.linear",
+      "stemMd": "Which rule fits this table?\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 4 | 7 | 10 |",
+      "type": "mcq",
+      "options": ["$y = 3x + 1$", "$y = x + 3$", "$y = 4x$", "$y = 3x$"],
+      "answer": "$y = 3x + 1$",
+      "feedbackCorrect": "Yes. $y$ goes up by 3 each step, and when $x = 0$, $y = 1$.",
+      "feedbackIncorrect": "$y$ goes up by 3 each time $x$ goes up by 1, so the rule has $3x$. When $x = 0$, $y = 1$, so it is $y = 3x + 1$. A common slip is to see \"goes up by 3\" and write $y = x + 3$.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-linear-4",
+      "topicTag": "algebra.linear",
+      "stemMd": "Which line is steeper: $y = 3x - 4$ or $y = 2x + 10$?",
+      "type": "mcq",
+      "options": ["$y = 3x - 4$", "$y = 2x + 10$", "They are equally steep"],
+      "answer": "$y = 3x - 4$",
+      "feedbackCorrect": "Yes. Steepness depends only on the gradient, and 3 is bigger than 2.",
+      "feedbackIncorrect": "Steepness depends only on the gradient (the number multiplying $x$). 3 is bigger than 2, so $y = 3x - 4$ is steeper. The $+10$ only moves the line up.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-prop-1",
+      "topicTag": "number.proportional",
+      "stemMd": "A mix uses flour and sugar in the ratio $3 : 2$. What fraction of the mix is flour?",
+      "type": "mcq",
+      "options": ["$\\frac{3}{5}$", "$\\frac{3}{2}$", "$\\frac{2}{3}$", "$\\frac{2}{5}$"],
+      "answer": "$\\frac{3}{5}$",
+      "feedbackCorrect": "Yes. There are $3 + 2 = 5$ parts altogether, and 3 of them are flour.",
+      "feedbackIncorrect": "A ratio compares part to part. There are $3 + 2 = 5$ parts in total, so flour is $\\frac{3}{5}$ of the mix. Reading $3 : 2$ as $\\frac{3}{2}$ is a very common mix-up.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-prop-2",
+      "topicTag": "number.proportional",
+      "stemMd": "Apples cost \\$6 for 4 kg. What is the cost per kilogram, in dollars?",
+      "type": "numeric",
+      "answer": "1.5",
+      "feedbackCorrect": "Yes, \\$1.50 per kilogram.",
+      "feedbackIncorrect": "Divide the cost by the number of kilograms: $6 \\div 4 = 1.5$, so \\$1.50 per kilogram.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-prop-3",
+      "topicTag": "number.proportional",
+      "stemMd": "Which is the better buy: 500 g for \\$4.00, or 750 g for \\$5.70?",
+      "type": "mcq",
+      "options": ["750 g for \\$5.70", "500 g for \\$4.00", "They are the same value"],
+      "answer": "750 g for \\$5.70",
+      "feedbackCorrect": "Yes. It works out at 76c per 100 g, compared with 80c per 100 g.",
+      "feedbackIncorrect": "Compare a unit rate. \\$4.00 for 500 g is 80c per 100 g. \\$5.70 for 750 g is 76c per 100 g, so the larger pack is better value.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-prop-4",
+      "topicTag": "number.proportional",
+      "stemMd": "An \\$80 jacket is reduced by 15%. What is the sale price, in dollars?",
+      "type": "numeric",
+      "answer": "68",
+      "feedbackCorrect": "Yes. 15% of \\$80 is \\$12, and $80 - 12 = 68$.",
+      "feedbackIncorrect": "15% of \\$80 is $0.15 \\times 80 = 12$, so the sale price is $80 - 12 = 68$ dollars. You can also find 85% of \\$80 directly.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-alg-1",
+      "topicTag": "algebra.foundations",
+      "stemMd": "What does $3n$ mean?",
+      "type": "mcq",
+      "options": [
+        "$3 \\times n$",
+        "$3 + n$",
+        "A number in the thirties",
+        "$n$ with a 3 in front, like 34 or 35"
+      ],
+      "answer": "$3 \\times n$",
+      "feedbackCorrect": "Yes. Writing a number next to a pronumeral means multiply.",
+      "feedbackIncorrect": "In algebra, $3n$ means $3 \\times n$. Students often read it like place value (a number in the thirties) or as $3 + n$.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-alg-2",
+      "topicTag": "algebra.foundations",
+      "stemMd": "Which expression is equivalent to $2(x + 4)$?",
+      "type": "mcq",
+      "options": ["$2x + 8$", "$2x + 4$", "$x + 8$", "$2x + 6$"],
+      "answer": "$2x + 8$",
+      "feedbackCorrect": "Yes. The 2 multiplies both terms inside the brackets.",
+      "feedbackIncorrect": "The 2 multiplies everything inside the brackets: $2 \\times x + 2 \\times 4 = 2x + 8$. Multiplying only the first term ($2x + 4$) is the most common error.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-alg-3",
+      "topicTag": "algebra.foundations",
+      "stemMd": "What number goes in the box? $7 + 5 = \\square + 8$",
+      "type": "numeric",
+      "answer": "4",
+      "feedbackCorrect": "Yes. Both sides must equal 12.",
+      "feedbackIncorrect": "The equals sign means \"the same as\", so both sides must equal 12. $12 - 8 = 4$. Students who read \"=\" as \"the answer is\" often write 12 here.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-alg-4",
+      "topicTag": "algebra.foundations",
+      "stemMd": "Simplify $3a + 2b - a + 4b$.",
+      "type": "mcq",
+      "options": ["$2a + 6b$", "$4a + 6b$", "$8ab$", "$2a + 2b$"],
+      "answer": "$2a + 6b$",
+      "feedbackCorrect": "Yes. Collect the $a$ terms ($3a - a = 2a$) and the $b$ terms ($2b + 4b = 6b$).",
+      "feedbackIncorrect": "Collect like terms: $3a - a = 2a$ and $2b + 4b = 6b$, giving $2a + 6b$. Unlike terms such as $a$ and $b$ can't be combined into $ab$.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-early-1",
+      "topicTag": "primary.early-number",
+      "stemMd": "A child counts 7 counters correctly. When you ask \"How many are there?\", they count them all again. Which idea are they still building?",
+      "type": "mcq",
+      "options": [
+        "Cardinality: the last number said tells you how many",
+        "One-to-one correspondence",
+        "Stable order: saying the numbers in the same order",
+        "Subitising"
+      ],
+      "answer": "Cardinality: the last number said tells you how many",
+      "feedbackCorrect": "Yes. They can count, but haven't yet linked the last number to the size of the group.",
+      "feedbackIncorrect": "They counted correctly, so one-to-one and stable order are in place. Recounting shows they haven't linked the last number said to \"how many\". That's cardinality.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-early-2",
+      "topicTag": "primary.early-number",
+      "stemMd": "Knowing how many are in a small group at a glance, without counting, is called:",
+      "type": "mcq",
+      "options": ["Subitising", "Skip counting", "Partitioning", "Estimating"],
+      "answer": "Subitising",
+      "feedbackCorrect": "Yes. Dot cards and dice patterns build it.",
+      "feedbackIncorrect": "It's called subitising. Quick looks at dot cards and dice patterns help children build it.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-early-3",
+      "topicTag": "primary.early-number",
+      "stemMd": "Which response best shows a child understands part-part-whole for 5?",
+      "type": "mcq",
+      "options": [
+        "\"5 can be 3 and 2, or 4 and 1\"",
+        "\"5 comes after 4\"",
+        "\"I can count to 5\"",
+        "\"5 is an odd number\""
+      ],
+      "answer": "\"5 can be 3 and 2, or 4 and 1\"",
+      "feedbackCorrect": "Yes. Seeing a number as made of parts underpins addition and subtraction.",
+      "feedbackIncorrect": "Part-part-whole means seeing a number as made of smaller parts, like 3 and 2 making 5. The other answers are about counting order or number properties.",
+      "reviewedBy": null
+    },
+    {
+      "id": "dx-early-4",
+      "topicTag": "primary.early-number",
+      "stemMd": "What does it look like when a child \"counts on\" to work out $5 + 3$?",
+      "type": "mcq",
+      "options": [
+        "They start at 5 and say \"6, 7, 8\"",
+        "They count 1 to 5, then 1 to 3",
+        "They count all 8 from 1",
+        "They start at 3 and say \"4, 5\""
+      ],
+      "answer": "They start at 5 and say \"6, 7, 8\"",
+      "feedbackCorrect": "Yes. Counting on from the larger number is a key step beyond counting all.",
+      "feedbackIncorrect": "Counting on means starting from one number (ideally the larger) and counting up: \"5... 6, 7, 8\". Counting everything from 1 is \"counting all\", an earlier strategy.",
+      "reviewedBy": null
+    }
+  ]
+}

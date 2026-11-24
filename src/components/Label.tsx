@@ -5,13 +5,18 @@ export function Label({
   children,
   as: As = 'div',
   className = '',
+  htmlFor,
 }: {
   children: ReactNode;
   as?: ElementType;
   className?: string;
+  htmlFor?: string;
 }) {
   return (
-    <As className={`text-[13px] uppercase tracking-[0.12em] text-muted ${className}`}>
+    <As
+      htmlFor={htmlFor}
+      className={`text-[13px] uppercase tracking-[0.12em] text-muted ${className}`}
+    >
       {children}
     </As>
   );

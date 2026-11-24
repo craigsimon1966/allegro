@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "note": "The controlled tag list. The AI may only use these tags (TECH_SPEC 7.3). Units in M2 use the same tags.",
+  "tags": [
+    {
+      "id": "algebra.linear",
+      "domain": "CK",
+      "label": "Linear relationships (gradient, tables, graphs and rules)",
+      "yearLevels": ["8", "9"]
+    },
+    {
+      "id": "algebra.foundations",
+      "domain": "CK",
+      "label": "Algebraic thinking (pronumerals, equivalence, simplifying)",
+      "yearLevels": ["7", "8"]
+    },
+    {
+      "id": "number.proportional",
+      "domain": "CK",
+      "label": "Proportional reasoning (ratio, rates, percentages)",
+      "yearLevels": ["7", "8"]
+    },
+    {
+      "id": "pck.algebra-misconceptions",
+      "domain": "PCK",
+      "label": "Common student errors in algebra and how to respond",
+      "yearLevels": ["7", "8", "9"]
+    },
+    {
+      "id": "pck.differentiation",
+      "domain": "PCK",
+      "label": "One maths task, three entry points",
+      "yearLevels": ["7", "8", "9"]
+    },
+    {
+      "id": "pk.checking-understanding",
+      "domain": "PK",
+      "label": "Checking for understanding (hinge questions, mini whiteboards, exit tickets)",
+      "yearLevels": []
+    },
+    {
+      "id": "pk.explicit-instruction",
+      "domain": "PK",
+      "label": "Explicit instruction and worked examples",
+      "yearLevels": []
+    },
+    {
+      "id": "pk.routines",
+      "domain": "PK",
+      "label": "Classroom routines (entry, transitions)",
+      "yearLevels": []
+    },
+    {
+      "id": "primary.routines",
+      "domain": "PK",
+      "label": "Early years routines",
+      "yearLevels": ["F", "1", "2"]
+    },
+    {
+      "id": "primary.attention",
+      "domain": "PK",
+      "label": "Attention spans and pacing in the early years",
+      "yearLevels": ["F", "1", "2"]
+    },
+    {
+      "id": "primary.early-number",
+      "domain": "CK",
+      "label": "Early number (counting, subitising, part-part-whole)",
+      "yearLevels": ["F", "1", "2"]
+    },
+    {
+      "id": "assessment.success-criteria",
+      "domain": "ASSESSMENT",
+      "label": "Writing learning intentions and success criteria",
+      "yearLevels": []
+    },
+    {
+      "id": "assessment.feedback",
+      "domain": "ASSESSMENT",
+      "label": "Feedback that moves learning forward",
+      "yearLevels": []
+    },
+    {
+      "id": "wellbeing.workload",
+      "domain": "WELLBEING",
+      "label": "Managing workload and confidence",
+      "yearLevels": []
+    },
+    {
+      "id": "context.out-of-field",
+      "domain": "CONTEXT",
+      "label": "Teaching outside your trained subject",
+      "yearLevels": []
+    },
+    {
+      "id": "context.regional",
+      "domain": "CONTEXT",
+      "label": "Teaching in a regional, rural or remote school",
+      "yearLevels": []
+    },
+    {
+      "id": "context.casual",
+      "domain": "CONTEXT",
+      "label": "Short-term and casual placements",
+      "yearLevels": []
+    }
+  ]
+}

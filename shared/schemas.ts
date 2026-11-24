@@ -72,6 +72,28 @@ export const ApiErrorCode = z.enum([
   'server_error',
 ]);
 
+export const GuidedSchema = z.object({
+  role: Role.optional(),
+  subject: z.string().max(100).optional(),
+  yearLevels: z.array(z.string().max(10)).max(13).optional(),
+  schoolType: z.enum(['government', 'catholic', 'independent', 'unknown']).optional(),
+  locationType: z.enum(['metro', 'regional', 'rural', 'remote', 'unknown']).optional(),
+  weeks: z.number().int().min(1).max(52).nullable().optional(),
+  hoursPerWeek: z.number().min(0.5).max(5).optional(),
+  /** 1 = Monday ... 5 = Friday */
+  teachingDays: z.array(z.number().int().min(1).max(5)).max(5).optional(),
+});
+
+export const DiagnoseRequestSchema = z.object({
+  situationText: z.string().trim().min(1).max(4000),
+  guided: GuidedSchema.optional(),
+  clarifyingAnswers: z.array(z.string().max(1000)).max(2).optional(),
+});
+
+export const AccessRequestSchema = z.object({ code: z.string().min(1).max(200) });
+
+export type Guided = z.infer<typeof GuidedSchema>;
+export type DiagnoseRequest = z.infer<typeof DiagnoseRequestSchema>;
 export type Need = z.infer<typeof NeedSchema>;
 export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 export type Lesson = z.infer<typeof LessonSchema>;
