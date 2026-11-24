@@ -43,6 +43,14 @@ const PAIRS: [string, string, number][] = [
   ['warning', 'white', 4.5],
   ['error', 'white', 4.5],
   ['info', 'white', 4.5],
+  ['muted', 'surface', 4.5],
+  ['green-700', 'surface', 4.5],
+  ['plum-700', 'surface', 4.5],
+  ['ink', 'plum-100', 4.5],
+  ['white', 'green-900', 4.5],
+  ['surface', 'ink', 4.5],
+  ['green-700', 'sage-100', 4.5],
+  ['warning', 'surface', 3], // icon and border only, text on warning badges is ink
   ['green-600', 'white', 3], // large text only
 ];
 
