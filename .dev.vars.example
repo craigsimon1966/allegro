@@ -1,0 +1,13 @@
+# Runtime values for Cloudflare Pages Functions (wrangler). Copy to .dev.vars and fill in.
+# Never commit .dev.vars. See TECH_SPEC.md section 8.
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-sonnet-5-5
+ANTHROPIC_MODEL_FAST=claude-haiku-5-5
+DEMO_ACCESS_CODE=
+ACCESS_COOKIE_SECRET=
+RATE_LIMIT_USER_PER_HOUR=40
+RATE_LIMIT_DEMO_PER_HOUR=15
+# DEBUG_PROMPTS=1   (local only, never in production)

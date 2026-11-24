@@ -1,0 +1,26 @@
+@import './tokens.css';
+@import 'katex/dist/katex.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  :focus-visible {
+    outline: 2px solid var(--green-700);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--white);
+  }
+}

@@ -1,0 +1,76 @@
+/*
+ * Allegro design tokens. Source of truth: SPEC.md sections 10.1 to 10.3.
+ * This is the ONLY file allowed to contain raw hex colours (enforced by tests/unit/tokens.test.ts).
+ * Contrast pairs are tested in tests/unit/contrast.test.ts.
+ */
+:root {
+  /* Brand: sage (surface and decoration only, never text on it except ink) */
+  --sage-500: #80a880;
+  --sage-300: #a9c7a9;
+  --sage-100: #e8f0e8;
+
+  /* Brand: green */
+  --green-600: #658865; /* logo and large display text only */
+  --green-700: #4e7050; /* primary action, links, focus ring */
+  --green-800: #3f5e3f; /* hover and pressed primary */
+  --green-900: #2f3e2f; /* footer, strong headings */
+
+  /* Brand: plum (the "thinking" colour, AI content) */
+  --plum-500: #7f577f;
+  --plum-700: #5e3e5e;
+  --plum-100: #f1eaf1;
+
+  /* Neutrals */
+  --ink: #1f2a1f;
+  --muted: #5a6b5a;
+  --surface: #f5f7f2;
+  --field: #ffffff; /* inputs and textareas only */
+  --white: #ffffff;
+  --border: #d5ddd3;
+
+  /* Status */
+  --success: #4e7050;
+  --warning: #9a6b12;
+  --error: #b4573a;
+  --info: #2e6b8a;
+
+  /* Exercise book language (SPEC 10.6a) */
+  --highlighter: #c9dec3;
+  --grid: #e1e9df;
+  --margin: rgb(127 87 127 / 0.5);
+  --rule: #d5ddd3;
+  --rule-strong: #1f2a1f;
+
+  /* Type */
+  --font-heading: 'Literata', Georgia, serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-margin: 'Caveat', cursive;
+
+  /* Spacing (4px grid) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius: 2px everywhere, no rounded cards, no pills */
+  --radius: 2px;
+
+  /* Layout */
+  --margin-col: 52px;
+  --content-start: 68px;
+  --tap-min: 44px;
+
+  /* Motion */
+  --dur: 200ms;
+  --ease: cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}
