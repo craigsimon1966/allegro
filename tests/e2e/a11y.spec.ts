@@ -20,6 +20,8 @@ async function asTammy(page: Page) {
   await expect(page).toHaveURL(/\/needs$/);
   await page.getByRole('button', { name: /Build my week/ }).click();
   await expect(page).toHaveURL(/\/pathway$/);
+  // Moving to a new screen puts focus on its heading; wait for that before pressing Tab.
+  await expect(page.getByRole('heading', { level: 1, name: 'This week' })).toBeFocused();
 }
 
 test('the first Tab on every screen is a skip link that moves focus into the main content', async ({
@@ -85,4 +87,18 @@ test('with reduced motion, the loading mark does not animate', async ({ page }) 
   const circle = page.locator('.allegro-mark-loading circle').first();
   await expect(circle).toHaveCount(1);
   expect(await circle.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+});
+
+test('each screen names the browser tab, and a new screen moves focus to its heading', async ({
+  page,
+}) => {
+  await page.goto('/demo');
+  await expect(page).toHaveTitle(/· Allegro Learning$/);
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  const needsTitle = await page.title();
+  await page.getByRole('button', { name: /Build my week/ }).click();
+  await expect(page).toHaveTitle('This week · Allegro Learning');
+  expect(needsTitle).not.toBe('This week · Allegro Learning');
+  await expect(page.getByRole('heading', { level: 1, name: 'This week' })).toBeFocused();
 });

@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components -- route table module, not a component module */
 import { lazy, Suspense, type ReactNode } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { RouteFocus } from '@/components/RouteFocus';
 import { SkipLink } from '@/components/SkipLink';
 import { Landing } from '@/features/landing/Landing';
 import { AllegroMark } from '@/components/AllegroMark';
@@ -66,6 +67,7 @@ function Root() {
   return (
     <>
       <SkipLink />
+      <RouteFocus />
       <Outlet />
     </>
   );
