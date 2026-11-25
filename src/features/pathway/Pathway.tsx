@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
+import { sourcesFor } from '@shared/sources';
 import { DockedQuickHelp } from '@/components/DockedQuickHelp';
 import { Label, SectionRule } from '@/components/Label';
 import { Highlight } from '@/components/Highlight';
@@ -339,8 +340,34 @@ export default function Pathway() {
                 {freeDays.length && teachingDays.length
                   ? `Learning is planned for ${listDays(freeDays)}.`
                   : 'Learning is spread across the week.'}{' '}
-                Use the arrows to change the order.
+                Use the arrows, or drag with a mouse, to change the order.
               </p>
+
+              <details className="mt-6 max-w-prose border-t border-rule pt-3">
+                <summary className="min-h-tap cursor-pointer text-[17px] font-bold">
+                  Further reading (optional)
+                </summary>
+                <p className="mt-1 text-[15px] text-muted">
+                  From sources the Allegro team has checked. These open in a new tab.
+                </p>
+                <ul className="mt-2">
+                  {sourcesFor(diagnosis.context.year_levels).map((src) => (
+                    <li key={src.id} className="border-b border-rule py-2">
+                      <a
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-green-700 underline"
+                      >
+                        {src.title}
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                      <div className="text-[13px] text-muted">{src.organisation}</div>
+                      <p className="text-[15px]">{src.summary}</p>
+                    </li>
+                  ))}
+                </ul>
+              </details>
               <p className="mt-2">
                 <Link to="/needs" className="text-green-700 underline">
                   Change my needs
