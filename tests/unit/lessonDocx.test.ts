@@ -2,7 +2,7 @@ import { unzipSync, strFromU8 } from 'fflate';
 import { Packer } from 'docx';
 import { describe, expect, it } from 'vitest';
 import { DEMO_LESSON } from '@shared/lesson';
-import { docxName, lessonDocument } from '@/lib/lessonDocx';
+import { docxName, lessonDocument, setVisualImage } from '@/lib/lessonDocx';
 
 const NOTICE = 'Drafted by Allegro AI. Please check before using.';
 
@@ -49,8 +49,8 @@ describe('diagrams in the Word download', () => {
       ),
       (c) => c.charCodeAt(0),
     );
-    const images = new Map([[raw, { data: png, width: 220, height: 100 }]]);
-    const buf = await Packer.toBuffer(lessonDocument(withVisual, NOTICE, 'NSW', images));
+    setVisualImage(raw, { data: png, width: 220, height: 100 });
+    const buf = await Packer.toBuffer(lessonDocument(withVisual, NOTICE, 'NSW'));
     const files = unzipSync(new Uint8Array(buf));
     const doc = strFromU8(files['word/document.xml']!);
     expect(doc).toContain('<w:drawing>');
@@ -60,8 +60,14 @@ describe('diagrams in the Word download', () => {
   });
 
   it('falls back to a description when the picture is missing', async () => {
-    const buf = await Packer.toBuffer(lessonDocument(withVisual, NOTICE, 'NSW'));
+    const undrawn = {
+      ...lesson,
+      blocks: [
+        { ...lesson.blocks[0]!, content_md: '```visual\n{"type":"ten_frame","filled":8}\n```' },
+      ],
+    };
+    const buf = await Packer.toBuffer(lessonDocument(undrawn, NOTICE, 'NSW'));
     const doc = strFromU8(unzipSync(new Uint8Array(buf))['word/document.xml']!);
-    expect(doc.replace(/<[^>]+>/g, '')).toContain('[Diagram] Ten frame with 7 counters.');
+    expect(doc.replace(/<[^>]+>/g, '')).toContain('[Diagram] Ten frame with 8 counters.');
   });
 });

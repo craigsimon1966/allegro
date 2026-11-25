@@ -10,7 +10,12 @@ export type Inline = {
 };
 export type Block =
   | { kind: 'para'; runs: Inline[] }
-  | { kind: 'list'; ordered: boolean; items: Inline[][] }
+  | {
+      kind: 'list';
+      ordered: boolean;
+      items: Inline[][];
+      /** First number of an ordered list. */ start?: number;
+    }
   | { kind: 'table'; rows: Inline[][][] }
   /** A ```visual diagram (shared/visuals.ts): the raw JSON spec. */
   | { kind: 'visual'; raw: string };
@@ -91,12 +96,13 @@ export function blocks(md: string): Block[] {
     const ordered = /^\d+\.\s/.test(line);
     if (ordered || /^[-*]\s/.test(line)) {
       const items: Inline[][] = [];
+      const start = ordered ? parseInt(line, 10) : undefined;
       const itemRe = ordered ? /^\d+\.\s+/ : /^[-*]\s+/;
       while (i < lines.length && itemRe.test(lines[i]!.trim())) {
         items.push(inline(lines[i]!.trim().replace(itemRe, '')));
         i++;
       }
-      out.push({ kind: 'list', ordered, items });
+      out.push({ kind: 'list', ordered, items, ...(start && start !== 1 ? { start } : {}) });
       continue;
     }
     const para: string[] = [];
@@ -122,7 +128,9 @@ export function blocksToMarkdown(bs: Block[]): string {
       if (b.kind === 'para') return md(b.runs);
       if (b.kind === 'visual') return '```visual\n' + b.raw + '\n```';
       if (b.kind === 'list')
-        return b.items.map((it, n) => `${b.ordered ? `${n + 1}.` : '-'} ${md(it)}`).join('\n');
+        return b.items
+          .map((it, n) => `${b.ordered ? `${(b.start ?? 1) + n}.` : '-'} ${md(it)}`)
+          .join('\n');
       const [head, ...rest] = b.rows;
       if (!head) return '';
       return [

@@ -117,7 +117,7 @@ export type JsonResult<T> =
 export async function generateJson<T>(
   complete: Completer,
   args: CompleteArgs,
-  schema: z.ZodType<T>,
+  schema: z.ZodType<T, z.ZodTypeDef, unknown>,
 ): Promise<JsonResult<T>> {
   const usage = { input: 0, output: 0 };
   let messages = args.messages;
