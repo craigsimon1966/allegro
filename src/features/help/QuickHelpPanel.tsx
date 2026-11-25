@@ -9,6 +9,7 @@ import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, askHelp, type HelpAnswer } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 import { Thumbs } from '@/features/feedback/Thumbs';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 // Quick Help (SPEC 7.8): a short teaching question, a short answer, one move, one unit.
 // Used by the /help page and by the slide-over panel (QuickHelpButton).
@@ -71,7 +72,8 @@ export default function QuickHelpPanel({ headingLevel = 1, onLeave }: Props) {
         Ask a teaching question
       </Heading>
       <p className="mt-2 max-w-prose text-muted">
-        A short answer and one thing to try. Please don&apos;t include student names.
+        A short answer and one thing to try. Please don&apos;t include student names. If you use the
+        microphone, your browser&apos;s speech service turns it into text.
       </p>
 
       <div className="mt-6 max-w-prose" aria-live="polite">
@@ -140,14 +142,19 @@ export default function QuickHelpPanel({ headingLevel = 1, onLeave }: Props) {
         <label htmlFor={fieldId} className="block text-[15px] font-bold">
           Your question
         </label>
-        <textarea
-          id={fieldId}
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          rows={3}
-          maxLength={600}
-          className="mt-1 w-full rounded border-2 border-ink bg-field p-3 text-[17px] text-ink"
-        />
+        <div className="mt-1 flex items-start gap-2">
+          <textarea
+            id={fieldId}
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            rows={3}
+            maxLength={600}
+            className="w-full rounded border-2 border-ink bg-field p-3 text-[17px] text-ink"
+          />
+          <VoiceInputButton
+            onText={(t) => setQuestion((prev) => (prev ? `${prev} ${t}` : t).slice(0, 600))}
+          />
+        </div>
         {names.length > 0 && (
           <p className="mt-2 font-bold" role="alert">
             This looks like it might include a student&apos;s name ({names.join(', ')}). Please

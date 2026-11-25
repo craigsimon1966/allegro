@@ -141,3 +141,36 @@ test('on a laptop, Quick Help docks on the right of This week', async ({ page })
   await expect(dock.getByText(/equal to 7 or 10/)).toBeVisible();
   await axeClean(page);
 });
+
+test('Quick Help takes a spoken question where the browser supports it', async ({ page }) => {
+  await page.addInitScript(() => {
+    class FakeRecognition {
+      lang = '';
+      continuous = false;
+      interimResults = false;
+      onresult: ((e: unknown) => void) | null = null;
+      onend: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      start() {
+        setTimeout(() => {
+          const alt = Object.assign([{ transcript: 'How do I explain gradient' }], {
+            isFinal: true,
+          });
+          this.onresult?.({ results: [alt] });
+          this.onend?.();
+        }, 50);
+      }
+      stop() {
+        this.onend?.();
+      }
+    }
+    // Chromium has its own SpeechRecognition, which is tried first, so replace both.
+    const w = window as unknown as Record<string, unknown>;
+    w.SpeechRecognition = FakeRecognition;
+    w.webkitSpeechRecognition = FakeRecognition;
+  });
+  await tammy(page);
+  await page.goto('/help');
+  await page.getByRole('button', { name: 'Speak instead of typing' }).click();
+  await expect(page.getByLabel('Your question')).toHaveValue('How do I explain gradient');
+});
