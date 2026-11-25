@@ -115,3 +115,18 @@ test('Allegro can be added to the Home Screen', async ({ page, request }) => {
   expect(manifest.display).toBe('standalone');
   for (const icon of manifest.icons) expect((await request.get(icon.src)).ok()).toBe(true);
 });
+
+test('the Me tab shows who you are and lets you leave the demo', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Sam/ }).click();
+  await page.goto('/me');
+  await expect(page.getByRole('heading', { level: 1, name: 'Your demo' })).toBeVisible();
+  await expect(page.getByText(/trying Allegro as Sam/)).toBeVisible();
+  await expect(page.getByRole('link', { name: /About this demo, privacy/ })).toBeVisible();
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations.map((v) => v.id)).toEqual([]);
+  await page.getByRole('button', { name: 'Leave the demo' }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await page.goto('/me');
+  await expect(page).toHaveURL(/\/demo$/);
+});
