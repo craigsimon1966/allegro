@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 import {
   extractJsonObject,
   generateJson,
+  anthropicCompleter,
+  thinkingFor,
   AiUnavailableError,
   type Completer,
 } from '../../functions/_lib/anthropic';
@@ -193,5 +195,40 @@ describe('access tokens', () => {
 describe('prompts', () => {
   it('generated prompts module is in sync with prompts/*.md', () => {
     expect(readFileSync('functions/_lib/prompts.generated.ts', 'utf8')).toBe(renderPromptsModule());
+  });
+});
+
+describe('anthropicCompleter', () => {
+  it('turns thinking off so the reply is all answer', async () => {
+    expect(thinkingFor('claude-sonnet-5-5')).toEqual({ type: 'between_tools' });
+    expect(thinkingFor('claude-haiku-5-5')).toEqual({ type: 'disabled' });
+    expect(thinkingFor('claude-opus-5-5')).toBeUndefined();
+    let sent: Record<string, unknown> = {};
+    const fakeFetch = (async (_url: unknown, init?: RequestInit) => {
+      sent = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      return new Response(
+        JSON.stringify({
+          id: 'msg_1',
+          type: 'message',
+          role: 'assistant',
+          model: 'claude-sonnet-5-5',
+          content: [{ type: 'text', text: '{"ok":true}' }],
+          stop_reason: 'end_turn',
+          stop_sequence: null,
+          usage: { input_tokens: 5, output_tokens: 3 },
+        }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      );
+    }) as typeof fetch;
+    const complete = anthropicCompleter({ ANTHROPIC_API_KEY: 'test' }, { fetch: fakeFetch });
+    const r = await complete({
+      model: 'claude-sonnet-5-5',
+      system: 's',
+      messages: [{ role: 'user', content: 'x' }],
+      maxTokens: 100,
+    });
+    expect(sent.thinking).toEqual({ type: 'between_tools' });
+    expect(sent.max_tokens).toBe(100);
+    expect(r).toMatchObject({ text: '{"ok":true}', stopReason: 'end_turn', outputTokens: 3 });
   });
 });

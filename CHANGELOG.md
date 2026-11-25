@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fixed the real cause of lesson drafts failing: the AI model thinks before it answers by default, and that thinking counts towards the reply limit. A lesson used its whole 8,000-token allowance thinking and never finished the lesson. Thinking is now turned off for every Allegro AI call (Sonnet 5.5 and Haiku 5.5), so the whole allowance goes on the answer, and replies are faster.
 - Craig's Allegro Learning logo is now in the header, the app sidebar and the footer, and his icon is the browser tab icon and the Home Screen icon. The waiting mark now fills green and plum (the logo purple) in turn.
 - Fixed: lesson drafts still failing after the timeout fix. A full eight-block lesson is longer than the 3,500-token reply limit, so every reply was cut off and could not be read, then asked again and cut off again. The limit is now 8,000, a cut-off reply is no longer retried (it would only fail again at twice the wait), and the server waits up to 120 seconds.
 - Fixed: "Allegro's AI isn't available right now" on every lesson draft. A full lesson takes longer than the 25 seconds the server waited, so it gave up, tried again, and gave up again. Lessons, situations and weeks now wait up to 90 seconds with no second try. The AI week was also being cut off part way (1,200 token limit, now 2,500), so it always fell back to the rules week.
