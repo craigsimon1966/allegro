@@ -264,7 +264,7 @@
       "kind": "example",
       "block_id": "b4",
       "heading": "I do: find the rule",
-      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 5 | 9 | 13 |",
+      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 5 | 9 | 13 |\n\n```visual\n{\"type\": \"graph\", \"xMin\": -1, \"xMax\": 3, \"yMin\": -2, \"yMax\": 14, \"points\": [{\"x\": 0, \"y\": 1}, {\"x\": 1, \"y\": 5}, {\"x\": 2, \"y\": 9}, {\"x\": 3, \"y\": 13}]}\n```",
       "writing_space": true,
       "answer_md": "$y = 4x + 1$. Check: $4 \\times 3 + 1 = 13$."
     },
