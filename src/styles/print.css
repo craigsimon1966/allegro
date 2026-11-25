@@ -1,0 +1,82 @@
+/* Lesson plan print view (TECH_SPEC 9.4): A4, 15mm margins, no app chrome, two pages for 60 minutes. */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  html,
+  body {
+    background: var(--white) !important;
+    font-size: 9.5pt;
+    line-height: 1.25;
+  }
+  nav,
+  aside,
+  header,
+  .no-print,
+  .margin-line {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  main > div,
+  main > div > div {
+    min-height: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .lesson-print h1 {
+    font-size: 18pt;
+  }
+  .lesson-print .lesson-block {
+    background: none !important;
+    margin-left: 0 !important;
+    padding: 3pt 0 3pt 34pt !important;
+  }
+  .lesson-print .lesson-block h2 {
+    font-size: 11.5pt;
+    margin-top: 0 !important;
+    break-after: avoid-page;
+  }
+  .lesson-print .block-label {
+    display: none;
+  }
+  .lesson-print .katex {
+    font-size: 1.05em;
+  }
+  .lesson-print .lesson-block > div:first-child {
+    top: 4pt !important;
+    width: 30pt !important;
+  }
+  .lesson-print .lesson-block > div:first-child span {
+    font-size: 13pt !important;
+  }
+  .lesson-print .rationale {
+    font-size: 8.5pt;
+    margin-top: 2pt;
+  }
+  .lesson-print .math-text li {
+    margin: 0;
+    break-inside: avoid;
+  }
+  /* Short question lists sit in two columns on paper to keep a lesson to two pages. */
+  .lesson-print .math-text ol {
+    columns: 2;
+    column-gap: 18pt;
+  }
+  .lesson-print .math-text,
+  .lesson-print .max-w-prose {
+    max-width: none !important;
+  }
+  .lesson-print .math-text p,
+  .lesson-print .math-text ul,
+  .lesson-print .math-text ol {
+    margin-top: 2pt;
+    margin-bottom: 2pt;
+  }
+  .lesson-print table {
+    font-size: 9.5pt;
+  }
+}

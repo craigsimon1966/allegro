@@ -4,7 +4,6 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
 import { Label, SectionRule } from '@/components/Label';
-import { MarginNote } from '@/components/MarginNote';
 import { Highlight } from '@/components/Highlight';
 import { DraftBadge } from '@/components/DraftBadge';
 import { MathText } from '@/components/MathText';
@@ -282,10 +281,7 @@ export default function Pathway() {
                     <Link to="/plan" className="text-[17px] text-ink no-underline hover:underline">
                       Plan {firstTeaching}&apos;s lesson
                     </Link>
-                    <div className="text-[13px] text-muted">Lesson builder · coming soon</div>
-                  </div>
-                  <div className="shrink-0 pr-5 pt-2">
-                    <MarginNote tone="muted">soon</MarginNote>
+                    <div className="text-[13px] text-muted">Lesson builder · about 10 min</div>
                   </div>
                 </li>
               </ol>

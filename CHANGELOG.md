@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### M3: Lesson Builder (25 November 2026)
+
+- `POST /api/lesson` (main model, 3,500 tokens) with `prompts/lesson.md`, given the topic's own units as reference. In code: the misconceptions block is always rebuilt from `misconceptions.json`, curriculum refs come from unit metadata (`AC9-TODO` / `NSW-TODO`), every other block is marked AI draft with a maths check, em dashes removed.
+- `POST /api/lesson-block` (main model, 1,000 tokens) with `prompts/lesson-block.md`: redoes one block, keeps its id and type; the misconceptions block is restored from the bank without calling the model.
+- /plan: topic, year level, length, class profile (general only, student-name check), last lesson, and the "Add to my lesson" moves. Tammy's ready-made lesson for the demo, AI for everything else. List of saved lessons.
+- /plan/:lessonId: margin timings, AC v9 and NSW refs side by side, "Check the maths" banner and a tick per block, edit, reorder, redo one block with an optional instruction, "Why this works" notes, print or save as PDF, copy as text.
+- `src/styles/print.css`: A4, 15mm margins, no app chrome. Signed-in lessons save to the `lessons` table.
+- Tests: grounding rules, both endpoints with a fake model, timings; Playwright for the demo lesson, editing, reordering, redo changing only one block, the AI path, and a PDF check that a 60-minute lesson is 2 pages or fewer.
+
 ### M2: Explain this differently and saved weeks (25 November 2026)
 
 - `POST /api/explain` on the fast model with `prompts/explain.md`. The prompt holds only that unit's title, hook, core idea and worked example. Student-name check on the optional note, rate limits and usage logging as for diagnose.

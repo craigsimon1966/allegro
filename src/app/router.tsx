@@ -14,6 +14,8 @@ const Intake = lazy(() => import('@/features/intake/Intake'));
 const Needs = lazy(() => import('@/features/needs/Needs'));
 const Pathway = lazy(() => import('@/features/pathway/Pathway'));
 const Learn = lazy(() => import('@/features/learn/Learn'));
+const PlanForm = lazy(() => import('@/features/plan/PlanForm'));
+const LessonView = lazy(() => import('@/features/plan/LessonView'));
 
 function Loading() {
   return (
@@ -38,22 +40,8 @@ export const routes = [
   { path: '/needs', element: lazyPage(<Needs />) },
   { path: '/pathway', element: lazyPage(<Pathway />) },
   { path: '/learn/:unitId', element: lazyPage(<Learn />) },
-  {
-    path: '/plan',
-    element: (
-      <Placeholder
-        title="Plan a lesson"
-        milestone="M3"
-        shell
-        step={5}
-        blurb="Soon you'll turn this week's learning into a lesson plan for your class, including any moves you added from a unit."
-      />
-    ),
-  },
-  {
-    path: '/plan/:lessonId',
-    element: <Placeholder title="Your lesson" milestone="M3" shell step={5} />,
-  },
+  { path: '/plan', element: lazyPage(<PlanForm />) },
+  { path: '/plan/:lessonId', element: lazyPage(<LessonView />) },
   {
     path: '/reflect',
     element: (
