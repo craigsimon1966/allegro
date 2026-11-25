@@ -1,7 +1,8 @@
 import type { Diagnosis, DiagnoseRequest } from '@shared/schemas';
 import { DiagnosisSchema } from '@shared/schemas';
 import { supabase } from './supabase';
-import { useAppStore, type TeacherNeed } from './store';
+import { useAppStore, type TeacherNeed, type UnitProgress } from './store';
+import type { PathwayItem } from '@shared/pathway';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
 // demo mode reads and writes the local store, signed-in mode also writes to Supabase.
@@ -54,6 +55,40 @@ async function post(path: string, body: unknown): Promise<unknown> {
     );
   }
   return data;
+}
+
+/** POST /api/explain: plain text back (TECH_SPEC 7.2). */
+export async function explain(
+  unitId: string,
+  style: 'simpler' | 'different_context',
+  context?: string,
+): Promise<string> {
+  let res: Response;
+  try {
+    res = await fetch('/api/explain', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', ...(await authHeaders()) },
+      body: JSON.stringify({ unitId, style, ...(context ? { context } : {}) }),
+      credentials: 'same-origin',
+    });
+  } catch {
+    throw new ApiError(
+      'offline',
+      "We couldn't reach Allegro. Check your connection and try again.",
+    );
+  }
+  if (!res.ok) {
+    const data = (await res.json().catch(() => null)) as {
+      error?: { code: string; message: string };
+    } | null;
+    throw new ApiError(
+      data?.error?.code ?? 'ai_unavailable',
+      data?.error?.message ?? "Allegro's AI isn't available right now.",
+    );
+  }
+  const text = (await res.text()).trim();
+  if (!text) throw new ApiError('ai_unavailable', "Allegro's AI isn't available right now.");
+  return text;
 }
 
 export async function diagnose(req: DiagnoseRequest): Promise<Diagnosis> {
@@ -162,4 +197,81 @@ export async function loadLatestFromSupabase(): Promise<boolean> {
     });
   }
   return true;
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Replaces the signed-in teacher's saved week with the current one. Demo: store only. */
+export async function savePathway(items: PathwayItem[]): Promise<void> {
+  const { mode } = useAppStore.getState();
+  if (mode !== 'signed_in' || !supabase) return;
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return;
+  await supabase.from('pathway_items').delete().eq('user_id', auth.user.id);
+  if (!items.length) return;
+  await supabase.from('pathway_items').insert(
+    items.map((it) => ({
+      unit_id: it.unitId,
+      need_id: UUID.test(it.needId) ? it.needId : null,
+      reason: it.reason,
+      scheduled_for: it.scheduledFor,
+      sort_order: it.sortOrder,
+    })),
+  );
+}
+
+/** Saves one unit's progress and reflection (signed in only). */
+export async function saveUnitProgress(unitId: string, p: UnitProgress): Promise<void> {
+  const { mode } = useAppStore.getState();
+  if (mode !== 'signed_in' || !supabase) return;
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return;
+  await supabase.from('unit_progress').upsert({
+    user_id: auth.user.id,
+    unit_id: unitId,
+    started_at: p.completedAt,
+    completed_at: p.completedAt,
+    check_answers: { correct: p.checkCorrect },
+    reflect_note: p.reflection.slice(0, 1000) || null,
+  });
+}
+
+/** Loads the saved week and unit progress into the store (signed in, new device or reload). */
+export async function loadPathwayFromSupabase(key: string, weekStart: string): Promise<void> {
+  if (!supabase) return;
+  const [{ data: items }, { data: progress }] = await Promise.all([
+    supabase
+      .from('pathway_items')
+      .select('unit_id, need_id, reason, scheduled_for, sort_order')
+      .order('sort_order', { ascending: true }),
+    supabase.from('unit_progress').select('unit_id, completed_at, check_answers, reflect_note'),
+  ]);
+  const store = useAppStore.getState();
+  if (progress?.length) {
+    useAppStore.setState({
+      progress: Object.fromEntries(
+        progress.map((r) => [
+          r.unit_id as string,
+          {
+            completedAt: (r.completed_at as string | null) ?? null,
+            checkCorrect: Number((r.check_answers as { correct?: number } | null)?.correct ?? 0),
+            reflection: (r.reflect_note as string | null) ?? '',
+          },
+        ]),
+      ),
+    });
+  }
+  // Only reuse a saved week if it is this week; an older one is rebuilt from the needs.
+  if (items?.length && (items[0]!.scheduled_for as string) >= weekStart) {
+    store.setPathway(
+      items.map((r) => ({
+        unitId: r.unit_id as string,
+        needId: (r.need_id as string | null) ?? '',
+        reason: (r.reason as string | null) ?? '',
+        scheduledFor: r.scheduled_for as string,
+        sortOrder: r.sort_order as number,
+      })),
+      key,
+    );
+  }
 }
