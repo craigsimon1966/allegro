@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- The landing page's four-circle diagram is now Craig's Allegro icon, larger and centred, with Equip, Embed, Evaluate and Elevate centred in their circles. It now shows on phones too, below the call to action.
 - Lessons can be downloaded as a Word file ("Download as Word"). It opens in Microsoft Word and in Google Docs, uses real headings, lists and tables, and carries "Drafted by Allegro AI. Please check before using." under the title and in every page footer. The Markdown helper behind the content review document moved to `shared/markdownBlocks.ts` so both use it.
 - Fixed the real cause of lesson drafts failing: the AI model thinks before it answers by default, and that thinking counts towards the reply limit. A lesson used its whole 8,000-token allowance thinking and never finished the lesson. Thinking is now turned off for every Allegro AI call (Sonnet 5.5 and Haiku 5.5), so the whole allowance goes on the answer, and replies are faster.
 - Craig's Allegro Learning logo is now in the header, the app sidebar and the footer, and his icon is the browser tab icon and the Home Screen icon. The waiting mark now fills green and plum (the logo purple) in turn.
