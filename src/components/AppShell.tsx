@@ -43,7 +43,7 @@ export function AppShell({ children, step, setup = false, backTo }: Props) {
       </main>
       {!setup && (
         <>
-          <aside aria-label="Quick Help">
+          <aside aria-label="Quick Help" className="lg:hidden">
             <QuickHelpButton />
           </aside>
           <TabBar />

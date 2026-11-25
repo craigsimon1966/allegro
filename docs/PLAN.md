@@ -112,7 +112,7 @@ Status (25 Nov 2026): built. All three done-when checks have tests.
 - `POST /api/reflect`, `POST /api/help` (streamed, final JSON line).
 - `/reflect`, `/growth` (chart plus text alternative, no badges or streaks), Quick Help slide-over and `/help`. Match `design/Mobile-07`, `Mobile-08`.
 
-Status (25 Nov 2026): built. Quick Help is a page and, on phone and tablet, a slide-over (laptop docking not built). All three done-when checks have tests or a live RLS check.
+Status (25 Nov 2026): built. Quick Help is a page and, on phone and tablet, a slide-over; on laptop it docks on This week. All three done-when checks have tests or a live RLS check.
 
 Done when: Quick Help answers are under 120 words by default; reflections are private to their owner; the growth chart has a text alternative.
 
