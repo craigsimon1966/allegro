@@ -64,6 +64,65 @@ export const LessonSchema = z.object({
   blocks: z.array(LessonBlockSchema),
 });
 
+/**
+ * The classroom pack for a lesson: student worksheets, a step-by-step teacher guide and smart
+ * board slides. Drafted by a second AI call (POST /api/lesson-pack) so the lesson reply stays
+ * within its token limit. Answers live on worksheet items and slides for the teacher's answer
+ * key only; worksheets and slides never print them.
+ */
+export const PackLevel = z.enum(['all', 'start', 'core', 'stretch']);
+
+export const PackStepSchema = z.object({
+  block_id: z.string(),
+  /** What the teacher does, in order. */
+  do: z.array(z.string()).max(5),
+  /** Words the teacher can say. */
+  say: z.array(z.string()).max(3),
+  /** Questions to ask the class. */
+  ask: z.array(z.string()).max(4),
+  /** What to listen and look for while students work. */
+  watch_for: z.array(z.string()).max(3),
+});
+
+export const PackItemSchema = z.object({
+  prompt_md: z.string(),
+  answer_md: z.string(),
+  /** Room to work: short (2 lines), medium (5 lines), long (9 lines). */
+  space: z.enum(['short', 'medium', 'long']),
+});
+
+export const PackSectionSchema = z.object({
+  heading: z.string(),
+  level: PackLevel,
+  block_id: z.string(),
+  items: z.array(PackItemSchema).max(10),
+});
+
+export const PackSlideSchema = z.object({
+  kind: z.enum(['title', 'intention', 'vocabulary', 'example', 'problem', 'hinge', 'reflection']),
+  block_id: z.string(),
+  heading: z.string(),
+  /** One idea, shown large. Never the answer or the working. */
+  body_md: z.string(),
+  /** Hinge question options, shown as large numbered boxes. */
+  options: z.array(z.string()).max(4).default([]),
+  /** Leave a blank area for the teacher to write on the board. */
+  writing_space: z.boolean(),
+  /** For the teacher guide's answer key only; never shown on the slide. */
+  answer_md: z.string().default(''),
+});
+
+export const LessonPackSchema = z.object({
+  steps: z.array(PackStepSchema).max(12),
+  worksheet: z.object({
+    title: z.string(),
+    instructions: z.string(),
+    sections: z.array(PackSectionSchema).max(8),
+  }),
+  exit_ticket: z.array(PackItemSchema).max(3),
+  slides: z.array(PackSlideSchema).min(1).max(18),
+});
+
 export const ApiErrorCode = z.enum([
   'rate_limited',
   'invalid_input',
@@ -101,4 +160,7 @@ export type Need = z.infer<typeof NeedSchema>;
 export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 export type Lesson = z.infer<typeof LessonSchema>;
 export type LessonBlock = z.infer<typeof LessonBlockSchema>;
+export type LessonPack = z.infer<typeof LessonPackSchema>;
+export type PackItem = z.infer<typeof PackItemSchema>;
+export type PackSlide = z.infer<typeof PackSlideSchema>;
 export type ApiErrorCode = z.infer<typeof ApiErrorCode>;

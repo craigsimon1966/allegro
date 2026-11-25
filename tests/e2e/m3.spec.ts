@@ -156,16 +156,64 @@ test('on a laptop, "Why this block works" follows the block the teacher is in', 
   await axeClean(page);
 });
 
-test('a lesson downloads as a Word file', async ({ page }) => {
-  await tammyLesson(page);
+async function downloadOf(page: Page, name: string | RegExp) {
   const [download] = await Promise.all([
     page.waitForEvent('download'),
-    page.getByRole('button', { name: 'Download as Word' }).click(),
+    page.getByRole('button', { name }).click(),
   ]);
-  expect(download.suggestedFilename()).toMatch(/year-8\.docx$/);
-  const bytes = await (await download.createReadStream()).toArray();
-  // A .docx is a zip file: it starts with "PK".
-  expect(Buffer.concat(bytes).subarray(0, 2).toString()).toBe('PK');
+  const bytes = Buffer.concat(await (await download.createReadStream()).toArray());
+  return { name: download.suggestedFilename(), bytes };
+}
+
+test("Tammy's lesson downloads as a pack: guide, worksheets and slides", async ({ page }) => {
+  await tammyLesson(page);
+  await expect(page.getByRole('heading', { name: 'Download for your class' })).toBeVisible();
+  await axeClean(page);
+
+  // The whole pack is one zip. Word, PowerPoint and zip files all start with "PK".
+  const zip = await downloadOf(page, /Download lesson pack/);
+  expect(zip.name).toBe('from-table-to-rule-year-8-lesson-pack.zip');
+  expect(zip.bytes.subarray(0, 2).toString()).toBe('PK');
+  for (const f of [
+    'teacher-guide.docx',
+    'worksheet-start-here.docx',
+    'worksheet-core.docx',
+    'worksheet-stretch.docx',
+    'exit-tickets.docx',
+    'slides.pptx',
+  ])
+    expect(zip.bytes.includes(`from-table-to-rule-year-8-${f}`)).toBe(true);
+
+  const guide = await downloadOf(page, 'Teacher guide');
+  expect(guide.name).toBe('from-table-to-rule-year-8-teacher-guide.docx');
+  const slides = await downloadOf(page, 'Smart board slides');
+  expect(slides.name).toBe('from-table-to-rule-year-8-slides.pptx');
+  expect(slides.bytes.subarray(0, 2).toString()).toBe('PK');
+  const sheets = await downloadOf(page, 'Student worksheets');
+  expect(sheets.name).toBe('from-table-to-rule-year-8-worksheets.zip');
+});
+
+test('an edited lesson asks the AI for its pack, and falls back to a plainer pack', async ({
+  page,
+}) => {
+  await tammyLesson(page);
+  await page.getByRole('button', { name: /^Edit Retrieval starter/ }).click();
+  await page.getByLabel('Edit Retrieval starter (5 minutes)').fill('1. Work out $2 + 2$.');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  let asked = 0;
+  await page.unroute('**/api/**');
+  await page.route('**/api/lesson-pack', (r) => {
+    asked++;
+    return r.fulfill({
+      status: 503,
+      contentType: 'application/json',
+      body: JSON.stringify({ error: { code: 'ai_unavailable', message: 'down' } }),
+    });
+  });
+  const slides = await downloadOf(page, 'Smart board slides');
+  expect(slides.name).toMatch(/slides\.pptx$/);
+  expect(asked).toBe(1);
+  await expect(page.getByText(/built straight from the lesson plan/)).toBeVisible();
 });
 
 test('a number check appears when an edit gives two letters the same value', async ({ page }) => {

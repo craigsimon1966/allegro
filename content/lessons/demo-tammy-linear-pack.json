@@ -1,0 +1,320 @@
+{
+  "steps": [
+    {
+      "block_id": "b1",
+      "do": [
+        "Show the 'Today we are learning to' slide. Read it aloud.",
+        "Point to each success criterion. Tell students they will tick them off at the end."
+      ],
+      "say": ["Today you'll find the rule hiding inside a table of numbers."],
+      "ask": ["What do you think a rule for a table might look like?"],
+      "watch_for": []
+    },
+    {
+      "block_id": "b2",
+      "do": [
+        "Hand out mini whiteboards.",
+        "Show the warm up slides one at a time. Give 30 seconds, then everyone shows their board together.",
+        "Write the correct answer on the slide with the board pen."
+      ],
+      "say": ["Boards up in 3, 2, 1. Everyone shows at the same time."],
+      "ask": [
+        "In question 1, which did you do first, the multiply or the add? Why?",
+        "How did you find the next two numbers in the pattern?"
+      ],
+      "watch_for": [
+        "Students who add before multiplying in question 1 (they get 18, not 14).",
+        "Students who can continue the pattern but cannot say what it goes up by."
+      ]
+    },
+    {
+      "block_id": "b3",
+      "do": [
+        "Show the key words slide. Read each term and its meaning.",
+        "Ask students to say 'rate of change' and 'starting value' back to you."
+      ],
+      "say": ["Every rule today has two parts: how much it goes up by, and where it starts."],
+      "ask": ["In the pattern 4, 7, 10, 13, what is the rate of change?"],
+      "watch_for": []
+    },
+    {
+      "block_id": "b4",
+      "do": [
+        "On the 'I do' slide, work through the table out loud, writing each step with the board pen.",
+        "Mark the +4 jumps between the y values with arrows.",
+        "Circle the y value when x = 0, then write the rule and check it with x = 3.",
+        "On the 'We do' slide, students tell you each step while you write. Point out that x = 0 is in the middle of this table."
+      ],
+      "say": [
+        "First I look at how much y goes up each time x goes up by 1.",
+        "Then I ask: what is y when x is 0?"
+      ],
+      "ask": [
+        "What happens when x = 0?",
+        "In the 'we do' table, where is x = 0?",
+        "How can we check our rule really works?"
+      ],
+      "watch_for": ["Students guessing the rule before finding both parts."]
+    },
+    {
+      "block_id": "misconceptions",
+      "do": [
+        "Keep these two errors in mind during guided practice and the hinge question.",
+        "If you hear one, ask the student to test their rule with a value from the table."
+      ],
+      "say": ["Does your rule work for every pair in the table? Try x = 3."],
+      "ask": ["What is the 2 doing each step?"],
+      "watch_for": [
+        "\"It goes up by 2, so the rule is y = x + 2.\" The change is being added, not multiplied.",
+        "Judging steepness by how a line looks on the page."
+      ]
+    },
+    {
+      "block_id": "b6",
+      "do": [
+        "Students work in pairs on the worksheet section 'Practise with a partner'.",
+        "Show the partner slides so everyone can see the tables.",
+        "Circulate and listen. After 8 minutes, take one answer per question and write the working on the slide."
+      ],
+      "say": ["Talk your partner through each step. Then check your rule with another pair."],
+      "ask": [
+        "How did you find the starting value in question 3, where there is no x = 0?",
+        "How do you know your rule works?"
+      ],
+      "watch_for": [
+        "Question 3: students using 5 as the starting value because it is the first y value."
+      ]
+    },
+    {
+      "block_id": "b7",
+      "do": [
+        "Show the hinge question slide. Give 20 seconds of thinking time.",
+        "Everyone holds up 1, 2 or 3 fingers at the same time.",
+        "Count roughly how many chose each option before you say the answer."
+      ],
+      "say": ["Hold your fingers against your chest so only I can see. Show me in 3, 2, 1."],
+      "ask": ["If you chose option 1, how did you use the 3?"],
+      "watch_for": [
+        "More than about a third choosing option 1 or 3. If so, do one more example together before independent practice."
+      ]
+    },
+    {
+      "block_id": "b8",
+      "do": [
+        "Hand out the worksheets: most students start on Core.",
+        "Give Start here to students who struggled with the hinge question, and Stretch to those who finished guided practice quickly.",
+        "Students may move up a level once they finish."
+      ],
+      "say": ["Find each rule, then check it with another pair from the table."],
+      "ask": [
+        "What is the rule's starting value when the table does not start at x = 0?",
+        "What happens to the rule when y goes down each step?"
+      ],
+      "watch_for": ["Stretch question 5: students writing +3x when y goes down by 3 each step."]
+    },
+    {
+      "block_id": "b9",
+      "do": [
+        "Show the exit ticket slide. Hand out the exit ticket slips.",
+        "Collect them at the door and sort into three piles: got it, nearly, not yet."
+      ],
+      "say": ["Work on your own. This tells me what to teach next lesson."],
+      "ask": [],
+      "watch_for": ["Question 2: students who spot that the rule fails but cannot say why."]
+    }
+  ],
+  "worksheet": {
+    "title": "From table to rule",
+    "instructions": "Find the rule for each table. Write it as y = mx + c, then check it with another pair of values.",
+    "sections": [
+      {
+        "heading": "Practise with a partner",
+        "level": "all",
+        "block_id": "b6",
+        "items": [
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 2 | 7 | 12 | 17 |",
+            "answer_md": "$y = 5x + 2$",
+            "space": "medium"
+          },
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | $-2$ | $-1$ | 0 | 1 |\n|---|---|---|---|---|\n| $y$ | 6 | 8 | 10 | 12 |",
+            "answer_md": "$y = 2x + 10$",
+            "space": "medium"
+          },
+          {
+            "prompt_md": "Find the rule. Careful: there is no $x = 0$.\n\n| $x$ | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|\n| $y$ | 5 | 8 | 11 | 14 |",
+            "answer_md": "$y = 3x + 2$",
+            "space": "long"
+          }
+        ]
+      },
+      {
+        "heading": "Start here",
+        "level": "start",
+        "block_id": "b8",
+        "items": [
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 3 | 4 | 5 | 6 |",
+            "answer_md": "$y = x + 3$",
+            "space": "medium"
+          },
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 0 | 4 | 8 | 12 |",
+            "answer_md": "$y = 4x$",
+            "space": "medium"
+          }
+        ]
+      },
+      {
+        "heading": "Core",
+        "level": "core",
+        "block_id": "b8",
+        "items": [
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | $-3$ | 2 | 7 | 12 |",
+            "answer_md": "$y = 5x - 3$",
+            "space": "medium"
+          },
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|\n| $y$ | 7 | 9 | 11 | 13 |",
+            "answer_md": "$y = 2x + 3$",
+            "space": "long"
+          }
+        ]
+      },
+      {
+        "heading": "Stretch",
+        "level": "stretch",
+        "block_id": "b8",
+        "items": [
+          {
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 20 | 17 | 14 | 11 |",
+            "answer_md": "$y = -3x + 20$",
+            "space": "medium"
+          },
+          {
+            "prompt_md": "Write your own table for the rule $y = 6x - 1$. Swap with a partner and check each other's tables.",
+            "answer_md": "For example, $x$: 0, 1, 2, 3 and $y$: $-1$, 5, 11, 17",
+            "space": "long"
+          }
+        ]
+      }
+    ]
+  },
+  "exit_ticket": [
+    {
+      "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | $-4$ | $-1$ | 2 | 5 |",
+      "answer_md": "$y = 3x - 4$",
+      "space": "medium"
+    },
+    {
+      "prompt_md": "A student says the rule for $x$: 0, 1, 2, 3 and $y$: 1, 4, 7, 10 is $y = x + 3$. Explain the mistake.",
+      "answer_md": "The rule must work for every pair. When $x = 2$, $x + 3 = 5$, not 7. $y$ goes up by 3 each step, so the rule is $y = 3x + 1$.",
+      "space": "long"
+    }
+  ],
+  "slides": [
+    {
+      "kind": "title",
+      "block_id": "",
+      "heading": "From table to rule",
+      "body_md": "Year 8",
+      "writing_space": false
+    },
+    {
+      "kind": "intention",
+      "block_id": "b1",
+      "heading": "Today we are learning to",
+      "body_md": "find the rule for a linear relationship from a table of values.\n\n- I can find how much $y$ changes each time $x$ goes up by 1.\n- I can find $y$ when $x = 0$.\n- I can write the rule as $y = mx + c$ and check it.",
+      "writing_space": false
+    },
+    {
+      "kind": "problem",
+      "block_id": "b2",
+      "heading": "Warm up",
+      "body_md": "1. Work out $3 \\times 4 + 2$.\n2. If $x = 5$, what is $2x + 1$?",
+      "writing_space": true,
+      "answer_md": "1. 14  2. 11"
+    },
+    {
+      "kind": "problem",
+      "block_id": "b2",
+      "heading": "Warm up",
+      "body_md": "3. Continue the pattern: 4, 7, 10, 13, ...",
+      "writing_space": true,
+      "answer_md": "16, 19"
+    },
+    {
+      "kind": "problem",
+      "block_id": "b2",
+      "heading": "Warm up",
+      "body_md": "4. What is the difference between each term in the pattern 4, 7, 10, 13?",
+      "writing_space": true,
+      "answer_md": "3"
+    },
+    {
+      "kind": "vocabulary",
+      "block_id": "b3",
+      "heading": "Key words",
+      "body_md": "- **Rule:** an equation that links $x$ and $y$\n- **Rate of change:** how much $y$ goes up for each step in $x$\n- **Starting value:** $y$ when $x = 0$",
+      "writing_space": false
+    },
+    {
+      "kind": "example",
+      "block_id": "b4",
+      "heading": "I do: find the rule",
+      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 5 | 9 | 13 |",
+      "writing_space": true,
+      "answer_md": "$y = 4x + 1$. Check: $4 \\times 3 + 1 = 13$."
+    },
+    {
+      "kind": "example",
+      "block_id": "b4",
+      "heading": "We do: find the rule",
+      "body_md": "Where is $x = 0$ in this table?\n\n| $x$ | $-1$ | 0 | 1 | 2 |\n|---|---|---|---|---|\n| $y$ | 2 | 5 | 8 | 11 |",
+      "writing_space": true,
+      "answer_md": "$y = 3x + 5$"
+    },
+    {
+      "kind": "problem",
+      "block_id": "b6",
+      "heading": "With a partner: 1",
+      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 2 | 7 | 12 | 17 |",
+      "writing_space": true,
+      "answer_md": "$y = 5x + 2$"
+    },
+    {
+      "kind": "problem",
+      "block_id": "b6",
+      "heading": "With a partner: 2",
+      "body_md": "| $x$ | $-2$ | $-1$ | 0 | 1 |\n|---|---|---|---|---|\n| $y$ | 6 | 8 | 10 | 12 |",
+      "writing_space": true,
+      "answer_md": "$y = 2x + 10$"
+    },
+    {
+      "kind": "problem",
+      "block_id": "b6",
+      "heading": "With a partner: 3",
+      "body_md": "Careful: there is no $x = 0$.\n\n| $x$ | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|\n| $y$ | 5 | 8 | 11 | 14 |",
+      "writing_space": true,
+      "answer_md": "$y = 3x + 2$"
+    },
+    {
+      "kind": "hinge",
+      "block_id": "b7",
+      "heading": "Show me: which rule?",
+      "body_md": "| $x$ | 0 | 1 | 2 |\n|---|---|---|---|\n| $y$ | 6 | 10 | 14 |",
+      "options": ["$y = x + 4$", "$y = 4x + 6$", "$y = 6x + 4$"],
+      "writing_space": true,
+      "answer_md": "2. $y = 4x + 6$. Option 1 adds the change; option 3 swaps the numbers."
+    },
+    {
+      "kind": "reflection",
+      "block_id": "b9",
+      "heading": "Exit ticket",
+      "body_md": "Answer both questions on your exit ticket, on your own. Then tick the success criteria you can do.",
+      "writing_space": false
+    }
+  ]
+}
