@@ -55,13 +55,15 @@ const PRODUCTS: {
   },
 ];
 
-// Petal centres in Craig's brand icon (public/brand/icon.svg, viewBox 375), measured from the
-// artwork. Clockwise from top-left: Equip, Embed, Evaluate, Elevate (SPEC 10.4).
+// Label positions in the brand icon (public/brand/icon.svg, viewBox 375). Each is the
+// spot with the most room from every line, measured by fitting the four circles in the artwork,
+// with the names kept on two rows and two columns so they line up. Clockwise from top-left:
+// Equip, Embed, Evaluate, Elevate (SPEC 10.4).
 const PETALS = [
-  { name: 'Equip', x: 137, y: 121 },
-  { name: 'Embed', x: 250, y: 132 },
-  { name: 'Evaluate', x: 239, y: 250 },
-  { name: 'Elevate', x: 121, y: 236 },
+  { name: 'Equip', x: 112, y: 113 },
+  { name: 'Embed', x: 251, y: 113 },
+  { name: 'Evaluate', x: 251, y: 236 },
+  { name: 'Elevate', x: 112, y: 236 },
 ];
 
 function HeroMark() {
