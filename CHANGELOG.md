@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Pilot error reporting: a page crash shows a friendly "Something went wrong" screen instead of a blank page, and crashes are reported (message, page, build, top of the stack, nothing the teacher typed) to the anonymous feedback table. Admins see them under "Errors in teachers' browsers" on /admin/feedback.
 - On a laptop, a lesson plan has a "Why this block works" panel on the right (design/Desktop-Lesson). It follows the block you are reading or editing and links the related units.
 - Quick Help has the microphone too (SPEC 10.6a), where the browser supports speech input, with the same privacy note as the situation box.
 - On a laptop, Quick Help docks on the right of This week (design/Desktop-Pathway), so teachers can ask while looking at their week.

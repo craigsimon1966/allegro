@@ -65,4 +65,24 @@ describe('POST /api/feedback', () => {
     );
     expect(res.status).toBe(204);
   });
+  it('accepts an error report (comment only) and rejects one with thumbs', async () => {
+    let body: Record<string, unknown> | undefined;
+    const fetchImpl = (async (_url: string, init: RequestInit) => {
+      body = JSON.parse(init.body as string);
+      return new Response(null, { status: 201 });
+    }) as unknown as typeof fetch;
+    const ok = await handleFeedback(
+      req({ sessionId: 'abcdefgh-123', target: 'error', comment: 'TypeError: x\nPage: /plan' }),
+      env,
+      fetchImpl,
+    );
+    expect(ok.status).toBe(204);
+    expect(body?.target).toBe('error');
+    const bad = await handleFeedback(
+      req({ sessionId: 'abcdefgh-123', target: 'error', comment: 'x', thumbs: 1 }),
+      env,
+      fetchImpl,
+    );
+    expect(bad.status).toBe(400);
+  });
 });

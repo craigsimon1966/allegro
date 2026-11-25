@@ -9,12 +9,13 @@ import { error } from './respond';
 export const FeedbackSchema = z
   .object({
     sessionId: z.string().min(8).max(64),
-    target: z.string().regex(/^(diagnosis|pathway|lesson|help|survey|unit:[a-z0-9-]{1,80})$/),
+    target: z.string().regex(/^(diagnosis|pathway|lesson|help|survey|error|unit:[a-z0-9-]{1,80})$/),
     thumbs: z.union([z.literal(1), z.literal(-1)]).optional(),
     scores: z.record(z.string().max(4), z.number().int().min(1).max(5)).optional(),
     comment: z.string().max(2000).optional(),
   })
-  .refine((f) => f.thumbs !== undefined || f.scores || f.comment, 'Empty feedback');
+  .refine((f) => f.thumbs !== undefined || f.scores || f.comment, 'Empty feedback')
+  .refine((f) => f.target !== 'error' || (f.comment && !f.thumbs && !f.scores), 'Bad error report');
 
 export async function handleFeedback(
   request: Request,
@@ -30,7 +31,8 @@ export async function handleFeedback(
   const parsed = FeedbackSchema.safeParse(body);
   if (!parsed.success) return error('invalid_input', 'We could not read that feedback.');
   const f = parsed.data;
-  if (f.comment && findLikelyStudentNames(f.comment).length)
+  // Error reports are machine text; the name check would only cause false alarms.
+  if (f.target !== 'error' && f.comment && findLikelyStudentNames(f.comment).length)
     return error(
       'invalid_input',
       "It looks like this includes a student's name. Please remove it and try again.",
