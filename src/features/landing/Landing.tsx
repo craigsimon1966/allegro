@@ -163,12 +163,12 @@ export function Landing() {
           <section aria-label="How Allegro is made" className="border-y-2 border-rule-strong py-5">
             <Label>Honesty note</Label>
             <p className="mt-1 font-heading text-[22px] leading-snug">
-              Built with teachers. AI helps, humans write the content.
+              Shaped by maths educators. AI helps, and always says so.
             </p>
             <p className="mt-2 max-w-prose text-muted">
-              Every learning unit is checked by an experienced maths educator before teachers see
-              it. AI helps understand your situation, choose what fits and draft lesson ideas, and
-              it always says so.
+              The learning in Allegro has been shaped by experienced maths educators who understand
+              what teachers need to know and how they need to learn it. AI helps understand your
+              situation, choose what fits and draft lesson ideas, and it always says so.
             </p>
           </section>
         </div>

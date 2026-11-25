@@ -37,26 +37,28 @@ export const RESULT_LABELS: Record<DiagnosticResult, string> = {
 };
 
 /**
- * Honest, kind calibration message comparing the self-rating with the check (SPEC 7.4, P5).
+ * Honest, kind calibration message comparing the teacher's rating with the check (SPEC 7.4, P5).
+ * The rating is concern, 1 (not a concern) to 5 (a big concern), so high concern with a solid
+ * result means they know more than they think (decided 26 Nov 2026, see docs/decisions.md).
  */
 export function calibrationMessage(
-  selfRating: number | null,
+  concern: number | null,
   result: DiagnosticResult,
   topic: string,
 ): string {
-  const rated = selfRating ? `You rated yourself ${selfRating} of 5. ` : '';
+  const rated = concern ? `You rated this ${concern} of 5 as a concern. ` : '';
   const t = topic.charAt(0).toLowerCase() + topic.slice(1);
   if (result === 'solid') {
-    if (selfRating !== null && selfRating <= 2)
+    if (concern !== null && concern >= 4)
       return `${rated}The check suggests you know more than you think about ${t}. That's very common when you're new to a subject.`;
     return `${rated}The check agrees: ${t} looks solid. We'll focus on teaching it.`;
   }
   if (result === 'refresh') {
-    if (selfRating !== null && selfRating >= 4)
+    if (concern !== null && concern <= 2)
       return `${rated}The check suggests ${t} is worth a refresh. That's very common, and a short unit will cover it.`;
     return `${rated}Your check agrees: ${t} is worth a refresh. Very common.`;
   }
-  if (selfRating !== null && selfRating >= 3)
+  if (concern !== null && concern <= 3)
     return `${rated}The check suggests starting from the beginning with ${t}. Lots of teachers find the same, and we'll start with the basics.`;
   return `${rated}Let's start here with ${t}. We'll begin with the basics, one short unit at a time.`;
 }
