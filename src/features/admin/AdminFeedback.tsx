@@ -8,6 +8,7 @@ import { AllegroMark } from '@/components/AllegroMark';
 import { useMode } from '@/lib/store';
 import { loadFeedbackForAdmin } from '@/lib/api';
 import { SURVEY_QUESTIONS } from '@/features/feedback/questions';
+import { SetupStatus } from './SetupStatus';
 import { surveyAverages, thumbsByTarget, toCsv, type FeedbackRow } from './feedbackSummary';
 
 // /admin/feedback (SPEC 14, TECH_SPEC 9.1): signed in with profiles.is_admin, else home.
@@ -71,6 +72,8 @@ export default function AdminFeedback() {
           <Button className="mt-4" onClick={() => download(rows)} disabled={!rows.length}>
             Download CSV
           </Button>
+
+          <SetupStatus />
 
           <section className="mt-8">
             <SectionRule>Thumbs by screen</SectionRule>

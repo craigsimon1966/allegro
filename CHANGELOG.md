@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `GET /api/health` now does what TECH_SPEC 7.6 and 13 ask: the live commit, a content version (unit count, reviewed count and a fingerprint), and AI calls in the last 24 hours. It also says yes or no (never the value) for the Anthropic key, Supabase, the service role key and the demo access code, and whether rate limits count in the database. /admin/feedback shows this as a "Live setup" list with what each missing setting breaks.
 - Each screen now names the browser tab after its heading, for example "This week · Allegro Learning" (WCAG 2.4.2). Before, every tab said "Allegro Learning".
 - Moving to a new screen puts focus on its heading, so VoiceOver and NVDA announce the new page instead of staying silent (WCAG 2.4.3). The first page load is left alone.
 - Every screen now has a "Skip to main content" link as the first Tab stop (WCAG 2.4.1). It was on the manual checklist but had never been built.
