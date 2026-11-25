@@ -57,6 +57,10 @@ test("Tammy's week and a full micro-unit", async ({ page }) => {
   await expect(page).toHaveURL(/\/pathway$/);
   await expect(page.getByLabel('Done')).toHaveCount(1);
   await expect(page.getByRole('link', { name: /^Continue:/ })).toBeVisible();
+
+  // The unit's one-line note appears in the growth view (SPEC 7.6).
+  await page.goto('/growth');
+  await expect(page.getByText('Testing their own rule seems powerful.')).toBeVisible();
 });
 
 test('Explain this differently shows a labelled AI answer', async ({ page }) => {

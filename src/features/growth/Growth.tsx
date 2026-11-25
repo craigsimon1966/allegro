@@ -104,6 +104,10 @@ export default function Growth() {
     .sort((a, b) => a.sortOrder - b.sortOrder)
     .find((it) => !progress[it.unitId]?.completedAt);
   const nextUnit = next ? unitById(next.unitId) : undefined;
+  // One-line notes from the last page of each unit (SPEC 7.6 step 7), newest first.
+  const unitNotes = Object.entries(progress)
+    .filter(([id, p]) => p.reflection.trim() && unitById(id))
+    .sort(([, a], [, b]) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''));
   const rated = needs.map((n) => ({ need: n, points: seriesFor(n, reflections) }));
   const hasRatings = rated.some((r) => r.points.length);
 
@@ -221,6 +225,21 @@ export default function Growth() {
                 </li>
               ))}
             </ol>
+          )}
+          {unitNotes.length > 0 && (
+            <>
+              <h3 className="mt-6 text-[17px] font-bold">Notes from your units</h3>
+              <ul>
+                {unitNotes.map(([id, p]) => (
+                  <li key={id} className="border-b border-rule py-3">
+                    <Link to={`/learn/${id}`} className="text-[13px] text-green-700 underline">
+                      <MathText inline>{unitById(id)?.title ?? ''}</MathText>
+                    </Link>
+                    <p>{p.reflection}</p>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
           <p className="mt-3 text-[13px] text-muted">Only you can see your reflections.</p>
           <p className="mt-6">
