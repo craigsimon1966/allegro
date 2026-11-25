@@ -22,14 +22,25 @@ export type Completer = (args: CompleteArgs) => Promise<Completion>;
 
 export class AiUnavailableError extends Error {}
 
-/** Real Anthropic client: 25 second timeout, one retry with backoff on timeouts and 5xx. */
-export function anthropicCompleter(env: Env): Completer {
+/**
+ * Real Anthropic client. By default a 25 second timeout and one retry with backoff on timeouts
+ * and 5xx. Long replies (a full lesson) take longer than 25 seconds to write, so their endpoints
+ * pass a longer timeout and no retry: a retry after a timeout only doubles the wait.
+ */
+export function anthropicCompleter(
+  env: Env,
+  opts: { timeoutMs?: number; maxRetries?: number } = {},
+): Completer {
   if (!env.ANTHROPIC_API_KEY) {
     return async () => {
       throw new AiUnavailableError('ANTHROPIC_API_KEY is not set');
     };
   }
-  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, timeout: 25_000, maxRetries: 1 });
+  const client = new Anthropic({
+    apiKey: env.ANTHROPIC_API_KEY,
+    timeout: opts.timeoutMs ?? 25_000,
+    maxRetries: opts.maxRetries ?? 1,
+  });
   return async ({ model, system, messages, maxTokens }) => {
     try {
       const res = await client.messages.create({ model, system, messages, max_tokens: maxTokens });

@@ -7,7 +7,7 @@ import { STATE_IDS, curriculumContext } from '../../shared/states';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify } from './auth';
-import { MAX_TOKENS, mainModel, type Env } from './env';
+import { LONG_CALL, MAX_TOKENS, mainModel, type Env } from './env';
 import { buildPrompt } from './prompts';
 import { checkRateLimit, logAiCall } from './ratelimit';
 import { error, json } from './respond';
@@ -150,7 +150,7 @@ export async function handlePathway(request: Request, env: Env, deps: Deps = {})
     .join('\n');
   const model = mainModel(env);
   const result = await generateJson(
-    deps.complete ?? anthropicCompleter(env),
+    deps.complete ?? anthropicCompleter(env, LONG_CALL),
     {
       model,
       system: buildPrompt('pathway', { UNIT_LIST: catalogueFor(req), SOURCE_LIST: sources }),

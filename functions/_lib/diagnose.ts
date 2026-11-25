@@ -9,7 +9,7 @@ import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify } from './auth';
-import { MAX_TOKENS, mainModel, type Env } from './env';
+import { LONG_CALL, MAX_TOKENS, mainModel, type Env } from './env';
 import { buildPrompt } from './prompts';
 import { checkRateLimit, logAiCall } from './ratelimit';
 import { error, json } from './respond';
@@ -94,7 +94,7 @@ export async function handleDiagnose(
   const model = mainModel(env);
   const tagList = TAGS.map((t) => `- ${t.id} (${t.domain}): ${t.label}`).join('\n');
   const result = await generateJson(
-    deps.complete ?? anthropicCompleter(env),
+    deps.complete ?? anthropicCompleter(env, LONG_CALL),
     {
       model,
       system: buildPrompt('diagnose', { TAG_LIST: tagList }),

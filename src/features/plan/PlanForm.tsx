@@ -113,7 +113,7 @@ export default function PlanForm() {
                 'Writing worked examples and practice',
                 'Checking common misconceptions',
               ]}
-              expectedSeconds={20}
+              expectedSeconds={40}
             />
           </div>
         ) : (
