@@ -13,6 +13,7 @@ import type { CheckItem, MicroUnit } from '@shared/types';
 import { useAppStore } from '@/lib/store';
 import { AIBlock } from '@/components/AIBlock';
 import { ApiError, explain, saveUnitProgress } from '@/lib/api';
+import { Thumbs } from '@/features/feedback/Thumbs';
 
 // Micro-unit player (SPEC 7.6): hook, core idea, worked example, misconception, check,
 // try tomorrow, reflect. One section per page, with a progress bar.
@@ -341,6 +342,7 @@ export default function Learn() {
             </Button>
           )}
         </div>
+        {last && <Thumbs target={`unit:${unit.id}`} label="Was this unit useful?" />}
         <p className="mt-4">
           <Link to="/pathway" className="text-green-700 underline">
             Back to this week

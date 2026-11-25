@@ -1,0 +1,26 @@
+{
+  "fictional": true,
+  "school": "Banksia Ridge Secondary College (fictional)",
+  "staffCount": 14,
+  "outOfFieldCount": 5,
+  "confidenceByDomain": [
+    { "domain": "CK", "label": "Content knowledge", "start": 2.6, "now": 3.3 },
+    { "domain": "PCK", "label": "Teaching this topic", "start": 2.4, "now": 3.1 },
+    { "domain": "PK", "label": "Pedagogy", "start": 3.2, "now": 3.6 },
+    { "domain": "ASSESSMENT", "label": "Assessment", "start": 2.9, "now": 3.2 }
+  ],
+  "mostUsedUnits": [
+    { "unitId": "lin-02-table-to-rule", "completions": 11 },
+    { "unitId": "cfu-01-hinge-questions", "completions": 9 },
+    { "unitId": "mc-01-goes-up-by", "completions": 8 },
+    { "unitId": "prop-01-ratio-tables", "completions": 6 },
+    { "unitId": "pk-routines-01-entry", "completions": 5 }
+  ],
+  "outOfFieldTopics": [
+    { "tag": "algebra.linear", "staff": 4 },
+    { "tag": "number.proportional", "staff": 3 },
+    { "tag": "pck.algebra-misconceptions", "staff": 3 },
+    { "tag": "algebra.foundations", "staff": 2 }
+  ],
+  "suggestedFocus": "Common student errors in algebra, and how to respond in the moment. Four of the five out-of-field staff named linear relationships as a need, and the misconception units are the most completed after the worked examples. A 45-minute faculty session using the hinge question routine would support everyone teaching Years 7 to 9."
+}

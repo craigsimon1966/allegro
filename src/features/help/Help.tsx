@@ -10,6 +10,7 @@ import { unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, askHelp, type HelpAnswer } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
+import { Thumbs } from '@/features/feedback/Thumbs';
 
 // Quick Help (SPEC 7.8): a short teaching question, a short answer, one move, one unit.
 
@@ -114,6 +115,7 @@ export default function Help() {
                   </button>
                 )}
               </div>
+              <Thumbs key={asked} target="help" label="Was this answer helpful?" />
             </div>
           )}
         </div>

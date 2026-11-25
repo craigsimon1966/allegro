@@ -114,6 +114,9 @@ export default function Reflect() {
             <Link to="/growth" className="font-bold text-green-700 underline">
               See your growth
             </Link>
+            <Link to="/survey" className="text-green-700 underline">
+              Tell us about the pilot (1 minute)
+            </Link>
             <Link to="/pathway" className="text-green-700 underline">
               Back to this week
             </Link>
@@ -231,7 +234,7 @@ export default function Reflect() {
                     {[1, 2, 3, 4, 5].map((v) => (
                       <label
                         key={v}
-                        className={`flex h-tap w-tap cursor-pointer items-center justify-center rounded border-2 ${
+                        className={`flex h-tap w-tap cursor-pointer items-center justify-center rounded border-2 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-green-700 ${
                           ratings[n.id] === v
                             ? 'border-green-700 bg-sage-100 font-bold'
                             : 'border-ink'
