@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Browsers no longer run an old copy of Allegro. New `public/_headers` tells browsers to check for a new page every time (`no-cache`), never to keep `version.txt`, and to keep hashed assets forever. A tab left open across a deploy now notices the new build (checking `version.txt` at most once a minute, and when the tab comes back into view): the next change of screen loads it, and a line at the top offers "Reload now".
 - The first download is about half the size again (164 KB down to 88 KB gzipped). The error page added earlier had pulled the Supabase client into the entry script; it now loads the error reporter only when a page crashes. New `npm run size:dist` (run in CI after the build) fails if the entry script goes over 110 KB gzipped or contains the Supabase client.
 - `GET /api/health` now does what TECH_SPEC 7.6 and 13 ask: the live commit, a content version (unit count, reviewed count and a fingerprint), and AI calls in the last 24 hours. It also says yes or no (never the value) for the Anthropic key, Supabase, the service role key and the demo access code, and whether rate limits count in the database. /admin/feedback shows this as a "Live setup" list with what each missing setting breaks.
 - Each screen now names the browser tab after its heading, for example "This week · Allegro Learning" (WCAG 2.4.2). Before, every tab said "Allegro Learning".
