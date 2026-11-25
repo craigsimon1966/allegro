@@ -20,7 +20,7 @@ import { MISCONCEPTIONS, MODULES, UNITS, misconceptionById } from '../shared/cat
 import { tagById } from '../shared/tags';
 import type { MicroUnit } from '../shared/types';
 import diagnosticsFile from '../content/diagnostics.json';
-import { blocks, blocksToMarkdown, inline, type Block, type Inline } from './reviewDoc';
+import { blocks, blocksToMarkdown, inline, type Block, type Inline } from '../shared/markdownBlocks';
 import { unitHash } from './contentReport';
 
 // npm run content:export-review (TECH_SPEC 10.3). Writes review/allegro-content-review.docx and a

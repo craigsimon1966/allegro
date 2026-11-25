@@ -1,5 +1,5 @@
-// Turns unit Markdown (with $maths$) into plain blocks for the review document (TECH_SPEC 10.3).
-// Kept small and pure so it can be unit tested; content-export-review.ts does the Word part.
+// Turns Markdown (with $maths$) into plain blocks for Word documents: the content review
+// (TECH_SPEC 10.3) and lesson downloads. Kept small and pure so it can be unit tested.
 
 export type Inline = { text: string; bold?: boolean; italic?: boolean };
 export type Block =
