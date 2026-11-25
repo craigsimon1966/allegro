@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### M4: Reflect, growth and Quick Help (25 November 2026)
+
+- `POST /api/help` and `POST /api/reflect` on the fast model with `prompts/help.md` and `prompts/reflect.md`. Unit ids checked against the catalogue, answers capped at 120 words in code, student-name checks, em dashes removed.
+- /help: question box, three example questions, short answer in a labelled AI block, "Try tomorrow", related unit link, "More detail".
+- /reflect: what you tried (ticks from your latest lesson plus free text), how students went, what you'll keep or change, optional confidence per need. AI observation and a next unit; saves even if the AI is down.
+- /growth: units done, minutes, lessons planned, next best step, confidence per topic as small charts with a table, reflections timeline. No badges or streaks.
+- Signed in: reflections and confidence ratings save to Supabase. Checked on the live database that one user's reflection is not readable by another (RLS, in a rolled-back transaction).
+- Tests: both endpoints, the word cap; Playwright for Quick Help, Reflect into Growth, and Reflect with the AI down, all with axe.
+
 ### M3: Lesson Builder (25 November 2026)
 
 - `POST /api/lesson` (main model, 3,500 tokens) with `prompts/lesson.md`, given the topic's own units as reference. In code: the misconceptions block is always rebuilt from `misconceptions.json`, curriculum refs come from unit metadata (`AC9-TODO` / `NSW-TODO`), every other block is marked AI draft with a maths check, em dashes removed.
