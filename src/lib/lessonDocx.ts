@@ -295,7 +295,7 @@ export function lessonDocument(
         `Smart board slides (${pack.slides.length} slides, no answers on them)`,
       ]),
       ...bullets('Get ready', [
-        'Check the maths in this guide and the answer key. Allegro drafts can contain mistakes.',
+        'Check this guide and the answer key for accuracy. Allegro drafts can contain mistakes.',
         levels.length
           ? 'Print the worksheets. Most students start on Core; print fewer Start here and Stretch copies.'
           : 'Print one worksheet for each student.',

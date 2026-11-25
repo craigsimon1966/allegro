@@ -64,7 +64,7 @@ export interface LessonMove {
 export interface SavedLesson {
   lesson: Lesson;
   inputs: LessonRequest;
-  /** Block ids the teacher has ticked "I've checked this" on. */
+  /** Block ids the teacher has ticked "Check this for accuracy" on. */
   checked: string[];
   /** Supabase row id once saved (signed in only). */
   dbId?: string;
