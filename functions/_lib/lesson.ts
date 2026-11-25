@@ -1,11 +1,13 @@
 import { z } from 'zod';
 import {
   LessonBlockSchema,
-  LessonPackSchema,
+  PackGuidePartSchema,
+  PackSlidesPartSchema,
   LessonSchema,
+  type LessonPack,
   type Lesson,
 } from '../../shared/schemas';
-import { groundPack } from '../../shared/lessonPack';
+import { fallbackPack, groundPack } from '../../shared/lessonPack';
 import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../shared/lesson';
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
@@ -223,34 +225,69 @@ export async function handleLessonPack(request: Request, env: Env, deps: Deps = 
   const { lesson } = parsed.data;
 
   const model = mainModel(env);
-  const result = await generateJson(
-    deps.complete ?? anthropicCompleter(env, LONG_CALL),
-    {
-      model,
-      system: buildPrompt('lesson-pack', { LESSON: JSON.stringify(lesson) }),
-      messages: [
+  const complete = deps.complete ?? anthropicCompleter(env, LONG_CALL);
+  const ask = <T>(
+    endpoint: 'lesson-pack' | 'lesson-slides',
+    what: string,
+    schema: z.ZodType<T, z.ZodTypeDef, unknown>,
+  ) =>
+    generateJson(
+      complete,
+      {
+        model,
+        system: buildPrompt(endpoint, { LESSON: JSON.stringify(lesson) }),
+        messages: [
+          {
+            role: 'user',
+            content: `Make the ${what} for this Year ${lesson.year_level}, ${lesson.duration_minutes}-minute lesson.`,
+          },
+        ],
+        maxTokens: MAX_TOKENS[endpoint],
+      },
+      schema,
+    ).then(async (result) => {
+      await logAiCall(
+        g.subject,
+        env,
         {
-          role: 'user',
-          content: `Make the classroom pack for this Year ${lesson.year_level}, ${lesson.duration_minutes}-minute lesson.`,
+          endpoint,
+          model,
+          inputTokens: result.usage.input,
+          outputTokens: result.usage.output,
+          ok: result.ok,
         },
-      ],
-      maxTokens: MAX_TOKENS['lesson-pack'],
-    },
-    LessonPackSchema,
-  );
-  await logAiCall(
-    g.subject,
-    env,
-    {
-      endpoint: 'lesson-pack',
-      model,
-      inputTokens: result.usage.input,
-      outputTokens: result.usage.output,
-      ok: result.ok,
-    },
-    fetchImpl,
-  );
-  if (!result.ok)
+        fetchImpl,
+      );
+      return result;
+    });
+
+  // Two replies side by side: each stays well inside its token limit, and the wait is the
+  // longer of the two, not the sum.
+  const [guide, slides] = await Promise.all([
+    ask('lesson-pack', 'teacher steps and worksheets', PackGuidePartSchema),
+    ask('lesson-slides', 'smart board slides', PackSlidesPartSchema),
+  ]);
+  if (!guide.ok && !slides.ok)
     return error('ai_unavailable', "Allegro couldn't draft the worksheets and slides right now.");
-  return json(groundPack(result.data, lesson));
+  // If one half failed, that half is built from the lesson text, and the teacher is told.
+  const plainPack = fallbackPack(lesson);
+  const pack: LessonPack = {
+    ...(guide.ok
+      ? guide.data
+      : {
+          steps: plainPack.steps,
+          worksheet: plainPack.worksheet,
+          exit_ticket: plainPack.exit_ticket,
+        }),
+    slides: slides.ok ? slides.data.slides : plainPack.slides,
+    ...(guide.ok && slides.ok
+      ? {}
+      : {
+          plain: [
+            ...(guide.ok ? [] : ['guide' as const]),
+            ...(slides.ok ? [] : ['slides' as const]),
+          ],
+        }),
+  };
+  return json(groundPack(pack, lesson));
 }
