@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { Link, useRouteError } from 'react-router-dom';
 import { MarginLayout } from '@/components/MarginLayout';
-import { reportError } from '@/lib/errorReport';
 
 /** Shown instead of a blank screen when a page crashes. The error is reported for the pilot. */
 export function RouteError() {
   const error = useRouteError();
-  useEffect(() => reportError(error), [error]);
+  // Loaded on demand: errorReport pulls in the data layer, which would bloat the first download.
+  useEffect(() => {
+    void import('@/lib/errorReport').then((m) => m.reportError(error));
+  }, [error]);
   return (
     <main id="main">
       <MarginLayout>
