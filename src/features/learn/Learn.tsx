@@ -11,6 +11,8 @@ import { findLikelyStudentNames } from '@shared/pii';
 import { DOMAIN_LABELS } from '@shared/tags';
 import type { CheckItem, MicroUnit } from '@shared/types';
 import { useAppStore } from '@/lib/store';
+import { AIBlock } from '@/components/AIBlock';
+import { ApiError, explain, saveUnitProgress } from '@/lib/api';
 
 // Micro-unit player (SPEC 7.6): hook, core idea, worked example, misconception, check,
 // try tomorrow, reflect. One section per page, with a progress bar.
@@ -79,6 +81,65 @@ function Check({ item, onAnswered }: { item: CheckItem; onAnswered: (correct: bo
   );
 }
 
+type Style = 'simpler' | 'different_context';
+const STYLE_LABEL: Record<Style, string> = {
+  simpler: 'More simply',
+  different_context: 'With a different example',
+};
+
+/** "Explain this differently" (SPEC 7.6): AI, labelled, grounded in this unit only. */
+function ExplainDifferently({ unitId }: { unitId: string }) {
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState<Style | null>(null);
+  const [result, setResult] = useState<{ style: Style; text: string } | null>(null);
+  const [problem, setProblem] = useState('');
+  const run = async (style: Style) => {
+    setBusy(style);
+    setProblem('');
+    try {
+      setResult({ style, text: await explain(unitId, style) });
+    } catch (e) {
+      setProblem(
+        e instanceof ApiError
+          ? e.message
+          : "Allegro's AI isn't available right now. Please try again later.",
+      );
+    } finally {
+      setBusy(null);
+    }
+  };
+  return (
+    <div className="mt-6">
+      {!open ? (
+        <Button variant="ask" onClick={() => setOpen(true)}>
+          Explain this differently
+        </Button>
+      ) : (
+        <div>
+          <p className="text-[15px] font-bold">How would you like it explained?</p>
+          <div className="mt-2 flex flex-wrap gap-3">
+            {(Object.keys(STYLE_LABEL) as Style[]).map((st) => (
+              <Button key={st} variant="ask" onClick={() => void run(st)} disabled={busy !== null}>
+                {busy === st ? 'Thinking…' : STYLE_LABEL[st]}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+      <div aria-live="polite">
+        {problem && <p className="mt-3 max-w-prose">{problem}</p>}
+        {result && (
+          <div className="mt-4 max-w-prose">
+            <AIBlock label="AI" title={STYLE_LABEL[result.style]} headingLevel={2}>
+              <MathText>{result.text}</MathText>
+            </AIBlock>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function buildPages(
   u: MicroUnit,
   extras: { onCheck: (ok: boolean) => void; tomorrow: ReactNode; reflect: ReactNode },
@@ -89,7 +150,16 @@ function buildPages(
       label: 'Why it matters',
       body: <MathText className="text-[19px]">{u.hook}</MathText>,
     },
-    { key: 'core', label: 'The core idea', body: <MathText>{u.coreIdeaMd}</MathText> },
+    {
+      key: 'core',
+      label: 'The core idea',
+      body: (
+        <>
+          <MathText>{u.coreIdeaMd}</MathText>
+          <ExplainDifferently unitId={u.id} />
+        </>
+      ),
+    },
   ];
   if (u.workedExampleMd)
     pages.push({
@@ -214,11 +284,13 @@ export default function Learn() {
   const last = page === pages.length - 1;
 
   const finish = () => {
-    saveProgress(unit.id, {
+    const p = {
       completedAt: new Date().toISOString(),
       checkCorrect: correct,
       reflection: reflection.trim(),
-    });
+    };
+    saveProgress(unit.id, p);
+    void saveUnitProgress(unit.id, p).catch(() => undefined);
     navigate('/pathway');
   };
 
