@@ -1,0 +1,187 @@
+import { z } from 'zod';
+import { LessonBlockSchema, LessonSchema, type Lesson } from '../../shared/schemas';
+import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../shared/lesson';
+import { UNITS } from '../../shared/catalogue';
+import { tagById } from '../../shared/tags';
+import { findLikelyStudentNames } from '../../shared/pii';
+import { hasAccess } from './access';
+import { anthropicCompleter, generateJson, type Completer } from './anthropic';
+import { identify, type Subject } from './auth';
+import { MAX_TOKENS, mainModel, type Env } from './env';
+import { buildPrompt } from './prompts';
+import { checkRateLimit, logAiCall } from './ratelimit';
+import { error, json } from './respond';
+
+// POST /api/lesson and /api/lesson-block (SPEC 7.7, TECH_SPEC 7.2, 7.3).
+
+export interface Deps {
+  complete?: Completer;
+  fetch?: typeof fetch;
+}
+
+type Gate = { ok: true; subject: Subject; body: unknown } | { ok: false; res: Response };
+
+async function gate(request: Request, env: Env, fetchImpl: typeof fetch): Promise<Gate> {
+  if (!(await hasAccess(request, env)))
+    return { ok: false, res: error('unauthorised', 'Please enter the demo access code first.') };
+  const subject = await identify(request, env, fetchImpl);
+  if (!subject)
+    return {
+      ok: false,
+      res: error('unauthorised', 'Please sign in or choose a demo teacher first.'),
+    };
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return { ok: false, res: error('invalid_input', 'We could not read that request.') };
+  }
+  const wait = await checkRateLimit(subject, env, fetchImpl);
+  if (wait)
+    return {
+      ok: false,
+      res: error(
+        'rate_limited',
+        "You've reached this hour's limit. Please try again a little later.",
+        { retryAfterSeconds: wait },
+      ),
+    };
+  return { ok: true, subject, body };
+}
+
+const namesIn = (...texts: (string | undefined)[]) =>
+  findLikelyStudentNames(texts.filter(Boolean).join('\n')).length > 0;
+
+const PII = () =>
+  error(
+    'invalid_input',
+    "It looks like this includes a student's name. Please describe the class in general terms only.",
+    { reason: 'student_pii' },
+  );
+
+/** Reference text for the prompt: the topic's own units (core ideas and worked examples). */
+export function referenceFor(topicTag: string): string {
+  return UNITS.filter((u) => u.tags.includes(topicTag))
+    .map((u) => [`## ${u.title}`, u.coreIdeaMd, u.workedExampleMd ?? ''].join('\n\n'))
+    .join('\n\n')
+    .slice(0, 8000);
+}
+
+export async function handleLesson(request: Request, env: Env, deps: Deps = {}) {
+  const fetchImpl = deps.fetch ?? fetch;
+  const g = await gate(request, env, fetchImpl);
+  if (!g.ok) return g.res;
+  const parsed = LessonRequestSchema.safeParse(g.body);
+  if (!parsed.success) return error('invalid_input', 'Please check the lesson details.');
+  const req = parsed.data;
+  const tag = tagById(req.topicTag);
+  if (!tag) return error('invalid_input', 'Please choose a topic from the list.');
+  if (namesIn(req.classProfile, req.lastLesson, ...(req.carryIn ?? []))) return PII();
+
+  const parts = [
+    `Topic: ${tag.label}`,
+    `Year level: ${req.yearLevel}`,
+    `Lesson length: ${req.durationMinutes} minutes`,
+    `Class profile (general): ${req.classProfile || 'not given'}`,
+    req.lastLesson ? `Covered last lesson: ${req.lastLesson}` : '',
+    req.carryIn?.length ? `Moves to include:\n${req.carryIn.map((m) => `- ${m}`).join('\n')}` : '',
+  ].filter(Boolean);
+
+  const model = mainModel(env);
+  const result = await generateJson(
+    deps.complete ?? anthropicCompleter(env),
+    {
+      model,
+      system: buildPrompt('lesson', { REFERENCE: referenceFor(req.topicTag) || 'none' }),
+      messages: [{ role: 'user', content: parts.join('\n') }],
+      maxTokens: MAX_TOKENS.lesson,
+    },
+    LessonSchema,
+  );
+  await logAiCall(
+    g.subject,
+    env,
+    {
+      endpoint: 'lesson',
+      model,
+      inputTokens: result.usage.input,
+      outputTokens: result.usage.output,
+      ok: result.ok,
+    },
+    fetchImpl,
+  );
+  if (!result.ok)
+    return result.code === 'ai_unavailable'
+      ? error('ai_unavailable', "Allegro's AI isn't available right now. Please try again later.")
+      : error('ai_invalid_output', "We couldn't make sense of the AI's reply. Please try again.");
+  const lesson: Lesson = {
+    ...result.data,
+    lesson_id: crypto.randomUUID(),
+    year_level: req.yearLevel,
+    duration_minutes: req.durationMinutes,
+  };
+  return json(groundLesson(lesson, req.topicTag));
+}
+
+export const LessonBlockRequestSchema = z.object({
+  lesson: LessonSchema,
+  topicTag: z.string().min(1).max(60),
+  blockId: z.string().min(1),
+  instruction: z.string().max(300).optional(),
+});
+
+export async function handleLessonBlock(request: Request, env: Env, deps: Deps = {}) {
+  const fetchImpl = deps.fetch ?? fetch;
+  const g = await gate(request, env, fetchImpl);
+  if (!g.ok) return g.res;
+  const parsed = LessonBlockRequestSchema.safeParse(g.body);
+  if (!parsed.success) return error('invalid_input', 'We could not read that request.');
+  const { lesson, topicTag, blockId, instruction } = parsed.data;
+  const block = lesson.blocks.find((b) => b.id === blockId);
+  if (!block) return error('invalid_input', 'We could not find that block.');
+  // The misconceptions block is never written by the model.
+  if (block.type === 'misconceptions') return json(misconceptionsBlock(topicTag, block.id));
+  if (namesIn(instruction)) return PII();
+
+  const model = mainModel(env);
+  const result = await generateJson(
+    deps.complete ?? anthropicCompleter(env),
+    {
+      model,
+      system: buildPrompt('lesson-block', { LESSON: JSON.stringify(lesson) }),
+      messages: [
+        {
+          role: 'user',
+          content: `Redo the block with id "${block.id}" (type ${block.type}, "${block.title}").${
+            instruction ? ` Instruction: ${instruction}` : ''
+          }`,
+        },
+      ],
+      maxTokens: MAX_TOKENS['lesson-block'],
+    },
+    LessonBlockSchema,
+  );
+  await logAiCall(
+    g.subject,
+    env,
+    {
+      endpoint: 'lesson-block',
+      model,
+      inputTokens: result.usage.input,
+      outputTokens: result.usage.output,
+      ok: result.ok,
+    },
+    fetchImpl,
+  );
+  if (!result.ok)
+    return error('ai_unavailable', "Allegro couldn't redo that block right now. Please try again.");
+  return json({
+    ...result.data,
+    id: block.id,
+    type: block.type,
+    content_md: result.data.content_md.replace(/—/g, ', '),
+    rationale: result.data.rationale.replace(/—/g, ', '),
+    source: 'ai_draft',
+    needs_maths_check: true,
+  });
+}
