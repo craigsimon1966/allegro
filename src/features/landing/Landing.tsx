@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { AllegroMark, type Product } from '@/components/AllegroMark';
 import { ButtonLink } from '@/components/Button';
 import { Label, SectionRule } from '@/components/Label';
@@ -56,16 +55,18 @@ const PRODUCTS: {
   },
 ];
 
-// Petal centres in Craig's brand icon (public/brand/icon.svg, viewBox 375), measured from the
-// artwork. Clockwise from top-left: Equip, Embed, Evaluate, Elevate (SPEC 10.4).
+// Label positions in the brand icon (public/brand/icon.svg, viewBox 375). Each is the
+// spot with the most room from every line, measured by fitting the four circles in the artwork,
+// with the names kept on two rows and two columns so they line up. Clockwise from top-left:
+// Equip, Embed, Evaluate, Elevate (SPEC 10.4).
 const PETALS = [
-  { name: 'Equip', x: 137, y: 121 },
-  { name: 'Embed', x: 250, y: 132 },
-  { name: 'Evaluate', x: 239, y: 250 },
-  { name: 'Elevate', x: 121, y: 236 },
+  { name: 'Equip', x: 112, y: 113 },
+  { name: 'Embed', x: 251, y: 113 },
+  { name: 'Evaluate', x: 251, y: 236 },
+  { name: 'Elevate', x: 112, y: 236 },
 ];
 
-export function HeroMark() {
+function HeroMark() {
   // The brand icon sits on the same sage as the hero, so only its white lines show.
   return (
     <figure className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-[400px]">
@@ -91,43 +92,36 @@ export function HeroMark() {
   );
 }
 
-export function Hero({
-  diagram = <HeroMark />,
-  id = 'hero-title',
-}: {
-  diagram?: ReactNode;
-  id?: string;
-}) {
-  return (
-    <section className="bg-sage-500 text-ink" aria-labelledby={id}>
-      <div className="mx-auto grid max-w-[1200px] items-center gap-6 px-4 py-8 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_400px]">
-        <div className="flex flex-col gap-4">
-          <h1 id={id} className="max-w-[18ch] text-[32px] leading-[1.15] sm:text-[44px]">
-            Learn it in five minutes. Teach it with confidence.
-          </h1>
-          <p className="max-w-prose text-[17px] leading-normal">
-            Professional learning built around your class, your topic and your week, then turned
-            into tomorrow&apos;s lesson.
-          </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <ButtonLink to="/demo" variant="ink">
-              Try the demo <span aria-hidden="true">→</span>
-            </ButtonLink>
-            <span className="text-[15px]">About 15 minutes. No sign-up needed.</span>
-          </div>
-        </div>
-        <div className="w-full max-w-[400px] justify-self-center">{diagram}</div>
-      </div>
-    </section>
-  );
-}
-
 export function Landing() {
   return (
     <>
       <SiteHeader />
       <main id="main">
-        <Hero />
+        <section className="bg-sage-500 text-ink" aria-labelledby="hero-title">
+          <div className="mx-auto grid max-w-[1200px] items-center gap-6 px-4 py-8 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_400px]">
+            <div className="flex flex-col gap-4">
+              <h1
+                id="hero-title"
+                className="max-w-[18ch] text-[32px] leading-[1.15] sm:text-[44px]"
+              >
+                Learn it in five minutes. Teach it with confidence.
+              </h1>
+              <p className="max-w-prose text-[17px] leading-normal">
+                Professional learning built around your class, your topic and your week, then turned
+                into tomorrow&apos;s lesson.
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <ButtonLink to="/demo" variant="ink">
+                  Try the demo <span aria-hidden="true">→</span>
+                </ButtonLink>
+                <span className="text-[15px]">About 15 minutes. No sign-up needed.</span>
+              </div>
+            </div>
+            <div className="w-full justify-self-center">
+              <HeroMark />
+            </div>
+          </div>
+        </section>
 
         <div className="mx-auto flex max-w-[1200px] flex-col gap-12 px-4 py-10 sm:px-8">
           <section aria-labelledby="how-it-works" className="flex flex-col">
