@@ -10,6 +10,7 @@ if (!root) throw new Error('Root element missing');
 
 // Loaded after first paint so the landing page stays small.
 void import('./lib/session').then((m) => m.restoreSession());
+void import('./lib/errorReport').then((m) => m.installErrorReporting());
 
 createRoot(root).render(
   <StrictMode>

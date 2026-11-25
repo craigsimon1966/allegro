@@ -52,7 +52,8 @@ export default function AdminFeedback() {
     rows.filter((r) => r.target === 'survey'),
     KEYS,
   );
-  const comments = rows.filter((r) => r.comment);
+  const comments = rows.filter((r) => r.comment && r.target !== 'error');
+  const errors = rows.filter((r) => r.target === 'error');
 
   return (
     <>
@@ -146,6 +147,22 @@ export default function AdminFeedback() {
                     {c.target}, {new Date(c.created_at).toLocaleString('en-AU')}
                   </p>
                   <p className="mt-1 whitespace-pre-wrap">{c.comment}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="mt-8">
+            <SectionRule>Errors in teachers&apos; browsers</SectionRule>
+            {!errors.length && <p className="mt-2 text-muted">No errors reported.</p>}
+            <ul className="mt-2">
+              {errors.slice(0, 50).map((c) => (
+                <li key={c.id} className="border-b border-rule py-3">
+                  <p className="text-sm text-muted">
+                    {new Date(c.created_at).toLocaleString('en-AU')}
+                  </p>
+                  <pre className="mt-1 whitespace-pre-wrap break-words font-mono text-[13px]">
+                    {c.comment}
+                  </pre>
                 </li>
               ))}
             </ul>

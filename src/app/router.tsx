@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Landing } from '@/features/landing/Landing';
 import { AllegroMark } from '@/components/AllegroMark';
 import { Placeholder } from './Placeholder';
+import { RouteError } from './RouteError';
 
 const AboutDemo = lazy(() => import('@/features/about/AboutDemo'));
 const Styleguide = lazy(() => import('@/features/styleguide/Styleguide'));
@@ -57,4 +58,5 @@ export const routes = [
   { path: '*', element: <Placeholder title="Page not found" /> },
 ];
 
-export const router = createBrowserRouter(routes);
+// One error screen for every route, so a crash never leaves a blank page.
+export const router = createBrowserRouter([{ errorElement: <RouteError />, children: routes }]);
