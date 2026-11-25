@@ -10,9 +10,9 @@ export function SiteHeader() {
           <img
             src="/brand/logo-green.svg"
             alt="Allegro Learning home"
-            width={196}
-            height={48}
-            className="h-10 w-auto sm:h-12"
+            width={294}
+            height={72}
+            className="h-12 w-auto sm:h-[72px]"
           />
         </Link>
         <nav aria-label="Site" className="ml-auto flex items-center gap-5">
