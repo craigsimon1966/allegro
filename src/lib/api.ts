@@ -127,7 +127,7 @@ export async function aiPathway(
     yearLevels: string[];
     state?: string;
   },
-  timeoutMs = 20000,
+  timeoutMs = 45000,
 ): Promise<{ items: PathwayItem[]; external: ReadingPick[] } | null> {
   const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs));
   const call = post('/api/pathway', req)

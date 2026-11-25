@@ -19,8 +19,8 @@ import { useAppStore, type ReadingPick } from '@/lib/store';
 import { AIProgress } from '@/components/AIProgress';
 import { Thumbs } from '@/features/feedback/Thumbs';
 
-/** Rough typical wait for the AI's week. The call gives up at 20 seconds and uses rules. */
-const AI_WEEK_SECONDS = 15;
+/** Rough typical wait for the AI's week. The call gives up at 45 seconds and uses rules. */
+const AI_WEEK_SECONDS = 25;
 
 // This week (SPEC 7.5). Demo personas get the rules version straight away. Everyone else gets the
 // AI's choices (checked on the server for hours, days and real units), or rules if the AI fails.
@@ -178,7 +178,7 @@ export default function Pathway() {
             'Picking further reading',
           ]}
           expectedSeconds={AI_WEEK_SECONDS}
-          slowNote="If it takes more than 20 seconds, we'll build your week from your needs straight away."
+          slowNote="If it takes more than 45 seconds, we'll build your week from your needs straight away."
         />
       </div>
     );

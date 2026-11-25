@@ -8,7 +8,7 @@ import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify, type Subject } from './auth';
-import { MAX_TOKENS, mainModel, type Env } from './env';
+import { LONG_CALL, MAX_TOKENS, mainModel, type Env } from './env';
 import { buildPrompt } from './prompts';
 import { checkRateLimit, logAiCall } from './ratelimit';
 import { error, json } from './respond';
@@ -91,7 +91,7 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
 
   const model = mainModel(env);
   const result = await generateJson(
-    deps.complete ?? anthropicCompleter(env),
+    deps.complete ?? anthropicCompleter(env, LONG_CALL),
     {
       model,
       system: buildPrompt('lesson', { REFERENCE: referenceFor(req.topicTag) || 'none' }),

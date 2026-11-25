@@ -110,7 +110,7 @@ export default function Intake() {
                 'Working out what you need',
                 'Matching your needs to units',
               ]}
-              expectedSeconds={12}
+              expectedSeconds={20}
               slowNote="If it doesn't finish, you can answer a few quick questions instead."
             />
           </div>
