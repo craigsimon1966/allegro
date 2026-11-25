@@ -6,16 +6,10 @@ import { Label } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, sendFeedback } from '@/lib/api';
+import { SURVEY_QUESTIONS } from './questions';
 
 // End-of-loop pilot survey (SPEC 14). Anonymous.
 
-const SURVEY_QUESTIONS = [
-  'The needs identified matched my real situation.',
-  'The pathway fitted the time I have.',
-  'I learned something I will use this week.',
-  'I would use the lesson plan with minor edits.',
-  'I would recommend Allegro to a colleague.',
-];
 const SCALE = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree'];
 
 export default function Survey() {

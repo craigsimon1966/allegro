@@ -47,3 +47,27 @@ test('thumbs and the survey send anonymous feedback', async ({ page }) => {
   expect(bodies.at(-1)).toMatchObject({ target: 'survey', scores: { q1: 4 } });
   for (const b of bodies) expect(Object.keys(b)).not.toContain('userId');
 });
+
+test('about page covers SPEC 7.12 and lets a demo user clear their data', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/about-demo');
+  for (const h of [
+    'What this demo does, and does not do',
+    'How AI is used',
+    'Your data',
+    'Who to contact',
+    'Delete your account and data',
+  ])
+    await expect(page.getByText(h, { exact: true })).toBeVisible();
+  await axeClean(page);
+  await page.getByRole('button', { name: 'Clear demo data from this browser' }).click();
+  await expect(page).toHaveURL(/\/$/);
+  const mode = await page.evaluate(() => localStorage.getItem('allegro-demo'));
+  expect(mode ?? '').not.toContain('"mode":"demo"');
+});
+
+test('admin feedback sends anyone not signed in home', async ({ page }) => {
+  await page.goto('/admin/feedback');
+  await expect(page).toHaveURL(/\/$/);
+});

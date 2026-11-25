@@ -21,6 +21,7 @@ const Growth = lazy(() => import('@/features/growth/Growth'));
 const Help = lazy(() => import('@/features/help/Help'));
 const Leader = lazy(() => import('@/features/leader/Leader'));
 const Survey = lazy(() => import('@/features/feedback/Survey'));
+const AdminFeedback = lazy(() => import('@/features/admin/AdminFeedback'));
 
 function Loading() {
   return (
@@ -52,7 +53,7 @@ export const routes = [
   { path: '/help', element: lazyPage(<Help />) },
   { path: '/leader', element: lazyPage(<Leader />) },
   { path: '/survey', element: lazyPage(<Survey />) },
-  { path: '/admin/feedback', element: <Placeholder title="Pilot feedback" milestone="M5" /> },
+  { path: '/admin/feedback', element: lazyPage(<AdminFeedback />) },
   { path: '*', element: <Placeholder title="Page not found" /> },
 ];
 

@@ -10,6 +10,7 @@ import {
   type UnitProgress,
 } from './store';
 import type { PathwayItem } from '@shared/pathway';
+import type { FeedbackRow } from '@/features/admin/feedbackSummary';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
 // demo mode reads and writes the local store, signed-in mode also writes to Supabase.
@@ -425,4 +426,34 @@ export async function sendFeedback(f: {
   comment?: string;
 }): Promise<void> {
   await post('/api/feedback', { sessionId: feedbackSession(), ...f });
+}
+
+/** POST /api/account/delete (TECH_SPEC 5.3), then sign out and clear everything local. */
+export async function deleteAccount(): Promise<void> {
+  await post('/api/account/delete', {});
+  if (supabase) await supabase.auth.signOut().catch(() => null);
+  useAppStore.getState().reset();
+}
+
+/**
+ * Admin only (TECH_SPEC 9.1): returns null when the signed-in user is not an admin.
+ * RLS is the real guard; this check just decides whether to show the page.
+ */
+export async function loadFeedbackForAdmin(): Promise<FeedbackRow[] | null> {
+  if (!supabase) return null;
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return null;
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('is_admin')
+    .eq('user_id', auth.user.id)
+    .maybeSingle();
+  if (!profile?.is_admin) return null;
+  const { data, error } = await supabase
+    .from('feedback')
+    .select('id, session_id, target, thumbs, scores, comment, created_at')
+    .order('created_at', { ascending: false })
+    .limit(5000);
+  if (error) throw new ApiError('server_error', "We couldn't load the feedback.");
+  return data as FeedbackRow[];
 }
