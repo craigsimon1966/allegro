@@ -1,0 +1,287 @@
+import { useEffect, useMemo, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { AppShell } from '@/components/AppShell';
+import { MarginLayout } from '@/components/MarginLayout';
+import { Label, SectionRule } from '@/components/Label';
+import { MarginNote } from '@/components/MarginNote';
+import { Highlight } from '@/components/Highlight';
+import { DraftBadge } from '@/components/DraftBadge';
+import { MathText } from '@/components/MathText';
+import { ButtonLink } from '@/components/Button';
+import { UNITS, unitById } from '@shared/catalogue';
+import { buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
+import { DOMAIN_LABELS } from '@shared/tags';
+import { personaById } from '@shared/personas';
+import { loadLatestFromSupabase } from '@/lib/api';
+import { useAppStore } from '@/lib/store';
+
+// This week (SPEC 7.5). Built by rules from the confirmed needs, inside the teacher's stated hours.
+
+const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+const DAY_LONG = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+function listDays(days: number[]) {
+  const names = days.map((d) => DAY_NAMES[d - 1]);
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0];
+}
+
+function formatDay(iso: string) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Intl.DateTimeFormat('en-AU', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(new Date(Date.UTC(y!, m! - 1, d!)));
+}
+
+export default function Pathway() {
+  const mode = useAppStore((s) => s.mode);
+  const diagnosis = useAppStore((s) => s.diagnosis);
+  const intake = useAppStore((s) => s.intake);
+  const needs = useAppStore((s) => s.needs);
+  const pathway = useAppStore((s) => s.pathway);
+  const pathwayKey = useAppStore((s) => s.pathwayKey);
+  const setPathway = useAppStore((s) => s.setPathway);
+  const moveItem = useAppStore((s) => s.moveItem);
+  const progress = useAppStore((s) => s.progress);
+  const personaId = useAppStore((s) => s.personaId);
+  const [openWhy, setOpenWhy] = useState<string | null>(null);
+  const [loading, setLoading] = useState(mode === 'signed_in' && !diagnosis);
+
+  useEffect(() => {
+    if (!loading) return;
+    void loadLatestFromSupabase()
+      .catch(() => false)
+      .finally(() => setLoading(false));
+  }, [loading]);
+
+  const active = needs.filter((n) => n.status === 'active');
+  const hours = intake?.guided.hoursPerWeek ?? diagnosis?.context.hours_per_week ?? 2;
+  const teachingDays = intake?.guided.teachingDays ?? [];
+  const weekStart = sydneyWeekStart();
+  const key = JSON.stringify([
+    active.map((n) => [n.id, n.priority, n.catalogue_tags]),
+    hours,
+    teachingDays,
+    weekStart,
+  ]);
+
+  useEffect(() => {
+    if (!diagnosis || key === pathwayKey) return;
+    setPathway(
+      buildPathway({ needs: active, units: UNITS, hoursPerWeek: hours, teachingDays, weekStart }),
+      key,
+    );
+    // `active` is derived from `needs`, which `key` already covers.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, pathwayKey, diagnosis]);
+
+  const items = useMemo(
+    () => [...(pathway ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
+    [pathway],
+  );
+
+  if (loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center" role="status">
+        <p>Loading your week</p>
+      </div>
+    );
+  if (mode === 'anonymous') return <Navigate to="/demo" replace />;
+  if (!diagnosis) return <Navigate to="/start" replace />;
+
+  const budget = Math.round(hours * 60);
+  const done = items.filter((it) => progress[it.unitId]?.completedAt);
+  const doneMinutes = totalMinutes(done, UNITS);
+  const planned = totalMinutes(items, UNITS);
+  const todo = items.filter((it) => !progress[it.unitId]?.completedAt);
+  const nowNeedIds = new Set(active.filter((n) => n.priority === 'now').map((n) => n.id));
+  const urgent = todo.filter((it) => nowNeedIds.has(it.needId)).slice(0, 3);
+  const next = todo[0];
+  const persona = personaId ? personaById(personaId) : undefined;
+  const yearLabel = diagnosis.context.year_levels.length
+    ? `Year ${diagnosis.context.year_levels.join(' and ')}`
+    : '';
+  const freeDays = [1, 2, 3, 4, 5].filter((d) => !teachingDays.includes(d));
+  const firstTeaching = teachingDays.length ? DAY_LONG[Math.min(...teachingDays) - 1] : 'Monday';
+
+  return (
+    <AppShell step={3}>
+      <MarginLayout>
+        <Label>
+          Week of {formatDay(weekStart)}
+          {persona ? ` · ${persona.name}` : ''}
+        </Label>
+        <h1 className="mt-1 text-[30px] leading-tight">This week</h1>
+        <p className="mt-1 text-muted">
+          {doneMinutes} of {planned} minutes done · you have {budget} minutes this week
+        </p>
+
+        {items.length === 0 ? (
+          <div className="mt-6 max-w-prose">
+            <p>
+              We don&apos;t have learning units for these needs yet. Try adding another need, or ask
+              a question.
+            </p>
+            <p className="mt-4">
+              <Link to="/needs" className="font-bold text-green-700 underline">
+                Back to your needs
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <>
+            {urgent.length > 0 && (
+              <section
+                aria-labelledby="before-monday"
+                className="-ml-content mt-6 border-y-2 border-rule-strong bg-sage-100 py-4 pl-content pr-5"
+              >
+                <h2 id="before-monday" className="text-[20px] font-semibold">
+                  Before {firstTeaching}
+                  {yearLabel ? `, ${yearLabel}` : ''}
+                </h2>
+                <p className="mt-1">
+                  {urgent.length === 1 ? 'One short unit' : `${urgent.length} short units`} before
+                  your next lesson:
+                </p>
+                <ul className="mt-1 list-disc pl-5">
+                  {urgent.map((it) => (
+                    <li key={it.unitId}>
+                      <MathText inline>{unitById(it.unitId)?.title ?? ''}</MathText>
+                    </li>
+                  ))}
+                </ul>
+                {next && (
+                  <ButtonLink to={`/learn/${next.unitId}`} variant="ink" className="mt-3">
+                    {done.length ? 'Continue' : 'Start'}:{' '}
+                    <MathText inline>{unitById(next.unitId)?.title ?? ''}</MathText>{' '}
+                    <span aria-hidden="true">→</span>
+                  </ButtonLink>
+                )}
+              </section>
+            )}
+
+            <div className="mt-8">
+              <SectionRule>Your learning this week</SectionRule>
+              {items.some((it) => !unitById(it.unitId)?.reviewedBy) && (
+                <div className="mt-3">
+                  <DraftBadge reviewedBy={null} />
+                  <p className="mt-1 text-[13px] text-muted">
+                    These units are drafts until a maths educator has reviewed them.
+                  </p>
+                </div>
+              )}
+              <ol>
+                {items.map((it, i) => {
+                  const u = unitById(it.unitId);
+                  if (!u) return null;
+                  const isDone = Boolean(progress[it.unitId]?.completedAt);
+                  const isNext = next?.unitId === it.unitId;
+                  return (
+                    <li key={it.unitId} className="flex items-start border-b border-rule">
+                      <div
+                        className={`w-margin shrink-0 pt-3 text-center ${
+                          isDone
+                            ? 'font-margin text-[28px] leading-none text-green-700'
+                            : 'font-heading text-[22px] font-semibold text-green-700'
+                        }`}
+                      >
+                        {isDone ? <span aria-label="Done">✓</span> : i + 1}
+                      </div>
+                      <div className="min-w-0 flex-1 py-3 pl-4">
+                        <Link
+                          to={`/learn/${u.id}`}
+                          className={`text-[17px] text-ink no-underline hover:underline ${
+                            isNext ? 'font-bold' : ''
+                          } ${isDone ? 'text-muted line-through decoration-green-700' : ''}`}
+                        >
+                          {isNext ? (
+                            <Highlight>
+                              <MathText inline>{u.title}</MathText>
+                            </Highlight>
+                          ) : (
+                            <MathText inline>{u.title}</MathText>
+                          )}
+                        </Link>
+                        <div className="text-[13px] text-muted">
+                          {DOMAIN_LABELS[u.domain]} · {u.durationMinutes} min ·{' '}
+                          {formatDay(it.scheduledFor)}
+                          {isNext ? ' · up next' : ''}
+                        </div>
+                        <div className="mt-1 flex flex-wrap items-center gap-x-4">
+                          <button
+                            type="button"
+                            className="min-h-tap text-[15px] font-bold text-green-700 underline"
+                            aria-expanded={openWhy === it.unitId}
+                            onClick={() => setOpenWhy(openWhy === it.unitId ? null : it.unitId)}
+                          >
+                            Why this?
+                          </button>
+                          {u.reviewedBy && <span className="text-[13px] text-muted">Reviewed</span>}
+                        </div>
+                        {openWhy === it.unitId && (
+                          <p className="mt-1 max-w-prose text-[15px]">{it.reason}</p>
+                        )}
+                      </div>
+                      <div className="flex shrink-0 flex-col pr-2 pt-1">
+                        <button
+                          type="button"
+                          className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
+                          onClick={() => moveItem(it.unitId, -1)}
+                          disabled={i === 0}
+                          aria-label={`Move ${u.title} up`}
+                        >
+                          <ChevronUp size={22} strokeWidth={1.5} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
+                          onClick={() => moveItem(it.unitId, 1)}
+                          disabled={i === items.length - 1}
+                          aria-label={`Move ${u.title} down`}
+                        >
+                          <ChevronDown size={22} strokeWidth={1.5} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+                <li className="flex min-h-[64px] items-start border-b border-rule">
+                  <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-green-700">
+                    {items.length + 1}
+                  </div>
+                  <div className="min-w-0 flex-1 py-3 pl-4">
+                    <Link to="/plan" className="text-[17px] text-ink no-underline hover:underline">
+                      Plan {firstTeaching}&apos;s lesson
+                    </Link>
+                    <div className="text-[13px] text-muted">Lesson builder · coming soon</div>
+                  </div>
+                  <div className="shrink-0 pr-5 pt-2">
+                    <MarginNote tone="muted">soon</MarginNote>
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <p className="mt-6 max-w-prose text-[15px] text-muted">
+              {teachingDays.length
+                ? `${listDays(teachingDays)} ${teachingDays.length > 1 ? 'are' : 'is'} teaching days. `
+                : ''}
+              {freeDays.length && teachingDays.length
+                ? `Learning is planned for ${listDays(freeDays)}.`
+                : 'Learning is spread across the week.'}{' '}
+              Use the arrows to change the order.
+            </p>
+            <p className="mt-2">
+              <Link to="/needs" className="text-green-700 underline">
+                Change my needs
+              </Link>
+            </p>
+          </>
+        )}
+      </MarginLayout>
+    </AppShell>
+  );
+}
