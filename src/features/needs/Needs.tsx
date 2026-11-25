@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { AIBlock } from '@/components/AIBlock';
@@ -7,7 +7,7 @@ import { MarginLayout } from '@/components/MarginLayout';
 import { SectionRule } from '@/components/Label';
 import { DOMAIN_LABELS, TAGS, tagById } from '@shared/tags';
 import { RESULT_LABELS, itemsForTag } from '@shared/diagnostics';
-import { saveNeedEdit } from '@/lib/api';
+import { loadLatestFromSupabase, saveNeedEdit } from '@/lib/api';
 import { useAppStore, type TeacherNeed } from '@/lib/store';
 import type { Need } from '@shared/schemas';
 import { DiagnosticCheck } from './DiagnosticCheck';
@@ -36,6 +36,21 @@ export default function Needs() {
   const [checking, setChecking] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [addTag, setAddTag] = useState('');
+  // Signed in on a new device: fetch the saved needs before deciding where to go.
+  const [loading, setLoading] = useState(mode === 'signed_in' && !diagnosis);
+  useEffect(() => {
+    if (!loading) return;
+    void loadLatestFromSupabase()
+      .catch(() => false)
+      .finally(() => setLoading(false));
+  }, [loading]);
+
+  if (loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center" role="status">
+        <p>Loading your needs</p>
+      </div>
+    );
 
   if (mode === 'anonymous' || !diagnosis)
     return <Navigate to={mode === 'anonymous' ? '/demo' : '/start'} replace />;

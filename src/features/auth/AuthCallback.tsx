@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AllegroMark } from '@/components/AllegroMark';
 import { supabase } from '@/lib/supabase';
 import { useAppStore } from '@/lib/store';
+import { loadLatestFromSupabase } from '@/lib/api';
 
 /**
  * /auth/callback (TECH_SPEC 6.1). supabase-js exchanges the PKCE code from the URL on load;
- * then a new teacher goes to /start and a returning one to /pathway.
+ * then a new teacher goes to /start and a returning one back to their needs (/pathway is built in M2).
  */
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -28,8 +29,8 @@ export default function AuthCallback() {
         return;
       }
       setSignedIn();
-      const { count } = await client.from('intakes').select('id', { count: 'exact', head: true });
-      navigate(count ? '/pathway' : '/start', { replace: true });
+      const returning = await loadLatestFromSupabase().catch(() => false);
+      navigate(returning ? '/needs' : '/start', { replace: true });
     })();
   }, [navigate, setSignedIn]);
 
