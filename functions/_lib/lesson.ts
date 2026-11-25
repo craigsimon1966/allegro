@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { LessonBlockSchema, LessonSchema, type Lesson } from '../../shared/schemas';
+import {
+  LessonBlockSchema,
+  LessonPackSchema,
+  LessonSchema,
+  type Lesson,
+} from '../../shared/schemas';
+import { groundPack } from '../../shared/lessonPack';
 import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../shared/lesson';
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
@@ -186,4 +192,48 @@ export async function handleLessonBlock(request: Request, env: Env, deps: Deps =
     source: 'ai_draft',
     needs_maths_check: true,
   });
+}
+
+export const LessonPackRequestSchema = z.object({ lesson: LessonSchema });
+
+/** POST /api/lesson-pack: worksheets, teacher steps and smart board slides for a finished lesson. */
+export async function handleLessonPack(request: Request, env: Env, deps: Deps = {}) {
+  const fetchImpl = deps.fetch ?? fetch;
+  const g = await gate(request, env, fetchImpl);
+  if (!g.ok) return g.res;
+  const parsed = LessonPackRequestSchema.safeParse(g.body);
+  if (!parsed.success) return error('invalid_input', 'We could not read that request.');
+  const { lesson } = parsed.data;
+
+  const model = mainModel(env);
+  const result = await generateJson(
+    deps.complete ?? anthropicCompleter(env, LONG_CALL),
+    {
+      model,
+      system: buildPrompt('lesson-pack', { LESSON: JSON.stringify(lesson) }),
+      messages: [
+        {
+          role: 'user',
+          content: `Make the classroom pack for this Year ${lesson.year_level}, ${lesson.duration_minutes}-minute lesson.`,
+        },
+      ],
+      maxTokens: MAX_TOKENS['lesson-pack'],
+    },
+    LessonPackSchema,
+  );
+  await logAiCall(
+    g.subject,
+    env,
+    {
+      endpoint: 'lesson-pack',
+      model,
+      inputTokens: result.usage.input,
+      outputTokens: result.usage.output,
+      ok: result.ok,
+    },
+    fetchImpl,
+  );
+  if (!result.ok)
+    return error('ai_unavailable', "Allegro couldn't draft the worksheets and slides right now.");
+  return json(groundPack(result.data, lesson));
 }
