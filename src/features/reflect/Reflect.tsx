@@ -11,7 +11,7 @@ import { findLikelyStudentNames } from '@shared/pii';
 import { reflectOn, saveNeedEdit, saveReflection } from '@/lib/api';
 import { useAppStore, type Reflection } from '@/lib/store';
 
-// Reflect (SPEC 7.9): three prompts, about two minutes, optional confidence re-rating.
+// Reflect (SPEC 7.9): three prompts, about two minutes, optional concern re-rating (1 not a concern, 5 a big concern).
 
 const HOW = ['Most students got it', 'About half got it', 'Few got it'];
 const field = 'mt-1 w-full rounded border-2 border-ink bg-field p-3 text-[17px] text-ink';
@@ -226,7 +226,9 @@ export default function Reflect() {
 
           {needs.length > 0 && (
             <fieldset>
-              <legend className="text-[20px] font-semibold">Your confidence now (optional)</legend>
+              <legend className="text-[20px] font-semibold">
+                How concerning is each one now? (optional)
+              </legend>
               {needs.map((n) => (
                 <fieldset key={n.id} className="mt-3">
                   <legend className="text-[15px] font-bold">{n.topic}</legend>
@@ -234,7 +236,7 @@ export default function Reflect() {
                     {[1, 2, 3, 4, 5].map((v) => (
                       <label
                         key={v}
-                        className={`flex h-tap w-tap cursor-pointer items-center justify-center rounded border-2 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-green-700 ${
+                        className={`relative flex h-tap w-tap cursor-pointer items-center justify-center rounded border-2 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-green-700 ${
                           ratings[n.id] === v
                             ? 'border-green-700 bg-sage-100 font-bold'
                             : 'border-ink'

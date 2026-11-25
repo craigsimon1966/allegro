@@ -153,7 +153,8 @@ export default function Needs() {
         <div className="mt-6">
           <SectionRule id="needs-heading">What you need, in order</SectionRule>
           <p className="mt-2 text-[15px] text-muted">
-            Change the order, rate your confidence, or remove anything that doesn&apos;t fit.
+            Change the order, rate how much of a concern each one is, or remove anything that
+            doesn&apos;t fit.
           </p>
           <ul aria-labelledby="needs-heading" className="mt-1">
             {active.map((n, idx) => {
@@ -176,7 +177,7 @@ export default function Needs() {
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
                       <div>
                         <label htmlFor={`conf-${n.id}`} className="block text-[15px] font-bold">
-                          How confident are you?{' '}
+                          How much of a concern is this for you?{' '}
                           {n.selfRating ? `${n.selfRating} of 5` : 'Not rated'}
                         </label>
                         <input
@@ -192,11 +193,11 @@ export default function Needs() {
                           onPointerUp={(e) =>
                             !n.selfRating && patch(n, { selfRating: Number(e.currentTarget.value) })
                           }
-                          className={`w-full accent-green-700 ${n.selfRating ? '' : 'opacity-50'}`}
+                          className={`w-full accent-plum-500 ${n.selfRating ? '' : 'opacity-50'}`}
                         />
                         <div className="flex justify-between text-[13px] text-muted">
-                          <span>Not very</span>
-                          <span>Very</span>
+                          <span>Not a concern</span>
+                          <span>A big concern</span>
                         </div>
                       </div>
                       <div>

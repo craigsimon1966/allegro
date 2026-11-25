@@ -16,7 +16,7 @@ interface Point {
   rating: number;
 }
 
-/** Confidence per need: the first rating, then each reflection that re-rated it. */
+/** Concern per need (1 not a concern, 5 a big concern): the first rating, then each re-rating. */
 function seriesFor(need: TeacherNeed, reflections: Reflection[]): Point[] {
   const later = reflections
     .filter((r) => r.ratings[need.id])
@@ -40,7 +40,7 @@ function MiniChart({ title, points }: { title: string; points: Point[] }) {
       viewBox={`0 0 ${w} ${h}`}
       className="h-24 w-full max-w-[320px]"
       role="img"
-      aria-label={`${title}: confidence ${points.map((p) => `${p.label} ${p.rating} of 5`).join(', ')}`}
+      aria-label={`${title}: concern ${points.map((p) => `${p.label} ${p.rating} of 5`).join(', ')}`}
     >
       {[1, 3, 5].map((v) => (
         <g key={v}>
@@ -158,10 +158,15 @@ export default function Growth() {
         </div>
 
         <div className="mt-8 max-w-prose">
-          <SectionRule>Confidence by topic</SectionRule>
+          <SectionRule>How much each topic concerns you</SectionRule>
+          <p className="mt-2 text-[15px] text-muted">
+            1 is not a concern and 5 is a big concern, so a line going down means it worries you
+            less.
+          </p>
           {!hasRatings ? (
             <p className="mt-3 text-muted">
-              Rate your confidence on your needs or after a lesson, and it will show here.
+              Rate how much each need concerns you, on your needs or after a lesson, and it will
+              show here.
             </p>
           ) : (
             <>
@@ -184,7 +189,7 @@ export default function Growth() {
                     <tr className="border-b border-rule-strong">
                       <th className="py-1 pr-3">Topic</th>
                       <th className="py-1 pr-3">When</th>
-                      <th className="py-1">Confidence</th>
+                      <th className="py-1">Concern (1 to 5)</th>
                     </tr>
                   </thead>
                   <tbody>

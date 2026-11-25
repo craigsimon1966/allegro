@@ -15,7 +15,7 @@ const LINKS = [
   {
     to: '/needs',
     label: 'Your needs',
-    note: 'Change the order, rate your confidence, add or remove',
+    note: 'Change the order, rate how much each one concerns you, add or remove',
   },
   { to: '/start', label: 'Describe your situation again', note: 'Allegro will suggest new needs' },
   { to: '/survey', label: 'Tell us about the pilot', note: 'About a minute' },

@@ -82,8 +82,8 @@ describe('diagnostics', () => {
     expect(resultFor(1, 4)).toBe('start_here');
   });
   it('gives an honest message when the self-rating and check disagree', () => {
-    expect(calibrationMessage(5, 'refresh', 'Linear relationships')).toMatch(/worth a refresh/);
-    expect(calibrationMessage(1, 'solid', 'Linear relationships')).toMatch(
+    expect(calibrationMessage(1, 'refresh', 'Linear relationships')).toMatch(/worth a refresh/);
+    expect(calibrationMessage(5, 'solid', 'Linear relationships')).toMatch(
       /know more than you think/,
     );
     expect(calibrationMessage(null, 'start_here', 'Linear relationships')).not.toMatch(/of 5/);
