@@ -33,7 +33,7 @@
   "aitslStandards": [],
   "hook": "Students who learn percentages as a set of tricks often get stuck on \"what percentage is 18 of 24?\" Proportion makes all three types the same question.",
   "coreIdeaMd": "**Percent** means \"out of 100\". Every percentage question is a ratio table with 100 in it.\n\n| part | ? |\n|---|---|\n| whole | 100 |\n\nWhether you are finding the part, the whole or the percentage, set up the table and find the missing value.",
-  "workedExampleMd": "**What percentage is 18 of 24?**\n\n| Quantity | Actual | Percent |\n|---|---|---|\n| part | 18 | ? |\n| whole | 24 | 100 |\n\n1. 24 to 100 is multiplying by $\\frac{100}{24}$.\n2. $18 \\times \\frac{100}{24} = 75$\n3. So 18 is **75%** of 24.\n\n**Check:** 75% of 24 is $0.75 \\times 24 = 18$. ✓",
+  "workedExampleMd": "**What percentage is 18 of 24?**\n\n| Quantity | Actual | Percent |\n|---|---|---|\n| part | 18 | ? |\n| whole | 24 | 100 |\n\n1. 24 to 100 is multiplying by $\\frac{100}{24}$.\n2. $18 \\times \\frac{100}{24} = 75$\n3. So 18 is **75%** of 24.\n\n```visual\n{\"type\": \"bar_model\", \"bars\": [{\"label\": \"Amount\", \"parts\": [{\"label\": \"6\", \"shaded\": true}, {\"label\": \"6\", \"shaded\": true}, {\"label\": \"6\", \"shaded\": true}, {\"label\": \"6\"}]}, {\"label\": \"Percent\", \"parts\": [{\"label\": \"25%\", \"shaded\": true}, {\"label\": \"25%\", \"shaded\": true}, {\"label\": \"25%\", \"shaded\": true}, {\"label\": \"25%\"}]}], \"total\": \"24 is 100%\"}\n```\n\nThe bar model shows the same thing: 24 in four equal parts of 6, and 18 is three of them.\n\n**Check:** 75% of 24 is $0.75 \\times 24 = 18$. ✓",
   "misconceptionIds": [
     "mis-additive-proportion",
     "mis-percent-up-down"

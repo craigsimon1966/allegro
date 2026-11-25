@@ -16,6 +16,7 @@ import { MarginLayout } from '@/components/MarginLayout';
 import { Label } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { MathText } from '@/components/MathText';
+import { MathTextarea } from '@/components/MathTextarea';
 import { MarginNote } from '@/components/MarginNote';
 import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
@@ -129,10 +130,10 @@ function BlockView({
           <label htmlFor={`${id}-edit`} className="sr-only">
             Edit {block.title}
           </label>
-          <textarea
+          <MathTextarea
             id={`${id}-edit`}
             value={draft}
-            onChange={(e) => setDraft(e.target.value)}
+            onChange={setDraft}
             rows={10}
             className="w-full rounded border-2 border-ink bg-field p-3 font-mono text-[15px] text-ink"
           />

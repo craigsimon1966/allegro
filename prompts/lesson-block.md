@@ -12,6 +12,8 @@ Rules:
 
 {{> _maths-examples}}
 
+{{> _maths-visuals}}
+
 The whole lesson, for context (JSON):
 
 """

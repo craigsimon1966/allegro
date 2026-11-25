@@ -6,6 +6,7 @@ import {
   docxName,
   exitTicketDocument,
   lessonDocument,
+  prepareVisuals,
   saveBlob,
   worksheetDocument,
 } from '@/lib/lessonDocx';
@@ -53,6 +54,11 @@ export async function packFiles(
   state?: string,
 ): Promise<PackFile[]> {
   const files: PackFile[] = [];
+  await prepareVisuals([
+    ...lesson.blocks.map((b) => b.content_md),
+    ...pack.worksheet.sections.flatMap((s) => s.items.map((it) => it.prompt_md)),
+    ...pack.exit_ticket.map((it) => it.prompt_md),
+  ]);
   if (part === 'guide' || part === 'all')
     files.push({
       name: docxName(lesson, 'teacher-guide'),

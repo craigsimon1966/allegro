@@ -1,7 +1,13 @@
 // Turns Markdown (with $maths$) into plain blocks for Word documents: the content review
 // (TECH_SPEC 10.3) and lesson downloads. Kept small and pure so it can be unit tested.
 
-export type Inline = { text: string; bold?: boolean; italic?: boolean };
+export type Inline = {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  /** For maths: the original LaTeX, so Word downloads can build a real equation. */
+  tex?: string;
+};
 export type Block =
   | { kind: 'para'; runs: Inline[] }
   | {
@@ -10,7 +16,9 @@ export type Block =
       items: Inline[][];
       /** First number of an ordered list. */ start?: number;
     }
-  | { kind: 'table'; rows: Inline[][][] };
+  | { kind: 'table'; rows: Inline[][][] }
+  /** A ```visual diagram (shared/visuals.ts): the raw JSON spec. */
+  | { kind: 'visual'; raw: string };
 
 /** LaTeX as a teacher would read it on paper: 2 × 3, 6 ÷ 2, 3/4, □. */
 export function plainMaths(tex: string): string {
@@ -43,7 +51,7 @@ export function inline(md: string): Inline[] {
     if (m.index! > last) out.push({ text: md.slice(last, m.index) });
     if (m[1] !== undefined) out.push(...inline(m[1]).map((r) => ({ ...r, bold: true })));
     else if (m[2] !== undefined) out.push({ text: m[2], italic: true });
-    else out.push({ text: plainMaths(m[3]!) });
+    else out.push({ text: plainMaths(m[3]!), tex: m[3]! });
     last = m.index! + m[0].length;
   }
   if (last < md.length) out.push({ text: md.slice(last) });
@@ -60,6 +68,16 @@ export function blocks(md: string): Block[] {
     const line = lines[i]!.trim();
     if (!line) {
       i++;
+      continue;
+    }
+    if (line.startsWith('```')) {
+      const lang = line.slice(3).trim();
+      const body: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i]!.trim().startsWith('```')) body.push(lines[i++]!);
+      i++;
+      if (lang === 'visual') out.push({ kind: 'visual', raw: body.join('\n').trim() });
+      else if (body.length) out.push({ kind: 'para', runs: [{ text: body.join(' ') }] });
       continue;
     }
     if (line.startsWith('|')) {
@@ -88,7 +106,11 @@ export function blocks(md: string): Block[] {
       continue;
     }
     const para: string[] = [];
-    while (i < lines.length && lines[i]!.trim() && !/^(\||\d+\.\s|[-*]\s)/.test(lines[i]!.trim())) {
+    while (
+      i < lines.length &&
+      lines[i]!.trim() &&
+      !/^(\||\d+\.\s|[-*]\s|```)/.test(lines[i]!.trim())
+    ) {
       para.push(lines[i]!.trim());
       i++;
     }
@@ -104,6 +126,7 @@ export function blocksToMarkdown(bs: Block[]): string {
   return bs
     .map((b) => {
       if (b.kind === 'para') return md(b.runs);
+      if (b.kind === 'visual') return '```visual\n' + b.raw + '\n```';
       if (b.kind === 'list')
         return b.items
           .map((it, n) => `${b.ordered ? `${(b.start ?? 1) + n}.` : '-'} ${md(it)}`)

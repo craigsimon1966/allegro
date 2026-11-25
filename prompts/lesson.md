@@ -47,6 +47,8 @@ Rules:
 
 {{> _maths-examples}}
 
+{{> _maths-visuals}}
+
 Reference material from Allegro's units on this topic:
 
 """

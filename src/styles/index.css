@@ -142,3 +142,21 @@
     background: var(--sage-100);
   }
 }
+
+/* Equation editor (MathLive): fits the exercise book box it sits in, square corners, no own
+   keyboard toggle (the symbol buttons do that job inside the dialog). */
+math-field.equation-field {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 24px;
+  --caret-color: var(--green-700);
+  --selection-background-color: var(--highlighter);
+}
+math-field.equation-field::part(virtual-keyboard-toggle) {
+  display: none;
+}

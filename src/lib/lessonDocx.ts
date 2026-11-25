@@ -4,6 +4,8 @@ import {
   Document,
   Footer,
   HeadingLevel,
+  ImageRun,
+  Math as WordMath,
   Packer,
   PageBreak,
   PageNumber,
@@ -20,6 +22,49 @@ import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks'
 import { curriculumRows } from '@shared/curriculum';
 import { LEVEL_NAMES, packLevels, slideRange, slidesByBlock } from '@shared/lessonPack';
 import { PRINT } from '@/lib/printColours';
+import { describeVisual, parseVisual, visualBlocksIn } from '@shared/visuals';
+import { visualToPng, type VisualImage } from './visualPng';
+import { latexToMath } from './latexToDocx';
+
+/**
+ * Diagrams drawn as pictures, keyed by their raw ```visual spec. Drawing needs the browser and
+ * is async, so `prepareVisuals` fills this before a document is built; a diagram that isn't
+ * here goes in as a written description.
+ */
+const VISUALS = new Map<string, VisualImage>();
+
+export function setVisualImage(raw: string, img: VisualImage) {
+  VISUALS.set(raw, img);
+}
+
+/** Draws every diagram in these Markdown strings, ready for the Word builders below. */
+export async function prepareVisuals(mds: string[]) {
+  for (const raw of new Set(mds.flatMap(visualBlocksIn))) {
+    if (VISUALS.has(raw)) continue;
+    const img = await visualToPng(raw);
+    if (img) VISUALS.set(raw, img);
+  }
+}
+
+function visualParagraph(raw: string): Paragraph {
+  const img = VISUALS.get(raw);
+  const v = parseVisual(raw);
+  const alt = v.ok ? describeVisual(v.spec) : 'Diagram';
+  if (!img) return para([{ text: `[Diagram] ${alt}`, italic: true }]);
+  // At most 15 cm wide (about 570 px at 96 dpi), keeping the shape.
+  const w = Math.min(img.width, 570);
+  return new Paragraph({
+    spacing: { after: 120 },
+    children: [
+      new ImageRun({
+        type: 'png',
+        data: img.data,
+        transformation: { width: w, height: Math.round((img.height * w) / img.width) },
+        altText: { name: 'Diagram', title: 'Diagram', description: alt },
+      }),
+    ],
+  });
+}
 
 // Word files for a lesson: the teacher guide, the student worksheets and the exit ticket slips.
 // Plain Word structure (real headings, lists as text, simple tables, Calibri) so the files open
@@ -29,16 +74,18 @@ const FONT = 'Calibri';
 type Child = Paragraph | Table;
 
 const runs = (rs: Inline[], extra: { size?: number; italics?: boolean; colour?: string } = {}) =>
-  rs.map(
-    (r) =>
-      new TextRun({
-        text: r.text,
-        bold: r.bold,
-        italics: r.italic || extra.italics,
-        font: FONT,
-        size: extra.size,
-        color: extra.colour,
-      }),
+  rs.map((r) =>
+    // Maths becomes a real Word equation (editable in Word); everything else is text.
+    r.tex
+      ? new WordMath({ children: latexToMath(r.tex) })
+      : new TextRun({
+          text: r.text,
+          bold: r.bold,
+          italics: r.italic || extra.italics,
+          font: FONT,
+          size: extra.size,
+          color: extra.colour,
+        }),
   );
 
 const para = (
@@ -95,6 +142,7 @@ function body(bs: Block[], size?: number): Child[] {
   const out: Child[] = [];
   for (const b of bs) {
     if (b.kind === 'para') out.push(para(b.runs, { size }));
+    else if (b.kind === 'visual') out.push(visualParagraph(b.raw));
     else if (b.kind === 'list')
       b.items.forEach((it, n) =>
         out.push(
@@ -529,6 +577,7 @@ export async function downloadLessonDocx(
   state?: string,
   pack?: LessonPack,
 ) {
+  await prepareVisuals(lesson.blocks.map((b) => b.content_md));
   saveBlob(
     await docxBlob(lessonDocument(lesson, disclosure, state, pack)),
     docxName(lesson, pack ? 'teacher-guide' : ''),

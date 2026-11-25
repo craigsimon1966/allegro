@@ -34,7 +34,7 @@
       "id": "b3",
       "type": "vocabulary",
       "title": "Key vocabulary",
-      "content_md": "- **Linear relationship:** a relationship where $y$ changes by the same amount each time $x$ goes up by 1.\n- **Rule:** an equation that links $x$ and $y$, such as $y = 4x - 3$.\n- **Rate of change:** how much $y$ goes up (or down) for each step in $x$.\n- **Starting value:** the value of $y$ when $x = 0$.",
+      "content_md": "- **Linear relationship:** a relationship where $y$ changes by the same amount each time $x$ goes up by 1.\n- **Rule:** an equation that links $x$ and $y$, such as $y = 2x - 7$.\n- **Rate of change:** how much $y$ goes up (or down) for each step in $x$.\n- **Starting value:** the value of $y$ when $x = 0$.",
       "rationale": "Naming the two parts of the rule in plain words gives students language to explain their thinking, not only symbols to copy.",
       "source": "ai_draft",
       "needs_maths_check": true
@@ -43,7 +43,7 @@
       "id": "b4",
       "type": "explicit_teaching",
       "title": "Explicit teaching: table to rule",
-      "content_md": "**Worked example (I do)**\n\n| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 1 | 5 | 9 | 13 |\n\n1. $y$ goes up by 4 each step, so the rule starts with $4x$.\n2. When $x = 0$, $y = 1$, so add 1.\n3. $y = 4x + 1$\n4. Check: $x = 3$ gives $4 \\times 3 + 1 = 13$. ✓\n\n**Second example (we do):** $x$: $-1$, 0, 1, 2 and $y$: 2, 5, 8, 11. Students give each step. Point out that $x = 0$ is in the middle of this table. ($y = 3x + 5$)\n\nAsk \"what happens when $x = 0$?\" before anyone guesses the rule.",
+      "content_md": "**Worked example (I do)**\n\n```visual\n{\"type\": \"graph\", \"xMin\": -1, \"xMax\": 3, \"yMin\": -4, \"yMax\": 14, \"lines\": [{\"m\": 4, \"c\": 1, \"label\": \"y = 4x + 1\"}], \"points\": [{\"x\": 0, \"y\": 1}]}\n```\n\n| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 1 | 5 | 9 | 13 |\n\n1. $y$ goes up by 4 each step, so the rule starts with $4x$.\n2. When $x = 0$, $y = 1$, so add 1.\n3. $y = 4x + 1$\n4. Check: $x = 3$ gives $4 \\times 3 + 1 = 13$. ✓\n\n**Second example (we do):** $x$: $-1$, 0, 1, 2 and $y$: 2, 5, 8, 11. Students give each step. ($y = 3x + 5$)\n\nAsk \"what happens when $x = 0$?\" before anyone guesses the rule.",
       "rationale": "Seeing the full method modelled, then completing one together, reduces load on working memory before students practise alone.",
       "source": "ai_draft",
       "needs_maths_check": true

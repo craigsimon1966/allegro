@@ -94,7 +94,7 @@ describe('lesson pack files', () => {
     expect(body).toContain('Slides 3 to 5');
     expect(body).toContain('Slides 9 to 11 · Worksheet');
     expect(body).toContain('0 to 2 min');
-    expect(body).toContain('y = 5x - 3');
+    expect(body).toContain('y = 5x − 3');
     expect(body).toContain(NOTICE);
     expect(footer).toContain(NOTICE);
   });
@@ -117,7 +117,7 @@ describe('lesson pack files', () => {
     const { body } = await docText(exitTicketDocument(lesson, DEMO_PACK, NOTICE));
     expect(body.match(/Exit ticket:/g)).toHaveLength(2);
     expect(body).toContain('cut here');
-    expect(body).not.toContain('y = 3x - 4');
+    expect(body).not.toContain('y = 3x − 4');
   });
 
   it('slides open as a plain .pptx: one per pack slide, notice on each, no answers, no effects', async () => {

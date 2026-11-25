@@ -8,6 +8,7 @@ describe('AI prompts carry the number rules', () => {
       const p = buildPrompt(name, vars);
       expect(p).toContain('Never give two letters the same value');
       expect(p).toContain('Context or numbers only');
+      expect(p).toContain('```visual');
       expect(p).not.toContain('{{>');
     });
 });

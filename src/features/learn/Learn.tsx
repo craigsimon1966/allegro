@@ -6,6 +6,7 @@ import { Label } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { DraftBadge } from '@/components/DraftBadge';
 import { MathText } from '@/components/MathText';
+import { MathTextarea } from '@/components/MathTextarea';
 import { misconceptionById, unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { DOMAIN_LABELS } from '@shared/tags';
@@ -412,10 +413,10 @@ export default function Learn() {
         <label htmlFor="reflection" className="block text-[17px]">
           <MathText inline>{unit.reflectPrompt}</MathText>
         </label>
-        <textarea
+        <MathTextarea
           id="reflection"
           value={reflection}
-          onChange={(e) => setReflection(e.target.value)}
+          onChange={setReflection}
           rows={4}
           className="mt-2 w-full rounded border-2 border-ink bg-field p-3 text-[17px] text-ink"
           aria-describedby="reflection-hint"

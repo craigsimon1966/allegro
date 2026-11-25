@@ -102,6 +102,14 @@ Craig asked that worked examples avoid ambiguous numbers (two letters both equal
 
 Craig: "How confident are you?" doesn't fit context needs such as finding support in a regional setting, which are facts rather than skills. Every need is now rated "How much of a concern is this for you?", 1 (Not a concern) to 5 (A big concern), on the needs list and in Reflect. Growth shows the same scale, so a falling line is good. The calibration message after a quick check reads high concern like low confidence. The rating doesn't feed the pathway order or the AI prompts, so the demo teachers' weeks don't change. The column and table names (self_rating, confidence_ratings) stay as they are, to avoid a migration. Any ratings saved before this change were confidence ratings. The leader demo still shows staff confidence, because it is separate made-up data.
 
+## 26 Nov 2026: maths diagrams drawn from specs
+
+Craig asked for actual images wherever content names a representation. Diagrams are a fenced ```visual block holding JSON (bar_model, number_line, graph, array, area_model, ten_frame, balance), drawn as SVG by `shared/visuals.ts`. The AI writes the spec, not the picture, so the maths is exact and the colours are tokens. The SVG is built from validated numbers and escaped labels, so inserting it is safe. The Word download draws each diagram to a PNG in the browser (Word can't read CSS variables, so the colours are read from the live tokens first). In print, diagrams float right at 3 cm wide so the 60-minute demo lesson stays on two A4 pages; the Word copy keeps them full size. Quick Help's word cap ignores diagrams so a spec is never cut in half.
+
+## 26 Nov 2026: equation editor
+
+Craig asked for an equation editor in worked examples and wherever teachers edit, especially success criteria. Chosen: MathLive 0.111.4 in a dialog behind an "Insert maths" button, saving LaTeX between $ signs so everything else (KaTeX rendering, the AI, the number checks) keeps working on plain Markdown. MathLive is lazy-loaded (about 230 KB gzipped, only when the dialog opens), draws with the KaTeX fonts already on the page (`fontsDirectory = null`, so no font files are added) and has sounds and its own pop-up keyboard turned off; a row of symbol buttons does the keyboard's job and works inside the dialog on phones. The Word download turns the LaTeX into Word equations (OMML) with a small converter (`src/lib/latexToDocx.ts`) covering fractions, powers, subscripts, roots, brackets and common symbols; anything it doesn't know stays as plain text.
+
 ## 26 Nov 2026: real curriculum codes, checked before they show
 
 Craig asked for codes on content examples, the week and lesson plans, checked before they reach the screen.
