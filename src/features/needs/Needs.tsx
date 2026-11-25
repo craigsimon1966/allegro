@@ -195,7 +195,7 @@ export default function Needs() {
                           className={`w-full accent-green-700 ${n.selfRating ? '' : 'opacity-50'}`}
                         />
                         <div className="flex justify-between text-[13px] text-muted">
-                          <span>Not yet</span>
+                          <span>Not very</span>
                           <span>Very</span>
                         </div>
                       </div>
