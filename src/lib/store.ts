@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { CheckAttempt } from '@shared/quickCheck';
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
 import type { Diagnosis, Guided, Need } from '@shared/schemas';
 import type { DiagnosticResult } from '@shared/diagnostics';
@@ -50,6 +51,8 @@ export interface UnitProgress {
   completedAt: string | null;
   checkCorrect: number;
   reflection: string;
+  /** Latest quick check attempt per item id, fed into needs (see shared/quickCheck.ts). */
+  attempts?: Record<string, CheckAttempt>;
 }
 
 /** A "Try tomorrow" move saved for the lesson builder (M3). */

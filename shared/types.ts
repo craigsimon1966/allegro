@@ -5,14 +5,44 @@ export type Format = 'text' | 'worked_example' | 'video' | 'reflective_task' | '
 export type Audience =
   'out_of_field' | 'early_career' | 'casual' | 'experienced' | 'leader' | 'primary' | 'secondary';
 
-export interface CheckItem {
+/** Feedback for one likely wrong answer, tied to the misconception behind it. */
+export interface WrongAnswerFeedback {
+  /** The wrong answer as chosen or typed (compared without spaces, $ or case). */
+  answer: string;
+  feedback: string;
+  misconceptionId?: string;
+}
+
+/** A question in a unit's quick check, or a parallel version of one. */
+export interface CheckQuestion {
   id: string;
   stemMd: string;
   type: 'mcq' | 'numeric' | 'short';
   options?: string[];
   answer: string;
   feedbackCorrect: string;
+  /** Used when the wrong answer has no entry in wrongAnswers. */
   feedbackIncorrect: string;
+  wrongAnswers?: WrongAnswerFeedback[];
+  /** Step-by-step solution, shown after a second wrong answer. */
+  workedSolutionMd?: string;
+}
+
+/** Same skill and level as the question it follows, with different numbers. */
+export interface ParallelItem extends CheckQuestion {
+  workedSolutionMd: string;
+}
+
+export interface CheckItem extends CheckQuestion {
+  /**
+   * The questions after this one build on it. A wrong answer is not moved on: the teacher gets
+   * targeted feedback and a parallel item (up to two) before the next question opens.
+   */
+  incremental?: boolean;
+  /** What the question checks, e.g. "algebra.table-to-rule". Groups attempts across items. */
+  skill?: string;
+  /** Parallel items, in the order they are offered. Required when incremental is true. */
+  parallels?: ParallelItem[];
 }
 
 export interface MicroUnit {

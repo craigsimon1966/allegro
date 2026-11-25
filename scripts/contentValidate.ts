@@ -1,19 +1,62 @@
 import { z } from 'zod';
+import { MAX_PARALLELS, normaliseAnswer } from '../shared/quickCheck';
 
 // Content checks (TECH_SPEC 10): schema, tags, misconception links, modules, 3 to 8 minutes,
 // MCQ answers among the options, and no em dashes. Pure, so tests can feed it broken content.
 
+const WrongAnswerSchema = z.object({
+  answer: z.string().min(1),
+  feedback: z.string().min(1),
+  misconceptionId: z.string().optional(),
+});
+
+const QuestionShape = {
+  id: z.string().min(1),
+  stemMd: z.string().min(1),
+  type: z.enum(['mcq', 'numeric', 'short']),
+  options: z.array(z.string()).optional(),
+  answer: z.string().min(1),
+  feedbackCorrect: z.string().min(1),
+  feedbackIncorrect: z.string().min(1),
+  wrongAnswers: z.array(WrongAnswerSchema).optional(),
+  workedSolutionMd: z.string().min(1).optional(),
+};
+
+const ParallelSchema = z.object({ ...QuestionShape, workedSolutionMd: z.string().min(1) });
+
 const CheckItemSchema = z
   .object({
-    id: z.string().min(1),
-    stemMd: z.string().min(1),
-    type: z.enum(['mcq', 'numeric', 'short']),
-    options: z.array(z.string()).optional(),
-    answer: z.string().min(1),
-    feedbackCorrect: z.string().min(1),
-    feedbackIncorrect: z.string().min(1),
+    ...QuestionShape,
+    incremental: z.boolean().optional(),
+    skill: z
+      .string()
+      .regex(/^[a-z]+\.[a-z-]+$/)
+      .optional(),
+    parallels: z.array(ParallelSchema).max(MAX_PARALLELS).optional(),
   })
   .passthrough();
+
+type Question = z.infer<typeof ParallelSchema> | z.infer<typeof CheckItemSchema>;
+const norm = normaliseAnswer;
+
+/** Problems with one question or parallel: MCQ answer and options, wrong-answer feedback. */
+function questionProblems(file: string, q: Question, misIds: Set<string>): string[] {
+  const out: string[] = [];
+  const opts = q.options ?? [];
+  if (q.type === 'mcq' && !opts.includes(q.answer))
+    out.push(`${file}: check ${q.id} answer is not one of its options`);
+  if (new Set(opts.map(norm)).size !== opts.length)
+    out.push(`${file}: check ${q.id} has two options that read the same`);
+  for (const w of q.wrongAnswers ?? []) {
+    if (norm(w.answer) === norm(q.answer))
+      out.push(`${file}: check ${q.id} lists its own answer as a wrong answer`);
+    if (q.type === 'mcq' && !opts.includes(w.answer))
+      out.push(`${file}: check ${q.id} wrong answer "${w.answer}" is not one of its options`);
+    if (w.misconceptionId && !misIds.has(w.misconceptionId))
+      out.push(`${file}: check ${q.id} unknown misconception ${w.misconceptionId}`);
+  }
+  return out;
+}
 
 const UnitSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -97,9 +140,33 @@ export function validateContent(c: ContentInput): string[] {
     if (!mod) problems.push(`${file}: unknown module ${u.moduleId}`);
     else if (!mod.unitIds.includes(u.id))
       problems.push(`${file}: module ${u.moduleId} does not list this unit`);
-    for (const q of u.checkItems)
-      if (q.type === 'mcq' && !(q.options ?? []).includes(q.answer))
-        problems.push(`${file}: check ${q.id} answer is not one of its options`);
+    const ids = new Set<string>();
+    u.checkItems.forEach((q, qi) => {
+      problems.push(...questionProblems(file, q, misIds));
+      const ps = q.parallels ?? [];
+      if (q.incremental) {
+        if (!ps.length) problems.push(`${file}: check ${q.id} is incremental but has no parallels`);
+        if (!q.skill) problems.push(`${file}: check ${q.id} is incremental but has no skill`);
+        if (qi === u.checkItems.length - 1)
+          problems.push(`${file}: check ${q.id} is incremental but no question comes after it`);
+      }
+      const stems = new Set([norm(q.stemMd)]);
+      for (const p of ps) {
+        problems.push(...questionProblems(file, p, misIds));
+        if (p.type !== q.type) problems.push(`${file}: parallel ${p.id} is not the same type`);
+        if (stems.has(norm(p.stemMd)))
+          problems.push(`${file}: parallel ${p.id} repeats an earlier question`);
+        stems.add(norm(p.stemMd));
+        // Fixed labels like True and False may repeat; a worked answer must change.
+        const fixedLabel = p.type === 'mcq' && (q.options ?? []).includes(p.answer);
+        if (!fixedLabel && norm(p.answer) === norm(q.answer))
+          problems.push(`${file}: parallel ${p.id} has the same answer as ${q.id}`);
+      }
+      for (const id of [q.id, ...ps.map((p) => p.id)]) {
+        if (ids.has(id)) problems.push(`${file}: duplicate check id ${id}`);
+        ids.add(id);
+      }
+    });
     for (const [p, s] of strings(u, ''))
       if (EM_DASH.test(s)) problems.push(`${file}: em dash in ${p}`);
   }

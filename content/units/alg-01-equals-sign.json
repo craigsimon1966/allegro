@@ -46,7 +46,58 @@
       ],
       "answer": "True",
       "feedbackCorrect": "Yes. Both sides equal 12, so it is true.",
-      "feedbackIncorrect": "Work out each side: $9 + 3 = 12$ and $6 + 6 = 12$. They are the same, so it is true."
+      "feedbackIncorrect": "Work out each side: $9 + 3 = 12$ and $6 + 6 = 12$. They are the same, so it is true.",
+      "incremental": true,
+      "skill": "algebra.equals-as-balance",
+      "wrongAnswers": [
+        {
+          "answer": "False",
+          "misconceptionId": "mis-equals-as-answer",
+          "feedback": "It is easy to read the equals sign as \"the answer comes next\". Here it means \"is the same value as\". Work out each side: $9 + 3 = 12$ and $6 + 6 = 12$. Both sides are 12, so it is true."
+        }
+      ],
+      "parallels": [
+        {
+          "id": "alg-01-q1-p1",
+          "stemMd": "Is this true or false? $6 + 8 = 9 + 5$",
+          "type": "mcq",
+          "options": [
+            "True",
+            "False"
+          ],
+          "answer": "True",
+          "feedbackCorrect": "Yes. Both sides equal 14. You checked the value of each side, not just what came after the equals sign.",
+          "feedbackIncorrect": "Work out each side before deciding: $6 + 8 = 14$ and $9 + 5 = 14$. They are the same value, so it is true.",
+          "wrongAnswers": [
+            {
+              "answer": "False",
+              "misconceptionId": "mis-equals-as-answer",
+              "feedback": "The right side does not have to be a single answer. $6 + 8 = 14$ and $9 + 5 = 14$, so both sides have the same value and it is true."
+            }
+          ],
+          "workedSolutionMd": "1. Work out the left side: $6 + 8 = 14$.\n2. Work out the right side: $9 + 5 = 14$.\n3. Compare: $14 = 14$, so the two sides balance.\n4. **True.** The equals sign means both sides have the same value."
+        },
+        {
+          "id": "alg-01-q1-p2",
+          "stemMd": "Is this true or false? $10 - 3 = 2 + 5$",
+          "type": "mcq",
+          "options": [
+            "True",
+            "False"
+          ],
+          "answer": "True",
+          "feedbackCorrect": "Yes. Both sides equal 7, even though one is a subtraction and one is an addition.",
+          "feedbackIncorrect": "Work out each side: $10 - 3 = 7$ and $2 + 5 = 7$. Same value on both sides, so it is true.",
+          "wrongAnswers": [
+            {
+              "answer": "False",
+              "misconceptionId": "mis-equals-as-answer",
+              "feedback": "Each side can be its own calculation. $10 - 3 = 7$ and $2 + 5 = 7$, so the sides balance and it is true."
+            }
+          ],
+          "workedSolutionMd": "1. Work out the left side: $10 - 3 = 7$.\n2. Work out the right side: $2 + 5 = 7$.\n3. Compare: $7 = 7$, so the sides balance.\n4. **True.** It does not matter that one side subtracts and the other adds."
+        }
+      ]
     },
     {
       "id": "alg-01-q2",
