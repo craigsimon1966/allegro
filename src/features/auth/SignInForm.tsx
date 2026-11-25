@@ -7,13 +7,20 @@ import { supabase } from '@/lib/supabase';
 import { loadLatestFromSupabase } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 
-/** Magic-link sign-in (TECH_SPEC 6.1). Teachers never set a password. */
+/**
+ * Email sign-in (TECH_SPEC 6.1). The email has a 6-digit code and a link; either works.
+ * The code avoids the link opening in a mail app's own browser. Teachers never set a password.
+ */
 export function SignInForm() {
   const id = useId();
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error' | 'unavailable'>('idle');
   const [message, setMessage] = useState('');
   const [signedInAs, setSignedInAs] = useState<string | null>(null);
+  const codeId = useId();
+  const [code, setCode] = useState('');
+  const [checking, setChecking] = useState(false);
+  const [codeError, setCodeError] = useState('');
   const navigate = useNavigate();
   const setSignedIn = useAppStore((s) => s.setSignedIn);
   const reset = useAppStore((s) => s.reset);
@@ -59,14 +66,36 @@ export function SignInForm() {
         error.status === 403 || /not on the allegro pilot list/i.test(error.message)
           ? "This email isn't on the pilot list yet. Please contact the Allegro team."
           : error.status === 429 && /seconds/i.test(error.message)
-            ? 'We sent a link a moment ago. Please check your email, or wait a minute and try again.'
+            ? 'We sent an email a moment ago. Please check your email, or wait a minute and try again.'
             : error.status === 429
-              ? "We've sent a lot of sign-in emails in the last hour. Please try again a little later, or use the link already in your inbox."
-              : "We couldn't send the link. Please check the address and try again.",
+              ? "We've sent a lot of sign-in emails in the last hour. Please try again a little later, or use the email already in your inbox."
+              : "We couldn't send the email. Please check the address and try again.",
       );
     } else {
       setState('sent');
     }
+  };
+
+  const verify = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!supabase) return;
+    setChecking(true);
+    setCodeError('');
+    const { error } = await supabase.auth.verifyOtp({
+      email: email.trim(),
+      token: code.replace(/\D/g, ''),
+      type: 'email',
+    });
+    setChecking(false);
+    if (error) {
+      setCodeError(
+        /expired/i.test(error.message)
+          ? 'That code has expired. Go back and send a new one.'
+          : "That code didn't work. Check the numbers and try again.",
+      );
+      return;
+    }
+    await carryOn();
   };
 
   if (signedInAs) {
@@ -87,10 +116,49 @@ export function SignInForm() {
 
   if (state === 'sent') {
     return (
-      <div role="status" className="flex flex-col gap-1">
-        <p className="font-bold">Check your email.</p>
-        <p>We&apos;ve sent a sign-in link to {email}. It works once and expires in 1 hour.</p>
-      </div>
+      <form onSubmit={verify} className="flex flex-col gap-2.5">
+        <p className="font-bold" role="status">
+          Check your email.
+        </p>
+        <p>
+          We&apos;ve sent a sign-in email to {email}. Type the code from it here, or tap the link in
+          the email. Both work once and expire in 1 hour.
+        </p>
+        <Label as="label" htmlFor={codeId}>
+          Code from the email
+        </Label>
+        <input
+          id={codeId}
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          pattern="[0-9 ]{6,12}"
+          required
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          className="h-12 w-48 rounded border-2 border-ink bg-field px-3 text-[20px] tracking-[0.2em] text-ink"
+        />
+        <div className="flex flex-wrap gap-3">
+          <Button type="submit" disabled={checking}>
+            {checking ? 'Checking…' : 'Sign in'} <span aria-hidden="true">→</span>
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => {
+              setState('idle');
+              setCode('');
+              setCodeError('');
+            }}
+          >
+            Use a different email
+          </Button>
+        </div>
+        {codeError && (
+          <p role="alert" className="font-bold text-error">
+            {codeError}
+          </p>
+        )}
+      </form>
     );
   }
 
@@ -110,10 +178,10 @@ export function SignInForm() {
         className="h-12 rounded border-2 border-ink bg-field px-3 text-[17px] text-ink"
       />
       <Button type="submit" disabled={state === 'sending'}>
-        {state === 'sending' ? 'Sending…' : 'Email me a sign-in link'}{' '}
+        {state === 'sending' ? 'Sending…' : 'Email me a sign-in code'}{' '}
         <span aria-hidden="true">→</span>
       </Button>
-      <MarginNote size={21}>No password. The link works once.</MarginNote>
+      <MarginNote size={21}>No password. The code works once.</MarginNote>
       {state === 'error' && (
         <p role="alert" className="font-bold text-error">
           {message}

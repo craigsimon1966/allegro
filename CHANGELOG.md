@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Sign in with a code (25 November 2026)
+
+- After asking for a sign-in email, teachers type the 6-digit code from it (`verifyOtp`), or tap the link as before. Clear messages for a wrong or expired code, and "Use a different email".
+- `supabase/email-templates/magic-link.html`: the email template to paste into Supabase, showing the code and the link.
+
 ### Content review document (25 November 2026)
 
 - Drafted the rest of the SPEC 9.2 seed set: 6 more units (graphing errors, ratio or fraction, the equals sign, simplifying, I do we do you do, transitions; 28 in all) and 8 more misconceptions (12 in all). All `reviewedBy: null`, CK codes `AC9-TODO` / `NSW-TODO`.
