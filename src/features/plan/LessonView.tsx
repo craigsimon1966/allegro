@@ -10,6 +10,7 @@ import { MarginNote } from '@/components/MarginNote';
 import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
 import { tagById } from '@shared/tags';
+import { UNITS } from '@shared/catalogue';
 import type { LessonBlock } from '@shared/schemas';
 import { ApiError, loadLessonsFromSupabase, redoBlock, saveLesson } from '@/lib/api';
 import { useAppStore, type SavedLesson } from '@/lib/store';
@@ -41,6 +42,7 @@ function BlockView({
   onMove,
   onSave,
   onRedo,
+  onActive,
 }: {
   block: LessonBlock;
   minutes: number;
@@ -51,6 +53,8 @@ function BlockView({
   onMove: (dir: -1 | 1) => void;
   onSave: (content: string) => void;
   onRedo: (instruction: string) => Promise<void>;
+  /** The teacher is looking at or working in this block (for the laptop side panel). */
+  onActive: () => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(block.content_md);
@@ -78,6 +82,9 @@ function BlockView({
   return (
     <section
       aria-labelledby={id}
+      data-block-id={block.id}
+      onFocusCapture={onActive}
+      onMouseEnter={onActive}
       className={`lesson-block relative border-b border-rule py-4 ${ai ? 'bg-plum-100' : ''} -ml-content pl-content pr-5`}
     >
       <div className="absolute left-0 top-4 w-margin text-center">
@@ -234,6 +241,23 @@ export default function LessonView() {
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
   const [copied, setCopied] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const blockCount = saved?.lesson.blocks.length ?? 0;
+
+  // On laptop, the side panel follows the block in the upper part of the screen as the teacher scrolls.
+  useEffect(() => {
+    if (!blockCount || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting);
+        const bid = hit?.target.getAttribute('data-block-id');
+        if (bid) setActiveId(bid);
+      },
+      { rootMargin: '-25% 0px -65% 0px' },
+    );
+    document.querySelectorAll('[data-block-id]').forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [blockCount]);
 
   useEffect(() => {
     if (!loading) return;
@@ -303,101 +327,147 @@ export default function LessonView() {
 
   return (
     <AppShell step={5}>
-      <MarginLayout>
-        <div className="lesson-print">
-          <Label>
-            {tagById(saved.inputs.topicTag)?.label ?? 'Lesson'} · Year {lesson.year_level} ·{' '}
-            {lesson.duration_minutes} min
-          </Label>
-          <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
-          <dl className="mt-2 grid max-w-prose grid-cols-[auto_1fr] gap-x-4 text-[15px]">
-            <dt className="font-bold">AC v9</dt>
-            <dd>{lesson.curriculum_refs.ac9.join(', ')} (to be verified)</dd>
-            <dt className="font-bold">NSW</dt>
-            <dd>{lesson.curriculum_refs.nsw.join(', ')} (to be verified)</dd>
-          </dl>
-          <p className="mt-2 text-sm text-plum-700">{AI_DISCLOSURE}</p>
+      <div className="lesson-wrap lg:flex print:block">
+        <MarginLayout className="lg:min-w-0 lg:flex-1">
+          <div className="lesson-print">
+            <Label>
+              {tagById(saved.inputs.topicTag)?.label ?? 'Lesson'} · Year {lesson.year_level} ·{' '}
+              {lesson.duration_minutes} min
+            </Label>
+            <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
+            <dl className="mt-2 grid max-w-prose grid-cols-[auto_1fr] gap-x-4 text-[15px]">
+              <dt className="font-bold">AC v9</dt>
+              <dd>{lesson.curriculum_refs.ac9.join(', ')} (to be verified)</dd>
+              <dt className="font-bold">NSW</dt>
+              <dd>{lesson.curriculum_refs.nsw.join(', ')} (to be verified)</dd>
+            </dl>
+            <p className="mt-2 text-sm text-plum-700">{AI_DISCLOSURE}</p>
 
-          <div
-            className={`no-print -ml-content mt-4 border-y-2 py-3 pl-content pr-5 ${
-              unchecked ? 'border-warning' : 'border-green-700'
-            }`}
-            role="status"
-          >
-            {unchecked ? (
-              <p className="font-bold">
-                Check the maths: {unchecked} of {toCheck.length} blocks still to check before you
-                teach this.
-              </p>
-            ) : (
-              <p className="font-bold text-green-700">
-                You&apos;ve checked the maths in every block.
-              </p>
-            )}
-          </div>
-
-          {saved.inputs.carryIn && saved.inputs.carryIn.length > 0 && (
-            <div className="mt-4 max-w-prose">
-              <h2 className="text-[17px] font-bold">Moves you planned to try</h2>
-              <ul className="mt-1 list-disc pl-5">
-                {saved.inputs.carryIn.map((m) => (
-                  <li key={m}>
-                    <MathText inline>{m}</MathText>
-                  </li>
-                ))}
-              </ul>
+            <div
+              className={`no-print -ml-content mt-4 border-y-2 py-3 pl-content pr-5 ${
+                unchecked ? 'border-warning' : 'border-green-700'
+              }`}
+              role="status"
+            >
+              {unchecked ? (
+                <p className="font-bold">
+                  Check the maths: {unchecked} of {toCheck.length} blocks still to check before you
+                  teach this.
+                </p>
+              ) : (
+                <p className="font-bold text-green-700">
+                  You&apos;ve checked the maths in every block.
+                </p>
+              )}
             </div>
-          )}
 
-          <div className="mt-4">
-            {lesson.blocks.map((b, i) => (
-              <BlockView
-                key={b.id}
-                block={b}
-                minutes={minutes[i] ?? 0}
-                index={i}
-                count={lesson.blocks.length}
-                checked={saved.checked.includes(b.id)}
-                onCheck={(v) => setChecked(b.id, v)}
-                onMove={(dir) => move(i, dir)}
-                onSave={(content) => setBlock(b.id, { ...b, content_md: content })}
-                onRedo={async (instruction) => {
-                  const nb = await redoBlock(lesson, saved.inputs.topicTag, b.id, instruction);
-                  setBlock(b.id, nb);
-                  setChecked(b.id, false);
-                }}
-              />
-            ))}
+            {saved.inputs.carryIn && saved.inputs.carryIn.length > 0 && (
+              <div className="mt-4 max-w-prose">
+                <h2 className="text-[17px] font-bold">Moves you planned to try</h2>
+                <ul className="mt-1 list-disc pl-5">
+                  {saved.inputs.carryIn.map((m) => (
+                    <li key={m}>
+                      <MathText inline>{m}</MathText>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="mt-4">
+              {lesson.blocks.map((b, i) => (
+                <BlockView
+                  key={b.id}
+                  block={b}
+                  minutes={minutes[i] ?? 0}
+                  index={i}
+                  count={lesson.blocks.length}
+                  checked={saved.checked.includes(b.id)}
+                  onCheck={(v) => setChecked(b.id, v)}
+                  onMove={(dir) => move(i, dir)}
+                  onSave={(content) => setBlock(b.id, { ...b, content_md: content })}
+                  onActive={() => setActiveId(b.id)}
+                  onRedo={async (instruction) => {
+                    const nb = await redoBlock(lesson, saved.inputs.topicTag, b.id, instruction);
+                    setBlock(b.id, nb);
+                    setChecked(b.id, false);
+                  }}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="no-print mt-6 flex flex-wrap gap-3">
-          <Button onClick={() => window.print()}>
-            <Printer size={18} strokeWidth={1.5} aria-hidden="true" /> Print or save as PDF
-          </Button>
-          <Button variant="secondary" onClick={() => void copy()}>
-            <Copy size={18} strokeWidth={1.5} aria-hidden="true" />
-            {copied ? 'Copied' : 'Copy as text'}
-          </Button>
-        </div>
-        <Thumbs target="lesson" label="Would you use this lesson with minor edits?" />
-        <p className="no-print mt-2 text-[13px] text-muted">
-          To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window.
-        </p>
-        <p className="no-print mt-4">
-          <Link to="/reflect" className="font-bold text-green-700 underline">
-            After you teach it: reflect
-          </Link>
-          {' · '}
-          <Link to="/plan" className="text-green-700 underline">
-            Back to the lesson builder
-          </Link>
-          {' · '}
-          <Link to="/pathway" className="text-green-700 underline">
-            Back to this week
-          </Link>
-        </p>
-      </MarginLayout>
+          <div className="no-print mt-6 flex flex-wrap gap-3">
+            <Button onClick={() => window.print()}>
+              <Printer size={18} strokeWidth={1.5} aria-hidden="true" /> Print or save as PDF
+            </Button>
+            <Button variant="secondary" onClick={() => void copy()}>
+              <Copy size={18} strokeWidth={1.5} aria-hidden="true" />
+              {copied ? 'Copied' : 'Copy as text'}
+            </Button>
+          </div>
+          <Thumbs target="lesson" label="Would you use this lesson with minor edits?" />
+          <p className="no-print mt-2 text-[13px] text-muted">
+            To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window.
+          </p>
+          <p className="no-print mt-4">
+            <Link to="/reflect" className="font-bold text-green-700 underline">
+              After you teach it: reflect
+            </Link>
+            {' · '}
+            <Link to="/plan" className="text-green-700 underline">
+              Back to the lesson builder
+            </Link>
+            {' · '}
+            <Link to="/pathway" className="text-green-700 underline">
+              Back to this week
+            </Link>
+          </p>
+        </MarginLayout>
+        <WhyThisBlock
+          block={lesson.blocks.find((b) => b.id === activeId) ?? lesson.blocks[0]}
+          topicTag={saved.inputs.topicTag}
+        />
+      </div>
     </AppShell>
+  );
+}
+
+/** Laptop only: "Why this block works" docks on the right of a lesson (SPEC 10.6, design/Desktop-Lesson). */
+function WhyThisBlock({ block, topicTag }: { block?: LessonBlock; topicTag: string }) {
+  const related = UNITS.filter((u) => u.tags.includes(topicTag)).slice(0, 3);
+  return (
+    <aside
+      aria-label="Why this works"
+      className="no-print sticky top-0 hidden h-screen w-[320px] shrink-0 overflow-y-auto border-l-2 border-rule-strong px-5 py-6 lg:block"
+    >
+      <Label className="block border-b-2 border-rule-strong pb-1.5">Why this block works</Label>
+      {block && (
+        <div aria-live="polite">
+          <p className="mt-3 font-bold">
+            <MathText inline>{block.title}</MathText>
+          </p>
+          <MathText className="mt-1 text-[15px]">{block.rationale}</MathText>
+        </div>
+      )}
+      {related.length > 0 && (
+        <>
+          <Label className="mt-6 block border-b border-rule pb-1.5">From your learning</Label>
+          <ul>
+            {related.map((u) => (
+              <li key={u.id} className="border-b border-rule">
+                <Link
+                  to={`/learn/${u.id}`}
+                  className="flex min-h-tap items-center py-2 text-[15px] text-green-700 underline"
+                >
+                  <MathText inline>{u.title}</MathText>
+                  &nbsp;· {u.durationMinutes} min
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </aside>
   );
 }
