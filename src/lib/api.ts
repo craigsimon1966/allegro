@@ -125,6 +125,7 @@ export async function aiPathway(
     teachingDays: number[];
     weekStart: string;
     yearLevels: string[];
+    state?: string;
   },
   timeoutMs = 20000,
 ): Promise<{ items: PathwayItem[]; external: ReadingPick[] } | null> {

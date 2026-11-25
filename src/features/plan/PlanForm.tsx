@@ -4,7 +4,7 @@ import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
 import { Label, SectionRule } from '@/components/Label';
 import { Button } from '@/components/Button';
-import { AllegroMark } from '@/components/AllegroMark';
+import { AIProgress } from '@/components/AIProgress';
 import { TAGS, tagById } from '@shared/tags';
 import { DEMO_LESSON } from '@shared/lesson';
 import { findLikelyStudentNames } from '@shared/pii';
@@ -26,6 +26,7 @@ export default function PlanForm() {
   const moves = useAppStore((s) => s.lessonMoves);
   const lessons = useAppStore((s) => s.lessons);
   const putLesson = useAppStore((s) => s.putLesson);
+  const state = useAppStore((s) => s.intake?.guided.state);
 
   const needTag = needs
     .filter((n) => n.status === 'active')
@@ -54,6 +55,7 @@ export default function PlanForm() {
     classProfile: classProfile.trim(),
     ...(lastLesson.trim() ? { lastLesson: lastLesson.trim() } : {}),
     ...(carry.length ? { carryIn: carry } : {}),
+    ...(state ? { state } : {}),
   };
   const useCached =
     personaId === 'tammy' &&
@@ -102,9 +104,17 @@ export default function PlanForm() {
         </p>
 
         {busy ? (
-          <div className="mt-10 flex flex-col items-start gap-3" role="status">
-            <AllegroMark size={48} loading label="Drafting your lesson" />
-            <p>Drafting your lesson. This takes about 20 seconds.</p>
+          <div className="mt-10">
+            <AIProgress
+              title="Drafting your lesson"
+              steps={[
+                'Reading your class and topic',
+                'Planning the explicit teaching',
+                'Writing worked examples and practice',
+                'Checking common misconceptions',
+              ]}
+              expectedSeconds={20}
+            />
           </div>
         ) : (
           <form

@@ -16,7 +16,11 @@ import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore, type ReadingPick } from '@/lib/store';
+import { AIProgress } from '@/components/AIProgress';
 import { Thumbs } from '@/features/feedback/Thumbs';
+
+/** Rough typical wait for the AI's week. The call gives up at 20 seconds and uses rules. */
+const AI_WEEK_SECONDS = 15;
 
 // This week (SPEC 7.5). Demo personas get the rules version straight away. Everyone else gets the
 // AI's choices (checked on the server for hours, days and real units), or rules if the AI fails.
@@ -112,6 +116,7 @@ export default function Pathway() {
         teachingDays,
         weekStart,
         yearLevels: diagnosis.context.year_levels,
+        ...(intake?.guided.state ? { state: intake.guided.state } : {}),
       })
         .then((ai) => {
           // The server already checked these; run them through the same rules again here.
@@ -161,10 +166,26 @@ export default function Pathway() {
     [pathway],
   );
 
-  if (loading || (building && items.length === 0))
+  if (building && items.length === 0 && !loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <AIProgress
+          title="Building your week"
+          steps={[
+            'Reading your needs',
+            'Choosing units that fit your time',
+            'Putting them on your free days',
+            'Picking further reading',
+          ]}
+          expectedSeconds={AI_WEEK_SECONDS}
+          slowNote="If it takes more than 20 seconds, we'll build your week from your needs straight away."
+        />
+      </div>
+    );
+  if (loading)
     return (
       <div className="flex min-h-screen items-center justify-center" role="status">
-        <p>{building ? 'Building your week' : 'Loading your week'}</p>
+        <p>Loading your week</p>
       </div>
     );
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;
@@ -183,7 +204,7 @@ export default function Pathway() {
     ? `Year ${diagnosis.context.year_levels.join(' and ')}`
     : '';
   // Approved sources for their year levels, with the AI's picks (and reasons) first.
-  const forYears = sourcesFor(diagnosis.context.year_levels);
+  const forYears = sourcesFor(diagnosis.context.year_levels, intake?.guided.state);
   const picked = new Map(
     reading
       .filter((r) => forYears.some((s) => s.id === r.sourceId))

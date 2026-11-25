@@ -3,6 +3,7 @@ import { UNITS } from '../../shared/catalogue';
 import { buildPathway, type PathwayItem } from '../../shared/pathway';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { APPROVED_SOURCES, sourcesFor } from '../../shared/sources';
+import { STATE_IDS, curriculumContext } from '../../shared/states';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify } from './auth';
@@ -36,6 +37,7 @@ export const PathwayRequestSchema = z.object({
   teachingDays: z.array(z.number().int().min(1).max(5)).max(5),
   weekStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   yearLevels: z.array(z.string().max(20)).max(13).optional(),
+  state: z.enum(STATE_IDS).optional(),
 });
 export type PathwayRequest = z.infer<typeof PathwayRequestSchema>;
 
@@ -73,6 +75,7 @@ export function userMessage(req: PathwayRequest): string {
     ? `Teaching days (1 is Monday): ${req.teachingDays.join(', ')}`
     : 'Teaching days: not given';
   return [
+    curriculumContext(req.state),
     `Needs:\n${needs}`,
     `Time for learning this week: ${Math.round(req.hoursPerWeek * 60)} minutes`,
     days,
@@ -99,7 +102,7 @@ export function finishPathway(
     !!reply &&
     items.length > 0 &&
     items.every((it) => reply.items.some((p) => p.unitId === it.unitId));
-  const allowed = new Set(sourcesFor(req.yearLevels ?? []).map((s) => s.id));
+  const allowed = new Set(sourcesFor(req.yearLevels ?? [], req.state).map((s) => s.id));
   const external = (reply?.external ?? [])
     .filter((e) => allowed.has(e.sourceId) && APPROVED_SOURCES.some((s) => s.id === e.sourceId))
     .filter((e, i, all) => all.findIndex((x) => x.sourceId === e.sourceId) === i)
@@ -142,7 +145,7 @@ export async function handlePathway(request: Request, env: Env, deps: Deps = {})
       { retryAfterSeconds: wait },
     );
 
-  const sources = sourcesFor(req.yearLevels ?? [])
+  const sources = sourcesFor(req.yearLevels ?? [], req.state)
     .map((s) => `- ${s.id}: ${s.organisation}, ${s.title}. ${s.summary}`)
     .join('\n');
   const model = mainModel(env);

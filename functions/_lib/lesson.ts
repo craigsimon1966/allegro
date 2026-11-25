@@ -3,6 +3,7 @@ import { LessonBlockSchema, LessonSchema, type Lesson } from '../../shared/schem
 import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../shared/lesson';
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
+import { curriculumContext } from '../../shared/states';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
@@ -79,6 +80,7 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
   if (namesIn(req.classProfile, req.lastLesson, ...(req.carryIn ?? []))) return PII();
 
   const parts = [
+    curriculumContext(req.state),
     `Topic: ${tag.label}`,
     `Year level: ${req.yearLevel}`,
     `Lesson length: ${req.durationMinutes} minutes`,
