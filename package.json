@@ -20,7 +20,11 @@
     "e2e": "playwright test",
     "content:validate": "tsx scripts/content-validate.ts",
     "content:report": "tsx scripts/content-report.ts",
-    "content:export-review": "tsx scripts/content-export-review.ts"
+    "content:export-review": "tsx scripts/content-export-review.ts",
+    "prompts:build": "tsx scripts/build-prompts.ts",
+    "predev": "npm run prompts:build",
+    "prebuild": "npm run prompts:build",
+    "pretest": "npm run prompts:build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.13.0",
@@ -34,6 +38,7 @@
     "react-markdown": "9.1.0",
     "react-router-dom": "6.30.6",
     "rehype-katex": "7.0.1",
+    "remark-gfm": "4.0.1",
     "remark-math": "6.0.0",
     "zod": "3.25.76",
     "zustand": "5.1.0"

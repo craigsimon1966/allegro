@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "note": "Fictional demo teachers (SPEC 4). cachedDiagnosis lets the demo run with no AI call (SPEC 7.2, 8.7). Re-generate these from the real prompt before the pilot and review them.",
+  "personas": [
+    {
+      "id": "tammy",
+      "name": "Tammy",
+      "initial": "T",
+      "situation": "PE teacher, now teaching Year 8 maths",
+      "situationText": "I'm a PE and health teacher. Because of a gap in the timetable I'm now teaching two Year 8 maths classes. We start linear relationships next week and I only half remember how it works. I learned the rules but never really understood them. I teach three days a week and I'm happy to put time in on my days off.",
+      "guided": {
+        "role": "out_of_field",
+        "subject": "Mathematics",
+        "yearLevels": ["8"],
+        "schoolType": "government",
+        "locationType": "metro",
+        "weeks": 10,
+        "hoursPerWeek": 2,
+        "teachingDays": [1, 3, 4]
+      },
+      "cachedDiagnosis": {
+        "summary": "You're new to teaching maths and start linear relationships with Year 8 next week. You'd like to understand the ideas, not just the rules, and you have about 2 hours a week on your days off.",
+        "context": {
+          "role": "out_of_field",
+          "subject": "Mathematics",
+          "year_levels": ["8"],
+          "school_type": "government",
+          "location_type": "metro",
+          "timeframe_weeks": 10,
+          "hours_per_week": 2
+        },
+        "needs": [
+          {
+            "id": "tammy-1",
+            "domain": "CK",
+            "topic": "Linear relationships: gradient, tables and rules",
+            "catalogue_tags": ["algebra.linear"],
+            "evidence": "You said you \"only half remember how it works\".",
+            "priority": "now"
+          },
+          {
+            "id": "tammy-2",
+            "domain": "PCK",
+            "topic": "Errors students make with linear rules, and how to respond",
+            "catalogue_tags": ["pck.algebra-misconceptions"],
+            "evidence": "You learned \"the rules\" but want to understand why, which is exactly what students get stuck on too.",
+            "priority": "now"
+          },
+          {
+            "id": "tammy-3",
+            "domain": "PK",
+            "topic": "Checking for understanding mid-lesson",
+            "catalogue_tags": ["pk.checking-understanding"],
+            "evidence": "You're teaching two classes in a subject that's new to you, so quick checks will show you who's following.",
+            "priority": "now"
+          },
+          {
+            "id": "tammy-4",
+            "domain": "CK",
+            "topic": "Proportional reasoning: ratio, rates and percentages",
+            "catalogue_tags": ["number.proportional"],
+            "evidence": "Year 8 maths leans on proportional reasoning, and it comes up again in linear relationships.",
+            "priority": "soon"
+          },
+          {
+            "id": "tammy-5",
+            "domain": "CONTEXT",
+            "topic": "Teaching outside your trained subject",
+            "catalogue_tags": ["context.out-of-field"],
+            "evidence": "You said you're a PE and health teacher.",
+            "priority": "later"
+          }
+        ],
+        "clarifying_questions": [],
+        "safety_flags": []
+      }
+    },
+    {
+      "id": "sam",
+      "name": "Sam",
+      "initial": "S",
+      "situation": "Second-year teacher, regional NSW",
+      "situationText": "I'm in my second year, teaching Year 7 and Year 9 maths at a regional high school in NSW. I'm fine with the maths itself. My Year 9 class takes ages to settle and I lose the first ten minutes most lessons. In Year 7 the range is huge: some kids are still unsure of times tables and others finish everything in five minutes.",
+      "guided": {
+        "role": "early_career",
+        "subject": "Mathematics",
+        "yearLevels": ["7", "9"],
+        "schoolType": "government",
+        "locationType": "regional",
+        "weeks": null,
+        "hoursPerWeek": 1.5,
+        "teachingDays": [1, 2, 3, 4, 5]
+      },
+      "cachedDiagnosis": {
+        "summary": "Your maths is strong. What's hard is getting Year 9 settled quickly and pitching Year 7 work for a very wide range of students. You have about an hour and a half a week for learning.",
+        "context": {
+          "role": "early_career",
+          "subject": "Mathematics",
+          "year_levels": ["7", "9"],
+          "school_type": "government",
+          "location_type": "regional",
+          "timeframe_weeks": null,
+          "hours_per_week": 1.5
+        },
+        "needs": [
+          {
+            "id": "sam-1",
+            "domain": "PK",
+            "topic": "Entry routines that get a class working in the first two minutes",
+            "catalogue_tags": ["pk.routines"],
+            "evidence": "You said you \"lose the first ten minutes most lessons\" with Year 9.",
+            "priority": "now"
+          },
+          {
+            "id": "sam-2",
+            "domain": "PCK",
+            "topic": "One maths task, three entry points",
+            "catalogue_tags": ["pck.differentiation"],
+            "evidence": "You said the range in Year 7 is \"huge\".",
+            "priority": "now"
+          },
+          {
+            "id": "sam-3",
+            "domain": "PK",
+            "topic": "Explicit instruction and worked examples",
+            "catalogue_tags": ["pk.explicit-instruction"],
+            "evidence": "A clear \"I do, we do, you do\" structure helps both settling and differentiation.",
+            "priority": "soon"
+          },
+          {
+            "id": "sam-4",
+            "domain": "ASSESSMENT",
+            "topic": "Feedback that moves learning forward",
+            "catalogue_tags": ["assessment.feedback"],
+            "evidence": "Students who finish in five minutes need feedback that gives them somewhere to go next.",
+            "priority": "later"
+          },
+          {
+            "id": "sam-5",
+            "domain": "CONTEXT",
+            "topic": "Teaching in a regional school",
+            "catalogue_tags": ["context.regional"],
+            "evidence": "You're at a regional high school in NSW.",
+            "priority": "later"
+          }
+        ],
+        "clarifying_questions": [],
+        "safety_flags": []
+      }
+    },
+    {
+      "id": "priya",
+      "name": "Priya",
+      "initial": "P",
+      "situation": "Casual teacher, Year 1 for three weeks",
+      "situationText": "I'm secondary trained and doing casual relief. I've been given a Year 1 class at a small rural school in Victoria for the next three weeks. I've never taught little ones. I'm not sure how long they can concentrate, how to run the morning, or how to teach early number properly.",
+      "guided": {
+        "role": "casual",
+        "subject": "Primary (all subjects)",
+        "yearLevels": ["1"],
+        "schoolType": "government",
+        "locationType": "rural",
+        "weeks": 3,
+        "hoursPerWeek": 1,
+        "teachingDays": [1, 2, 3, 4, 5]
+      },
+      "cachedDiagnosis": {
+        "summary": "You're secondary trained and have a Year 1 class for three weeks. You want to know how to run the day, how long young children can focus, and how to teach early number well.",
+        "context": {
+          "role": "casual",
+          "subject": "Primary (all subjects)",
+          "year_levels": ["1"],
+          "school_type": "government",
+          "location_type": "rural",
+          "timeframe_weeks": 3,
+          "hours_per_week": 1
+        },
+        "needs": [
+          {
+            "id": "priya-1",
+            "domain": "PK",
+            "topic": "Early years routines for the morning and transitions",
+            "catalogue_tags": ["primary.routines"],
+            "evidence": "You said you're not sure \"how to run the morning\".",
+            "priority": "now"
+          },
+          {
+            "id": "priya-2",
+            "domain": "PK",
+            "topic": "Attention spans and pacing with six-year-olds",
+            "catalogue_tags": ["primary.attention"],
+            "evidence": "You asked \"how long they can concentrate\".",
+            "priority": "now"
+          },
+          {
+            "id": "priya-3",
+            "domain": "CK",
+            "topic": "Early number: counting, subitising and part-part-whole",
+            "catalogue_tags": ["primary.early-number"],
+            "evidence": "You want to teach early number \"properly\".",
+            "priority": "now"
+          },
+          {
+            "id": "priya-4",
+            "domain": "CONTEXT",
+            "topic": "Making the most of a short placement",
+            "catalogue_tags": ["context.casual"],
+            "evidence": "You're with this class for three weeks.",
+            "priority": "later"
+          }
+        ],
+        "clarifying_questions": [],
+        "safety_flags": []
+      }
+    }
+  ]
+}

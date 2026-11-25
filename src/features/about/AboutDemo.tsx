@@ -19,7 +19,11 @@ const SECTIONS = [
   },
   {
     title: 'Your data',
-    body: "If you try the demo as one of our example teachers, nothing leaves your browser. If you sign in, your pathway, lessons and reflections are saved in Australia and only you can see them. You'll be able to delete your account and data from this page.",
+    body: "If you try the demo as one of our example teachers, nothing leaves your browser. If you describe your own situation without signing in, the text is sent to our AI to work out your needs and is not stored. If you sign in, your pathway, lessons and reflections are saved in Australia and only you can see them. You'll be able to delete your account and data from this page.",
+  },
+  {
+    title: 'Voice input',
+    body: "The microphone button uses your browser's own speech recognition. In Chrome and Edge this sends your audio to Google or Microsoft to turn it into text. Allegro never receives the audio, only the words that appear in the box. If you'd rather not, just type.",
   },
 ];
 

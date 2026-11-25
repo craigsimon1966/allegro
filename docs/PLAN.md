@@ -64,7 +64,9 @@ Done when: `npm run check` passes; axe clean on `/` and `/styleguide`; hero and 
 
 Decisions needed first: AI disclosure wording (spec-issues #6).
 
-## M1: Auth, intake and diagnosis
+## M1: Auth, intake and diagnosis (built without accounts 24 November 2026, see CHANGELOG)
+
+Still needs Craig's Supabase project and Anthropic key: run the migrations, switch on the allow-list hook, set the env vars, then test real sign-in, the cross-user read check and a real-AI diagnosis.
 
 - Migrations `0001_init.sql` and `0002_rls.sql` exactly as TECH_SPEC 5; plus `0003_allowed_emails.sql` if the allow-list default stands (G7).
 - `/signin`, `/auth/callback`, access-code gate (`POST /api/access`, signed cookie, also enforced on `/api/*`, see G8).

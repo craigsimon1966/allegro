@@ -7,6 +7,11 @@ import { Placeholder } from './Placeholder';
 
 const AboutDemo = lazy(() => import('@/features/about/AboutDemo'));
 const Styleguide = lazy(() => import('@/features/styleguide/Styleguide'));
+const DemoPicker = lazy(() => import('@/features/demo/DemoPicker'));
+const SignInPage = lazy(() => import('@/features/auth/SignInPage'));
+const AuthCallback = lazy(() => import('@/features/auth/AuthCallback'));
+const Intake = lazy(() => import('@/features/intake/Intake'));
+const Needs = lazy(() => import('@/features/needs/Needs'));
 
 function Loading() {
   return (
@@ -24,17 +29,11 @@ export const routes = [
   { path: '/', element: <Landing /> },
   { path: '/about-demo', element: lazyPage(<AboutDemo />) },
   { path: '/styleguide', element: lazyPage(<Styleguide />) },
-  { path: '/demo', element: <Placeholder title="Choose a teacher" milestone="M1" /> },
-  { path: '/signin', element: <Placeholder title="Sign in" milestone="M1" /> },
-  { path: '/auth/callback', element: <Placeholder title="Signing you in" milestone="M1" /> },
-  {
-    path: '/start',
-    element: <Placeholder title="Tell us your situation" milestone="M1" shell step={1} />,
-  },
-  {
-    path: '/needs',
-    element: <Placeholder title="Your learning needs" milestone="M1" shell step={2} />,
-  },
+  { path: '/demo', element: lazyPage(<DemoPicker />) },
+  { path: '/signin', element: lazyPage(<SignInPage />) },
+  { path: '/auth/callback', element: lazyPage(<AuthCallback />) },
+  { path: '/start', element: lazyPage(<Intake />) },
+  { path: '/needs', element: lazyPage(<Needs />) },
   { path: '/pathway', element: <Placeholder title="This week" milestone="M2" shell step={3} /> },
   { path: '/learn/:unitId', element: <Placeholder title="Learn" milestone="M2" shell step={4} /> },
   { path: '/plan', element: <Placeholder title="Plan a lesson" milestone="M3" shell step={5} /> },

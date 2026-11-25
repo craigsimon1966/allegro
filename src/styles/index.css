@@ -105,3 +105,20 @@
     overflow-x: auto;
   }
 }
+
+@layer components {
+  .math-text table {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+    font-family: var(--font-heading);
+  }
+  .math-text th,
+  .math-text td {
+    border: 1px solid var(--rule);
+    padding: 4px 10px;
+    text-align: center;
+  }
+  .math-text th {
+    background: var(--sage-100);
+  }
+}
