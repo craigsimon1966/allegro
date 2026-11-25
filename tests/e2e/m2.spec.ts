@@ -68,3 +68,34 @@ test('unbuilt screens say what is coming and lead back to the week', async ({ pa
     await expect(page.getByRole('link', { name: 'Back to this week' })).toBeVisible();
   }
 });
+
+test('Explain this differently shows a labelled AI answer', async ({ page }) => {
+  await page.route('**/api/explain', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: 'Start where $x = 0$, then add the same amount each step.',
+    }),
+  );
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/learn/lin-02-table-to-rule');
+  await page.getByRole('button', { name: /Next/ }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'The core idea' })).toBeVisible();
+  await page.getByRole('button', { name: 'Explain this differently' }).click();
+  await page.getByRole('button', { name: 'More simply' }).click();
+  await expect(page.getByText('Drafted by Allegro AI. Please check before using.')).toBeVisible();
+  await expect(page.getByText(/then add the same amount/)).toBeVisible();
+  await axeClean(page);
+});
+
+test('Explain this differently says so when the AI is down', async ({ page }) => {
+  await page.route('**/api/explain', (r) => r.abort());
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/learn/lin-02-table-to-rule');
+  await page.getByRole('button', { name: /Next/ }).click();
+  await page.getByRole('button', { name: 'Explain this differently' }).click();
+  await page.getByRole('button', { name: 'With a different example' }).click();
+  await expect(page.getByText(/couldn't reach Allegro/)).toBeVisible();
+});

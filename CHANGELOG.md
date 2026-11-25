@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### M2: Explain this differently and saved weeks (25 November 2026)
+
+- `POST /api/explain` on the fast model with `prompts/explain.md`. The prompt holds only that unit's title, hook, core idea and worked example. Student-name check on the optional note, rate limits and usage logging as for diagnose.
+- "Explain this differently" on the core idea page: "More simply" or "With a different example", shown in a labelled AI block, with a plain message if the AI is unavailable.
+- Signed-in teachers: the week, its order, unit progress and reflections save to Supabase (`pathway_items`, `unit_progress`) and load on another device. Demo mode is unchanged.
+- Unit catalogue now comes from a generated import list so the Functions can read it too.
+- Tests: explain endpoint (fast model, 400 tokens, only the requested unit in the prompt, errors), Playwright for the AI answer and the AI-down message.
+
 ### M2 (demo slice): Pathway and learning (25 November 2026)
 
 - 22 draft micro-units covering all 17 catalogue tags (extra depth for Tammy's linear relationships, algebra errors, checking for understanding and proportional reasoning), 4 misconceptions and 12 modules. All `reviewedBy: null`, curriculum codes `AC9-TODO` / `NSW-TODO`.

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
@@ -13,7 +13,7 @@ import { UNITS, unitById } from '@shared/catalogue';
 import { buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
-import { loadLatestFromSupabase } from '@/lib/api';
+import { loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 
 // This week (SPEC 7.5). Built by rules from the confirmed needs, inside the teacher's stated hours.
@@ -68,15 +68,41 @@ export default function Pathway() {
     weekStart,
   ]);
 
+  // Signed in: try the saved week first, then build a new one if it doesn't match.
+  const triedLoad = useRef(mode !== 'signed_in');
   useEffect(() => {
     if (!diagnosis || key === pathwayKey) return;
-    setPathway(
-      buildPathway({ needs: active, units: UNITS, hoursPerWeek: hours, teachingDays, weekStart }),
-      key,
-    );
+    let cancelled = false;
+    const build = () => {
+      if (cancelled || useAppStore.getState().pathwayKey === key) return;
+      const items = buildPathway({
+        needs: active,
+        units: UNITS,
+        hoursPerWeek: hours,
+        teachingDays,
+        weekStart,
+      });
+      setPathway(items, key);
+      void savePathway(items).catch(() => undefined);
+    };
+    if (triedLoad.current) build();
+    else {
+      triedLoad.current = true;
+      void loadPathwayFromSupabase(key, weekStart)
+        .catch(() => undefined)
+        .finally(build);
+    }
+    return () => {
+      cancelled = true;
+    };
     // `active` is derived from `needs`, which `key` already covers.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, pathwayKey, diagnosis]);
+
+  const move = (unitId: string, dir: -1 | 1) => {
+    moveItem(unitId, dir);
+    void savePathway(useAppStore.getState().pathway ?? []).catch(() => undefined);
+  };
 
   const items = useMemo(
     () => [...(pathway ?? [])].sort((a, b) => a.sortOrder - b.sortOrder),
@@ -229,7 +255,7 @@ export default function Pathway() {
                         <button
                           type="button"
                           className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
-                          onClick={() => moveItem(it.unitId, -1)}
+                          onClick={() => move(it.unitId, -1)}
                           disabled={i === 0}
                           aria-label={`Move ${u.title} up`}
                         >
@@ -238,7 +264,7 @@ export default function Pathway() {
                         <button
                           type="button"
                           className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
-                          onClick={() => moveItem(it.unitId, 1)}
+                          onClick={() => move(it.unitId, 1)}
                           disabled={i === items.length - 1}
                           aria-label={`Move ${u.title} down`}
                         >
