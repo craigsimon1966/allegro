@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- The Me tab opens a new /me page: who you are, Sign out (or Leave the demo, Try a different teacher), and links to your needs, your situation, the pilot survey and About this demo.
 - `npm run content:validate` now exists (it was listed but never written). It checks every unit against the schema, tags, misconception and module links, 3 to 8 minutes, MCQ answers and em dashes, and the same checks run in `npm run check`.
 - This week has an optional "Further reading" section (SPEC 7.5) with the 7 sources Craig approved, kept in `content/approved-sources.json`. Primary teachers don't see the 7 to 10 syllabus page. A unit test fails if any other external link appears in the app or content.
 - Growth shows the one-line notes teachers write at the end of each unit (SPEC 7.6), under "Notes from your units". They were saved but not shown.
