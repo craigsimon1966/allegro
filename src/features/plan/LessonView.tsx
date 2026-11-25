@@ -13,6 +13,7 @@ import { tagById } from '@shared/tags';
 import { curriculumRows } from '@shared/states';
 import { UNITS } from '@shared/catalogue';
 import type { LessonBlock } from '@shared/schemas';
+import { lessonNumberIssues, type NumberIssue } from '@shared/numberChecks';
 import { ApiError, loadLessonsFromSupabase, redoBlock, saveLesson } from '@/lib/api';
 import { useAppStore, type SavedLesson } from '@/lib/store';
 import { Thumbs } from '@/features/feedback/Thumbs';
@@ -46,8 +47,11 @@ function BlockView({
   onSave,
   onRedo,
   onActive,
+  numberIssues = [],
 }: {
   block: LessonBlock;
+  /** Numbers that could confuse students (shared/numberChecks.ts). Shown on screen, not printed. */
+  numberIssues?: NumberIssue[];
   minutes: number;
   index: number;
   count: number;
@@ -135,6 +139,16 @@ function BlockView({
         </div>
       ) : (
         <MathText className="mt-2">{block.content_md}</MathText>
+      )}
+      {!editing && numberIssues.length > 0 && (
+        <div className="number-check no-print mt-3 max-w-prose border-l-2 border-warning pl-3 text-[15px]">
+          <p className="font-bold">Number check</p>
+          <ul className="list-disc pl-5">
+            {numberIssues.map((i) => (
+              <li key={i.message}>{i.message}</li>
+            ))}
+          </ul>
+        </div>
       )}
       <p className="rationale mt-3 max-w-prose text-[15px] text-muted">
         <span className="font-bold">Why this works: </span>
@@ -296,6 +310,7 @@ export default function LessonView() {
   const minutes = blockMinutes(lesson);
   const toCheck = lesson.blocks.filter((b) => b.needs_maths_check);
   const unchecked = toCheck.filter((b) => !saved.checked.includes(b.id)).length;
+  const numberIssues = lessonNumberIssues(lesson.blocks);
 
   const change = (fn: (s: SavedLesson) => SavedLesson) => {
     updateLesson(lessonId, fn);
@@ -405,6 +420,7 @@ export default function LessonView() {
                   onMove={(dir) => move(i, dir)}
                   onSave={(content) => setBlock(b.id, { ...b, content_md: content })}
                   onActive={() => setActiveId(b.id)}
+                  numberIssues={numberIssues[b.id]}
                   onRedo={async (instruction) => {
                     const nb = await redoBlock(lesson, saved.inputs.topicTag, b.id, instruction);
                     setBlock(b.id, nb);

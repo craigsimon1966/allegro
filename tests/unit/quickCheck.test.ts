@@ -19,7 +19,7 @@ describe('quick check flow', () => {
   const q = item('lin-02-q1');
 
   it('right first time moves on', () => {
-    const s = answerFlow(q, startFlow(), '$y = 4x + 5$');
+    const s = answerFlow(q, startFlow(), '$y = 4x + 3$');
     expect(s.phase).toBe('done');
     expect(toAttempt(q, s)?.outcome).toBe('first_try');
   });
@@ -38,7 +38,7 @@ describe('quick check flow', () => {
   });
 
   it('wrong twice offers one more try or moving on, and caps at three questions', () => {
-    let s = answerFlow(q, startFlow(), '$y = 5x + 4$');
+    let s = answerFlow(q, startFlow(), '$y = 3x + 4$');
     s = answerFlow(q, nextParallel(q, s), '$y = x + 3$');
     expect(s.phase).toBe('feedback');
     expect(toAttempt(q, moveOnForNow(s))?.outcome).toBe('needs_support');

@@ -12,6 +12,14 @@
     color: var(--ink);
     font-family: var(--font-body);
     line-height: 1.5;
+    /* Keep focused or scrolled-to controls clear of the fixed tab bar and Ask button on
+       phones and tablets (WCAG 2.4.11, focus not obscured). */
+    scroll-padding-bottom: 150px;
+  }
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-bottom: 0;
+    }
   }
   h1,
   h2,

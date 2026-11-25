@@ -51,7 +51,7 @@ test('a wrong answer gets targeted feedback and a parallel item before question 
 
 test('wrong twice shows a worked solution, and moving on flags it as a need', async ({ page }) => {
   await toQuickCheck(page, 'lin-02-table-to-rule');
-  await pick(page, '$y = 5x + 4$');
+  await pick(page, '$y = 3x + 4$');
   await check(page).click();
   await page.getByRole('button', { name: 'Try one like it' }).click();
   await pick(page, '$y = x + 3$');

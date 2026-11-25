@@ -45,6 +45,8 @@ Rules:
 - If the teacher's "moves to include" are given, work them into the most suitable block.
 - Use the reference material below for the methods and examples; do not contradict it.
 
+{{> _maths-examples}}
+
 Reference material from Allegro's units on this topic:
 
 """
