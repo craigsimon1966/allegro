@@ -1,0 +1,11 @@
+<!-- Paste into Supabase: Authentication > Emails > Templates > Magic link.
+     Subject: Your Allegro sign-in code
+     {{ .Token }} is the 6-digit code; {{ .ConfirmationURL }} is the link. Either works once. -->
+<div style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #1F2A1F">
+  <h2 style="margin: 0 0 12px">Sign in to Allegro</h2>
+  <p>Your sign-in code is:</p>
+  <p style="font-size: 32px; font-weight: bold; letter-spacing: 6px; margin: 8px 0 16px">{{ .Token }}</p>
+  <p>Type it on the Allegro sign-in screen. It works once and expires in 1 hour.</p>
+  <p>Or, on the device where you asked for it, <a href="{{ .ConfirmationURL }}">tap here to sign in</a>.</p>
+  <p style="color: #5A6B5A; font-size: 14px">If you didn't ask to sign in, you can ignore this email.</p>
+</div>
