@@ -11,7 +11,7 @@ import { DraftBadge } from '@/components/DraftBadge';
 import { MathText } from '@/components/MathText';
 import { ButtonLink } from '@/components/Button';
 import { UNITS, unitById } from '@shared/catalogue';
-import { buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
+import { addDays, buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
@@ -49,6 +49,7 @@ export default function Pathway() {
   const reading = useAppStore((s) => s.pathwayReading) ?? [];
   const setPathway = useAppStore((s) => s.setPathway);
   const moveItem = useAppStore((s) => s.moveItem);
+  const setItemDay = useAppStore((s) => s.setItemDay);
   const progress = useAppStore((s) => s.progress);
   const personaId = useAppStore((s) => s.personaId);
   const [openWhy, setOpenWhy] = useState<string | null>(null);
@@ -137,6 +138,11 @@ export default function Pathway() {
 
   const move = (unitId: string, dir: -1 | 1) => {
     moveItem(unitId, dir);
+    void savePathway(useAppStore.getState().pathway ?? []).catch(() => undefined);
+  };
+
+  const changeDay = (unitId: string, day: string) => {
+    setItemDay(unitId, day);
     void savePathway(useAppStore.getState().pathway ?? []).catch(() => undefined);
   };
 
@@ -314,7 +320,22 @@ export default function Pathway() {
                           </Link>
                           <div className="text-[13px] text-muted">
                             {DOMAIN_LABELS[u.domain]} · {u.durationMinutes} min ·{' '}
-                            {formatDay(it.scheduledFor)}
+                            <select
+                              aria-label={`Day for ${u.title}`}
+                              value={it.scheduledFor}
+                              onChange={(e) => changeDay(it.unitId, e.target.value)}
+                              className="min-h-[32px] cursor-pointer rounded-none border-0 border-b border-rule bg-transparent text-[13px] text-muted"
+                            >
+                              {[1, 2, 3, 4, 5].map((d) => {
+                                const iso = addDays(weekStart, d - 1);
+                                return (
+                                  <option key={d} value={iso}>
+                                    {formatDay(iso)}
+                                    {teachingDays.includes(d) ? ' (teaching)' : ''}
+                                  </option>
+                                );
+                              })}
+                            </select>
                             {isNext ? ' · up next' : ''}
                           </div>
                           <div className="mt-1 flex flex-wrap items-center gap-x-4">

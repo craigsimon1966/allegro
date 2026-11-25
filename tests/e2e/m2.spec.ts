@@ -114,7 +114,11 @@ test('on a laptop, units can be dragged into a new order', async ({ page }, info
     (await rows.allInnerTexts()).map((t) => t.split('\n').find((l) => l.trim().length > 3));
   await expect(rows.first()).toBeVisible();
   const before = await titles();
-  await rows.nth(0).dragTo(rows.nth(2));
+  // Grab by the margin number, away from the row's links, buttons and day picker.
+  await rows.nth(0).dragTo(rows.nth(2), {
+    sourcePosition: { x: 20, y: 20 },
+    targetPosition: { x: 20, y: 20 },
+  });
   await expect.poll(titles).not.toEqual(before);
   const after = await titles();
   expect(after[2]).toBe(before[0]);
@@ -131,4 +135,19 @@ test('This week has optional further reading from approved sources only', async 
   await expect(reSolve).toHaveAttribute('target', '_blank');
   // Priya teaches Year 1, so the 7 to 10 syllabus page is left out.
   await expect(page.getByRole('link', { name: /7–10 syllabus/ })).toHaveCount(0);
+});
+
+test('a unit can be moved to another day, and the choice is kept', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/pathway');
+  const day = page.getByRole('combobox', { name: /^Day for / }).first();
+  await expect(day).toBeVisible();
+  // Tammy teaches Mon, Wed and Thu, so those days are marked.
+  await expect(day.locator('option', { hasText: '(teaching)' })).toHaveCount(3);
+  const monday = await day.locator('option').first().getAttribute('value');
+  await day.selectOption(monday!);
+  await page.reload();
+  await expect(page.getByRole('combobox', { name: /^Day for / }).first()).toHaveValue(monday!);
+  await axeClean(page);
 });

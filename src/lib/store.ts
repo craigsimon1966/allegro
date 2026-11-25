@@ -111,6 +111,8 @@ interface State {
   addNeed: (need: TeacherNeed) => void;
   setPathway: (items: PathwayItem[], key: string, reading?: ReadingPick[]) => void;
   moveItem: (unitId: string, dir: -1 | 1) => void;
+  /** Moves a unit to another day of the week (YYYY-MM-DD). Its place in the list stays. */
+  setItemDay: (unitId: string, day: string) => void;
   saveProgress: (unitId: string, patch: Partial<UnitProgress>) => void;
   addLessonMove: (move: LessonMove) => void;
   putLesson: (saved: SavedLesson) => void;
@@ -172,6 +174,12 @@ export const useAppStore = create<State>()(
           [items[i], items[j]] = [items[j]!, items[i]!];
           return { pathway: items.map((it, k) => ({ ...it, sortOrder: k })) };
         }),
+      setItemDay: (unitId, day) =>
+        set((s) => ({
+          pathway:
+            s.pathway?.map((it) => (it.unitId === unitId ? { ...it, scheduledFor: day } : it)) ??
+            null,
+        })),
       saveProgress: (unitId, patch) =>
         set((s) => ({
           progress: {
