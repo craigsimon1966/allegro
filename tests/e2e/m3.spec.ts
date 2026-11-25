@@ -165,7 +165,10 @@ test('a lesson downloads as a Word file', async ({ page }) => {
   expect(download.suggestedFilename()).toMatch(/year-8\.docx$/);
   const bytes = await (await download.createReadStream()).toArray();
   // A .docx is a zip file: it starts with "PK".
-  expect(Buffer.concat(bytes).subarray(0, 2).toString()).toBe('PK');
+  const zip = Buffer.concat(bytes);
+  expect(zip.subarray(0, 2).toString()).toBe('PK');
+  // The demo lesson's graph is drawn into the file as a picture.
+  expect(zip.includes(Buffer.from('word/media/'))).toBe(true);
 });
 
 test('a number check appears when an edit gives two letters the same value', async ({ page }) => {

@@ -1,3 +1,4 @@
+import { describeVisual, parseVisual } from '../shared/visuals';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
@@ -123,7 +124,21 @@ function blocksToDocx(bs: Block[]): (Paragraph | Table)[] {
   for (const b of bs) {
     if (b.kind === 'para')
       out.push(new Paragraph({ spacing: { after: 120 }, children: runs(b.runs) }));
-    else if (b.kind === 'list')
+    else if (b.kind === 'visual') {
+      // The review copy describes the diagram; the app draws it from the same spec.
+      const v = parseVisual(b.raw);
+      out.push(
+        new Paragraph({
+          spacing: { after: 120 },
+          children: runs([
+            {
+              text: v.ok ? `[Diagram] ${describeVisual(v.spec)}` : '[Diagram that does not draw]',
+              italic: true,
+            },
+          ]),
+        }),
+      );
+    } else if (b.kind === 'list')
       b.items.forEach((it, n) =>
         out.push(
           new Paragraph({

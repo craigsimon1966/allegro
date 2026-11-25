@@ -5,7 +5,9 @@ export type Inline = { text: string; bold?: boolean; italic?: boolean };
 export type Block =
   | { kind: 'para'; runs: Inline[] }
   | { kind: 'list'; ordered: boolean; items: Inline[][] }
-  | { kind: 'table'; rows: Inline[][][] };
+  | { kind: 'table'; rows: Inline[][][] }
+  /** A ```visual diagram (shared/visuals.ts): the raw JSON spec. */
+  | { kind: 'visual'; raw: string };
 
 /** LaTeX as a teacher would read it on paper: 2 × 3, 6 ÷ 2, 3/4, □. */
 export function plainMaths(tex: string): string {
@@ -57,6 +59,16 @@ export function blocks(md: string): Block[] {
       i++;
       continue;
     }
+    if (line.startsWith('```')) {
+      const lang = line.slice(3).trim();
+      const body: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i]!.trim().startsWith('```')) body.push(lines[i++]!);
+      i++;
+      if (lang === 'visual') out.push({ kind: 'visual', raw: body.join('\n').trim() });
+      else if (body.length) out.push({ kind: 'para', runs: [{ text: body.join(' ') }] });
+      continue;
+    }
     if (line.startsWith('|')) {
       const rows: Inline[][][] = [];
       while (i < lines.length && lines[i]!.trim().startsWith('|')) {
@@ -82,7 +94,11 @@ export function blocks(md: string): Block[] {
       continue;
     }
     const para: string[] = [];
-    while (i < lines.length && lines[i]!.trim() && !/^(\||\d+\.\s|[-*]\s)/.test(lines[i]!.trim())) {
+    while (
+      i < lines.length &&
+      lines[i]!.trim() &&
+      !/^(\||\d+\.\s|[-*]\s|```)/.test(lines[i]!.trim())
+    ) {
       para.push(lines[i]!.trim());
       i++;
     }
@@ -98,6 +114,7 @@ export function blocksToMarkdown(bs: Block[]): string {
   return bs
     .map((b) => {
       if (b.kind === 'para') return md(b.runs);
+      if (b.kind === 'visual') return '```visual\n' + b.raw + '\n```';
       if (b.kind === 'list')
         return b.items.map((it, n) => `${b.ordered ? `${n + 1}.` : '-'} ${md(it)}`).join('\n');
       const [head, ...rest] = b.rows;

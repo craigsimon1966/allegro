@@ -3,6 +3,7 @@ import {
   Document,
   Footer,
   HeadingLevel,
+  ImageRun,
   Packer,
   PageNumber,
   Paragraph,
@@ -16,6 +17,11 @@ import { blockMinutes } from '@shared/lesson';
 import type { Lesson } from '@shared/schemas';
 import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks';
 import { curriculumRows } from '@shared/states';
+import { describeVisual, parseVisual, visualBlocksIn } from '@shared/visuals';
+import { visualToPng, type VisualImage } from './visualPng';
+
+/** Drawn diagrams keyed by their raw ```visual spec. */
+export type VisualImages = Map<string, VisualImage>;
 
 // "Download as Word" for a lesson plan. Plain Word structure (real headings, lists as text,
 // simple tables, Calibri) so the file opens cleanly in Microsoft Word and in Google Docs.
@@ -63,11 +69,32 @@ function table(rows: Inline[][][]) {
   });
 }
 
-function body(bs: Block[]): (Paragraph | Table)[] {
+function body(bs: Block[], images: VisualImages): (Paragraph | Table)[] {
   const out: (Paragraph | Table)[] = [];
   for (const b of bs) {
     if (b.kind === 'para') out.push(para(b.runs));
-    else if (b.kind === 'list')
+    else if (b.kind === 'visual') {
+      const img = images.get(b.raw);
+      const v = parseVisual(b.raw);
+      const alt = v.ok ? describeVisual(v.spec) : 'Diagram';
+      if (img) {
+        // At most 15 cm wide (about 570 px at 96 dpi), keeping the shape.
+        const w = Math.min(img.width, 570);
+        out.push(
+          new Paragraph({
+            spacing: { after: 120 },
+            children: [
+              new ImageRun({
+                type: 'png',
+                data: img.data,
+                transformation: { width: w, height: Math.round((img.height * w) / img.width) },
+                altText: { name: 'Diagram', title: 'Diagram', description: alt },
+              }),
+            ],
+          }),
+        );
+      } else out.push(para([{ text: `[Diagram] ${alt}`, italic: true }]));
+    } else if (b.kind === 'list')
       b.items.forEach((it, n) =>
         out.push(
           new Paragraph({
@@ -89,7 +116,12 @@ function body(bs: Block[]): (Paragraph | Table)[] {
 }
 
 /** The Word document for a lesson, with the AI notice at the top and in every page footer. */
-export function lessonDocument(lesson: Lesson, disclosure: string, state?: string): Document {
+export function lessonDocument(
+  lesson: Lesson,
+  disclosure: string,
+  state?: string,
+  images: VisualImages = new Map(),
+): Document {
   const minutes = blockMinutes(lesson);
   const children: (Paragraph | Table)[] = [
     new Paragraph({
@@ -120,7 +152,7 @@ export function lessonDocument(lesson: Lesson, disclosure: string, state?: strin
           }),
         ],
       }),
-      ...body(blocks(b.content_md)),
+      ...body(blocks(b.content_md), images),
     );
     if (b.rationale)
       children.push(
@@ -172,7 +204,12 @@ export function docxName(lesson: Lesson): string {
 }
 
 export async function downloadLessonDocx(lesson: Lesson, disclosure: string, state?: string) {
-  const blob = await Packer.toBlob(lessonDocument(lesson, disclosure, state));
+  const images: VisualImages = new Map();
+  for (const raw of new Set(lesson.blocks.flatMap((b) => visualBlocksIn(b.content_md)))) {
+    const img = await visualToPng(raw);
+    if (img) images.set(raw, img);
+  }
+  const blob = await Packer.toBlob(lessonDocument(lesson, disclosure, state, images));
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

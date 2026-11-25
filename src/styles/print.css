@@ -29,6 +29,15 @@
     padding: 0 !important;
     margin: 0 !important;
   }
+  /* Diagrams print small and sit to the right of the text, so a lesson still fits two pages. */
+  .lesson-print .math-visual {
+    float: right;
+    width: 3cm !important;
+    margin: 0 0 4pt 8pt !important;
+  }
+  .lesson-print .lesson-block {
+    display: flow-root;
+  }
   .lesson-print h1 {
     font-size: 18pt;
   }

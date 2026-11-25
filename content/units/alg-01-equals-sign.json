@@ -31,7 +31,7 @@
   "aitslStandards": [],
   "hook": "Ask a class what goes in the box: $7 + 5 = \\square + 8$. Many will write 12. That one answer tells you how they read the equals sign.",
   "coreIdeaMd": "Many students read $=$ as **\"the answer comes next\"**, because that is how it looked in early arithmetic ($3 + 4 = 7$).\n\nIn algebra, $=$ means **both sides have the same value**. It is a balance, not an instruction.\n\nStudents who see it as a balance find solving equations much easier, because doing the same thing to both sides keeps the balance.\n\nTwo habits help:\n\n- Write equations with the operation on the right sometimes: $12 = \\square + 8$.\n- Ask \"is this true or false?\" about statements like $6 + 2 = 4 + 4$.",
-  "workedExampleMd": "**What number goes in the box? $7 + 5 = \\square + 8$**\n\n1. Work out the left side: $7 + 5 = 12$.\n2. The right side must also be 12.\n3. $\\square + 8 = 12$, so the box is 4.\n4. **Check:** $7 + 5 = 12$ and $4 + 8 = 12$. Both sides match. ✓\n\n**In class:** draw a balance scale with 7 and 5 on one side, 8 and a box on the other.",
+  "workedExampleMd": "**What number goes in the box? $7 + 5 = \\square + 8$**\n\n```visual\n{\"type\": \"balance\", \"left\": [\"7\", \"5\"], \"right\": [\"\\u25a1\", \"8\"]}\n```\n\n1. Work out the left side: $7 + 5 = 12$.\n2. The right side must also be 12.\n3. $\\square + 8 = 12$, so the box is 4.\n4. **Check:** $7 + 5 = 12$ and $4 + 8 = 12$. Both sides match. ✓\n\n**In class:** draw a balance scale with 7 and 5 on one side, 8 and a box on the other.",
   "misconceptionIds": [
     "mis-equals-as-answer"
   ],

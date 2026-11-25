@@ -32,3 +32,36 @@ describe('lesson Word download', () => {
     ).toBe('linear-rules-tables-graphs-year-8.docx');
   });
 });
+
+describe('diagrams in the Word download', () => {
+  const lesson = DEMO_LESSON.lesson;
+  const raw = '{"type":"ten_frame","filled":7}';
+  const withVisual = {
+    ...lesson,
+    blocks: [{ ...lesson.blocks[0]!, content_md: `Count them.\n\n\`\`\`visual\n${raw}\n\`\`\`` }],
+  };
+
+  it('embeds the drawn diagram as a picture with alt text', async () => {
+    // A 1 x 1 PNG stands in for the browser's drawing.
+    const png = Uint8Array.from(
+      atob(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      ),
+      (c) => c.charCodeAt(0),
+    );
+    const images = new Map([[raw, { data: png, width: 220, height: 100 }]]);
+    const buf = await Packer.toBuffer(lessonDocument(withVisual, NOTICE, 'NSW', images));
+    const files = unzipSync(new Uint8Array(buf));
+    const doc = strFromU8(files['word/document.xml']!);
+    expect(doc).toContain('<w:drawing>');
+    expect(doc).toContain('Ten frame with 7 counters.');
+    expect(Object.keys(files).some((f) => f.startsWith('word/media/'))).toBe(true);
+    expect(doc).not.toContain('```');
+  });
+
+  it('falls back to a description when the picture is missing', async () => {
+    const buf = await Packer.toBuffer(lessonDocument(withVisual, NOTICE, 'NSW'));
+    const doc = strFromU8(unzipSync(new Uint8Array(buf))['word/document.xml']!);
+    expect(doc.replace(/<[^>]+>/g, '')).toContain('[Diagram] Ten frame with 7 counters.');
+  });
+});

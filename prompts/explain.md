@@ -16,6 +16,8 @@ Rules:
 
 {{> _maths-examples}}
 
+{{> _maths-visuals}}
+
 Unit text (your only source):
 
 """

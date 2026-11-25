@@ -25,6 +25,7 @@ const NUM = String.raw`-?\d+(?:\.\d+)?`;
 /** Turn LaTeX and Markdown maths into plain text that the patterns below can read. */
 export function plainForChecks(md: string): string {
   return md
+    .replace(/```visual[\s\S]*?```/g, '')
     .replace(/\\times|×|\\cdot/g, '×')
     .replace(/\\div|÷/g, '÷')
     .replace(/\\left|\\right/g, '')

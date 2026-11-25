@@ -20,6 +20,8 @@ Rules:
 
 {{> _maths-examples}}
 
+{{> _maths-visuals}}
+
 Allegro units (id: title, tags):
 
 {{UNIT_LIST}}

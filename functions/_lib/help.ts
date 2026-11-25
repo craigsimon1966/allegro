@@ -23,6 +23,15 @@ const noDash = (s: string) => s.replace(/—/g, ', ').trim();
 
 /** Keeps the default answer under the word limit by dropping whole trailing sentences. */
 export function capWords(text: string, max = 120): string {
+  // Diagrams (```visual blocks) don't count as words and are never cut in half.
+  const visuals = text.match(/```visual[\s\S]*?```/g) ?? [];
+  if (visuals.length) {
+    const prose = capWords(
+      text.replace(/```visual[\s\S]*?```/g, ' ').replace(/[ \t]+\n/g, '\n'),
+      max,
+    );
+    return `${prose}\n\n${visuals.join('\n\n')}`;
+  }
   const words = text.trim().split(/\s+/);
   if (words.length <= max) return text.trim();
   const sentences = text.trim().match(/[^.!?]+[.!?]+(\s|$)/g) ?? [text];
