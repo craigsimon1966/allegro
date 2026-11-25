@@ -120,3 +120,15 @@ test('on a laptop, units can be dragged into a new order', async ({ page }, info
   expect(after[2]).toBe(before[0]);
   expect(after[0]).toBe(before[1]);
 });
+
+test('This week has optional further reading from approved sources only', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Priya/ }).click();
+  await page.goto('/pathway');
+  await page.getByText('Further reading (optional)').click();
+  const reSolve = page.getByRole('link', { name: /reSolve Maths/ });
+  await expect(reSolve).toHaveAttribute('href', 'https://resolve.edu.au/');
+  await expect(reSolve).toHaveAttribute('target', '_blank');
+  // Priya teaches Year 1, so the 7 to 10 syllabus page is left out.
+  await expect(page.getByRole('link', { name: /7–10 syllabus/ })).toHaveCount(0);
+});

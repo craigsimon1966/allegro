@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- This week has an optional "Further reading" section (SPEC 7.5) with the 7 sources Craig approved, kept in `content/approved-sources.json`. Primary teachers don't see the 7 to 10 syllabus page. A unit test fails if any other external link appears in the app or content.
 - Growth shows the one-line notes teachers write at the end of each unit (SPEC 7.6), under "Notes from your units". They were saved but not shown.
 - On a laptop, units on This week can be dragged into a new order (SPEC 7.5). The up and down buttons stay for touch screens and keyboards.
 - Pilot error reporting: a page crash shows a friendly "Something went wrong" screen instead of a blank page, and crashes are reported (message, page, build, top of the stack, nothing the teacher typed) to the anonymous feedback table. Admins see them under "Errors in teachers' browsers" on /admin/feedback.

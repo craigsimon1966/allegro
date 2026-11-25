@@ -1,0 +1,63 @@
+{
+  "note": "Approved by Craig Simon on 25 Nov 2026. Only links in this file may appear in Allegro (CLAUDE.md, SPEC 8.5). Do not add links without his approval.",
+  "approvedBy": "Craig Simon",
+  "approvedOn": "2026-11-25",
+  "sources": [
+    {
+      "id": "acara-v9-maths",
+      "organisation": "ACARA",
+      "title": "Australian Curriculum v9: Mathematics",
+      "url": "https://www.australiancurriculum.edu.au/curriculum-information/understand-this-learning-area/mathematics/",
+      "summary": "The purpose, strands and teaching considerations of the v9 maths learning area.",
+      "audience": ["secondary", "primary"]
+    },
+    {
+      "id": "nesa-maths-k10",
+      "organisation": "NESA",
+      "title": "Mathematics K–10 Syllabus overview",
+      "url": "https://curriculum.nsw.edu.au/learning-areas/mathematics/mathematics-k-10-2022/overview",
+      "summary": "How the NSW syllabus is structured, working mathematically, and Core–Paths for Years 7 to 10.",
+      "audience": ["secondary", "primary"]
+    },
+    {
+      "id": "nsw-doe-7-10",
+      "organisation": "NSW Department of Education",
+      "title": "Mathematics 7–10 syllabus information",
+      "url": "https://education.nsw.gov.au/teaching-and-learning/curriculum/mathematics/leading-mathematics-k-12/leading-mathematics-7-12/mathematics-7-10-syllabus-information",
+      "summary": "What has changed in the 7–10 syllabus, with advice for teachers teaching maths out of field.",
+      "audience": ["secondary"]
+    },
+    {
+      "id": "resolve",
+      "organisation": "reSolve Maths by Inquiry",
+      "title": "reSolve Maths",
+      "url": "https://resolve.edu.au/",
+      "summary": "Free rich tasks and teaching sequences aligned to the v9 curriculum.",
+      "audience": ["secondary", "primary"]
+    },
+    {
+      "id": "aero-explicit-explainer",
+      "organisation": "AERO",
+      "title": "Explicit instruction optimises learning",
+      "url": "https://www.edresearch.edu.au/summaries-explainers/explainers/explicit-instruction-optimises-learning",
+      "summary": "A short read on explaining, modelling and gradually handing over to students.",
+      "audience": ["secondary", "primary"]
+    },
+    {
+      "id": "aero-explicit-maths-guide",
+      "organisation": "AERO",
+      "title": "Explicit instruction in maths: group facilitation guide",
+      "url": "https://www.edresearch.edu.au/guides-resources/practice-resources/explicit-instruction-maths-group-facilitation-guide",
+      "summary": "A video-based staff session that follows a maths teacher using explicit instruction.",
+      "audience": ["secondary", "primary"]
+    },
+    {
+      "id": "aamt-top-drawer",
+      "organisation": "AAMT",
+      "title": "Top Drawer Teachers",
+      "url": "https://topdrawer.aamt.edu.au/",
+      "summary": "Reasoning, statistics and geometry activities. Archived by AAMT, so no longer updated.",
+      "audience": ["secondary", "primary"]
+    }
+  ]
+}
