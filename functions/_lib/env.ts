@@ -22,7 +22,8 @@ export const fastModel = (env: Env) => env.ANTHROPIC_MODEL_FAST || DEFAULT_MODEL
 
 /** Max output tokens per endpoint, in one place (SPEC 8.7, TECH_SPEC 7.2). */
 export const MAX_TOKENS = {
-  diagnose: 1500,
+  // Real replies for a full situation run to about 1,500 tokens, so 1,500 cut the JSON off.
+  diagnose: 4000,
   pathway: 1200,
   explain: 400,
   lesson: 3500,

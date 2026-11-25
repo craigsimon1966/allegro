@@ -27,7 +27,9 @@ export function SignInForm() {
       setMessage(
         error.status === 403 || /not on the allegro pilot list/i.test(error.message)
           ? "This email isn't on the pilot list yet. Please contact the Allegro team."
-          : "We couldn't send the link. Please check the address and try again.",
+          : error.status === 429
+            ? "We've sent a lot of sign-in emails in the last hour. Please try again a little later, or use the link already in your inbox."
+            : "We couldn't send the link. Please check the address and try again.",
       );
     } else {
       setState('sent');
