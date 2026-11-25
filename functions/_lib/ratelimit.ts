@@ -80,3 +80,23 @@ export async function logAiCall(
 
 /** Test helper. */
 export const resetMemoryLimits = () => memory.clear();
+
+/** All AI calls since a time, for GET /api/health. Null when there is no database to count in. */
+export async function aiCallsSince(
+  env: Env,
+  sinceIso: string,
+  fetchImpl: typeof fetch = fetch,
+): Promise<number | null> {
+  if (!hasDb(env)) return null;
+  try {
+    const res = await fetchImpl(
+      `${env.SUPABASE_URL}/rest/v1/ai_calls?select=id&created_at=gte.${encodeURIComponent(sinceIso)}`,
+      { method: 'HEAD', headers: { ...adminHeaders(env), prefer: 'count=exact' } },
+    );
+    if (!res.ok) return null;
+    const range = res.headers.get('content-range');
+    return Number(range?.split('/')[1] ?? 0) || 0;
+  } catch {
+    return null;
+  }
+}
