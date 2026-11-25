@@ -250,7 +250,7 @@ export default function Learn() {
         </Button>
         {added && (
           <p className="mt-2 text-[15px] text-muted">
-            Saved for the lesson builder, which is coming soon.
+            Saved. It will be offered when you plan your next lesson.
           </p>
         )}
       </div>

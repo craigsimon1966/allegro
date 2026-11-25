@@ -105,6 +105,8 @@ Status (25 Nov 2026): demo slice done. Rules-based pathway in `shared/pathway.ts
 
 Done when: a 60-minute lesson prints on 2 A4 pages or fewer; regenerating one block leaves the rest byte-identical.
 
+Status (25 Nov 2026): built. All three done-when checks have tests.
+
 ## M4: Reflect, growth and Quick Help
 
 - `POST /api/reflect`, `POST /api/help` (streamed, final JSON line).

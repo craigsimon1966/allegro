@@ -1,7 +1,8 @@
-import type { Diagnosis, DiagnoseRequest } from '@shared/schemas';
-import { DiagnosisSchema } from '@shared/schemas';
+import type { Diagnosis, DiagnoseRequest, Lesson, LessonBlock } from '@shared/schemas';
+import { DiagnosisSchema, LessonBlockSchema, LessonSchema } from '@shared/schemas';
+import type { LessonRequest } from '@shared/lesson';
 import { supabase } from './supabase';
-import { useAppStore, type TeacherNeed, type UnitProgress } from './store';
+import { useAppStore, type SavedLesson, type TeacherNeed, type UnitProgress } from './store';
 import type { PathwayItem } from '@shared/pathway';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
@@ -274,4 +275,82 @@ export async function loadPathwayFromSupabase(key: string, weekStart: string): P
       key,
     );
   }
+}
+
+export async function draftLesson(req: LessonRequest): Promise<Lesson> {
+  const parsed = LessonSchema.safeParse(await post('/api/lesson', req));
+  if (!parsed.success)
+    throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
+  return parsed.data;
+}
+
+export async function redoBlock(
+  lesson: Lesson,
+  topicTag: string,
+  blockId: string,
+  instruction?: string,
+): Promise<LessonBlock> {
+  const parsed = LessonBlockSchema.safeParse(
+    await post('/api/lesson-block', {
+      lesson,
+      topicTag,
+      blockId,
+      ...(instruction ? { instruction } : {}),
+    }),
+  );
+  if (!parsed.success)
+    throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
+  return parsed.data;
+}
+
+/** Saves a lesson to the lessons table (signed in only) and remembers its row id. */
+export async function saveLesson(saved: SavedLesson): Promise<void> {
+  const { mode } = useAppStore.getState();
+  if (mode !== 'signed_in' || !supabase) return;
+  const row = {
+    title: saved.lesson.title,
+    topic_tag: saved.inputs.topicTag,
+    year_level: saved.lesson.year_level,
+    duration_minutes: saved.lesson.duration_minutes,
+    inputs: saved.inputs,
+    plan: saved.lesson,
+    maths_checked: saved.lesson.blocks
+      .filter((b) => b.needs_maths_check)
+      .every((b) => saved.checked.includes(b.id)),
+  };
+  if (saved.dbId) {
+    await supabase.from('lessons').update(row).eq('id', saved.dbId);
+    return;
+  }
+  const { data } = await supabase.from('lessons').insert(row).select('id').single();
+  if (data?.id)
+    useAppStore
+      .getState()
+      .updateLesson(saved.lesson.lesson_id, (l) => ({ ...l, dbId: data.id as string }));
+}
+
+/** Loads the signed-in teacher's saved lessons into the store. */
+export async function loadLessonsFromSupabase(): Promise<void> {
+  if (!supabase) return;
+  const { data } = await supabase
+    .from('lessons')
+    .select('id, inputs, plan, maths_checked, updated_at')
+    .order('updated_at', { ascending: false })
+    .limit(20);
+  if (!data?.length) return;
+  const lessons = { ...useAppStore.getState().lessons };
+  for (const r of data) {
+    const plan = LessonSchema.safeParse(r.plan);
+    if (!plan.success) continue;
+    const existing = Object.values(lessons).find((l) => l.dbId === r.id);
+    if (existing) continue;
+    lessons[plan.data.lesson_id] = {
+      lesson: plan.data,
+      inputs: r.inputs as LessonRequest,
+      checked: r.maths_checked ? plan.data.blocks.map((b) => b.id) : [],
+      dbId: r.id as string,
+      updatedAt: r.updated_at as string,
+    };
+  }
+  useAppStore.setState({ lessons });
 }

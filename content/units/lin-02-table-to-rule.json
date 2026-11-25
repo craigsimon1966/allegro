@@ -31,7 +31,7 @@
   "aitslStandards": [],
   "hook": "Students are often given a table and asked for the rule. There is a reliable two-step method, and it starts with one question: what happens when $x = 0$?",
   "coreIdeaMd": "To find a linear rule from a table:\n\n1. **Check the steps in $x$ go up by 1.** If they don't, divide the change in $y$ by the change in $x$.\n2. **Find the change in $y$ each step.** That is $m$.\n3. **Find $y$ when $x = 0$.** That is $c$. If 0 isn't in the table, work backwards one step at a time.\n4. **Write $y = mx + c$ and check it** with one more pair from the table.",
-  "workedExampleMd": "**Find the rule for this table.**\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 3 | 5 | 7 |\n\n1. $y$ goes up by 2 each step, so the rule starts with $2x$.\n2. When $x = 0$, $y = 1$, so add 1.\n3. $y = 2x + 1$\n4. **Check:** $x = 3$ gives $2 \\times 3 + 1 = 7$. ✓\n\n**In class:** ask \"what happens when $x = 0$?\" before anyone guesses the rule.",
+  "workedExampleMd": "**Find the rule for this table.**\n\n| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 1 | 3 | 5 | 7 |\n\n1. $y$ goes up by 2 each step, so the rule starts with $2x$.\n2. When $x = 0$, $y = 1$, so add 1.\n3. $y = 2x + 1$\n4. **Check:** $x = 3$ gives $2 \\times 3 + 1 = 7$. ✓\n\n**In class:** ask \"what happens when $x = 0$?\" before anyone guesses the rule.",
   "misconceptionIds": [
     "mis-linear-constant-only"
   ],

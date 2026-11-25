@@ -62,7 +62,7 @@ test("Tammy's week and a full micro-unit", async ({ page }) => {
 test('unbuilt screens say what is coming and lead back to the week', async ({ page }) => {
   await page.goto('/demo');
   await page.getByRole('button', { name: /Tammy/ }).click();
-  for (const path of ['/plan', '/reflect', '/growth', '/help']) {
+  for (const path of ['/reflect', '/growth', '/help']) {
     await page.goto(path);
     await expect(page.getByText('Coming soon')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Back to this week' })).toBeVisible();

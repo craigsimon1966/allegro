@@ -3,6 +3,8 @@ import { createJSONStorage, persist, type StateStorage } from 'zustand/middlewar
 import type { Diagnosis, Guided, Need } from '@shared/schemas';
 import type { DiagnosticResult } from '@shared/diagnostics';
 import type { PathwayItem } from '@shared/pathway';
+import type { Lesson } from '@shared/schemas';
+import type { LessonRequest } from '@shared/lesson';
 
 // App state (TECH_SPEC 3.1). Demo mode keeps everything here and in localStorage (SPEC 12.1).
 // localStorage can be missing or throw (private windows, blocked storage), so every access is guarded.
@@ -51,6 +53,16 @@ export interface LessonMove {
   text: string;
 }
 
+export interface SavedLesson {
+  lesson: Lesson;
+  inputs: LessonRequest;
+  /** Block ids the teacher has ticked "I've checked this" on. */
+  checked: string[];
+  /** Supabase row id once saved (signed in only). */
+  dbId?: string;
+  updatedAt: string;
+}
+
 export interface Intake {
   situationText: string;
   guided: Guided;
@@ -69,6 +81,7 @@ interface State {
   pathwayKey: string;
   progress: Record<string, UnitProgress>;
   lessonMoves: LessonMove[];
+  lessons: Record<string, SavedLesson>;
   startDemo: (personaId: string | null) => void;
   setSignedIn: () => void;
   setIntake: (intake: Intake) => void;
@@ -80,6 +93,8 @@ interface State {
   moveItem: (unitId: string, dir: -1 | 1) => void;
   saveProgress: (unitId: string, patch: Partial<UnitProgress>) => void;
   addLessonMove: (move: LessonMove) => void;
+  putLesson: (saved: SavedLesson) => void;
+  updateLesson: (id: string, fn: (l: SavedLesson) => SavedLesson) => void;
   reset: () => void;
 }
 
@@ -102,6 +117,7 @@ const empty = {
   pathwayKey: '',
   progress: {} as Record<string, UnitProgress>,
   lessonMoves: [] as LessonMove[],
+  lessons: {} as Record<string, SavedLesson>,
 };
 
 export const useAppStore = create<State>()(
@@ -147,6 +163,16 @@ export const useAppStore = create<State>()(
             ? {}
             : { lessonMoves: [...s.lessonMoves, move] },
         ),
+      putLesson: (saved) =>
+        set((s) => ({ lessons: { ...s.lessons, [saved.lesson.lesson_id]: saved } })),
+      updateLesson: (id, fn) =>
+        set((s) => {
+          const cur = s.lessons[id];
+          if (!cur) return {};
+          return {
+            lessons: { ...s.lessons, [id]: { ...fn(cur), updatedAt: new Date().toISOString() } },
+          };
+        }),
       reset: () => set({ mode: 'anonymous', personaId: null, demoSessionId: null, ...empty }),
     }),
     { name: 'allegro-demo', storage: createJSONStorage(() => safeStorage), version: 1 },

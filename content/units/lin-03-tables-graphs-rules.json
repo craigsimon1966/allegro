@@ -31,7 +31,7 @@
   },
   "aitslStandards": [],
   "hook": "A table, a graph and a rule can all show the same relationship. Students get stuck when they treat them as three different topics.",
-  "coreIdeaMd": "The same two numbers appear in every representation:\n\n| | Rate of change ($m$) | Starting value ($c$) |\n|---|---|---|\n| **Table** | The change in $y$ each step | $y$ when $x = 0$ |\n| **Graph** | How steep the line is (rise over run) | Where the line crosses the $y$-axis |\n| **Rule** | The number multiplying $x$ | The number added on |\n\nTeaching tip: always move between at least two representations in a lesson, and ask \"where can you see the 3 in the graph?\"",
+  "coreIdeaMd": "The same two numbers appear in every representation:\n\n| Shown as | Rate of change ($m$) | Starting value ($c$) |\n|---|---|---|\n| **Table** | The change in $y$ each step | $y$ when $x = 0$ |\n| **Graph** | How steep the line is (rise over run) | Where the line crosses the $y$-axis |\n| **Rule** | The number multiplying $x$ | The number added on |\n\nTeaching tip: always move between at least two representations in a lesson, and ask \"where can you see the 3 in the graph?\"",
   "workedExampleMd": "**A phone plan costs \\$10 a month plus \\$2 per gigabyte.**\n\n- **Rule:** $C = 2g + 10$\n- **Table:** $g$ = 0, 1, 2, 3 gives $C$ = 10, 12, 14, 16\n- **Graph:** starts at 10 on the vertical axis and rises 2 for every 1 across\n\nThe \\$10 is the starting value in all three. The \\$2 is the rate in all three.",
   "misconceptionIds": [
     "mis-gradient-steepness"
