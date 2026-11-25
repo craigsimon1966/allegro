@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ChevronDown, ChevronUp, Copy, FileDown, Pencil, Printer, RefreshCw } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  FileDown,
+  FileText,
+  Pencil,
+  Presentation,
+  Printer,
+  RefreshCw,
+} from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
 import { Label } from '@/components/Label';
@@ -15,8 +25,15 @@ import { ROLE_SHORT } from '@shared/profile';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { UNITS } from '@shared/catalogue';
-import type { LessonBlock } from '@shared/schemas';
-import { ApiError, loadLessonsFromSupabase, redoBlock, saveLesson } from '@/lib/api';
+import type { LessonBlock, LessonPack } from '@shared/schemas';
+import { lessonNumberIssues, type NumberIssue } from '@shared/numberChecks';
+import {
+  ApiError,
+  draftLessonPack,
+  loadLessonsFromSupabase,
+  redoBlock,
+  saveLesson,
+} from '@/lib/api';
 import { useAppStore, type SavedLesson } from '@/lib/store';
 import { Thumbs } from '@/features/feedback/Thumbs';
 
@@ -49,8 +66,11 @@ function BlockView({
   onSave,
   onRedo,
   onActive,
+  numberIssues = [],
 }: {
   block: LessonBlock;
+  /** Numbers that could confuse students (shared/numberChecks.ts). Shown on screen, not printed. */
+  numberIssues?: NumberIssue[];
   minutes: number;
   index: number;
   count: number;
@@ -138,6 +158,16 @@ function BlockView({
         </div>
       ) : (
         <MathText className="mt-2">{block.content_md}</MathText>
+      )}
+      {!editing && numberIssues.length > 0 && (
+        <div className="number-check no-print mt-3 max-w-prose border-l-2 border-warning pl-3 text-[15px]">
+          <p className="font-bold">Number check</p>
+          <ul className="list-disc pl-5">
+            {numberIssues.map((i) => (
+              <li key={i.message}>{i.message}</li>
+            ))}
+          </ul>
+        </div>
       )}
       <p className="rationale mt-3 max-w-prose text-[15px] text-muted">
         <span className="font-bold">Why this works: </span>
@@ -248,7 +278,8 @@ export default function LessonView() {
   const state = profile.state ?? undefined;
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
-  const [wordState, setWordState] = useState<'idle' | 'busy' | 'failed'>('idle');
+  const [packState, setPackState] = useState<'idle' | 'drafting' | 'building' | 'failed'>('idle');
+  const [plainPack, setPlainPack] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const blockCount = saved?.lesson.blocks.length ?? 0;
@@ -300,6 +331,7 @@ export default function LessonView() {
   const minutes = blockMinutes(lesson);
   const toCheck = lesson.blocks.filter((b) => b.needs_maths_check);
   const unchecked = toCheck.filter((b) => !saved.checked.includes(b.id)).length;
+  const numberIssues = lessonNumberIssues(lesson.blocks);
 
   const change = (fn: (s: SavedLesson) => SavedLesson) => {
     updateLesson(lessonId, fn);
@@ -325,16 +357,37 @@ export default function LessonView() {
       checked: v ? [...new Set([...s.checked, id])] : s.checked.filter((x) => x !== id),
     }));
 
-  const downloadWord = async () => {
-    setWordState('busy');
+  /** The pack for this version of the lesson: saved, the demo's, freshly drafted, or plain. */
+  const getPack = async (): Promise<LessonPack> => {
+    const lp = await import('@shared/lessonPack');
+    const key = lp.lessonKey(saved.lesson);
+    if (saved.pack?.key === key) return saved.pack.pack;
+    if (key === lp.DEMO_LESSON_KEY) return lp.DEMO_PACK;
+    setPackState('drafting');
     try {
-      const { downloadLessonDocx } = await import('@/lib/lessonDocx');
-      await downloadLessonDocx(saved.lesson, AI_DISCLOSURE, state);
-      setWordState('idle');
+      const pack = await draftLessonPack(saved.lesson);
+      change((s) => ({ ...s, pack: { key, pack } }));
+      setPlainPack(false);
+      return pack;
     } catch {
-      setWordState('failed');
+      setPlainPack(true);
+      return lp.fallbackPack(saved.lesson);
     }
   };
+
+  const download = async (part: 'guide' | 'worksheets' | 'slides' | 'all') => {
+    if (packState === 'drafting' || packState === 'building') return;
+    try {
+      const pack = await getPack();
+      setPackState('building');
+      const { downloadPack } = await import('@/lib/lessonPackFiles');
+      await downloadPack(part, saved.lesson, pack, AI_DISCLOSURE, state);
+      setPackState('idle');
+    } catch {
+      setPackState('failed');
+    }
+  };
+  const packBusy = packState === 'drafting' || packState === 'building';
 
   const copy = async () => {
     try {
@@ -355,7 +408,7 @@ export default function LessonView() {
               {lesson.duration_minutes} min
             </Label>
             <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
-            <p className="mt-1 text-[15px]" data-testid="built-for">
+            <p className="mt-1 text-[15px] print:hidden" data-testid="built-for">
               <span className="font-bold text-plum-700">Built for:</span>{' '}
               {builtForLine({
                 years: [lesson.year_level],
@@ -415,6 +468,7 @@ export default function LessonView() {
                   onMove={(dir) => move(i, dir)}
                   onSave={(content) => setBlock(b.id, { ...b, content_md: content })}
                   onActive={() => setActiveId(b.id)}
+                  numberIssues={numberIssues[b.id]}
                   onRedo={async (instruction) => {
                     const nb = await redoBlock(lesson, saved.inputs.topicTag, b.id, instruction);
                     setBlock(b.id, nb);
@@ -425,17 +479,90 @@ export default function LessonView() {
             </div>
           </div>
 
+          <section
+            aria-labelledby="pack-heading"
+            className="no-print -ml-content mt-6 border-t-2 border-rule-strong pl-content pt-4"
+          >
+            <h2 id="pack-heading" className="text-[22px] leading-tight text-plum-700">
+              Download for your class
+            </h2>
+            <ul className="mt-2 max-w-prose list-disc pl-5 text-[15px]">
+              <li>
+                <strong>Teacher guide</strong> (Word): step by step, with timings, what to say and
+                ask, what to watch for, and the answer key.
+              </li>
+              <li>
+                <strong>Student worksheets</strong> (Word): no answers, space to work, one for each
+                level, plus exit ticket slips.
+              </li>
+              <li>
+                <strong>Smart board slides</strong> (PowerPoint): one idea per slide, large type and
+                blank space. The slides show no answers, so you write the working live with the
+                board pen.
+              </li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button disabled={packBusy} onClick={() => void download('all')}>
+                <FileDown size={18} strokeWidth={1.5} aria-hidden="true" />
+                Download lesson pack (.zip)
+              </Button>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-x-5">
+              <button
+                type="button"
+                className={linkBtn}
+                disabled={packBusy}
+                onClick={() => void download('guide')}
+              >
+                <FileText size={18} strokeWidth={1.5} aria-hidden="true" /> Teacher guide
+              </button>
+              <button
+                type="button"
+                className={linkBtn}
+                disabled={packBusy}
+                onClick={() => void download('worksheets')}
+              >
+                <FileText size={18} strokeWidth={1.5} aria-hidden="true" /> Student worksheets
+              </button>
+              <button
+                type="button"
+                className={linkBtn}
+                disabled={packBusy}
+                onClick={() => void download('slides')}
+              >
+                <Presentation size={18} strokeWidth={1.5} aria-hidden="true" /> Smart board slides
+              </button>
+            </div>
+            <div role="status" className="mt-2 text-[15px]">
+              {packState === 'drafting' && (
+                <p className="font-bold">
+                  Allegro is drafting the worksheets and slides. This usually takes about 40
+                  seconds.
+                </p>
+              )}
+              {packState === 'building' && <p className="font-bold">Preparing your files…</p>}
+              {plainPack && packState !== 'drafting' && (
+                <p>
+                  Allegro&apos;s AI wasn&apos;t available, so these files were built straight from
+                  the lesson plan and are plainer. Try again later for the full pack.
+                </p>
+              )}
+            </div>
+            {packState === 'failed' && (
+              <p role="alert" className="mt-2 font-bold">
+                We couldn&apos;t make the files. Please try again, or use Print or Copy as text.
+              </p>
+            )}
+            <p className="mt-2 text-[13px] text-muted">
+              Word files open in Microsoft Word and Google Docs. The slides open in PowerPoint,
+              Google Slides (File, then Import slides) and smart board software that opens
+              PowerPoint. Please check the maths before you use them.
+            </p>
+          </section>
+
           <div className="no-print mt-6 flex flex-wrap gap-3">
-            <Button onClick={() => window.print()}>
+            <Button variant="secondary" onClick={() => window.print()}>
               <Printer size={18} strokeWidth={1.5} aria-hidden="true" /> Print or save as PDF
-            </Button>
-            <Button
-              variant="secondary"
-              disabled={wordState === 'busy'}
-              onClick={() => void downloadWord()}
-            >
-              <FileDown size={18} strokeWidth={1.5} aria-hidden="true" />
-              {wordState === 'busy' ? 'Preparing…' : 'Download as Word'}
             </Button>
             <Button variant="secondary" onClick={() => void copy()}>
               <Copy size={18} strokeWidth={1.5} aria-hidden="true" />
@@ -443,15 +570,6 @@ export default function LessonView() {
             </Button>
           </div>
           <Thumbs target="lesson" label="Would you use this lesson with minor edits?" />
-          <p className="no-print mt-2 text-[13px] text-muted">
-            To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window. The Word file opens
-            in Microsoft Word and in Google Docs (upload it to Drive, then open it).
-          </p>
-          {wordState === 'failed' && (
-            <p role="alert" className="no-print mt-2 font-bold">
-              We couldn&apos;t make the Word file. Please try again, or use Print or Copy as text.
-            </p>
-          )}
           <p className="no-print mt-4">
             <Link to="/reflect" className="font-bold text-green-700 underline">
               After you teach it: reflect

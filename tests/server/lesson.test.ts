@@ -1,10 +1,10 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { CompleteArgs, Completer } from '../../functions/_lib/anthropic';
-import { handleLesson, handleLessonBlock } from '../../functions/_lib/lesson';
+import { handleLesson, handleLessonBlock, handleLessonPack } from '../../functions/_lib/lesson';
 import { resetMemoryLimits } from '../../functions/_lib/ratelimit';
 import { DEMO_LESSON, blockMinutes, groundLesson, misconceptionsFor } from '../../shared/lesson';
-import { LessonSchema, type Lesson } from '../../shared/schemas';
+import { LessonPackSchema, LessonSchema, type Lesson } from '../../shared/schemas';
 
 const SESSION = '3f2b8c1e-4d5a-4b6c-8d7e-9f0a1b2c3d4e';
 const post = (path: string, body: unknown) =>
@@ -223,5 +223,61 @@ describe('POST /api/lesson-block', () => {
     );
     expect(res.status).toBe(200);
     expect(called).toBe(false);
+  });
+});
+
+describe('POST /api/lesson-pack', () => {
+  const lesson = DEMO_LESSON.lesson;
+  it('grounds the pack: known blocks only, no em dashes, a title slide first, writing space on problems', async () => {
+    let system = '';
+    const complete: Completer = async (args: CompleteArgs) => {
+      system = args.system;
+      return {
+        text: JSON.stringify({
+          steps: [
+            { block_id: 'b2', do: ['Show — the slide'], say: [], ask: [], watch_for: [] },
+            { block_id: 'nope', do: ['x'], say: [], ask: [], watch_for: [] },
+          ],
+          worksheet: {
+            title: 'T',
+            instructions: 'Show working.',
+            sections: [
+              {
+                heading: 'Core',
+                level: 'core',
+                block_id: 'b8',
+                items: [{ prompt_md: 'Q', answer_md: 'A', space: 'short' }],
+              },
+            ],
+          },
+          exit_ticket: [],
+          slides: [
+            {
+              kind: 'problem',
+              block_id: 'b6',
+              heading: 'Q1',
+              body_md: 'Find the rule',
+              writing_space: false,
+              answer_md: 'y = 2x',
+            },
+          ],
+        }),
+      };
+    };
+    const res = await handleLessonPack(post('/api/lesson-pack', { lesson }), {}, { complete });
+    expect(res.status).toBe(200);
+    const pack = LessonPackSchema.parse(await res.json());
+    expect(system).toContain(lesson.title);
+    expect(pack.steps.map((s) => s.block_id)).toEqual(['b2']);
+    expect(pack.steps[0]!.do[0]).toBe('Show, the slide');
+    expect(pack.slides[0]!.kind).toBe('title');
+    expect(pack.slides[1]!.writing_space).toBe(true);
+  });
+  it('says the AI is unavailable when the model fails', async () => {
+    const complete: Completer = async () => {
+      throw new Error('down');
+    };
+    const res = await handleLessonPack(post('/api/lesson-pack', { lesson }), {}, { complete });
+    expect(res.status).toBeGreaterThanOrEqual(400);
   });
 });

@@ -32,7 +32,7 @@
   "aitslStandards": [],
   "hook": "$2a + 3b$ cannot be simplified. Students often want to write $5ab$. Knowing why not is the heart of simplifying.",
   "coreIdeaMd": "**Like terms** have exactly the same pronumeral part. $3x$ and $5x$ are like terms. $3x$ and $5y$ are not, and neither are $x$ and $x^2$.\n\nTo simplify:\n\n1. **Find the like terms.** Underline or colour each group.\n2. **Add or subtract the numbers in front** (the coefficients). The pronumeral stays the same.\n3. **Unlike terms stay separate.** $2a + 3b$ is already as simple as it gets.\n\nA helpful picture: $3x$ is three of the same thing. You can add three bananas and two bananas, but three bananas and two apples stay as they are.",
-  "workedExampleMd": "**Simplify $4x + 3y - x + 2y$.**\n\n1. Like terms: $4x$ and $-x$; $3y$ and $2y$.\n2. $4x - x = 3x$.\n3. $3y + 2y = 5y$.\n4. Answer: $3x + 5y$.\n5. **Check:** put $x = 1$ and $y = 1$ in both. The original gives $4 + 3 - 1 + 2 = 8$, and $3 + 5 = 8$. ✓\n\n**In class:** checking with small numbers shows students for themselves that $2a + 3b$ is not $5ab$.",
+  "workedExampleMd": "**Simplify $4x + 3y - x + 2y$.**\n\n1. Like terms: $4x$ and $-x$; $3y$ and $2y$.\n2. $4x - x = 3x$.\n3. $3y + 2y = 5y$.\n4. Answer: $3x + 5y$.\n5. **Check:** put $x = 2$ and $y = 3$ in both (two different values, so you can tell which letter is which). The original gives $8 + 9 - 2 + 6 = 21$, and $6 + 15 = 21$. ✓\n\n**In class:** checking with small numbers shows students for themselves that $2a + 3b$ is not $5ab$.",
   "misconceptionIds": [
     "mis-conjoining",
     "mis-brackets-first-term"
@@ -49,7 +49,72 @@
       ],
       "answer": "$2m + 2n$",
       "feedbackCorrect": "Yes. $5m - 3m = 2m$, and $2n$ stays as it is.",
-      "feedbackIncorrect": "Collect the $m$ terms: $5m - 3m = 2m$. The $n$ term is not like the $m$ terms, so it stays: $2m + 2n$."
+      "feedbackIncorrect": "Collect the $m$ terms: $5m - 3m = 2m$. The $n$ term is not like the $m$ terms, so it stays: $2m + 2n$.",
+      "incremental": true,
+      "skill": "algebra.collect-like-terms",
+      "wrongAnswers": [
+        {
+          "answer": "$4mn$",
+          "misconceptionId": "mis-conjoining",
+          "feedback": "This joins unlike terms together. $m$ terms and $n$ terms are different things, so they can't be combined into $mn$. Only the $m$ terms collect: $5m - 3m = 2m$, giving $2m + 2n$."
+        },
+        {
+          "answer": "$8m + 2n$",
+          "feedback": "The $-$ belongs to the $3m$ that follows it, so $3m$ is taken away, not added. $5m - 3m = 2m$, giving $2m + 2n$."
+        }
+      ],
+      "parallels": [
+        {
+          "id": "alg-02-q1-p1",
+          "stemMd": "Simplify $7a + 3b - 2a$.",
+          "type": "mcq",
+          "options": [
+            "$5a + 3b$",
+            "$8ab$",
+            "$9a + 3b$"
+          ],
+          "answer": "$5a + 3b$",
+          "feedbackCorrect": "Yes. $7a - 2a = 5a$, and $3b$ stays as it is. You kept the unlike terms apart.",
+          "feedbackIncorrect": "Collect the $a$ terms: $7a - 2a = 5a$. The $b$ term is not like the $a$ terms, so it stays: $5a + 3b$.",
+          "wrongAnswers": [
+            {
+              "answer": "$8ab$",
+              "misconceptionId": "mis-conjoining",
+              "feedback": "$a$ terms and $b$ terms can't be joined. Only collect the $a$ terms: $7a - 2a = 5a$, giving $5a + 3b$."
+            },
+            {
+              "answer": "$9a + 3b$",
+              "feedback": "The sign goes with the term after it, so the $2a$ is subtracted. $7a - 2a = 5a$, giving $5a + 3b$."
+            }
+          ],
+          "workedSolutionMd": "1. Find the like terms: $7a$ and $-2a$ (the sign goes with the term after it).\n2. Collect them: $7a - 2a = 5a$.\n3. $3b$ has no like term, so it stays as it is.\n4. **$5a + 3b$**"
+        },
+        {
+          "id": "alg-02-q1-p2",
+          "stemMd": "Simplify $8r + 3s - 2r$.",
+          "type": "mcq",
+          "options": [
+            "$9rs$",
+            "$10r + 3s$",
+            "$6r + 3s$"
+          ],
+          "answer": "$6r + 3s$",
+          "feedbackCorrect": "Yes. $8r - 2r = 6r$, and $3s$ stays as it is.",
+          "feedbackIncorrect": "Collect the $r$ terms: $8r - 2r = 6r$. The $s$ term stays: $6r + 3s$.",
+          "wrongAnswers": [
+            {
+              "answer": "$9rs$",
+              "misconceptionId": "mis-conjoining",
+              "feedback": "$r$ terms and $s$ terms are different, so they can't be joined into $rs$. $8r - 2r = 6r$, giving $6r + 3s$."
+            },
+            {
+              "answer": "$10r + 3s$",
+              "feedback": "The $2r$ has a minus sign in front of it, so it is taken away. $8r - 2r = 6r$, giving $6r + 3s$."
+            }
+          ],
+          "workedSolutionMd": "1. Find the like terms: $8r$ and $-2r$.\n2. Collect them: $8r - 2r = 6r$.\n3. $3s$ has no like term, so it stays.\n4. **$6r + 3s$**"
+        }
+      ]
     },
     {
       "id": "alg-02-q2",

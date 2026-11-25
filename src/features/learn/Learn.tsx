@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
@@ -9,7 +9,21 @@ import { MathText } from '@/components/MathText';
 import { misconceptionById, unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { DOMAIN_LABELS } from '@shared/tags';
-import type { CheckItem, MicroUnit } from '@shared/types';
+import type { CheckItem, CheckQuestion, MicroUnit } from '@shared/types';
+import {
+  MAX_PARALLELS,
+  answerFlow,
+  moveOnForNow,
+  needsSupport,
+  nextParallel,
+  questionAt,
+  startFlow,
+  toAttempt,
+  visibleCount,
+  wrongFeedback,
+  type CheckAttempt,
+  type FlowState,
+} from '@shared/quickCheck';
 import { useAppStore } from '@/lib/store';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
@@ -22,28 +36,18 @@ import { Thumbs } from '@/features/feedback/Thumbs';
 
 type Page = { key: string; label: string; body: ReactNode };
 
-const normalise = (s: string) => s.replace(/[$\s]/g, '').toLowerCase();
-
-function Check({ item, onAnswered }: { item: CheckItem; onAnswered: (correct: boolean) => void }) {
+/** One question's answer area: radio options or a text box, and the Check button. */
+function AnswerInput({ q, onSubmit }: { q: CheckQuestion; onSubmit: (value: string) => void }) {
   const [value, setValue] = useState('');
-  const [result, setResult] = useState<boolean | null>(null);
-  const submit = () => {
-    const ok = normalise(value) === normalise(item.answer);
-    setResult(ok);
-    onAnswered(ok);
-  };
   return (
-    <fieldset className="mt-5 border-b border-rule pb-5">
-      <legend className="text-[17px] font-bold">
-        <MathText inline>{item.stemMd}</MathText>
-      </legend>
-      {item.type === 'mcq' ? (
+    <>
+      {q.type === 'mcq' ? (
         <div className="mt-3 flex flex-col gap-2">
-          {(item.options ?? []).map((o) => (
+          {(q.options ?? []).map((o) => (
             <label key={o} className="flex min-h-tap cursor-pointer items-center gap-3">
               <input
                 type="radio"
-                name={item.id}
+                name={q.id}
                 value={o}
                 checked={value === o}
                 onChange={() => setValue(o)}
@@ -55,32 +59,173 @@ function Check({ item, onAnswered }: { item: CheckItem; onAnswered: (correct: bo
         </div>
       ) : (
         <div className="mt-3">
-          <label htmlFor={`${item.id}-answer`} className="block text-[15px] font-bold">
+          <label htmlFor={`${q.id}-answer`} className="block text-[15px] font-bold">
             Your answer
           </label>
           <input
-            id={`${item.id}-answer`}
-            inputMode={item.type === 'numeric' ? 'decimal' : 'text'}
+            id={`${q.id}-answer`}
+            inputMode={q.type === 'numeric' ? 'decimal' : 'text'}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             className="h-12 w-40 rounded border-2 border-ink bg-field px-3 text-[17px] text-ink"
           />
         </div>
       )}
-      <Button variant="secondary" className="mt-3" onClick={submit} disabled={!value}>
+      <Button
+        variant="secondary"
+        className="mt-3"
+        onClick={() => onSubmit(value)}
+        disabled={!value}
+      >
         Check my answer
       </Button>
+    </>
+  );
+}
+
+function WorkedSolution({ md }: { md?: string }) {
+  if (!md) return null;
+  return (
+    <div className="mt-3 border-l-4 border-plum-500 pl-3">
+      <h2 className="text-[17px] font-bold text-plum-500">Worked solution</h2>
+      <MathText>{md}</MathText>
+    </div>
+  );
+}
+
+/**
+ * A quick check question. An incremental one (later questions build on it) is not moved on after
+ * a wrong answer: targeted feedback, then a parallel item, then a worked solution and one more
+ * try or "move on for now" (shared/quickCheck.ts).
+ */
+function Check({
+  item,
+  number,
+  total,
+  onDone,
+}: {
+  item: CheckItem;
+  number: number;
+  total: number;
+  onDone: (attempt: CheckAttempt) => void;
+}) {
+  const [flow, setFlow] = useState<FlowState>(startFlow);
+  const legendRef = useRef<HTMLLegendElement>(null);
+  const q = questionAt(item, flow.step);
+  const parallels = Math.min(item.parallels?.length ?? 0, MAX_PARALLELS);
+
+  useEffect(() => {
+    if (flow.step > 0) legendRef.current?.focus();
+  }, [flow.step]);
+
+  const update = (next: FlowState) => {
+    setFlow(next);
+    const attempt = toAttempt(item, next);
+    if (attempt && next !== flow) onDone(attempt);
+  };
+
+  const wrong = flow.last && !flow.last.correct ? wrongFeedback(q, flow.last.value) : null;
+  const isFinal = flow.phase === 'done';
+  // The worked solution comes after a second wrong answer, never after the first.
+  const showWorked = !!wrong && flow.step > 0;
+
+  return (
+    <fieldset className="mt-5 border-b border-rule pb-5" data-testid={`check-${item.id}`}>
+      <legend ref={legendRef} tabIndex={-1} className="text-[17px] font-bold outline-none">
+        <span className="block text-[13px] font-normal uppercase tracking-[0.12em] text-muted">
+          {flow.step === 0
+            ? `Question ${number} of ${total}`
+            : `Question ${number}, follow-up ${flow.step} of ${parallels} · same skill, new numbers`}
+        </span>
+        <MathText inline>{q.stemMd}</MathText>
+      </legend>
+      {flow.phase === 'answering' ? (
+        <AnswerInput key={q.id} q={q} onSubmit={(v) => update(answerFlow(item, flow, v))} />
+      ) : (
+        <p className="mt-3">
+          Your answer: <MathText inline>{flow.last?.value ?? ''}</MathText>
+        </p>
+      )}
       <div aria-live="polite">
-        {result !== null && (
+        {flow.last && (
           <div className="mt-3 max-w-prose">
-            <p className={`font-bold ${result ? 'text-green-700' : 'text-ink'}`}>
-              {result ? 'Correct.' : 'Not quite.'}
+            <p className={`font-bold ${flow.last.correct ? 'text-green-700' : 'text-ink'}`}>
+              {flow.last.correct ? 'Correct.' : 'Not quite.'}
             </p>
-            <MathText>{result ? item.feedbackCorrect : item.feedbackIncorrect}</MathText>
+            <MathText>{flow.last.correct ? q.feedbackCorrect : wrong!.text}</MathText>
+            {flow.last.correct && flow.step > 0 && (
+              <p className="mt-2 font-bold text-green-700">
+                You used the feedback. On to the next question.
+              </p>
+            )}
+            {showWorked && <WorkedSolution md={q.workedSolutionMd} />}
+
+            {flow.phase === 'feedback' && flow.step === 0 && (
+              <div className="mt-3">
+                <p>The next question builds on this one, so try one like it first.</p>
+                <Button className="mt-3" onClick={() => update(nextParallel(item, flow))}>
+                  Try one like it
+                </Button>
+              </div>
+            )}
+            {flow.phase === 'feedback' && flow.step > 0 && (
+              <div className="mt-3">
+                <p>Read the worked solution, then have one more go, or move on for now.</p>
+                <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <Button onClick={() => update(nextParallel(item, flow))}>Try one more</Button>
+                  <button
+                    type="button"
+                    onClick={() => update(moveOnForNow(flow))}
+                    className="min-h-tap font-bold text-green-700 underline"
+                  >
+                    Move on for now
+                  </button>
+                </div>
+              </div>
+            )}
+            {isFinal && flow.outcome === 'needs_support' && (
+              <p className="mt-3">
+                No problem. We&apos;ve noted this skill so it comes back on your needs and in your
+                week.
+                {number < total && ' The next question is open.'}
+              </p>
+            )}
           </div>
         )}
       </div>
     </fieldset>
+  );
+}
+
+function QuickCheck({
+  items,
+  onAttempt,
+}: {
+  items: CheckItem[];
+  onAttempt: (a: CheckAttempt) => void;
+}) {
+  const [resolved, setResolved] = useState<Record<string, boolean>>({});
+  const shown = visibleCount(items, resolved);
+  return (
+    <div>
+      {items.slice(0, shown).map((c, i) => (
+        <Check
+          key={c.id}
+          item={c}
+          number={i + 1}
+          total={items.length}
+          onDone={(a) => {
+            setResolved((r) => ({ ...r, [c.id]: true }));
+            onAttempt(a);
+          }}
+        />
+      ))}
+      {shown < items.length && (
+        <p className="mt-3 text-[15px] text-muted">
+          Question {shown + 1} builds on this one, so it opens once you&apos;re done here.
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -145,7 +290,7 @@ function ExplainDifferently({ unitId }: { unitId: string }) {
 
 function buildPages(
   u: MicroUnit,
-  extras: { onCheck: (ok: boolean) => void; tomorrow: ReactNode; reflect: ReactNode },
+  extras: { onAttempt: (a: CheckAttempt) => void; tomorrow: ReactNode; reflect: ReactNode },
 ): Page[] {
   const pages: Page[] = [
     {
@@ -198,9 +343,7 @@ function buildPages(
     label: 'Quick check',
     body: (
       <div>
-        {u.checkItems.map((c) => (
-          <Check key={c.id} item={c} onAnswered={extras.onCheck} />
-        ))}
+        <QuickCheck items={u.checkItems} onAttempt={extras.onAttempt} />
       </div>
     ),
   });
@@ -219,7 +362,7 @@ export default function Learn() {
   const addLessonMove = useAppStore((s) => s.addLessonMove);
   const added = useAppStore((s) => s.lessonMoves.some((m) => m.unitId === unitId));
   const [page, setPage] = useState(0);
-  const [correct, setCorrect] = useState(0);
+  const [attempts, setAttempts] = useState<Record<string, CheckAttempt>>({});
   const [reflection, setReflection] = useState(saved?.reflection ?? '');
   const unit = unitById(unitId);
 
@@ -240,7 +383,12 @@ export default function Learn() {
 
   const names = findLikelyStudentNames(reflection);
   const pages = buildPages(unit, {
-    onCheck: (ok) => ok && setCorrect((c) => c + 1),
+    onAttempt: (a) => {
+      const next = { ...attempts, [a.itemId]: a };
+      setAttempts(next);
+      // Saved straight away, so a teacher who leaves mid-unit still feeds their needs.
+      saveProgress(unit.id, { attempts: { ...(saved?.attempts ?? {}), ...next } });
+    },
     tomorrow: (
       <div className="max-w-prose">
         <MathText className="text-[19px]">{unit.tryTomorrow}</MathText>
@@ -290,7 +438,8 @@ export default function Learn() {
   const finish = () => {
     const p = {
       completedAt: new Date().toISOString(),
-      checkCorrect: correct,
+      checkCorrect: Object.values(attempts).filter((a) => !needsSupport(a.outcome)).length,
+      attempts: { ...(saved?.attempts ?? {}), ...attempts },
       reflection: reflection.trim(),
     };
     saveProgress(unit.id, p);

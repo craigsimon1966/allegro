@@ -1,5 +1,11 @@
 import type { Diagnosis, DiagnoseRequest, Lesson, LessonBlock } from '@shared/schemas';
-import { DiagnosisSchema, LessonBlockSchema, LessonSchema } from '@shared/schemas';
+import {
+  DiagnosisSchema,
+  LessonBlockSchema,
+  LessonPackSchema,
+  LessonSchema,
+  type LessonPack,
+} from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
 import { supabase } from './supabase';
 import {
@@ -11,6 +17,7 @@ import {
   type UnitProgress,
 } from './store';
 import type { PathwayItem } from '@shared/pathway';
+import type { CheckAttempt } from '@shared/quickCheck';
 import type { FeedbackRow } from '@/features/admin/feedbackSummary';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
@@ -272,7 +279,7 @@ export async function saveUnitProgress(unitId: string, p: UnitProgress): Promise
     unit_id: unitId,
     started_at: p.completedAt,
     completed_at: p.completedAt,
-    check_answers: { correct: p.checkCorrect },
+    check_answers: { correct: p.checkCorrect, attempts: p.attempts ?? {} },
     reflect_note: p.reflection.slice(0, 1000) || null,
   });
 }
@@ -296,6 +303,9 @@ export async function loadPathwayFromSupabase(key: string, weekStart: string): P
           {
             completedAt: (r.completed_at as string | null) ?? null,
             checkCorrect: Number((r.check_answers as { correct?: number } | null)?.correct ?? 0),
+            attempts:
+              (r.check_answers as { attempts?: Record<string, CheckAttempt> } | null)?.attempts ??
+              {},
             reflection: (r.reflect_note as string | null) ?? '',
           },
         ]),
@@ -338,6 +348,14 @@ export async function redoBlock(
       ...(instruction ? { instruction } : {}),
     }),
   );
+  if (!parsed.success)
+    throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
+  return parsed.data;
+}
+
+/** Worksheets, teacher steps and smart board slides for a finished lesson. */
+export async function draftLessonPack(lesson: Lesson): Promise<LessonPack> {
+  const parsed = LessonPackSchema.safeParse(await post('/api/lesson-pack', { lesson }));
   if (!parsed.success)
     throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
   return parsed.data;

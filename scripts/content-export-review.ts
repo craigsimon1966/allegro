@@ -20,7 +20,13 @@ import { MISCONCEPTIONS, MODULES, UNITS, misconceptionById } from '../shared/cat
 import { tagById } from '../shared/tags';
 import type { MicroUnit } from '../shared/types';
 import diagnosticsFile from '../content/diagnostics.json';
-import { blocks, blocksToMarkdown, inline, type Block, type Inline } from '../shared/markdownBlocks';
+import {
+  blocks,
+  blocksToMarkdown,
+  inline,
+  type Block,
+  type Inline,
+} from '../shared/markdownBlocks';
 import { unitHash } from './contentReport';
 
 // npm run content:export-review (TECH_SPEC 10.3). Writes review/allegro-content-review.docx and a
@@ -146,6 +152,9 @@ interface Question {
   answer: string;
   feedbackCorrect: string;
   feedbackIncorrect: string;
+  wrongAnswers?: { answer: string; feedback: string }[];
+  incremental?: boolean;
+  workedSolutionMd?: string;
 }
 const LETTERS = 'ABCDEFGH';
 const indented = (t: string) =>
@@ -162,6 +171,26 @@ function question(title: string, q: Question): Paragraph[] {
     indented(`**Answer:** ${q.answer}`),
     indented(`**If right:** ${q.feedbackCorrect}`),
     indented(`**If wrong:** ${q.feedbackIncorrect}`),
+    ...extraLines(q).map(indented),
+  ];
+}
+
+/** Targeted feedback per wrong answer, the worked solution, and whether later questions wait. */
+function extraLines(q: Question): string[] {
+  return [
+    ...(q.wrongAnswers ?? []).map((w) => `**If they choose ${w.answer}:** ${w.feedback}`),
+    ...(q.incremental
+      ? ['**Builds on:** the next question waits until this one is right or followed up.']
+      : []),
+    ...(q.workedSolutionMd
+      ? [
+          // The table repeats the question, so only the steps go in the review document.
+          `**Worked solution:** ${q.workedSolutionMd
+            .split('\n')
+            .filter((l) => l.trim() && !l.trim().startsWith('|'))
+            .join(' ')}`,
+        ]
+      : []),
   ];
 }
 const questionMd = (title: string, q: Question) =>
@@ -171,6 +200,7 @@ const questionMd = (title: string, q: Question) =>
     `   **Answer:** ${q.answer}`,
     `   **If right:** ${q.feedbackCorrect}`,
     `   **If wrong:** ${q.feedbackIncorrect}`,
+    ...extraLines(q).map((l) => `   ${l}`),
   ]
     .map((l) => blocksToMarkdown([{ kind: 'para', runs: inline(l) }]))
     .join('\n');
@@ -284,6 +314,11 @@ for (const g of ordered) {
       u.checkItems.forEach((q, qi) => {
         children.push(...question(`Question ${qi + 1}`, q));
         mdOut.push(questionMd(`Question ${qi + 1}`, q));
+        (q.parallels ?? []).forEach((pq, pi) => {
+          const t = `Question ${qi + 1}, follow-up ${pi + 1} (same skill, new numbers)`;
+          children.push(...question(t, pq));
+          mdOut.push(questionMd(t, pq));
+        });
       });
     }
 

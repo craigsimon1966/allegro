@@ -33,6 +33,8 @@ export const MAX_TOKENS = {
   // A full eight-block lesson runs past 3,500 tokens; production replies were all cut off there.
   lesson: 8000,
   'lesson-block': 1000,
+  // Worksheets, teacher steps and 10 to 16 slides: about 3,000 tokens for a 60-minute lesson.
+  'lesson-pack': 6000,
   help: 350,
   reflect: 300,
 } as const;

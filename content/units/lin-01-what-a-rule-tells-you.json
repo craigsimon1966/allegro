@@ -55,11 +55,11 @@
     },
     {
       "id": "lin-01-q2",
-      "stemMd": "In $y = 4x + 1$, what is $y$ when $x = 0$?",
+      "stemMd": "In $y = -2x + 7$, what is $y$ when $x = 0$?",
       "type": "numeric",
-      "answer": "1",
-      "feedbackCorrect": "Right. When $x = 0$ the $4x$ part disappears, leaving the starting value.",
-      "feedbackIncorrect": "When $x = 0$, $4x = 0$, so $y = 1$. That is the starting value."
+      "answer": "7",
+      "feedbackCorrect": "Right. When $x = 0$ the $-2x$ part is 0, leaving the starting value.",
+      "feedbackIncorrect": "When $x = 0$, $-2x = 0$, so $y = 7$. That is the starting value."
     }
   ],
   "tryTomorrow": "Before you show any rule, put a table on the board and ask: \"Where does it start, and what does it go up by?\" Collect answers in words first.",

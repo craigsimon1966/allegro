@@ -11,6 +11,7 @@ import { loadLatestFromSupabase, saveNeedEdit } from '@/lib/api';
 import { useAppStore, type TeacherNeed } from '@/lib/store';
 import type { Need } from '@shared/schemas';
 import { DiagnosticCheck } from './DiagnosticCheck';
+import { FromQuickChecks } from './FromQuickChecks';
 import { Thumbs } from '@/features/feedback/Thumbs';
 import { builtForLine, topicFitsYear } from '@shared/curriculum';
 import { ROLE_SHORT } from '@shared/profile';
@@ -339,6 +340,8 @@ export default function Needs() {
             )}
           </div>
         </div>
+
+        <FromQuickChecks usedTags={usedTags} onAdd={addNeed} />
 
         <Thumbs target="diagnosis" label="Did we get your situation right?" />
 

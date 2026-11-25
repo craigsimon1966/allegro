@@ -1,9 +1,10 @@
 import { create } from 'zustand';
+import type { CheckAttempt } from '@shared/quickCheck';
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
 import type { Diagnosis, Guided, Need } from '@shared/schemas';
 import type { DiagnosticResult } from '@shared/diagnostics';
 import type { PathwayItem } from '@shared/pathway';
-import type { Lesson } from '@shared/schemas';
+import type { Lesson, LessonPack } from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
 
 // App state (TECH_SPEC 3.1). Demo mode keeps everything here and in localStorage (SPEC 12.1).
@@ -50,6 +51,8 @@ export interface UnitProgress {
   completedAt: string | null;
   checkCorrect: number;
   reflection: string;
+  /** Latest quick check attempt per item id, fed into needs (see shared/quickCheck.ts). */
+  attempts?: Record<string, CheckAttempt>;
 }
 
 /** A "Try tomorrow" move saved for the lesson builder (M3). */
@@ -65,6 +68,8 @@ export interface SavedLesson {
   checked: string[];
   /** Supabase row id once saved (signed in only). */
   dbId?: string;
+  /** The classroom pack, drafted for the lesson content with this key (shared/lessonPack.ts). */
+  pack?: { key: string; pack: LessonPack };
   updatedAt: string;
 }
 
