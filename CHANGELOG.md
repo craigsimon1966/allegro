@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Further reading on This week now shows the AI's picks first, each with a one-line reason labelled "Suggested for you by Allegro AI". Links still come only from `content/approved-sources.json`, and only sources for the teacher's year levels appear. Personas see the plain list as before.
 - New `POST /api/pathway` (TECH_SPEC 7.2, 7.3) with `prompts/pathway.md`. For teachers using their own situation or signed in, the AI now chooses the week's units and writes each "Why this?" reason. The code keeps only real units and needs, never goes over the hours, keeps learning off teaching days, and only passes on approved source ids. If the AI is down or picks nothing usable, the rules week is used. Demo personas stay on rules, with no AI call.
 - The Me tab opens a new /me page: who you are, Sign out (or Leave the demo, Try a different teacher), and links to your needs, your situation, the pilot survey and About this demo.
 - `npm run content:validate` now exists (it was listed but never written). It checks every unit against the schema, tags, misconception and module links, 3 to 8 minutes, MCQ answers and em dashes, and the same checks run in `npm run check`.

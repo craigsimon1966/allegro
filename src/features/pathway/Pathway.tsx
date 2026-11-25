@@ -15,7 +15,7 @@ import { buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
-import { useAppStore } from '@/lib/store';
+import { useAppStore, type ReadingPick } from '@/lib/store';
 import { Thumbs } from '@/features/feedback/Thumbs';
 
 // This week (SPEC 7.5). Demo personas get the rules version straight away. Everyone else gets the
@@ -46,6 +46,7 @@ export default function Pathway() {
   const needs = useAppStore((s) => s.needs);
   const pathway = useAppStore((s) => s.pathway);
   const pathwayKey = useAppStore((s) => s.pathwayKey);
+  const reading = useAppStore((s) => s.pathwayReading) ?? [];
   const setPathway = useAppStore((s) => s.setPathway);
   const moveItem = useAppStore((s) => s.moveItem);
   const progress = useAppStore((s) => s.progress);
@@ -85,10 +86,10 @@ export default function Pathway() {
     if (!diagnosis || key === pathwayKey) return;
     let cancelled = false;
     const input = { needs: active, units: UNITS, hoursPerWeek: hours, teachingDays, weekStart };
-    const finish = (items: ReturnType<typeof buildPathway>) => {
+    const finish = (items: ReturnType<typeof buildPathway>, reading: ReadingPick[] = []) => {
       // An AI reply can arrive after a re-run of this effect, so check the key, not `cancelled`.
       if (latestKey.current !== key || useAppStore.getState().pathwayKey === key) return;
-      setPathway(items, key);
+      setPathway(items, key, reading);
       void savePathway(items).catch(() => undefined);
     };
     const build = () => {
@@ -113,7 +114,7 @@ export default function Pathway() {
       })
         .then((ai) => {
           // The server already checked these; run them through the same rules again here.
-          finish(ai ? buildPathway(input, ai) : buildPathway(input));
+          finish(ai ? buildPathway(input, ai.items) : buildPathway(input), ai?.external ?? []);
         })
         .finally(() => {
           if (aiKey.current === key) aiKey.current = null;
@@ -175,6 +176,16 @@ export default function Pathway() {
   const yearLabel = diagnosis.context.year_levels.length
     ? `Year ${diagnosis.context.year_levels.join(' and ')}`
     : '';
+  // Approved sources for their year levels, with the AI's picks (and reasons) first.
+  const forYears = sourcesFor(diagnosis.context.year_levels);
+  const picked = new Map(
+    reading
+      .filter((r) => forYears.some((s) => s.id === r.sourceId))
+      .map((r) => [r.sourceId, r.reason]),
+  );
+  const furtherReading = [...forYears].sort(
+    (a, b) => Number(picked.has(b.id)) - Number(picked.has(a.id)),
+  );
   const freeDays = [1, 2, 3, 4, 5].filter((d) => !teachingDays.includes(d));
   const firstTeaching = teachingDays.length ? DAY_LONG[Math.min(...teachingDays) - 1] : 'Monday';
 
@@ -376,12 +387,18 @@ export default function Pathway() {
               <details className="mt-6 max-w-prose border-t border-rule pt-3">
                 <summary className="min-h-tap cursor-pointer text-[17px] font-bold">
                   Further reading (optional)
+                  {picked.size > 0 && (
+                    <span className="font-normal text-muted">
+                      {' '}
+                      · {picked.size} suggested for you
+                    </span>
+                  )}
                 </summary>
                 <p className="mt-1 text-[15px] text-muted">
                   From sources the Allegro team has checked. These open in a new tab.
                 </p>
                 <ul className="mt-2">
-                  {sourcesFor(diagnosis.context.year_levels).map((src) => (
+                  {furtherReading.map((src) => (
                     <li key={src.id} className="border-b border-rule py-2">
                       <a
                         href={src.url}
@@ -394,6 +411,14 @@ export default function Pathway() {
                       </a>
                       <div className="text-[13px] text-muted">{src.organisation}</div>
                       <p className="text-[15px]">{src.summary}</p>
+                      {picked.has(src.id) && (
+                        <p className="mt-1 border-l-4 border-green-700 pl-3 text-[15px]">
+                          <span className="block text-[13px] text-muted">
+                            Suggested for you by Allegro AI
+                          </span>
+                          {picked.get(src.id)}
+                        </p>
+                      )}
                     </li>
                   ))}
                 </ul>

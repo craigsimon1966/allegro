@@ -4,6 +4,7 @@ import type { LessonRequest } from '@shared/lesson';
 import { supabase } from './supabase';
 import {
   useAppStore,
+  type ReadingPick,
   type Reflection,
   type SavedLesson,
   type TeacherNeed,
@@ -126,12 +127,13 @@ export async function aiPathway(
     yearLevels: string[];
   },
   timeoutMs = 20000,
-): Promise<PathwayItem[] | null> {
+): Promise<{ items: PathwayItem[]; external: ReadingPick[] } | null> {
   const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs));
   const call = post('/api/pathway', req)
     .then((data) => {
-      const items = (data as { items?: PathwayItem[] } | null)?.items;
-      return Array.isArray(items) && items.length ? items : null;
+      const d = data as { items?: PathwayItem[]; external?: ReadingPick[] } | null;
+      if (!Array.isArray(d?.items) || !d.items.length) return null;
+      return { items: d.items, external: Array.isArray(d.external) ? d.external : [] };
     })
     .catch(() => null);
   return Promise.race([call, timeout]);
