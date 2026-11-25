@@ -22,32 +22,14 @@ import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks'
 import { curriculumRows } from '@shared/curriculum';
 import { LEVEL_NAMES, packLevels, slideRange, slidesByBlock } from '@shared/lessonPack';
 import { PRINT } from '@/lib/printColours';
-import { describeVisual, parseVisual, visualBlocksIn } from '@shared/visuals';
-import { visualToPng, type VisualImage } from './visualPng';
+import { describeVisual, parseVisual } from '@shared/visuals';
+import { prepareVisuals, visualImage } from './visualCache';
 import { latexToMath } from './latexToDocx';
 
-/**
- * Diagrams drawn as pictures, keyed by their raw ```visual spec. Drawing needs the browser and
- * is async, so `prepareVisuals` fills this before a document is built; a diagram that isn't
- * here goes in as a written description.
- */
-const VISUALS = new Map<string, VisualImage>();
-
-export function setVisualImage(raw: string, img: VisualImage) {
-  VISUALS.set(raw, img);
-}
-
-/** Draws every diagram in these Markdown strings, ready for the Word builders below. */
-export async function prepareVisuals(mds: string[]) {
-  for (const raw of new Set(mds.flatMap(visualBlocksIn))) {
-    if (VISUALS.has(raw)) continue;
-    const img = await visualToPng(raw);
-    if (img) VISUALS.set(raw, img);
-  }
-}
+export { prepareVisuals, setVisualImage } from './visualCache';
 
 function visualParagraph(raw: string): Paragraph {
-  const img = VISUALS.get(raw);
+  const img = visualImage(raw);
   const v = parseVisual(raw);
   const alt = v.ok ? describeVisual(v.spec) : 'Diagram';
   if (!img) return para([{ text: `[Diagram] ${alt}`, italic: true }]);

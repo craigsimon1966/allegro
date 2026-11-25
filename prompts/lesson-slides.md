@@ -27,6 +27,7 @@ Rules:
 - Set "writing_space" true on every example, problem and hinge slide. Set it false on title, intention, vocabulary and reflection slides.
 - Retrieval starter: one slide per question, or two short questions on one slide.
 - Hinge options: two to four short options, without saying which is right.
+- Diagrams: when the lesson block shows the problem with a ```visual diagram (a graph, bar model, number line and so on), put it on the slide too, copied exactly into "body_md" as its own fenced block. At most one diagram per slide; it sits beside the text. A diagram on a slide must not give the answer away: for a "find the rule" graph, keep the points and leave out the line and any label that states the rule.
 - When a question gives a table of values (for example x and y), write it as a small Markdown table in "body_md", not as a list of numbers.
 - Use only the lesson's own content, numbers and order. Do not add new maths. Check every answer.
 - Speak to students in short sentences. Never invent or mention individual students.

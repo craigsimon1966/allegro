@@ -58,6 +58,7 @@ export async function packFiles(
     ...lesson.blocks.map((b) => b.content_md),
     ...pack.worksheet.sections.flatMap((s) => s.items.map((it) => it.prompt_md)),
     ...pack.exit_ticket.map((it) => it.prompt_md),
+    ...pack.slides.map((s) => s.body_md),
   ]);
   if (part === 'guide' || part === 'all')
     files.push({
