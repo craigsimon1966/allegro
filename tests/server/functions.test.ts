@@ -69,6 +69,16 @@ describe('generateJson', () => {
     expect(seen).toHaveLength(2);
     expect(seen[1]).toMatch(/did not match the schema/);
   });
+  it('does not ask again when the reply was cut off at the token limit', async () => {
+    let calls = 0;
+    const complete: Completer = async () => {
+      calls++;
+      return { text: '{"summary": "cut off', stopReason: 'max_tokens', outputTokens: 10 };
+    };
+    const r = await generateJson(complete, args, DiagnosisSchema);
+    expect(r).toMatchObject({ ok: false, code: 'ai_invalid_output' });
+    expect(calls).toBe(1);
+  });
   it('gives up after the second bad reply', async () => {
     const r = await generateJson(replying('nope', 'still nope'), args, DiagnosisSchema);
     expect(r).toMatchObject({ ok: false, code: 'ai_invalid_output' });
