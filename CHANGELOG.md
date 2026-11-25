@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Growth shows the one-line notes teachers write at the end of each unit (SPEC 7.6), under "Notes from your units". They were saved but not shown.
 - On a laptop, units on This week can be dragged into a new order (SPEC 7.5). The up and down buttons stay for touch screens and keyboards.
 - Pilot error reporting: a page crash shows a friendly "Something went wrong" screen instead of a blank page, and crashes are reported (message, page, build, top of the stack, nothing the teacher typed) to the anonymous feedback table. Admins see them under "Errors in teachers' browsers" on /admin/feedback.
 - On a laptop, a lesson plan has a "Why this block works" panel on the right (design/Desktop-Lesson). It follows the block you are reading or editing and links the related units.
