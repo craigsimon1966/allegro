@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components -- route table module, not a component module */
 import { lazy, Suspense, type ReactNode } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { SkipLink } from '@/components/SkipLink';
 import { Landing } from '@/features/landing/Landing';
 import { AllegroMark } from '@/components/AllegroMark';
 import { Placeholder } from './Placeholder';
@@ -61,4 +62,15 @@ export const routes = [
 ];
 
 // One error screen for every route, so a crash never leaves a blank page.
-export const router = createBrowserRouter([{ errorElement: <RouteError />, children: routes }]);
+function Root() {
+  return (
+    <>
+      <SkipLink />
+      <Outlet />
+    </>
+  );
+}
+
+export const router = createBrowserRouter([
+  { element: <Root />, errorElement: <RouteError />, children: routes },
+]);
