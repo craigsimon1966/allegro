@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ChevronDown, ChevronUp, Pencil, Printer, RefreshCw, Copy } from 'lucide-react';
+import { ChevronDown, ChevronUp, Copy, FileDown, Pencil, Printer, RefreshCw } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
 import { Label } from '@/components/Label';
@@ -244,6 +244,7 @@ export default function LessonView() {
   const state = useAppStore((s) => s.intake?.guided.state);
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
+  const [wordState, setWordState] = useState<'idle' | 'busy' | 'failed'>('idle');
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const blockCount = saved?.lesson.blocks.length ?? 0;
@@ -319,6 +320,17 @@ export default function LessonView() {
       ...s,
       checked: v ? [...new Set([...s.checked, id])] : s.checked.filter((x) => x !== id),
     }));
+
+  const downloadWord = async () => {
+    setWordState('busy');
+    try {
+      const { downloadLessonDocx } = await import('@/lib/lessonDocx');
+      await downloadLessonDocx(saved.lesson, AI_DISCLOSURE, state);
+      setWordState('idle');
+    } catch {
+      setWordState('failed');
+    }
+  };
 
   const copy = async () => {
     try {
@@ -407,6 +419,14 @@ export default function LessonView() {
             <Button onClick={() => window.print()}>
               <Printer size={18} strokeWidth={1.5} aria-hidden="true" /> Print or save as PDF
             </Button>
+            <Button
+              variant="secondary"
+              disabled={wordState === 'busy'}
+              onClick={() => void downloadWord()}
+            >
+              <FileDown size={18} strokeWidth={1.5} aria-hidden="true" />
+              {wordState === 'busy' ? 'Preparing…' : 'Download as Word'}
+            </Button>
             <Button variant="secondary" onClick={() => void copy()}>
               <Copy size={18} strokeWidth={1.5} aria-hidden="true" />
               {copied ? 'Copied' : 'Copy as text'}
@@ -414,8 +434,14 @@ export default function LessonView() {
           </div>
           <Thumbs target="lesson" label="Would you use this lesson with minor edits?" />
           <p className="no-print mt-2 text-[13px] text-muted">
-            To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window.
+            To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window. The Word file opens
+            in Microsoft Word and in Google Docs (upload it to Drive, then open it).
           </p>
+          {wordState === 'failed' && (
+            <p role="alert" className="no-print mt-2 font-bold">
+              We couldn&apos;t make the Word file. Please try again, or use Print or Copy as text.
+            </p>
+          )}
           <p className="no-print mt-4">
             <Link to="/reflect" className="font-bold text-green-700 underline">
               After you teach it: reflect

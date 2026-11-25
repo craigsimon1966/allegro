@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { blocks, blocksToMarkdown, inline, plainMaths, runsText } from '../../scripts/reviewDoc';
+import { blocks, blocksToMarkdown, inline, plainMaths, runsText } from '../../shared/markdownBlocks';
 
 describe('review document text', () => {
   it('writes maths as it would look on paper', () => {

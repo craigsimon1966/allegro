@@ -155,3 +155,15 @@ test('on a laptop, "Why this block works" follows the block the teacher is in', 
   await page.screenshot({ path: '/tmp/claude-0/why.png' });
   await axeClean(page);
 });
+
+test('a lesson downloads as a Word file', async ({ page }) => {
+  await tammyLesson(page);
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Download as Word' }).click(),
+  ]);
+  expect(download.suggestedFilename()).toMatch(/year-8\.docx$/);
+  const bytes = await (await download.createReadStream()).toArray();
+  // A .docx is a zip file: it starts with "PK".
+  expect(Buffer.concat(bytes).subarray(0, 2).toString()).toBe('PK');
+});
