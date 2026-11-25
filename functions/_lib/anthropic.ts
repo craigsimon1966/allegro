@@ -9,6 +9,8 @@ export interface Completion {
   text: string;
   inputTokens?: number;
   outputTokens?: number;
+  /** 'max_tokens' when the reply was cut off at the limit. */
+  stopReason?: string | null;
 }
 
 export interface CompleteArgs {
@@ -45,7 +47,12 @@ export function anthropicCompleter(
     try {
       const res = await client.messages.create({ model, system, messages, max_tokens: maxTokens });
       const text = res.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
-      return { text, inputTokens: res.usage.input_tokens, outputTokens: res.usage.output_tokens };
+      return {
+        text,
+        inputTokens: res.usage.input_tokens,
+        outputTokens: res.usage.output_tokens,
+        stopReason: res.stop_reason,
+      };
     } catch (e) {
       throw new AiUnavailableError(e instanceof Error ? e.message : 'Anthropic request failed');
     }
@@ -102,6 +109,19 @@ export async function generateJson<T>(
     }
     usage.input += reply.inputTokens ?? 0;
     usage.output += reply.outputTokens ?? 0;
+    // Cut off at the token limit: asking again would only be cut off again, at twice the wait.
+    if (reply.stopReason === 'max_tokens') {
+      const parsed = (() => {
+        try {
+          return schema.safeParse(extractJsonObject(reply.text));
+        } catch {
+          return null;
+        }
+      })();
+      return parsed?.success
+        ? { ok: true, data: parsed.data, usage }
+        : { ok: false, code: 'ai_invalid_output', usage };
+    }
     let problem: string;
     try {
       const parsed = schema.safeParse(extractJsonObject(reply.text));

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fixed: lesson drafts still failing after the timeout fix. A full eight-block lesson is longer than the 3,500-token reply limit, so every reply was cut off and could not be read, then asked again and cut off again. The limit is now 8,000, a cut-off reply is no longer retried (it would only fail again at twice the wait), and the server waits up to 120 seconds.
 - Fixed: "Allegro's AI isn't available right now" on every lesson draft. A full lesson takes longer than the 25 seconds the server waited, so it gave up, tried again, and gave up again. Lessons, situations and weeks now wait up to 90 seconds with no second try. The AI week was also being cut off part way (1,200 token limit, now 2,500), so it always fell back to the rules week.
 - Waiting for the AI now shows the animated Allegro mark, what it is doing (for example "Choosing units that fit your time"), a progress bar and a rough time left, on building the week, reading the situation and drafting a lesson. If it runs long it says so.
 - "Tell us about your teaching" now asks which state or territory you teach in. Lesson plans show that state's curriculum (NSW syllabus, Victorian Curriculum 2.0 or WA Curriculum alongside AC v9, or AC v9 alone for Queensland, SA, Tasmania, the ACT and the NT), the AI is told which curriculum to follow when it writes your week and lesson plans, and the NSW-only further-reading links show only to NSW teachers. Victorian and WA codes are placeholders (`VC2-TODO`, `WA-TODO`) until looked up. The demo teachers are set to NSW, so the demo is unchanged.

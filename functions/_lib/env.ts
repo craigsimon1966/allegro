@@ -22,7 +22,7 @@ export const fastModel = (env: Env) => env.ANTHROPIC_MODEL_FAST || DEFAULT_MODEL
 
 /** Max output tokens per endpoint, in one place (SPEC 8.7, TECH_SPEC 7.2). */
 /** Server-side wait for the long replies, which take longer than the default 25 seconds. */
-export const LONG_CALL = { timeoutMs: 90_000, maxRetries: 0 } as const;
+export const LONG_CALL = { timeoutMs: 120_000, maxRetries: 0 } as const;
 
 export const MAX_TOKENS = {
   // Real replies for a full situation run to about 1,500 tokens, so 1,500 cut the JSON off.
@@ -30,7 +30,8 @@ export const MAX_TOKENS = {
   // 1,200 cut the week's JSON off mid-reply, so every AI week fell back to rules.
   pathway: 2500,
   explain: 400,
-  lesson: 3500,
+  // A full eight-block lesson runs past 3,500 tokens; production replies were all cut off there.
+  lesson: 8000,
   'lesson-block': 1000,
   help: 350,
   reflect: 300,
