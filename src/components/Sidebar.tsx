@@ -1,5 +1,4 @@
 import { Link, NavLink } from 'react-router-dom';
-import { AllegroMark } from './AllegroMark';
 import { Label } from './Label';
 import { MAIN_NAV } from './nav';
 import { StepSquares } from './StepSquares';
@@ -11,9 +10,14 @@ export function Sidebar({ step }: { step?: number }) {
       aria-label="Main"
       className="sticky top-0 hidden h-screen w-[220px] shrink-0 flex-col border-r-2 border-rule-strong py-7 lg:flex"
     >
-      <Link to="/" className="flex items-center gap-2.5 px-5 pb-5 text-ink no-underline">
-        <AllegroMark product="equip" size={28} />
-        <span className="font-heading text-[19px] font-semibold">Allegro</span>
+      <Link to="/" className="block px-5 pb-5 no-underline">
+        <img
+          src="/brand/logo-green.svg"
+          alt="Allegro Learning home"
+          width={180}
+          height={44}
+          className="h-auto w-full"
+        />
       </Link>
       <Label className="px-5 pb-2">Contents</Label>
       <div className="border-t border-rule">
