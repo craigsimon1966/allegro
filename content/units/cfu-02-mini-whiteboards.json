@@ -1,0 +1,49 @@
+{
+  "id": "cfu-02-mini-whiteboards",
+  "moduleId": "mod-checking",
+  "title": "Mini whiteboards that actually tell you something",
+  "domain": "PK",
+  "tags": [
+    "pk.checking-understanding"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Mini whiteboards can turn a quiet class into one where every student answers every question. They can also turn into a drawing session. The routine makes the difference.",
+  "coreIdeaMd": "A simple routine:\n\n1. **Ask** the question. Give a short thinking time (count to five in your head).\n2. **\"Show me\"**: every board goes up at the same time, facing you.\n3. **Scan** for patterns, not individuals. Say what you see: \"Most of you have 3x, a few have x + 3.\"\n4. **Boards down, wipe.** Then respond to what you saw.\n\nKeep questions short. Mini whiteboards are for quick answers, not full working.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "cfu-02-q1",
+      "stemMd": "Why should every board go up at the same time?",
+      "type": "mcq",
+      "options": [
+        "It looks tidy",
+        "So students can't copy, and you see the whole class at once",
+        "So you can mark them later"
+      ],
+      "answer": "So students can't copy, and you see the whole class at once",
+      "feedbackCorrect": "Yes. Holding up together gives you honest information from everyone.",
+      "feedbackIncorrect": "Holding up together stops copying and lets you read the whole room in one look."
+    }
+  ],
+  "tryTomorrow": "Use mini whiteboards for three quick questions at the start of tomorrow's lesson. Say aloud what pattern you see each time.",
+  "reflectPrompt": "What did you notice about who answers questions in your class when you don't use whiteboards?",
+  "reviewedBy": null
+}

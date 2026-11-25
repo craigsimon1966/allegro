@@ -1,0 +1,110 @@
+{
+  "modules": [
+    {
+      "id": "mod-linear",
+      "title": "Linear relationships",
+      "summary": "",
+      "unitIds": [
+        "lin-01-what-a-rule-tells-you",
+        "lin-02-table-to-rule",
+        "lin-03-tables-graphs-rules"
+      ]
+    },
+    {
+      "id": "mod-algebra-errors",
+      "title": "Common algebra errors",
+      "summary": "",
+      "unitIds": [
+        "mc-01-goes-up-by",
+        "mc-02-pronumerals"
+      ]
+    },
+    {
+      "id": "mod-checking",
+      "title": "Checking for understanding",
+      "summary": "",
+      "unitIds": [
+        "cfu-01-hinge-questions",
+        "cfu-02-mini-whiteboards",
+        "cfu-03-exit-tickets"
+      ]
+    },
+    {
+      "id": "mod-proportional",
+      "title": "Proportional reasoning",
+      "summary": "",
+      "unitIds": [
+        "prop-01-ratio-tables",
+        "prop-02-percentages"
+      ]
+    },
+    {
+      "id": "mod-out-of-field",
+      "title": "Teaching out of field",
+      "summary": "",
+      "unitIds": [
+        "oof-01-you-are-not-alone"
+      ]
+    },
+    {
+      "id": "mod-routines",
+      "title": "Classroom routines",
+      "summary": "",
+      "unitIds": [
+        "pk-routines-01-entry"
+      ]
+    },
+    {
+      "id": "mod-differentiation",
+      "title": "Differentiation",
+      "summary": "",
+      "unitIds": [
+        "pck-diff-01-three-entry-points"
+      ]
+    },
+    {
+      "id": "mod-explicit",
+      "title": "Explicit instruction",
+      "summary": "",
+      "unitIds": [
+        "pk-explicit-01-worked-examples"
+      ]
+    },
+    {
+      "id": "mod-assessment",
+      "title": "Assessment and feedback",
+      "summary": "",
+      "unitIds": [
+        "assess-fb-01-feedback",
+        "assess-sc-01-success-criteria"
+      ]
+    },
+    {
+      "id": "mod-wellbeing",
+      "title": "Wellbeing",
+      "summary": "",
+      "unitIds": [
+        "wb-01-workload"
+      ]
+    },
+    {
+      "id": "mod-context",
+      "title": "Your school context",
+      "summary": "",
+      "unitIds": [
+        "ctx-regional-01",
+        "ctx-casual-01"
+      ]
+    },
+    {
+      "id": "mod-primary",
+      "title": "Early years",
+      "summary": "",
+      "unitIds": [
+        "pri-routines-01",
+        "pri-attention-01",
+        "pri-number-01"
+      ]
+    }
+  ]
+}

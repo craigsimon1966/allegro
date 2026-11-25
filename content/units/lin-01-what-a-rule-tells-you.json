@@ -1,0 +1,65 @@
+{
+  "id": "lin-01-what-a-rule-tells-you",
+  "moduleId": "mod-linear",
+  "title": "What a linear rule tells you",
+  "domain": "CK",
+  "tags": [
+    "algebra.linear"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "8",
+    "9"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "A rule like $y = 3x + 2$ is a recipe. Every Year 8 question about linear relationships is really asking: what is the recipe, and what does each part do?",
+  "coreIdeaMd": "A **linear rule** has the form $y = mx + c$.\n\n- $m$ is the **rate of change**: how much $y$ goes up (or down) each time $x$ goes up by 1. On a graph it is the **gradient**.\n- $c$ is the **starting value**: the value of $y$ when $x = 0$. On a graph it is where the line crosses the $y$-axis.\n\nIf you can say those two things in words, you understand the rule. Students who can only plug numbers in often can't.",
+  "workedExampleMd": "**Rule:** $y = 3x + 2$\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 2 | 5 | 8 | 11 |\n\n1. Start at $x = 0$: $y = 2$. That is $c$.\n2. Each step right, $y$ goes up by 3. That is $m$.\n3. In words: \"start at 2, add 3 each time\".\n\n**In class:** ask students to say the rule in words before they write it in symbols.",
+  "misconceptionIds": [
+    "mis-linear-constant-only"
+  ],
+  "checkItems": [
+    {
+      "id": "lin-01-q1",
+      "stemMd": "In $y = 4x + 1$, what does the 4 tell you?",
+      "type": "mcq",
+      "options": [
+        "The starting value",
+        "How much $y$ goes up each time $x$ goes up by 1",
+        "Where the line crosses the $x$-axis"
+      ],
+      "answer": "How much $y$ goes up each time $x$ goes up by 1",
+      "feedbackCorrect": "Yes. The number multiplying $x$ is the rate of change.",
+      "feedbackIncorrect": "Not quite. The 4 multiplies $x$, so it is the rate of change: $y$ goes up by 4 each step."
+    },
+    {
+      "id": "lin-01-q2",
+      "stemMd": "In $y = 4x + 1$, what is $y$ when $x = 0$?",
+      "type": "numeric",
+      "answer": "1",
+      "feedbackCorrect": "Right. When $x = 0$ the $4x$ part disappears, leaving the starting value.",
+      "feedbackIncorrect": "When $x = 0$, $4x = 0$, so $y = 1$. That is the starting value."
+    }
+  ],
+  "tryTomorrow": "Before you show any rule, put a table on the board and ask: \"Where does it start, and what does it go up by?\" Collect answers in words first.",
+  "reflectPrompt": "Which part of a linear rule do you think your students will find hardest to put into words, and why?",
+  "reviewedBy": null
+}

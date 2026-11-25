@@ -1,0 +1,49 @@
+{
+  "id": "assess-fb-01-feedback",
+  "moduleId": "mod-assessment",
+  "title": "Feedback that moves learning forward",
+  "domain": "ASSESSMENT",
+  "tags": [
+    "assessment.feedback"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Comments like \"good work\" or \"check your working\" rarely change what students do next. Useful feedback is specific and asks for action.",
+  "coreIdeaMd": "Feedback works best when it:\n\n- names **one** thing to improve, not five\n- is **specific** to the maths (\"your rule works for $x = 1$ but not $x = 3$\")\n- asks the student to **do something** with it straight away\n\nWhole-class feedback is often faster and just as useful: note the three most common errors from a set of books and spend five minutes on them next lesson.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "af-01-q1",
+      "stemMd": "Which is the most useful feedback?",
+      "type": "mcq",
+      "options": [
+        "Great effort!",
+        "Check your answers.",
+        "Your rule works for x = 1 but not x = 3. Test it again and fix it."
+      ],
+      "answer": "Your rule works for x = 1 but not x = 3. Test it again and fix it.",
+      "feedbackCorrect": "Yes. It is specific and asks for action.",
+      "feedbackIncorrect": "The best feedback is specific and gives the student a clear next step."
+    }
+  ],
+  "tryTomorrow": "Look at five students' work tonight and note the most common error. Start tomorrow with five minutes on it.",
+  "reflectPrompt": "What feedback do your students actually act on?",
+  "reviewedBy": null
+}

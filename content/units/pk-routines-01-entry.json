@@ -1,0 +1,47 @@
+{
+  "id": "pk-routines-01-entry",
+  "moduleId": "mod-routines",
+  "title": "An entry routine that works in two minutes",
+  "domain": "PK",
+  "tags": [
+    "pk.routines"
+  ],
+  "audience": [
+    "early_career",
+    "out_of_field",
+    "casual",
+    "secondary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "The first two minutes of a lesson set the tone for the next fifty. A predictable entry routine does most of the work for you.",
+  "coreIdeaMd": "A strong entry routine:\n\n1. **Meet students at the door.** Greet them by name.\n2. **A task is already on the board.** Three short questions they can start without you.\n3. **Same routine every lesson.** Students know what to do without asking.\n4. **Go over the task briefly**, then start the lesson.\n\nThe task should be easy enough for everyone to start. It is about settling, not testing.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pkr-01-q1",
+      "stemMd": "What makes an entry task work?",
+      "type": "mcq",
+      "options": [
+        "It is challenging",
+        "Every student can start it without help",
+        "It is different every lesson"
+      ],
+      "answer": "Every student can start it without help",
+      "feedbackCorrect": "Yes. Easy starts mean everyone is working quickly.",
+      "feedbackIncorrect": "Entry tasks are about settling. If students need help to start, the routine breaks down."
+    }
+  ],
+  "tryTomorrow": "Put three short review questions on the board before tomorrow's class arrives, and stand at the door.",
+  "reflectPrompt": "What usually happens in the first two minutes of your lessons now?",
+  "reviewedBy": null
+}

@@ -1,0 +1,49 @@
+{
+  "id": "ctx-regional-01",
+  "moduleId": "mod-context",
+  "title": "Teaching in a regional, rural or remote school",
+  "domain": "CONTEXT",
+  "tags": [
+    "context.regional"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "reflective_task"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Regional schools often have small faculties, which can mean less support but more freedom and closer relationships with students and families.",
+  "coreIdeaMd": "Ways to build support when your faculty is small:\n\n- **Connect online** with teachers in the same subject through your system or professional association.\n- **Use local context** in maths: farming, sport, travel distances and weather all make strong problems.\n- **Know your community.** Relationships with families often matter more in small towns, and they help in the classroom.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "ctxr-01-q1",
+      "stemMd": "What is one advantage of a small regional school?",
+      "type": "mcq",
+      "options": [
+        "Larger faculties",
+        "Closer relationships with students and families",
+        "More specialist staff"
+      ],
+      "answer": "Closer relationships with students and families",
+      "feedbackCorrect": "Yes. Those relationships are a real strength.",
+      "feedbackIncorrect": "Small schools often mean closer relationships, which help with learning and behaviour."
+    }
+  ],
+  "tryTomorrow": "Write one maths problem tomorrow that uses something local your students know well.",
+  "reflectPrompt": "What local context could make maths more real for your students?",
+  "reviewedBy": null
+}

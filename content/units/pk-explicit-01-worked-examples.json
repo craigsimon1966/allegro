@@ -1,0 +1,51 @@
+{
+  "id": "pk-explicit-01-worked-examples",
+  "moduleId": "mod-explicit",
+  "title": "Worked examples, then fading",
+  "domain": "PK",
+  "tags": [
+    "pk.explicit-instruction"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "When students meet a new procedure, seeing it worked out in full is more effective than working it out themselves.",
+  "coreIdeaMd": "A simple sequence:\n\n1. **I do:** work an example in full and think aloud.\n2. **We do:** work a second example together, with students giving each step.\n3. **You do:** students try a similar one on their own.\n\nThen **fade**: give examples with the last step missing, then the last two steps, until students do it all.",
+  "workedExampleMd": "**Solving $2x + 3 = 11$**\n\n- **I do:** \"I want $x$ on its own. First I subtract 3 from both sides: $2x = 8$. Then divide both sides by 2: $x = 4$.\"\n- **We do:** $3x + 1 = 13$, students say each step.\n- **You do:** $5x + 2 = 17$\n- **Faded:** $4x + 5 = 21$, so $4x = 16$, so $x = $ ___",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pke-01-q1",
+      "stemMd": "What does \"fading\" mean in a worked example sequence?",
+      "type": "mcq",
+      "options": [
+        "Making the font lighter",
+        "Gradually leaving more steps for students to complete",
+        "Skipping the examples"
+      ],
+      "answer": "Gradually leaving more steps for students to complete",
+      "feedbackCorrect": "Yes. Support is removed step by step.",
+      "feedbackIncorrect": "Fading means removing steps from the examples so students take over the work bit by bit."
+    }
+  ],
+  "tryTomorrow": "In tomorrow's lesson, think aloud through one example before students try any themselves.",
+  "reflectPrompt": "How much \"I do\" time do your lessons have now? Is it enough?",
+  "reviewedBy": null
+}

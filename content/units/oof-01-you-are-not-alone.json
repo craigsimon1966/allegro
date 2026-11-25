@@ -1,0 +1,45 @@
+{
+  "id": "oof-01-you-are-not-alone",
+  "moduleId": "mod-out-of-field",
+  "title": "Teaching outside your trained subject",
+  "domain": "CONTEXT",
+  "tags": [
+    "context.out-of-field"
+  ],
+  "audience": [
+    "out_of_field"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "reflective_task"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Many Australian secondary maths classes are taught by teachers trained in another subject. You are in good company, and your other subject is an asset.",
+  "coreIdeaMd": "Three things that help most when teaching out of field:\n\n1. **Stay one unit ahead, not one lesson ahead.** Knowing where a topic is heading stops you being caught out.\n2. **Learn the common errors before the content.** Knowing what students get wrong helps you teach it right.\n3. **Use what you already know about teaching.** Routines, questioning and relationships transfer from any subject.\n\nIt is fine to say to a class \"let's work that out together\". Modelling how to get unstuck is good maths teaching.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "oof-01-q1",
+      "stemMd": "Which of these helps most when you are new to teaching a subject?",
+      "type": "mcq",
+      "options": [
+        "Keeping one lesson ahead of the class",
+        "Knowing the common student errors in the topic",
+        "Avoiding questions you can't answer"
+      ],
+      "answer": "Knowing the common student errors in the topic",
+      "feedbackCorrect": "Yes. Knowing the errors lets you plan for them.",
+      "feedbackIncorrect": "Knowing the common errors helps you plan questions and responses. One lesson ahead is often not enough."
+    }
+  ],
+  "tryTomorrow": "Find one colleague who teaches the same year level and ask them: \"What do students usually get wrong in this topic?\"",
+  "reflectPrompt": "What strength from your own subject could you bring to your maths lessons this week?",
+  "reviewedBy": null
+}

@@ -1,0 +1,44 @@
+{
+  "id": "ctx-casual-01",
+  "moduleId": "mod-context",
+  "title": "Making the most of a short placement",
+  "domain": "CONTEXT",
+  "tags": [
+    "context.casual"
+  ],
+  "audience": [
+    "casual"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "reflective_task"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "In a short placement you have little time to build relationships. A few moves early on make the rest of the placement easier.",
+  "coreIdeaMd": "In the first week:\n\n1. **Learn names fast.** Use a seating plan and use names often.\n2. **Keep the class routines** the regular teacher uses where you can.\n3. **Ask for the plan.** Find out what students are meant to learn while you are there.\n4. **Leave good notes** for the next teacher: what was covered and who needs follow-up.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "ctxc-01-q1",
+      "stemMd": "Why keep the regular teacher's routines?",
+      "type": "mcq",
+      "options": [
+        "It is less work",
+        "Students feel settled and know what to expect",
+        "It is required"
+      ],
+      "answer": "Students feel settled and know what to expect",
+      "feedbackCorrect": "Yes. Familiar routines reduce disruption.",
+      "feedbackIncorrect": "Familiar routines help students settle with a new teacher."
+    }
+  ],
+  "tryTomorrow": "Ask the school tomorrow for one page on what students should learn during your placement.",
+  "reflectPrompt": "What helps you settle into a new school quickly?",
+  "reviewedBy": null
+}

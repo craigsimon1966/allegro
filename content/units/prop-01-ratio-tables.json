@@ -1,0 +1,52 @@
+{
+  "id": "prop-01-ratio-tables",
+  "moduleId": "mod-proportional",
+  "title": "Ratio tables and the unit rate",
+  "domain": "CK",
+  "tags": [
+    "number.proportional"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Recipes, map scales, unit prices and speed are all the same idea: two quantities that change together at a fixed rate.",
+  "coreIdeaMd": "Two quantities are in **proportion** when one is always the same multiple of the other.\n\nThe most useful tool is the **unit rate**: how much of one quantity for **one** of the other. Once you have the unit rate, every other question is a multiplication.\n\nA **ratio table** helps students see this: multiply or divide **both rows** by the same number.",
+  "workedExampleMd": "**3 kg of apples cost \\$7.50. How much do 5 kg cost?**\n\n| kg | 3 | 1 | 5 |\n|---|---|---|---|\n| \\$ | 7.50 | 2.50 | 12.50 |\n\n1. Divide both by 3 to get the unit rate: \\$2.50 per kg.\n2. Multiply both by 5: \\$12.50.\n\n**In class:** ask \"what is the price of one kilogram?\" before anything else.",
+  "misconceptionIds": [
+    "mis-additive-proportion"
+  ],
+  "checkItems": [
+    {
+      "id": "prop-01-q1",
+      "stemMd": "4 pens cost \\$6. How much do 10 pens cost (in dollars)?",
+      "type": "numeric",
+      "answer": "15",
+      "feedbackCorrect": "Right. The unit rate is \\$1.50 per pen, and $10 \\times 1.50 = 15$.",
+      "feedbackIncorrect": "Find one pen first: $6 \\div 4 = 1.50$. Then $10 \\times 1.50 = 15$."
+    }
+  ],
+  "tryTomorrow": "Start a lesson with a supermarket unit price label and ask which pack is better value. Let students argue it out.",
+  "reflectPrompt": "Where in your own subject do you already use proportional reasoning without calling it that?",
+  "reviewedBy": null
+}

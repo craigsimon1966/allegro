@@ -1,0 +1,57 @@
+{
+  "id": "mc-02-pronumerals",
+  "moduleId": "mod-algebra-errors",
+  "title": "When letters stand for objects",
+  "domain": "PCK",
+  "tags": [
+    "pck.algebra-misconceptions",
+    "algebra.foundations"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "\"3a means three apples.\" It is a common way to introduce algebra, and it causes problems later.",
+  "coreIdeaMd": "A **pronumeral** stands for a **number**, not an object. If $a$ means \"apples\", then $3a + 2b$ reads as \"3 apples and 2 bananas\" and students stop at that point. They can't see why $3a \\times 2 = 6a$ or what $a = 4$ means.\n\nBetter language: \"$a$ is the number of apples\" or, better still, \"$a$ is a number we don't know yet\".",
+  "workedExampleMd": "**A student says:** \"$5p$ means 5 pens.\"\n\n**You say:** \"If $p$ is the *number of pens* in one box, what does $5p$ mean?\"\n\nThe student now reads $5p$ as \"5 lots of an unknown number\". That idea still works when $p = 12$.",
+  "misconceptionIds": [
+    "mis-letter-as-object"
+  ],
+  "checkItems": [
+    {
+      "id": "mc-02-q1",
+      "stemMd": "Which wording best helps students understand $4n$?",
+      "type": "mcq",
+      "options": [
+        "4 nuts",
+        "4 times a number $n$",
+        "The letter $n$, four times"
+      ],
+      "answer": "4 times a number $n$",
+      "feedbackCorrect": "Yes. It keeps the letter as a number.",
+      "feedbackIncorrect": "\"4 nuts\" treats $n$ as an object. \"4 times a number $n$\" keeps it a number, which works for every later topic."
+    }
+  ],
+  "tryTomorrow": "Listen to how you say pronumerals aloud tomorrow. Swap any \"apples\" talk for \"the number of\".",
+  "reflectPrompt": "Where did you first learn algebra, and how was it explained to you?",
+  "reviewedBy": null
+}

@@ -1,0 +1,49 @@
+{
+  "id": "wb-01-workload",
+  "moduleId": "mod-wellbeing",
+  "title": "Protecting your time and confidence",
+  "domain": "WELLBEING",
+  "tags": [
+    "wellbeing.workload"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "reflective_task"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Feeling stretched is normal, especially when teaching something new. A few habits make a real difference.",
+  "coreIdeaMd": "Three habits that help:\n\n1. **Plan the week, not the night.** One planning block for the week beats five late nights.\n2. **Reuse and adapt.** Ask colleagues for lessons and adjust them rather than starting from scratch.\n3. **Notice what went well.** At the end of each day, name one thing that worked.\n\nIf workload or stress becomes too much, talk to your supervisor or use your school's employee assistance program.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "wb-01-q1",
+      "stemMd": "Which habit saves the most time across a week?",
+      "type": "mcq",
+      "options": [
+        "Planning each lesson the night before",
+        "One planning block for the whole week",
+        "Writing every resource yourself"
+      ],
+      "answer": "One planning block for the whole week",
+      "feedbackCorrect": "Yes. Batching your planning saves time and stress.",
+      "feedbackIncorrect": "Planning the week in one block is usually faster than planning night by night."
+    }
+  ],
+  "tryTomorrow": "Block out one hour this week in your diary as your planning time, and protect it.",
+  "reflectPrompt": "What is one thing that went well in your teaching this week?",
+  "reviewedBy": null
+}

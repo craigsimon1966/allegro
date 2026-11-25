@@ -1,0 +1,50 @@
+{
+  "id": "pri-routines-01",
+  "moduleId": "mod-primary",
+  "title": "Early years routines for mornings and transitions",
+  "domain": "PK",
+  "tags": [
+    "primary.routines"
+  ],
+  "audience": [
+    "primary",
+    "casual",
+    "early_career"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Young students thrive on predictability. Clear routines for the morning and for moving between activities save a lot of lost time.",
+  "coreIdeaMd": "Simple routines that work in the early years:\n\n- **A visual timetable** for the day, referred to often.\n- **A transition signal** (a clap pattern, song or chime) that means \"stop, look, listen\".\n- **Practise routines** in the first days, like a lesson in itself.\n- **Countdowns** for moving: \"By the time I count to ten, you'll be on the mat.\"",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pri-r-01-q1",
+      "stemMd": "Why practise a routine like a lesson?",
+      "type": "mcq",
+      "options": [
+        "It fills time",
+        "Young students learn routines by doing them, not by being told",
+        "It is in the curriculum"
+      ],
+      "answer": "Young students learn routines by doing them, not by being told",
+      "feedbackCorrect": "Yes. Practice makes routines automatic.",
+      "feedbackIncorrect": "Young students learn routines by practising them, just like any skill."
+    }
+  ],
+  "tryTomorrow": "Choose one transition signal and practise it three times with the class tomorrow morning.",
+  "reflectPrompt": "Which transition in your day loses the most time?",
+  "reviewedBy": null
+}

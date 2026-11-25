@@ -1,0 +1,56 @@
+{
+  "id": "mc-01-goes-up-by",
+  "moduleId": "mod-algebra-errors",
+  "title": "\"It goes up by 2, so y = x + 2\"",
+  "domain": "PCK",
+  "tags": [
+    "pck.algebra-misconceptions",
+    "algebra.linear"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "8",
+    "9"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "This is one of the most common errors in Year 8 linear relationships. It sounds sensible, which is why it sticks.",
+  "coreIdeaMd": "When students see $y$ increase by 2 each step, many write $y = x + 2$. They have noticed the **change** but put it in the wrong place.\n\nThe fix is not to tell them the right answer. It is to get them to **test their own rule** against the table. A rule that doesn't work for every pair is wrong, and students can see that for themselves.",
+  "misconceptionIds": [
+    "mis-linear-constant-only"
+  ],
+  "checkItems": [
+    {
+      "id": "mc-01-q1",
+      "stemMd": "A student writes $y = x + 3$ for the table $x$: 0, 1, 2 and $y$: 0, 3, 6. What is the best first response?",
+      "type": "mcq",
+      "options": [
+        "Tell them the rule is $y = 3x$",
+        "Ask them to check their rule when $x = 2$",
+        "Move on and revisit it next lesson"
+      ],
+      "answer": "Ask them to check their rule when $x = 2$",
+      "feedbackCorrect": "Yes. Testing their own rule lets them find the error themselves.",
+      "feedbackIncorrect": "Telling them fixes this question only. Asking them to test $x = 2$ (which gives 5, not 6) shows them why the rule is wrong."
+    }
+  ],
+  "tryTomorrow": "Next time you see $y = x + 2$ type answers, ask: \"Does your rule work when $x = 3$? Show me.\" Wait before you say more.",
+  "reflectPrompt": "How did you respond the last time a student gave an answer that sounded right but wasn't?",
+  "reviewedBy": null
+}

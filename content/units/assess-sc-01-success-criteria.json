@@ -1,0 +1,49 @@
+{
+  "id": "assess-sc-01-success-criteria",
+  "moduleId": "mod-assessment",
+  "title": "Learning intentions and success criteria",
+  "domain": "ASSESSMENT",
+  "tags": [
+    "assessment.success-criteria"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "If students can't tell you what they are learning, they can't tell whether they have learned it.",
+  "coreIdeaMd": "A **learning intention** says what students will learn: \"We are learning to find a linear rule from a table.\"\n\n**Success criteria** say how they will know: \"I can find the change in $y$. I can find $y$ when $x = 0$. I can write and check the rule.\"\n\nKeep them short, write them in student language, and **come back to them** at the end of the lesson.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "asc-01-q1",
+      "stemMd": "Which is a success criterion?",
+      "type": "mcq",
+      "options": [
+        "Students will enjoy algebra",
+        "I can find $y$ when $x = 0$ from a table",
+        "Complete page 42"
+      ],
+      "answer": "I can find $y$ when $x = 0$ from a table",
+      "feedbackCorrect": "Yes. It is something students can check for themselves.",
+      "feedbackIncorrect": "A success criterion is a check students can do on their own learning, not a task or a feeling."
+    }
+  ],
+  "tryTomorrow": "Write one learning intention and three success criteria for tomorrow's lesson. Return to them in the last five minutes.",
+  "reflectPrompt": "How do your students know when they have learned something?",
+  "reviewedBy": null
+}
