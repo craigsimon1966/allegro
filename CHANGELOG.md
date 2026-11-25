@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Add to Home Screen (25 November 2026)
+
+- Web app manifest, Home Screen icons (192, 512, Apple 180, safe for round crops) and Apple meta tags. Opens full screen at the teacher's week.
+- About page explains how to add it on iPhone, iPad and Android, and that it keeps iPhone and iPad sign-ins from being cleared after 7 days.
+- `scripts/build-icons.ts` rebuilds the icons from the brand mark.
+- No offline caching (service worker) yet, so nothing can serve a stale build.
+
 ### Sign in with a code (25 November 2026)
 
 - After asking for a sign-in email, teachers type the 6-digit code from it (`verifyOtp`), or tap the link as before. Clear messages for a wrong or expired code, and "Use a different email".

@@ -100,3 +100,18 @@ test('a rate limit shows the friendly message, not a crash', async ({ page }) =>
   await page.getByRole('button', { name: /^Ask/ }).click();
   await expect(page.getByText(/reached this hour's limit/)).toBeVisible();
 });
+
+test('Allegro can be added to the Home Screen', async ({ page, request }) => {
+  await page.goto('/');
+  await expect(page.locator('link[rel="manifest"]')).toHaveAttribute(
+    'href',
+    '/manifest.webmanifest',
+  );
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+  const manifest = (await (await request.get('/manifest.webmanifest')).json()) as {
+    display: string;
+    icons: { src: string }[];
+  };
+  expect(manifest.display).toBe('standalone');
+  for (const icon of manifest.icons) expect((await request.get(icon.src)).ok()).toBe(true);
+});

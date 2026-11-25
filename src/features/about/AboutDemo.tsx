@@ -46,6 +46,12 @@ const SECTIONS: { title: string; body: string[] }[] = [
     ],
   },
   {
+    title: 'Using Allegro on a phone or iPad',
+    body: [
+      "Add Allegro to your Home Screen and it opens like an app. On an iPhone or iPad, open Allegro in Safari, tap Share, then Add to Home Screen. On Android, open the Chrome menu and tap Add to Home screen. On an iPhone or iPad this also keeps you signed in: Safari forgets a website you haven't visited for 7 days, but not one on your Home Screen.",
+    ],
+  },
+  {
     title: 'Who to contact',
     body: [
       'Allegro Learning is being built by RockMouse. If you have a question, a privacy request or something looks wrong, contact the person who invited you to the pilot.',
