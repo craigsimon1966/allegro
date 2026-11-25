@@ -26,7 +26,8 @@
     "prebuild": "npm run prompts:build",
     "pretest": "npm run prompts:build",
     "security:dist": "tsx scripts/check-dist-secrets.ts",
-    "content:approve": "tsx scripts/content-approve.ts"
+    "content:approve": "tsx scripts/content-approve.ts",
+    "content:import-review": "tsx scripts/content-import-review.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.13.0",
@@ -64,6 +65,7 @@
     "eslint": "9.39.5",
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-react-refresh": "0.4.26",
+    "fflate": "0.8.3",
     "globals": "15.15.0",
     "jsdom": "25.0.1",
     "postcss": "8.5.33",

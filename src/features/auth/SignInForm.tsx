@@ -60,6 +60,11 @@ export function SignInForm() {
       email: email.trim(),
       options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     });
+    if (error && error.status === 429 && /seconds/i.test(error.message)) {
+      // An email went out a moment ago: let them type that code rather than wait.
+      setState('sent');
+      return;
+    }
     if (error) {
       setState('error');
       setMessage(
@@ -181,7 +186,27 @@ export function SignInForm() {
         {state === 'sending' ? 'Sending…' : 'Email me a sign-in code'}{' '}
         <span aria-hidden="true">→</span>
       </Button>
-      <MarginNote size={21}>No password. The code works once.</MarginNote>
+      <button
+        type="button"
+        className="self-start text-[17px] text-ink underline underline-offset-4"
+        onClick={() => {
+          if (!supabase) {
+            setState('unavailable');
+            return;
+          }
+          if (!email.trim()) {
+            setState('error');
+            setMessage('Type your email first, then enter the code from the email.');
+            return;
+          }
+          setState('sent');
+        }}
+      >
+        I already have a code
+      </button>
+      <MarginNote size={21}>
+        No password. After you send, a box appears here for the code.
+      </MarginNote>
       {state === 'error' && (
         <p role="alert" className="font-bold text-error">
           {message}

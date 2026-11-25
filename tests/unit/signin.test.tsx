@@ -60,4 +60,27 @@ describe('sign in with a code', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(/expired/);
     expect(useAppStore.getState().mode).toBe('anonymous');
   });
+  it('lets a teacher with a code already in their inbox type it without sending again', async () => {
+    signInWithOtp.mockClear();
+    render(
+      <MemoryRouter>
+        <SignInForm />
+      </MemoryRouter>,
+    );
+    fireEvent.change(screen.getByLabelText('Sign in with your email'), {
+      target: { value: 'teacher@example.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'I already have a code' }));
+    expect(await screen.findByLabelText('Code from the email')).toBeInTheDocument();
+    expect(signInWithOtp).not.toHaveBeenCalled();
+  });
+  it('shows the code box when an email was sent a moment ago', async () => {
+    signInWithOtp.mockResolvedValueOnce({
+      error: {
+        status: 429,
+        message: 'For security purposes, you can only request this after 40 seconds.',
+      },
+    });
+    await sendCode();
+  });
 });

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Each build serves `/version.txt` (and an `allegro-build` meta tag) with its commit, so it is easy to see which version is live.
+- Sign-in: an "I already have a code" link opens the code box straight away, and the code box also appears if an email was sent a moment ago.
+
+### Read the marked-up review back in (25 November 2026)
+
+- `npm run content:import-review -- <marked-up.docx>` reads Denise's file (with Track Changes and comments) and writes `review/review-summary.md`: Approved Y/N, reviewer and date, notes, comments, codes she wrote, and how many tracked changes each item has. It changes no content, and prints the `content:approve` command for units approved with no edits.
+
 ### Add to Home Screen (25 November 2026)
 
 - Web app manifest, Home Screen icons (192, 512, Apple 180, safe for round crops) and Apple meta tags. Opens full screen at the teacher's week.
