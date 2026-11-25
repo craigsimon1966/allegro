@@ -63,7 +63,7 @@ describe('lesson pack data', () => {
     expect(LessonPackSchema.safeParse(p).success).toBe(true);
     expect(packLevels(p)).toEqual(['start', 'core', 'stretch']);
     const core = p.worksheet.sections.find((s) => s.level === 'core')!;
-    expect(core.items.map((i) => i.answer_md)).toEqual(['$y = 4x + 5$', '$y = 2x + 3$']);
+    expect(core.items.map((i) => i.answer_md)).toEqual(['$y = 5x - 3$', '$y = 2x + 3$']);
     for (const s of p.worksheet.sections)
       for (const i of s.items) expect(i.prompt_md).not.toMatch(/answer/i);
     expect(p.exit_ticket).toHaveLength(2);
@@ -94,7 +94,7 @@ describe('lesson pack files', () => {
     expect(body).toContain('Slides 3 to 5');
     expect(body).toContain('Slides 9 to 11 · Worksheet');
     expect(body).toContain('0 to 2 min');
-    expect(body).toContain('y = 4x + 5');
+    expect(body).toContain('y = 5x - 3');
     expect(body).toContain(NOTICE);
     expect(footer).toContain(NOTICE);
   });
@@ -117,7 +117,7 @@ describe('lesson pack files', () => {
     const { body } = await docText(exitTicketDocument(lesson, DEMO_PACK, NOTICE));
     expect(body.match(/Exit ticket:/g)).toHaveLength(2);
     expect(body).toContain('cut here');
-    expect(body).not.toContain('y = 2x + 6');
+    expect(body).not.toContain('y = 3x - 4');
   });
 
   it('slides open as a plain .pptx: one per pack slide, notice on each, no answers, no effects', async () => {
@@ -141,7 +141,7 @@ describe('lesson pack files', () => {
       for (const a of answers) expect(text).not.toContain(a);
     }
     const notes = Object.keys(files).filter((f) => /notesSlide\d+\.xml$/.test(f));
-    for (const f of notes) expect(strFromU8(files[f]!)).not.toContain('y = 3x + 4');
+    for (const f of notes) expect(strFromU8(files[f]!)).not.toContain('y = 3x + 5');
   });
 
   it('reads print colours from the design tokens', () => {
@@ -158,5 +158,19 @@ describe('reading questions from lesson text', () => {
     );
     expect(p.items.map((i) => i.prompt)).toEqual(['a', 'b']);
     expect(p.intro).toEqual(['Which rule?']);
+  });
+});
+
+describe('number rules in the demo pack', () => {
+  it('no worksheet question, slide or answer breaks the number rules', async () => {
+    const { checkNumbers } = await import('@shared/numberChecks');
+    const texts = [
+      ...DEMO_PACK.worksheet.sections.flatMap((s) =>
+        s.items.flatMap((i) => [i.prompt_md, i.answer_md]),
+      ),
+      ...DEMO_PACK.exit_ticket.flatMap((i) => [i.prompt_md, i.answer_md]),
+      ...DEMO_PACK.slides.flatMap((s) => [s.body_md, s.answer_md, ...s.options]),
+    ];
+    expect(texts.flatMap((t) => checkNumbers(t).map((i) => `${i.code}: ${t}`))).toEqual([]);
   });
 });

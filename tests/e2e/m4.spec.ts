@@ -70,7 +70,7 @@ test('Reflect saves, shows the observation, and growth reflects it', async ({ pa
 
   await page.getByRole('link', { name: 'See your growth' }).click();
   await expect(page.getByRole('heading', { level: 1, name: /How you're going/ })).toBeVisible();
-  await expect(page.getByRole('img', { name: /confidence .*4 of 5/ })).toBeVisible();
+  await expect(page.getByRole('img', { name: /concern .*4 of 5/ })).toBeVisible();
   await page.getByText('Show as a table').click();
   await expect(page.getByRole('cell', { name: '4 of 5' })).toBeVisible();
   await expect(page.getByText('Tried: Table to rule with a hinge question.')).toBeVisible();

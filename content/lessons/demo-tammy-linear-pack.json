@@ -41,15 +41,19 @@
       "block_id": "b4",
       "do": [
         "On the 'I do' slide, work through the table out loud, writing each step with the board pen.",
-        "Mark the +2 jumps between the y values with arrows.",
+        "Mark the +4 jumps between the y values with arrows.",
         "Circle the y value when x = 0, then write the rule and check it with x = 3.",
-        "On the 'We do' slide, students tell you each step while you write."
+        "On the 'We do' slide, students tell you each step while you write. Point out that x = 0 is in the middle of this table."
       ],
       "say": [
         "First I look at how much y goes up each time x goes up by 1.",
         "Then I ask: what is y when x is 0?"
       ],
-      "ask": ["What happens when x = 0?", "How can we check our rule really works?"],
+      "ask": [
+        "What happens when x = 0?",
+        "In the 'we do' table, where is x = 0?",
+        "How can we check our rule really works?"
+      ],
       "watch_for": ["Students guessing the rule before finding both parts."]
     },
     {
@@ -134,7 +138,7 @@
             "space": "medium"
           },
           {
-            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 10 | 12 | 14 | 16 |",
+            "prompt_md": "Find the rule.\n\n| $x$ | $-2$ | $-1$ | 0 | 1 |\n|---|---|---|---|---|\n| $y$ | 6 | 8 | 10 | 12 |",
             "answer_md": "$y = 2x + 10$",
             "space": "medium"
           },
@@ -168,8 +172,8 @@
         "block_id": "b8",
         "items": [
           {
-            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 5 | 9 | 13 | 17 |",
-            "answer_md": "$y = 4x + 5$",
+            "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | $-3$ | 2 | 7 | 12 |",
+            "answer_md": "$y = 5x - 3$",
             "space": "medium"
           },
           {
@@ -200,8 +204,8 @@
   },
   "exit_ticket": [
     {
-      "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 6 | 8 | 10 | 12 |",
-      "answer_md": "$y = 2x + 6$",
+      "prompt_md": "Find the rule.\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | $-4$ | $-1$ | 2 | 5 |",
+      "answer_md": "$y = 3x - 4$",
       "space": "medium"
     },
     {
@@ -260,17 +264,17 @@
       "kind": "example",
       "block_id": "b4",
       "heading": "I do: find the rule",
-      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 3 | 5 | 7 |",
+      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 5 | 9 | 13 |",
       "writing_space": true,
-      "answer_md": "$y = 2x + 1$. Check: $2 \\times 3 + 1 = 7$."
+      "answer_md": "$y = 4x + 1$. Check: $4 \\times 3 + 1 = 13$."
     },
     {
       "kind": "example",
       "block_id": "b4",
       "heading": "We do: find the rule",
-      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 4 | 7 | 10 | 13 |",
+      "body_md": "Where is $x = 0$ in this table?\n\n| $x$ | $-1$ | 0 | 1 | 2 |\n|---|---|---|---|---|\n| $y$ | 2 | 5 | 8 | 11 |",
       "writing_space": true,
-      "answer_md": "$y = 3x + 4$"
+      "answer_md": "$y = 3x + 5$"
     },
     {
       "kind": "problem",
@@ -284,7 +288,7 @@
       "kind": "problem",
       "block_id": "b6",
       "heading": "With a partner: 2",
-      "body_md": "| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 10 | 12 | 14 | 16 |",
+      "body_md": "| $x$ | $-2$ | $-1$ | 0 | 1 |\n|---|---|---|---|---|\n| $y$ | 6 | 8 | 10 | 12 |",
       "writing_space": true,
       "answer_md": "$y = 2x + 10$"
     },
@@ -300,10 +304,10 @@
       "kind": "hinge",
       "block_id": "b7",
       "heading": "Show me: which rule?",
-      "body_md": "| $x$ | 0 | 1 | 2 |\n|---|---|---|---|\n| $y$ | 4 | 7 | 10 |",
-      "options": ["$y = x + 3$", "$y = 3x + 4$", "$y = 4x + 3$"],
+      "body_md": "| $x$ | 0 | 1 | 2 |\n|---|---|---|---|\n| $y$ | 6 | 10 | 14 |",
+      "options": ["$y = x + 4$", "$y = 4x + 6$", "$y = 6x + 4$"],
       "writing_space": true,
-      "answer_md": "2. $y = 3x + 4$. Option 1 adds the change; option 3 swaps the numbers."
+      "answer_md": "2. $y = 4x + 6$. Option 1 adds the change; option 3 swaps the numbers."
     },
     {
       "kind": "reflection",

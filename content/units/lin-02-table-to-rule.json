@@ -31,23 +31,23 @@
   "aitslStandards": [],
   "hook": "Students are often given a table and asked for the rule. There is a reliable two-step method, and it starts with one question: what happens when $x = 0$?",
   "coreIdeaMd": "To find a linear rule from a table:\n\n1. **Check the steps in $x$ go up by 1.** If they don't, divide the change in $y$ by the change in $x$.\n2. **Find the change in $y$ each step.** That is $m$.\n3. **Find $y$ when $x = 0$.** That is $c$. If 0 isn't in the table, work backwards one step at a time.\n4. **Write $y = mx + c$ and check it** with one more pair from the table.",
-  "workedExampleMd": "**Find the rule for this table.**\n\n| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 1 | 3 | 5 | 7 |\n\n1. $y$ goes up by 2 each step, so the rule starts with $2x$.\n2. When $x = 0$, $y = 1$, so add 1.\n3. $y = 2x + 1$\n4. **Check:** $x = 3$ gives $2 \\times 3 + 1 = 7$. ✓\n\n**In class:** ask \"what happens when $x = 0$?\" before anyone guesses the rule.",
+  "workedExampleMd": "**Find the rule for this table.**\n\n| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 5 | 7 | 9 | 11 |\n\n1. $y$ goes up by 2 each step, so the rule starts with $2x$.\n2. When $x = 0$, $y = 5$, so add 5.\n3. $y = 2x + 5$\n4. **Check:** $x = 3$ gives $2 \\times 3 + 5 = 11$. ✓\n\n**In class:** ask \"what happens when $x = 0$?\" before anyone guesses the rule.",
   "misconceptionIds": [
     "mis-linear-constant-only"
   ],
   "checkItems": [
     {
       "id": "lin-02-q1",
-      "stemMd": "A table has $x$: 0, 1, 2, 3 and $y$: 5, 9, 13, 17. What is the rule?",
+      "stemMd": "A table has $x$: 0, 1, 2, 3 and $y$: 3, 7, 11, 15. What is the rule?",
       "type": "mcq",
       "options": [
         "$y = x + 4$",
-        "$y = 4x + 5$",
-        "$y = 5x + 4$"
+        "$y = 4x + 3$",
+        "$y = 3x + 4$"
       ],
-      "answer": "$y = 4x + 5$",
-      "feedbackCorrect": "Yes. $y$ goes up by 4 each step and starts at 5.",
-      "feedbackIncorrect": "Look at the change in $y$ (it goes up by 4 each step) and the value when $x = 0$ (5). So $y = 4x + 5$."
+      "answer": "$y = 4x + 3$",
+      "feedbackCorrect": "Yes. $y$ goes up by 4 each step and starts at 3.",
+      "feedbackIncorrect": "Look at the change in $y$ (it goes up by 4 each step) and the value when $x = 0$ (3). So $y = 4x + 3$."
     },
     {
       "id": "lin-02-q2",

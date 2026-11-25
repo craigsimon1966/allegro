@@ -90,3 +90,11 @@ Decisions not covered by SPEC.md or TECH_SPEC.md. Newest first.
 ## 26 Nov 2026: more plum accents
 
 Craig asked for more purple. Plum now marks secondary buttons, the Ask (AI) button (solid plum), section headings, margin numbers, the active sidebar and tab item, completed step squares, the AI waiting bar and a 4px plum line on top of the site header. Primary actions stay green. AI content is still marked by its plum band, the "AI" label and the disclosure line, which are unchanged. Plum still never sits on sage or green.
+
+## 26 Nov 2026: number choice in worked examples
+
+Craig asked that worked examples avoid ambiguous numbers (two letters both equal to 1, 2 + 2 next to 2 × 2), vary the numbers, include negatives, and judge whether a real context or numbers alone suits each example. The rules live in one prompt part, `prompts/_maths-examples.md`, pulled into the lesson, redo-block, explain and Quick Help prompts with a new `{{> _part}}` include in `buildPrompt`. AI lessons are not retried or rejected when a check fails (a retry would double a 60 to 90 second wait); instead the lesson editor shows a "Number check" note under the block so the teacher can redo or edit it. The checks are pattern based, so they catch the common cases rather than every possible one, and a teacher's maths check is still required.
+
+## 26 Nov 2026: needs are rated by concern, not confidence
+
+Craig: "How confident are you?" doesn't fit context needs such as finding support in a regional setting, which are facts rather than skills. Every need is now rated "How much of a concern is this for you?", 1 (Not a concern) to 5 (A big concern), on the needs list and in Reflect. Growth shows the same scale, so a falling line is good. The calibration message after a quick check reads high concern like low confidence. The rating doesn't feed the pathway order or the AI prompts, so the demo teachers' weeks don't change. The column and table names (self_rating, confidence_ratings) stay as they are, to avoid a migration. Any ratings saved before this change were confidence ratings. The leader demo still shows staff confidence, because it is separate made-up data.

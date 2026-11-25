@@ -215,3 +215,13 @@ test('an edited lesson asks the AI for its pack, and falls back to a plainer pac
   expect(asked).toBe(1);
   await expect(page.getByText(/built straight from the lesson plan/)).toBeVisible();
 });
+
+test('a number check appears when an edit gives two letters the same value', async ({ page }) => {
+  await tammyLesson(page);
+  await expect(page.locator('.number-check')).toHaveCount(0);
+  await page.getByRole('button', { name: /^Edit Retrieval starter/ }).click();
+  await page.getByLabel('Edit Retrieval starter (5 minutes)').fill('When $x = 1$, $y = 1$.');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(page.locator('.number-check')).toContainText('x and y are both 1');
+  await axeClean(page);
+});
