@@ -34,7 +34,8 @@
   "coreIdeaMd": "Two quantities are in **proportion** when one is always the same multiple of the other.\n\nThe most useful tool is the **unit rate**: how much of one quantity for **one** of the other. Once you have the unit rate, every other question is a multiplication.\n\nA **ratio table** helps students see this: multiply or divide **both rows** by the same number.",
   "workedExampleMd": "**3 kg of apples cost \\$7.50. How much do 5 kg cost?**\n\n| kg | 3 | 1 | 5 |\n|---|---|---|---|\n| \\$ | 7.50 | 2.50 | 12.50 |\n\n1. Divide both by 3 to get the unit rate: \\$2.50 per kg.\n2. Multiply both by 5: \\$12.50.\n\n**In class:** ask \"what is the price of one kilogram?\" before anything else.",
   "misconceptionIds": [
-    "mis-additive-proportion"
+    "mis-additive-proportion",
+    "mis-unit-rate-order"
   ],
   "checkItems": [
     {

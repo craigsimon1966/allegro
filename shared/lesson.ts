@@ -29,11 +29,16 @@ export const BLOCK_ORDER: LessonBlock['type'][] = [
 ];
 
 /** Seeded misconceptions for a topic: those tagged with it, plus any its units point to. */
+export const MAX_MISCONCEPTIONS = 2;
+
 export function misconceptionsFor(topicTag: string) {
   const fromUnits = new Set(
     UNITS.filter((u) => u.tags.includes(topicTag)).flatMap((u) => u.misconceptionIds),
   );
-  return MISCONCEPTIONS.filter((m) => m.topicTag === topicTag || fromUnits.has(m.id));
+  const own = MISCONCEPTIONS.filter((m) => m.topicTag === topicTag);
+  const linked = MISCONCEPTIONS.filter((m) => m.topicTag !== topicTag && fromUnits.has(m.id));
+  // Two per lesson keeps a 60-minute plan on two A4 pages; the bank order sets priority.
+  return [...own, ...linked].slice(0, MAX_MISCONCEPTIONS);
 }
 
 export function misconceptionsBlock(topicTag: string, id = 'misconceptions'): LessonBlock {

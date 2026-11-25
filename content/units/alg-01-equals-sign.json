@@ -1,0 +1,63 @@
+{
+  "id": "alg-01-equals-sign",
+  "moduleId": "mod-algebra-foundations",
+  "title": "The equals sign means \"the same as\"",
+  "domain": "CK",
+  "tags": [
+    "algebra.foundations"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Ask a class what goes in the box: $7 + 5 = \\square + 8$. Many will write 12. That one answer tells you how they read the equals sign.",
+  "coreIdeaMd": "Many students read $=$ as **\"the answer comes next\"**, because that is how it looked in early arithmetic ($3 + 4 = 7$).\n\nIn algebra, $=$ means **both sides have the same value**. It is a balance, not an instruction.\n\nStudents who see it as a balance find solving equations much easier, because doing the same thing to both sides keeps the balance.\n\nTwo habits help:\n\n- Write equations with the operation on the right sometimes: $12 = \\square + 8$.\n- Ask \"is this true or false?\" about statements like $6 + 2 = 4 + 4$.",
+  "workedExampleMd": "**What number goes in the box? $7 + 5 = \\square + 8$**\n\n1. Work out the left side: $7 + 5 = 12$.\n2. The right side must also be 12.\n3. $\\square + 8 = 12$, so the box is 4.\n4. **Check:** $7 + 5 = 12$ and $4 + 8 = 12$. Both sides match. ✓\n\n**In class:** draw a balance scale with 7 and 5 on one side, 8 and a box on the other.",
+  "misconceptionIds": [
+    "mis-equals-as-answer"
+  ],
+  "checkItems": [
+    {
+      "id": "alg-01-q1",
+      "stemMd": "Is this true or false? $9 + 3 = 6 + 6$",
+      "type": "mcq",
+      "options": [
+        "True",
+        "False"
+      ],
+      "answer": "True",
+      "feedbackCorrect": "Yes. Both sides equal 12, so it is true.",
+      "feedbackIncorrect": "Work out each side: $9 + 3 = 12$ and $6 + 6 = 12$. They are the same, so it is true."
+    },
+    {
+      "id": "alg-01-q2",
+      "stemMd": "What number goes in the box? $15 = \\square + 9$",
+      "type": "numeric",
+      "answer": "6",
+      "feedbackCorrect": "Right. $6 + 9 = 15$.",
+      "feedbackIncorrect": "The right side must equal 15. $\\square + 9 = 15$, so the box is 6."
+    }
+  ],
+  "tryTomorrow": "Start tomorrow with three true or false statements that use the equals sign in different positions.",
+  "reflectPrompt": "How do your students currently read the equals sign? How could you find out?",
+  "reviewedBy": null
+}

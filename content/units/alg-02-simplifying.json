@@ -1,0 +1,65 @@
+{
+  "id": "alg-02-simplifying",
+  "moduleId": "mod-algebra-foundations",
+  "title": "Simplifying: collecting like terms",
+  "domain": "CK",
+  "tags": [
+    "algebra.foundations"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "$2a + 3b$ cannot be simplified. Students often want to write $5ab$. Knowing why not is the heart of simplifying.",
+  "coreIdeaMd": "**Like terms** have exactly the same pronumeral part. $3x$ and $5x$ are like terms. $3x$ and $5y$ are not, and neither are $x$ and $x^2$.\n\nTo simplify:\n\n1. **Find the like terms.** Underline or colour each group.\n2. **Add or subtract the numbers in front** (the coefficients). The pronumeral stays the same.\n3. **Unlike terms stay separate.** $2a + 3b$ is already as simple as it gets.\n\nA helpful picture: $3x$ is three of the same thing. You can add three bananas and two bananas, but three bananas and two apples stay as they are.",
+  "workedExampleMd": "**Simplify $4x + 3y - x + 2y$.**\n\n1. Like terms: $4x$ and $-x$; $3y$ and $2y$.\n2. $4x - x = 3x$.\n3. $3y + 2y = 5y$.\n4. Answer: $3x + 5y$.\n5. **Check:** put $x = 1$ and $y = 1$ in both. The original gives $4 + 3 - 1 + 2 = 8$, and $3 + 5 = 8$. ✓\n\n**In class:** checking with small numbers shows students for themselves that $2a + 3b$ is not $5ab$.",
+  "misconceptionIds": [
+    "mis-conjoining",
+    "mis-brackets-first-term"
+  ],
+  "checkItems": [
+    {
+      "id": "alg-02-q1",
+      "stemMd": "Simplify $5m + 2n - 3m$.",
+      "type": "mcq",
+      "options": [
+        "$4mn$",
+        "$2m + 2n$",
+        "$8m + 2n$"
+      ],
+      "answer": "$2m + 2n$",
+      "feedbackCorrect": "Yes. $5m - 3m = 2m$, and $2n$ stays as it is.",
+      "feedbackIncorrect": "Collect the $m$ terms: $5m - 3m = 2m$. The $n$ term is not like the $m$ terms, so it stays: $2m + 2n$."
+    },
+    {
+      "id": "alg-02-q2",
+      "stemMd": "Simplify $3(x + 2) + x$. What is the number in front of $x$ in your answer?",
+      "type": "numeric",
+      "answer": "4",
+      "feedbackCorrect": "Right. $3(x + 2) = 3x + 6$, then $3x + 6 + x = 4x + 6$.",
+      "feedbackIncorrect": "Expand first: $3(x + 2) = 3x + 6$. Then add $x$: $3x + x = 4x$, giving $4x + 6$."
+    }
+  ],
+  "tryTomorrow": "When students simplify, ask them to check their answer by putting in small numbers such as 1 and 2.",
+  "reflectPrompt": "Which picture or story would help your students most with like terms?",
+  "reviewedBy": null
+}

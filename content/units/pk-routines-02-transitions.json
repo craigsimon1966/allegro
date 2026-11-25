@@ -1,0 +1,47 @@
+{
+  "id": "pk-routines-02-transitions",
+  "moduleId": "mod-routines",
+  "title": "Smooth transitions between activities",
+  "domain": "PK",
+  "tags": [
+    "pk.routines"
+  ],
+  "audience": [
+    "early_career",
+    "out_of_field",
+    "casual",
+    "secondary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "A lesson with four activities has three transitions. If each one takes three minutes, that is nearly ten minutes of learning lost.",
+  "coreIdeaMd": "A good transition is **short, signalled and practised**:\n\n1. **Give a warning.** \"One more minute on this question.\"\n2. **Use the same signal every time** to get attention, such as a raised hand or a countdown from five.\n3. **Give the next instruction in one go, then check.** \"Books closed, whiteboards out, pens ready. Show me.\"\n4. **Have materials ready** before the lesson so nobody waits for sheets.\n\nPractise the routine early in the term, and praise the class when a transition is quick.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pkr-02-q1",
+      "stemMd": "Which instruction is most likely to give a quick transition?",
+      "type": "mcq",
+      "options": [
+        "\"OK everyone, let's move on to something else now.\"",
+        "\"In 10 seconds: books closed, whiteboards out, pens ready. Show me.\"",
+        "\"When you're finished, get a whiteboard.\""
+      ],
+      "answer": "\"In 10 seconds: books closed, whiteboards out, pens ready. Show me.\"",
+      "feedbackCorrect": "Yes. It is specific, timed and has a check at the end.",
+      "feedbackIncorrect": "Vague or open-ended instructions let the transition drift. Short, specific steps with a time and a check work best."
+    }
+  ],
+  "tryTomorrow": "Choose one attention signal and use it, the same way, at every transition tomorrow.",
+  "reflectPrompt": "Where in your lessons does time slip away between activities?",
+  "reviewedBy": null
+}

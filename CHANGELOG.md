@@ -4,6 +4,8 @@
 
 ### Content review document (25 November 2026)
 
+- Drafted the rest of the SPEC 9.2 seed set: 6 more units (graphing errors, ratio or fraction, the equals sign, simplifying, I do we do you do, transitions; 28 in all) and 8 more misconceptions (12 in all). All `reviewedBy: null`, CK codes `AC9-TODO` / `NSW-TODO`.
+- Lesson plans show at most 2 misconceptions, so a 60-minute plan still prints on 2 pages.
 - `npm run content:export-review` writes `review/allegro-content-review.docx` and a `.md` copy (TECH_SPEC 10.3): how to review, a summary table, one page per unit (hook, core idea, worked example, check questions with answers and feedback, linked misconceptions, try tomorrow, reflection prompt), then the misconception bank and the diagnostic items. Each has a box for AC v9 and NSW codes, notes and Approved (Y/N). Maths is written as it looks on paper.
 - `npm run content:approve -- <unit-id> --by "Name" --on YYYY-MM-DD` for Craig: sets the review fields and the content hash, and adds a line to `docs/review-log.md`.
 
