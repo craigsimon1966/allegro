@@ -1,0 +1,50 @@
+{
+  "id": "pri-attention-01",
+  "moduleId": "mod-primary",
+  "title": "Attention spans and pacing with young children",
+  "domain": "PK",
+  "tags": [
+    "primary.attention"
+  ],
+  "audience": [
+    "primary",
+    "casual",
+    "early_career"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Six-year-olds can focus on one activity for a short time only. Planning in short chunks keeps them learning.",
+  "coreIdeaMd": "A rough guide is a few minutes of focused attention per year of age, so plan in short chunks:\n\n- **Change the activity** every 10 to 15 minutes.\n- **Mix sitting and moving.** A quick movement break resets attention.\n- **Keep instructions short**: one or two steps at a time, then check.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pri-a-01-q1",
+      "stemMd": "How should you give instructions to a Year 1 class?",
+      "type": "mcq",
+      "options": [
+        "All the steps at once",
+        "One or two steps at a time, then check",
+        "Written on the board only"
+      ],
+      "answer": "One or two steps at a time, then check",
+      "feedbackCorrect": "Yes. Short instructions are easier to follow.",
+      "feedbackIncorrect": "Young students hold only a few steps in mind. Give one or two at a time."
+    }
+  ],
+  "tryTomorrow": "Plan tomorrow's morning session in 10-minute chunks with a movement break in the middle.",
+  "reflectPrompt": "When did you notice your class lose focus today?",
+  "reviewedBy": null
+}

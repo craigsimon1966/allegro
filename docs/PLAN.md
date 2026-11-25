@@ -94,6 +94,8 @@ Decisions needed first: allow-list (TECH_SPEC 15 #1), SMTP provider (#3).
 
 Done when: unit tests prove the time budget is never exceeded; every unit validates; Draft badges show.
 
+Status (25 Nov 2026): demo slice done. Rules-based pathway in `shared/pathway.ts` (runs in the browser), 22 draft units, /pathway and /learn built, unbuilt screens say "coming soon". Still to do: `/api/pathway` AI reasons, `/api/explain`, saving pathway and progress to Supabase for signed-in teachers.
+
 **Demo checkpoint:** deploy a Cloudflare preview and walk 2 or 3 friendly teachers through Tammy's path up to a finished micro-unit. Cheap way to test the "fits my actual situation" measure before building the Lesson Builder.
 
 ## M3: Lesson Builder

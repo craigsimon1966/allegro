@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
 import type { Diagnosis, Guided, Need } from '@shared/schemas';
 import type { DiagnosticResult } from '@shared/diagnostics';
+import type { PathwayItem } from '@shared/pathway';
 
 // App state (TECH_SPEC 3.1). Demo mode keeps everything here and in localStorage (SPEC 12.1).
 // localStorage can be missing or throw (private windows, blocked storage), so every access is guarded.
@@ -38,6 +39,18 @@ export interface TeacherNeed extends Need {
   diagnosticResult: DiagnosticResult | null;
 }
 
+export interface UnitProgress {
+  completedAt: string | null;
+  checkCorrect: number;
+  reflection: string;
+}
+
+/** A "Try tomorrow" move saved for the lesson builder (M3). */
+export interface LessonMove {
+  unitId: string;
+  text: string;
+}
+
 export interface Intake {
   situationText: string;
   guided: Guided;
@@ -51,6 +64,11 @@ interface State {
   summary: string;
   diagnosis: Diagnosis | null;
   needs: TeacherNeed[];
+  pathway: PathwayItem[] | null;
+  /** Needs signature the pathway was built from, so edited needs rebuild it. */
+  pathwayKey: string;
+  progress: Record<string, UnitProgress>;
+  lessonMoves: LessonMove[];
   startDemo: (personaId: string | null) => void;
   setSignedIn: () => void;
   setIntake: (intake: Intake) => void;
@@ -58,6 +76,10 @@ interface State {
   setSummary: (s: string) => void;
   updateNeed: (id: string, patch: Partial<TeacherNeed>) => void;
   addNeed: (need: TeacherNeed) => void;
+  setPathway: (items: PathwayItem[], key: string) => void;
+  moveItem: (unitId: string, dir: -1 | 1) => void;
+  saveProgress: (unitId: string, patch: Partial<UnitProgress>) => void;
+  addLessonMove: (move: LessonMove) => void;
   reset: () => void;
 }
 
@@ -71,7 +93,16 @@ const newSessionId = () =>
 export const toTeacherNeeds = (d: Diagnosis): TeacherNeed[] =>
   d.needs.map((n) => ({ ...n, status: 'active', selfRating: null, diagnosticResult: null }));
 
-const empty = { intake: null, summary: '', diagnosis: null, needs: [] as TeacherNeed[] };
+const empty = {
+  intake: null,
+  summary: '',
+  diagnosis: null,
+  needs: [] as TeacherNeed[],
+  pathway: null,
+  pathwayKey: '',
+  progress: {} as Record<string, UnitProgress>,
+  lessonMoves: [] as LessonMove[],
+};
 
 export const useAppStore = create<State>()(
   persist(
@@ -89,6 +120,33 @@ export const useAppStore = create<State>()(
       updateNeed: (id, patch) =>
         set((s) => ({ needs: s.needs.map((n) => (n.id === id ? { ...n, ...patch } : n)) })),
       addNeed: (need) => set((s) => ({ needs: [...s.needs, need] })),
+      setPathway: (pathway, pathwayKey) => set({ pathway, pathwayKey }),
+      moveItem: (unitId, dir) =>
+        set((s) => {
+          if (!s.pathway) return {};
+          const items = [...s.pathway].sort((a, b) => a.sortOrder - b.sortOrder);
+          const i = items.findIndex((it) => it.unitId === unitId);
+          const j = i + dir;
+          if (i < 0 || j < 0 || j >= items.length) return {};
+          [items[i], items[j]] = [items[j]!, items[i]!];
+          return { pathway: items.map((it, k) => ({ ...it, sortOrder: k })) };
+        }),
+      saveProgress: (unitId, patch) =>
+        set((s) => ({
+          progress: {
+            ...s.progress,
+            [unitId]: {
+              ...(s.progress[unitId] ?? { completedAt: null, checkCorrect: 0, reflection: '' }),
+              ...patch,
+            },
+          },
+        })),
+      addLessonMove: (move) =>
+        set((s) =>
+          s.lessonMoves.some((m) => m.unitId === move.unitId)
+            ? {}
+            : { lessonMoves: [...s.lessonMoves, move] },
+        ),
       reset: () => set({ mode: 'anonymous', personaId: null, demoSessionId: null, ...empty }),
     }),
     { name: 'allegro-demo', storage: createJSONStorage(() => safeStorage), version: 1 },

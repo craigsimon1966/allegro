@@ -1,0 +1,56 @@
+{
+  "id": "pck-diff-01-three-entry-points",
+  "moduleId": "mod-differentiation",
+  "title": "One maths task, three entry points",
+  "domain": "PCK",
+  "tags": [
+    "pck.differentiation"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8",
+    "9"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "One class, a wide range of students, and you have one lesson. A single task with three entry points means everyone works on the same maths.",
+  "coreIdeaMd": "Instead of three different worksheets, give one task with:\n\n- **A starting point** that everyone can reach (a concrete example)\n- **A middle** that most students will get to (the main skill)\n- **An extension** that asks why, or asks for a general rule\n\nEveryone starts in the same place and stops at a different point.",
+  "workedExampleMd": "**Task: a pattern of squares grows 1, 3, 5, 7...**\n\n- **Start:** draw the next two patterns.\n- **Middle:** how many squares in pattern 10?\n- **Extension:** write a rule for pattern $n$ and explain why it works.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pckd-01-q1",
+      "stemMd": "What is the main benefit of one task with three entry points?",
+      "type": "mcq",
+      "options": [
+        "Less marking",
+        "All students work on the same maths at their own level",
+        "Top students can finish early"
+      ],
+      "answer": "All students work on the same maths at their own level",
+      "feedbackCorrect": "Yes. It keeps the class together on one idea.",
+      "feedbackIncorrect": "The point is a shared task: everyone works on the same idea and can discuss it together."
+    }
+  ],
+  "tryTomorrow": "Take one question from tomorrow's lesson and add a \"start\" and an \"extension\" version.",
+  "reflectPrompt": "Which students in your class might benefit most from this approach?",
+  "reviewedBy": null
+}

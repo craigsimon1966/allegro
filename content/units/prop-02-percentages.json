@@ -1,0 +1,51 @@
+{
+  "id": "prop-02-percentages",
+  "moduleId": "mod-proportional",
+  "title": "Percentages as proportion",
+  "domain": "CK",
+  "tags": [
+    "number.proportional"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students who learn percentages as a set of tricks often get stuck on \"what percentage is 18 of 24?\" Proportion makes all three types the same question.",
+  "coreIdeaMd": "**Percent** means \"out of 100\". Every percentage question is a ratio table with 100 in it.\n\n| part | ? |\n|---|---|\n| whole | 100 |\n\nWhether you are finding the part, the whole or the percentage, set up the table and find the missing value.",
+  "workedExampleMd": "**What percentage is 18 of 24?**\n\n| | Actual | Percent |\n|---|---|---|\n| part | 18 | ? |\n| whole | 24 | 100 |\n\n1. 24 to 100 is multiplying by $\\frac{100}{24}$.\n2. $18 \\times \\frac{100}{24} = 75$\n3. So 18 is **75%** of 24.\n\n**Check:** 75% of 24 is $0.75 \\times 24 = 18$. ✓",
+  "misconceptionIds": [
+    "mis-additive-proportion"
+  ],
+  "checkItems": [
+    {
+      "id": "prop-02-q1",
+      "stemMd": "What percentage is 12 of 48?",
+      "type": "numeric",
+      "answer": "25",
+      "feedbackCorrect": "Yes. $12 \\div 48 = 0.25$, which is 25%.",
+      "feedbackIncorrect": "Set up the table: 12 out of 48 is the same as ? out of 100. $12 \\div 48 = 0.25$, so 25%."
+    }
+  ],
+  "tryTomorrow": "Ask students to solve one percentage problem two ways (with a ratio table and with a calculator), then compare.",
+  "reflectPrompt": "Which percentage method were you taught at school? Does it help or get in the way now?",
+  "reviewedBy": null
+}

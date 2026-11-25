@@ -1,0 +1,56 @@
+{
+  "id": "pri-number-01",
+  "moduleId": "mod-primary",
+  "title": "Early number: subitising and part-part-whole",
+  "domain": "CK",
+  "tags": [
+    "primary.early-number"
+  ],
+  "audience": [
+    "primary",
+    "casual",
+    "early_career"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Before children can add, they need to see numbers as made of parts. Subitising and part-part-whole build that sense.",
+  "coreIdeaMd": "**Subitising** is recognising how many without counting, like the dots on a dice.\n\n**Part-part-whole** is seeing that 5 can be 4 and 1, or 3 and 2. This is the foundation of addition and subtraction.\n\nUse dot cards, ten frames and fingers. Ask \"how did you see it?\" so children explain their thinking.",
+  "workedExampleMd": "**Show a ten frame with 7 dots (5 on top, 2 below) for two seconds.**\n\n- Ask: \"How many? How did you see it?\"\n- A child might say: \"5 on top and 2 more.\"\n- That is part-part-whole: $7 = 5 + 2$.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pri-n-01-q1",
+      "stemMd": "What is subitising?",
+      "type": "mcq",
+      "options": [
+        "Counting by ones",
+        "Recognising how many without counting",
+        "Writing numerals"
+      ],
+      "answer": "Recognising how many without counting",
+      "feedbackCorrect": "Yes. Like seeing six on a dice instantly.",
+      "feedbackIncorrect": "Subitising is seeing how many at a glance, without counting each one."
+    }
+  ],
+  "tryTomorrow": "Flash a dot card or ten frame for two seconds and ask \"how did you see it?\" three times tomorrow.",
+  "reflectPrompt": "How do your students currently show you how they see numbers?",
+  "reviewedBy": null
+}

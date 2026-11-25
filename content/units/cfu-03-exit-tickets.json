@@ -1,0 +1,50 @@
+{
+  "id": "cfu-03-exit-tickets",
+  "moduleId": "mod-checking",
+  "title": "Exit tickets that shape tomorrow",
+  "domain": "PK",
+  "tags": [
+    "pk.checking-understanding",
+    "assessment.feedback"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "An exit ticket takes three minutes at the end of a lesson and can save you a whole lesson of reteaching.",
+  "coreIdeaMd": "An **exit ticket** is one or two questions answered on a slip of paper before students leave.\n\n- Ask about the **main idea** of the lesson, not the hardest question.\n- Sort them into three piles straight after: **got it**, **nearly**, **not yet**.\n- Start the next lesson with what the piles tell you, for example a two-minute reteach for the \"not yet\" pile while others start the warm-up.\n\nExit tickets don't need marks or comments. Their job is to change what you do tomorrow.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "cfu-03-q1",
+      "stemMd": "What is the main purpose of an exit ticket?",
+      "type": "mcq",
+      "options": [
+        "To give each student a mark",
+        "To decide what to do at the start of the next lesson",
+        "To keep students busy at the end of class"
+      ],
+      "answer": "To decide what to do at the start of the next lesson",
+      "feedbackCorrect": "Yes. It is information for you, not a test for them.",
+      "feedbackIncorrect": "An exit ticket is information for your planning. Sorting into three piles is quicker than marking."
+    }
+  ],
+  "tryTomorrow": "Finish tomorrow's lesson with a one-question exit ticket. Sort them into three piles before you leave school.",
+  "reflectPrompt": "How would sorting into three piles change the way you start your next lesson?",
+  "reviewedBy": null
+}

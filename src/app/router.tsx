@@ -12,6 +12,8 @@ const SignInPage = lazy(() => import('@/features/auth/SignInPage'));
 const AuthCallback = lazy(() => import('@/features/auth/AuthCallback'));
 const Intake = lazy(() => import('@/features/intake/Intake'));
 const Needs = lazy(() => import('@/features/needs/Needs'));
+const Pathway = lazy(() => import('@/features/pathway/Pathway'));
+const Learn = lazy(() => import('@/features/learn/Learn'));
 
 function Loading() {
   return (
@@ -34,16 +36,58 @@ export const routes = [
   { path: '/auth/callback', element: lazyPage(<AuthCallback />) },
   { path: '/start', element: lazyPage(<Intake />) },
   { path: '/needs', element: lazyPage(<Needs />) },
-  { path: '/pathway', element: <Placeholder title="This week" milestone="M2" shell step={3} /> },
-  { path: '/learn/:unitId', element: <Placeholder title="Learn" milestone="M2" shell step={4} /> },
-  { path: '/plan', element: <Placeholder title="Plan a lesson" milestone="M3" shell step={5} /> },
+  { path: '/pathway', element: lazyPage(<Pathway />) },
+  { path: '/learn/:unitId', element: lazyPage(<Learn />) },
+  {
+    path: '/plan',
+    element: (
+      <Placeholder
+        title="Plan a lesson"
+        milestone="M3"
+        shell
+        step={5}
+        blurb="Soon you'll turn this week's learning into a lesson plan for your class, including any moves you added from a unit."
+      />
+    ),
+  },
   {
     path: '/plan/:lessonId',
     element: <Placeholder title="Your lesson" milestone="M3" shell step={5} />,
   },
-  { path: '/reflect', element: <Placeholder title="Reflect" milestone="M4" shell step={6} /> },
-  { path: '/growth', element: <Placeholder title="Your growth" milestone="M4" shell /> },
-  { path: '/help', element: <Placeholder title="Quick Help" milestone="M4" shell /> },
+  {
+    path: '/reflect',
+    element: (
+      <Placeholder
+        title="Reflect"
+        milestone="M4"
+        shell
+        step={6}
+        blurb="Soon you'll look back on how the lesson went and Allegro will adjust next week's learning."
+      />
+    ),
+  },
+  {
+    path: '/growth',
+    element: (
+      <Placeholder
+        title="Your growth"
+        milestone="M4"
+        shell
+        blurb="Soon you'll see your progress across topics over the term."
+      />
+    ),
+  },
+  {
+    path: '/help',
+    element: (
+      <Placeholder
+        title="Quick Help"
+        milestone="M4"
+        shell
+        blurb="Soon you'll be able to ask a quick question about a topic or a class and get an answer in a minute."
+      />
+    ),
+  },
   { path: '/leader', element: <Placeholder title="Leader preview" milestone="M5" /> },
   { path: '/admin/feedback', element: <Placeholder title="Pilot feedback" milestone="M5" /> },
   { path: '*', element: <Placeholder title="Page not found" /> },

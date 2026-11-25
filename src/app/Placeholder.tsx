@@ -9,17 +9,26 @@ interface Props {
   /** Teacher screens use the app frame (tabs and sidebar); public ones don't. */
   shell?: boolean;
   step?: number;
+  /** One line on what the screen will do, shown to teachers. */
+  blurb?: string;
 }
 
-export function Placeholder({ title, milestone, shell = false, step }: Props) {
+// Screens not built yet. Teacher screens say what's coming and point back to the week,
+// so a demo never hits a dead end.
+export function Placeholder({ title, milestone, shell = false, step, blurb }: Props) {
   const body = (
     <MarginLayout>
-      {milestone && <Label>Coming in {milestone}</Label>}
+      {milestone && <Label>Coming soon</Label>}
       <h1 className="mt-1 text-[30px] leading-tight">{title}</h1>
-      <p className="mt-4 max-w-prose text-muted">This screen isn&apos;t built yet.</p>
+      <p className="mt-4 max-w-prose text-muted">
+        {blurb ??
+          (milestone
+            ? 'This part of Allegro is still being built.'
+            : "We couldn't find that page.")}
+      </p>
       <p className="mt-6">
-        <Link to="/" className="text-green-700 underline">
-          Back to home
+        <Link to={shell ? '/pathway' : '/'} className="font-bold text-green-700 underline">
+          {shell ? 'Back to this week' : 'Back to home'}
         </Link>
       </p>
     </MarginLayout>

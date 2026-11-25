@@ -1,0 +1,57 @@
+{
+  "id": "lin-03-tables-graphs-rules",
+  "moduleId": "mod-linear",
+  "title": "One relationship, three pictures",
+  "domain": "CK",
+  "tags": [
+    "algebra.linear"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary"
+  ],
+  "yearLevels": [
+    "8",
+    "9"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9-TODO"
+    ],
+    "nsw": [
+      "NSW-TODO"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "A table, a graph and a rule can all show the same relationship. Students get stuck when they treat them as three different topics.",
+  "coreIdeaMd": "The same two numbers appear in every representation:\n\n| | Rate of change ($m$) | Starting value ($c$) |\n|---|---|---|\n| **Table** | The change in $y$ each step | $y$ when $x = 0$ |\n| **Graph** | How steep the line is (rise over run) | Where the line crosses the $y$-axis |\n| **Rule** | The number multiplying $x$ | The number added on |\n\nTeaching tip: always move between at least two representations in a lesson, and ask \"where can you see the 3 in the graph?\"",
+  "workedExampleMd": "**A phone plan costs \\$10 a month plus \\$2 per gigabyte.**\n\n- **Rule:** $C = 2g + 10$\n- **Table:** $g$ = 0, 1, 2, 3 gives $C$ = 10, 12, 14, 16\n- **Graph:** starts at 10 on the vertical axis and rises 2 for every 1 across\n\nThe \\$10 is the starting value in all three. The \\$2 is the rate in all three.",
+  "misconceptionIds": [
+    "mis-gradient-steepness"
+  ],
+  "checkItems": [
+    {
+      "id": "lin-03-q1",
+      "stemMd": "A line crosses the $y$-axis at 6 and rises 3 for every 1 across. What is its rule?",
+      "type": "mcq",
+      "options": [
+        "$y = 6x + 3$",
+        "$y = 3x + 6$",
+        "$y = 3x - 6$"
+      ],
+      "answer": "$y = 3x + 6$",
+      "feedbackCorrect": "Yes. The rise of 3 is the gradient and 6 is the starting value.",
+      "feedbackIncorrect": "The rise for every 1 across is the gradient (3). The $y$-axis crossing is the starting value (6). So $y = 3x + 6$."
+    }
+  ],
+  "tryTomorrow": "Pick one real-life context (a taxi fare or a phone plan) and have students show it as a table, a graph and a rule on mini whiteboards.",
+  "reflectPrompt": "Which representation do you feel most confident with yourself? How might that shape how you teach the others?",
+  "reviewedBy": null
+}

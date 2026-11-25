@@ -1,0 +1,51 @@
+{
+  "id": "cfu-01-hinge-questions",
+  "moduleId": "mod-checking",
+  "title": "Hinge questions in two minutes",
+  "domain": "PK",
+  "tags": [
+    "pk.checking-understanding"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "experienced",
+    "secondary",
+    "primary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "Halfway through a lesson, how do you know whether to move on? A hinge question tells you in under two minutes.",
+  "coreIdeaMd": "A **hinge question** is one multiple-choice question asked at the point where the lesson turns. Every student answers at once (fingers, cards or mini whiteboards).\n\nGood hinge questions:\n\n- take under a minute to answer\n- have wrong options that each match a **specific** error\n- let you decide on the spot: move on, reteach, or pair students up\n\nIf more than about a third of the class choose a wrong answer, reteach before moving on.",
+  "workedExampleMd": "**After teaching table to rule, ask:**\n\nThe table $x$: 0, 1, 2 and $y$: 4, 7, 10 has which rule?\n\n- **A** $y = x + 3$ (put the change in the wrong place)\n- **B** $y = 3x + 4$ (correct)\n- **C** $y = 4x + 3$ (swapped the numbers)\n\nEach wrong answer tells you exactly what to fix.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "cfu-01-q1",
+      "stemMd": "What makes a hinge question useful?",
+      "type": "mcq",
+      "options": [
+        "It is hard, so it stretches the top students",
+        "Each wrong option points to a specific error",
+        "Students can take as long as they need"
+      ],
+      "answer": "Each wrong option points to a specific error",
+      "feedbackCorrect": "Yes. That is what lets you act on the answers straight away.",
+      "feedbackIncorrect": "The power of a hinge question is in its wrong options: each one tells you what a student is thinking."
+    }
+  ],
+  "tryTomorrow": "Write one hinge question for tomorrow's lesson, with two wrong options that match errors you expect. Ask it at the halfway point.",
+  "reflectPrompt": "What do you normally do to decide whether a class is ready to move on?",
+  "reviewedBy": null
+}

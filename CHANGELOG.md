@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### M2 (demo slice): Pathway and learning (25 November 2026)
+
+- 22 draft micro-units covering all 17 catalogue tags (extra depth for Tammy's linear relationships, algebra errors, checking for understanding and proportional reasoning), 4 misconceptions and 12 modules. All `reviewedBy: null`, curriculum codes `AC9-TODO` / `NSW-TODO`.
+- `shared/pathway.ts`: rules-based week plan. Needs in priority order, each "now" need gets a unit before any need gets a second, the weekly time budget is never exceeded, learning goes on non-teaching weekdays (all weekdays if there are none), weeks start Monday in Sydney.
+- /pathway: "Before Monday" band with the next unit, ruled list with day, duration, "Why this?" and up/down reorder, a Draft notice, and the lesson step marked coming soon.
+- /learn/:unitId: hook, core idea, worked example, common mistake, quick check with feedback, try tomorrow with "Add to my lesson", and an optional reflection with the student-name check. Progress bar and Draft badge.
+- Unbuilt teacher screens (/plan, /reflect, /growth, /help) say what's coming and link back to the week.
+- Tests: catalogue validation, time budget, teaching days, Sydney week start; Playwright for Tammy's week and a full unit, and the coming-soon screens, with axe.
+- Not yet: `/api/pathway` AI reasons, "Explain this differently", saving the week and progress to Supabase.
+
 ### M1: Auth, intake and diagnosis, without accounts (24 November 2026)
 
 - Supabase migrations 0001 and 0002 from TECH_SPEC 5, plus 0003 for the pilot email allow-list and its auth hook. Not yet run (needs the Supabase project).
