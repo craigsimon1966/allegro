@@ -25,13 +25,26 @@ export type Completer = (args: CompleteArgs) => Promise<Completion>;
 export class AiUnavailableError extends Error {}
 
 /**
+ * Thinking off for every call. Current models think by default, and thinking tokens count
+ * towards max_tokens: in production a lesson spent all 8,000 tokens thinking and was cut off
+ * before the JSON. Our replies are structured drafts grounded in reference text, and a person
+ * checks the maths, so speed and a complete reply matter more here. Sonnet 5.5 turns thinking
+ * off with 'between_tools'; Haiku 5.5 with 'disabled'. Other models keep their default.
+ */
+export function thinkingFor(model: string): Anthropic.ThinkingConfigParam | undefined {
+  if (model.startsWith('claude-sonnet-5-5')) return { type: 'between_tools' };
+  if (model.startsWith('claude-haiku-5-5')) return { type: 'disabled' };
+  return undefined;
+}
+
+/**
  * Real Anthropic client. By default a 25 second timeout and one retry with backoff on timeouts
  * and 5xx. Long replies (a full lesson) take longer than 25 seconds to write, so their endpoints
  * pass a longer timeout and no retry: a retry after a timeout only doubles the wait.
  */
 export function anthropicCompleter(
   env: Env,
-  opts: { timeoutMs?: number; maxRetries?: number } = {},
+  opts: { timeoutMs?: number; maxRetries?: number; fetch?: typeof fetch } = {},
 ): Completer {
   if (!env.ANTHROPIC_API_KEY) {
     return async () => {
@@ -42,10 +55,18 @@ export function anthropicCompleter(
     apiKey: env.ANTHROPIC_API_KEY,
     timeout: opts.timeoutMs ?? 25_000,
     maxRetries: opts.maxRetries ?? 1,
+    ...(opts.fetch ? { fetch: opts.fetch } : {}),
   });
   return async ({ model, system, messages, maxTokens }) => {
     try {
-      const res = await client.messages.create({ model, system, messages, max_tokens: maxTokens });
+      const thinking = thinkingFor(model);
+      const res = await client.messages.create({
+        model,
+        system,
+        messages,
+        max_tokens: maxTokens,
+        ...(thinking ? { thinking } : {}),
+      });
       const text = res.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
       return {
         text,
