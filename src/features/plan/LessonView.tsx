@@ -13,6 +13,7 @@ import { tagById } from '@shared/tags';
 import type { LessonBlock } from '@shared/schemas';
 import { ApiError, loadLessonsFromSupabase, redoBlock, saveLesson } from '@/lib/api';
 import { useAppStore, type SavedLesson } from '@/lib/store';
+import { Thumbs } from '@/features/feedback/Thumbs';
 
 // Lesson plan editor (SPEC 7.7): reorder, edit, redo one block, check the maths, print.
 
@@ -379,6 +380,7 @@ export default function LessonView() {
             {copied ? 'Copied' : 'Copy as text'}
           </Button>
         </div>
+        <Thumbs target="lesson" label="Would you use this lesson with minor edits?" />
         <p className="no-print mt-2 text-[13px] text-muted">
           To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window.
         </p>

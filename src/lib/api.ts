@@ -403,3 +403,26 @@ export async function saveReflection(r: Reflection): Promise<void> {
     .map(([need_id, rating]) => ({ need_id, rating }));
   if (rows.length) await supabase.from('confidence_ratings').insert(rows);
 }
+
+/** Anonymous pilot feedback (SPEC 14). Uses a random id per browser session, never the user id. */
+function feedbackSession(): string {
+  try {
+    const k = 'allegro-feedback-session';
+    const existing = window.sessionStorage.getItem(k);
+    if (existing) return existing;
+    const id = crypto.randomUUID();
+    window.sessionStorage.setItem(k, id);
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
+
+export async function sendFeedback(f: {
+  target: string;
+  thumbs?: 1 | -1;
+  scores?: Record<string, number>;
+  comment?: string;
+}): Promise<void> {
+  await post('/api/feedback', { sessionId: feedbackSession(), ...f });
+}

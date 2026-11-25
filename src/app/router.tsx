@@ -19,6 +19,8 @@ const LessonView = lazy(() => import('@/features/plan/LessonView'));
 const Reflect = lazy(() => import('@/features/reflect/Reflect'));
 const Growth = lazy(() => import('@/features/growth/Growth'));
 const Help = lazy(() => import('@/features/help/Help'));
+const Leader = lazy(() => import('@/features/leader/Leader'));
+const Survey = lazy(() => import('@/features/feedback/Survey'));
 
 function Loading() {
   return (
@@ -48,7 +50,8 @@ export const routes = [
   { path: '/reflect', element: lazyPage(<Reflect />) },
   { path: '/growth', element: lazyPage(<Growth />) },
   { path: '/help', element: lazyPage(<Help />) },
-  { path: '/leader', element: <Placeholder title="Leader preview" milestone="M5" /> },
+  { path: '/leader', element: lazyPage(<Leader />) },
+  { path: '/survey', element: lazyPage(<Survey />) },
   { path: '/admin/feedback', element: <Placeholder title="Pilot feedback" milestone="M5" /> },
   { path: '*', element: <Placeholder title="Page not found" /> },
 ];

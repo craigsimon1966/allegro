@@ -14,6 +14,7 @@ import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
 import { loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
+import { Thumbs } from '@/features/feedback/Thumbs';
 
 // This week (SPEC 7.5). Built by rules from the confirmed needs, inside the teacher's stated hours.
 
@@ -301,6 +302,7 @@ export default function Pathway() {
                 Change my needs
               </Link>
             </p>
+            <Thumbs target="pathway" label="Does this week fit your time?" />
           </>
         )}
       </MarginLayout>

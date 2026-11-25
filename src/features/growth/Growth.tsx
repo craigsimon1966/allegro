@@ -220,6 +220,11 @@ export default function Growth() {
             </ol>
           )}
           <p className="mt-3 text-[13px] text-muted">Only you can see your reflections.</p>
+          <p className="mt-6">
+            <Link to="/survey" className="text-green-700 underline">
+              Tell us about the pilot (1 minute)
+            </Link>
+          </p>
         </div>
       </MarginLayout>
     </AppShell>

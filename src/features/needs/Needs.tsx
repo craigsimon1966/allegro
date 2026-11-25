@@ -11,6 +11,7 @@ import { loadLatestFromSupabase, saveNeedEdit } from '@/lib/api';
 import { useAppStore, type TeacherNeed } from '@/lib/store';
 import type { Need } from '@shared/schemas';
 import { DiagnosticCheck } from './DiagnosticCheck';
+import { Thumbs } from '@/features/feedback/Thumbs';
 
 // "Here's what we heard" (SPEC 7.4).
 
@@ -314,6 +315,8 @@ export default function Needs() {
             )}
           </div>
         </div>
+
+        <Thumbs target="diagnosis" label="Did we get your situation right?" />
 
         <div className="mt-8">
           <Button onClick={() => navigate('/pathway')} disabled={active.length === 0}>
