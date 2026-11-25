@@ -27,7 +27,7 @@ export function SectionRule({ children, id }: { children: ReactNode; id?: string
   return (
     <h2
       id={id}
-      className="border-b-2 border-rule-strong pb-1.5 font-body text-[13px] font-normal uppercase tracking-[0.12em] text-muted"
+      className="border-b-2 border-rule-strong pb-1.5 font-body text-[13px] font-bold uppercase tracking-[0.12em] text-plum-700"
     >
       {children}
     </h2>

@@ -111,7 +111,7 @@ export default function DemoPicker() {
                     >
                       <span
                         aria-hidden="true"
-                        className="w-margin shrink-0 text-center font-heading text-[22px] font-semibold text-green-700"
+                        className="w-margin shrink-0 text-center font-heading text-[22px] font-semibold text-plum-500"
                       >
                         {p.initial}
                       </span>

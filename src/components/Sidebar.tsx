@@ -3,7 +3,7 @@ import { Label } from './Label';
 import { MAIN_NAV } from './nav';
 import { StepSquares } from './StepSquares';
 
-/** Laptop "Contents" sidebar: ruled list, active item with a green left edge (SPEC 10.6). */
+/** Laptop "Contents" sidebar: ruled list, active item with a plum left edge (SPEC 10.6). */
 export function Sidebar({ step }: { step?: number }) {
   return (
     <nav
@@ -28,7 +28,7 @@ export function Sidebar({ step }: { step?: number }) {
             className={({ isActive }) =>
               `flex h-[46px] items-center border-b border-rule px-5 text-base no-underline ${
                 isActive
-                  ? 'bg-sage-100 font-bold text-ink shadow-[inset_4px_0_0_var(--green-700)]'
+                  ? 'bg-sage-100 font-bold text-ink shadow-[inset_4px_0_0_var(--plum-500)]'
                   : 'text-ink hover:bg-sage-100'
               }`
             }

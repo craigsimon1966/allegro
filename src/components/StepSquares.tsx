@@ -21,7 +21,7 @@ export function StepSquares({ current, showName = true }: Props) {
           <div
             key={name}
             data-filled={i < step}
-            className={`h-3 w-3 ${i < step ? 'bg-green-700' : 'border-[1.5px] border-muted'}`}
+            className={`h-3 w-3 ${i < step ? 'bg-plum-500' : 'border-[1.5px] border-muted'}`}
           />
         ))}
       </div>

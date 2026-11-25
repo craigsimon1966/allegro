@@ -163,7 +163,7 @@ export default function Needs() {
                   : undefined;
               return (
                 <li key={n.id} className="flex border-b border-rule">
-                  <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-green-700">
+                  <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-plum-500">
                     {idx + 1}
                   </div>
                   <div className="min-w-0 flex-1 py-3 pl-4 pr-2">

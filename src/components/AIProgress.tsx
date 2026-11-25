@@ -54,10 +54,10 @@ export function AIProgress({ title, steps, expectedSeconds, slowNote }: Props) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={percent}
-        className="h-2 w-full rounded-[2px] bg-sage-100"
+        className="h-2 w-full rounded-[2px] bg-plum-100"
       >
         <div
-          className="h-full rounded-[2px] bg-green-700 transition-[width] duration-500 ease-linear motion-reduce:transition-none"
+          className="h-full rounded-[2px] bg-plum-500 transition-[width] duration-500 ease-linear motion-reduce:transition-none"
           style={{ width: `${percent}%` }}
         />
       </div>

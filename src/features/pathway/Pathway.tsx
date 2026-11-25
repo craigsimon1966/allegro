@@ -319,7 +319,7 @@ export default function Pathway() {
                           className={`w-margin shrink-0 pt-3 text-center ${
                             isDone
                               ? 'font-margin text-[28px] leading-none text-green-700'
-                              : 'font-heading text-[22px] font-semibold text-green-700'
+                              : 'font-heading text-[22px] font-semibold text-plum-500'
                           }`}
                         >
                           {isDone ? <span aria-label="Done">✓</span> : i + 1}
@@ -400,7 +400,7 @@ export default function Pathway() {
                     );
                   })}
                   <li className="flex min-h-[64px] items-start border-b border-rule">
-                    <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-green-700">
+                    <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-plum-500">
                       {items.length + 1}
                     </div>
                     <div className="min-w-0 flex-1 py-3 pl-4">

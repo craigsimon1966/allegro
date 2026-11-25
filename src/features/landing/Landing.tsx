@@ -129,7 +129,7 @@ export function Landing() {
             <ol className="grid gap-x-8 sm:grid-cols-3">
               {STEPS.map((s, i) => (
                 <li key={s.title} className="flex gap-3 border-b border-rule py-4">
-                  <span className="w-6 shrink-0 font-heading text-[22px] font-semibold text-green-700">
+                  <span className="w-6 shrink-0 font-heading text-[22px] font-semibold text-plum-500">
                     {i + 1}
                   </span>
                   <div>
