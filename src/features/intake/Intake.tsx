@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
-import { AllegroMark } from '@/components/AllegroMark';
+import { AIProgress } from '@/components/AIProgress';
 import { Button } from '@/components/Button';
 import { Label } from '@/components/Label';
 import { MarginLayout } from '@/components/MarginLayout';
@@ -102,10 +102,17 @@ export default function Intake() {
         </p>
 
         {phase === 'submitting' ? (
-          <div role="status" className="mt-10 flex flex-col items-start gap-3">
-            <AllegroMark size={48} loading />
-            <p className="font-heading text-[22px]">Reading your situation</p>
-            <p className="text-muted">This usually takes a few seconds.</p>
+          <div className="mt-10">
+            <AIProgress
+              title="Reading your situation"
+              steps={[
+                'Reading what you wrote',
+                'Working out what you need',
+                'Matching your needs to units',
+              ]}
+              expectedSeconds={12}
+              slowNote="If it doesn't finish, you can answer a few quick questions instead."
+            />
           </div>
         ) : phase === 'clarifying' && pending ? (
           <form
