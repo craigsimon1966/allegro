@@ -1,8 +1,11 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useEffect, useId, useState, type FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Button';
 import { Label } from '@/components/Label';
 import { MarginNote } from '@/components/MarginNote';
 import { supabase } from '@/lib/supabase';
+import { loadLatestFromSupabase } from '@/lib/api';
+import { useAppStore } from '@/lib/store';
 
 /** Magic-link sign-in (TECH_SPEC 6.1). Teachers never set a password. */
 export function SignInForm() {
@@ -10,6 +13,34 @@ export function SignInForm() {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error' | 'unavailable'>('idle');
   const [message, setMessage] = useState('');
+  const [signedInAs, setSignedInAs] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const setSignedIn = useAppStore((s) => s.setSignedIn);
+  const reset = useAppStore((s) => s.reset);
+
+  // Already signed in (for example after the magic link): offer to carry on, not a new link.
+  useEffect(() => {
+    if (!supabase) return;
+    void supabase.auth
+      .getSession()
+      .then(({ data }) => setSignedInAs(data.session?.user.email ?? null));
+    const { data } = supabase.auth.onAuthStateChange((_e, session) =>
+      setSignedInAs(session?.user.email ?? null),
+    );
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  const carryOn = async () => {
+    setSignedIn();
+    const returning = await loadLatestFromSupabase().catch(() => false);
+    navigate(returning ? '/needs' : '/start');
+  };
+
+  const signOut = async () => {
+    await supabase?.auth.signOut();
+    reset();
+    setSignedInAs(null);
+  };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -27,12 +58,32 @@ export function SignInForm() {
       setMessage(
         error.status === 403 || /not on the allegro pilot list/i.test(error.message)
           ? "This email isn't on the pilot list yet. Please contact the Allegro team."
-          : "We couldn't send the link. Please check the address and try again.",
+          : error.status === 429 && /seconds/i.test(error.message)
+            ? 'We sent a link a moment ago. Please check your email, or wait a minute and try again.'
+            : error.status === 429
+              ? "We've sent a lot of sign-in emails in the last hour. Please try again a little later, or use the link already in your inbox."
+              : "We couldn't send the link. Please check the address and try again.",
       );
     } else {
       setState('sent');
     }
   };
+
+  if (signedInAs) {
+    return (
+      <div role="status" className="flex flex-col gap-2.5">
+        <p className="font-bold">You&apos;re signed in as {signedInAs}.</p>
+        <div className="flex flex-wrap gap-3">
+          <Button onClick={() => void carryOn()}>
+            Carry on <span aria-hidden="true">→</span>
+          </Button>
+          <Button variant="secondary" onClick={() => void signOut()}>
+            Sign out
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (state === 'sent') {
     return (

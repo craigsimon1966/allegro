@@ -122,3 +122,44 @@ export async function saveNeedEdit(need: TeacherNeed): Promise<void> {
     })
     .eq('id', need.id);
 }
+
+/**
+ * Signed in on a new device or after a reload: loads the latest intake and its needs from
+ * Supabase into the store. Returns false when the teacher has no intake yet.
+ */
+export async function loadLatestFromSupabase(): Promise<boolean> {
+  if (!supabase) return false;
+  const { data: intake } = await supabase
+    .from('intakes')
+    .select('id, situation_text, diagnosis')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!intake) return false;
+  const parsed = DiagnosisSchema.safeParse(intake.diagnosis);
+  if (!parsed.success) return false;
+  const { data: rows } = await supabase
+    .from('needs')
+    .select('id, domain, topic, tags, evidence, priority, self_rating, diagnostic_result, status')
+    .eq('intake_id', intake.id)
+    .order('created_at', { ascending: true });
+  const store = useAppStore.getState();
+  store.setIntake({ situationText: intake.situation_text as string, guided: {} });
+  store.setDiagnosis(parsed.data);
+  if (rows?.length) {
+    useAppStore.setState({
+      needs: rows.map((r) => ({
+        id: r.id as string,
+        domain: r.domain as TeacherNeed['domain'],
+        topic: r.topic as string,
+        catalogue_tags: (r.tags as string[]) ?? [],
+        evidence: (r.evidence as string) ?? '',
+        priority: r.priority as TeacherNeed['priority'],
+        selfRating: (r.self_rating as number | null) ?? null,
+        diagnosticResult: (r.diagnostic_result as TeacherNeed['diagnosticResult']) ?? null,
+        status: r.status === 'removed' ? 'removed' : 'active',
+      })),
+    });
+  }
+  return true;
+}
