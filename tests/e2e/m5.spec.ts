@@ -47,3 +47,56 @@ test('thumbs and the survey send anonymous feedback', async ({ page }) => {
   expect(bodies.at(-1)).toMatchObject({ target: 'survey', scores: { q1: 4 } });
   for (const b of bodies) expect(Object.keys(b)).not.toContain('userId');
 });
+
+test('about page covers SPEC 7.12 and lets a demo user clear their data', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/about-demo');
+  for (const h of [
+    'What this demo does, and does not do',
+    'How AI is used',
+    'Your data',
+    'Who to contact',
+    'Delete your account and data',
+  ])
+    await expect(page.getByText(h, { exact: true })).toBeVisible();
+  await axeClean(page);
+  await page.getByRole('button', { name: 'Clear demo data from this browser' }).click();
+  await expect(page).toHaveURL(/\/$/);
+  const mode = await page.evaluate(() => localStorage.getItem('allegro-demo'));
+  expect(mode ?? '').not.toContain('"mode":"demo"');
+});
+
+test('admin feedback sends anyone not signed in home', async ({ page }) => {
+  await page.goto('/admin/feedback');
+  await expect(page).toHaveURL(/\/$/);
+});
+
+test('an offline message shows when the connection drops', async ({ page, context }) => {
+  await page.goto('/demo');
+  await context.setOffline(true);
+  await expect(page.getByText(/You're offline/)).toBeVisible();
+  await context.setOffline(false);
+  await expect(page.getByText(/You're offline/)).toHaveCount(0);
+});
+
+test('a rate limit shows the friendly message, not a crash', async ({ page }) => {
+  await page.route('**/api/help', (r) =>
+    r.fulfill({
+      status: 429,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        error: {
+          code: 'rate_limited',
+          message: "You've reached this hour's limit. Please try again a little later.",
+        },
+      }),
+    }),
+  );
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/help');
+  await page.getByRole('textbox').first().fill('How do I explain gradient?');
+  await page.getByRole('button', { name: /^Ask/ }).click();
+  await expect(page.getByText(/reached this hour's limit/)).toBeVisible();
+});

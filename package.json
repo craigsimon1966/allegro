@@ -24,7 +24,8 @@
     "prompts:build": "tsx scripts/build-prompts.ts",
     "predev": "npm run prompts:build",
     "prebuild": "npm run prompts:build",
-    "pretest": "npm run prompts:build"
+    "pretest": "npm run prompts:build",
+    "security:dist": "tsx scripts/check-dist-secrets.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.13.0",

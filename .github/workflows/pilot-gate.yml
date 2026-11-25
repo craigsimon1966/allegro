@@ -1,0 +1,20 @@
+name: Pilot gate
+
+# TECH_SPEC 10.3: zero unreviewed units, zero changed since review, zero TODO codes before
+# teachers get pilot access. This fails until Denise's review and the code lookups are done.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run content:report -- --gate

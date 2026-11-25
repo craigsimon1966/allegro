@@ -17,6 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build
+      - run: npm run security:dist
 
   e2e:
     runs-on: ubuntu-latest
