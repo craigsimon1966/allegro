@@ -27,6 +27,7 @@ const Leader = lazy(() => import('@/features/leader/Leader'));
 const Survey = lazy(() => import('@/features/feedback/Survey'));
 const AdminFeedback = lazy(() => import('@/features/admin/AdminFeedback'));
 const Me = lazy(() => import('@/features/me/Me'));
+const DiagramOptions = lazy(() => import('@/features/landing/DiagramOptions'));
 
 function Loading() {
   return (
@@ -57,6 +58,7 @@ export const routes = [
   { path: '/growth', element: lazyPage(<Growth />) },
   { path: '/help', element: lazyPage(<Help />) },
   { path: '/me', element: lazyPage(<Me />) },
+  { path: '/diagram-options', element: lazyPage(<DiagramOptions />) },
   { path: '/leader', element: lazyPage(<Leader />) },
   { path: '/survey', element: lazyPage(<Survey />) },
   { path: '/admin/feedback', element: lazyPage(<AdminFeedback />) },
