@@ -138,3 +138,6 @@ Craig found the AI ignoring his year, experience and situation. Causes found: th
 
 The year level comes first and defaults to the teacher's own year. The topic list then shows only topics taught in that year with official AC v9 content for it (a test fails if a topic is offered for a year with no matching code). Teaching approaches without maths content of their own (such as "One maths task, three entry points") are learnt in the week rather than offered as a lesson topic. Linear relationships now covers Year 7 too, because AC v9 starts it there (AC9M7A04, AC9M7A05).
 
+## 26 Nov 2026: diagrams on the smart board slides
+
+Craig asked for the lesson diagrams on the slides too. They go in as PNG pictures (rendered from the same SVG at 3x), not as PowerPoint shapes or SVG: Google Slides and SMART Notebook / ActivInspire import a PNG reliably, while SVG and grouped shapes are dropped or rearranged. A diagram takes a fixed right-hand column (3.7 inches) and everything else, including the working space, uses the left. One diagram per slide. The drawn pictures are cached in `src/lib/visualCache.ts`, shared by the Word and PowerPoint builders. On slides, a diagram must show the problem only, so the AI is told to leave out a graph's line and rule.

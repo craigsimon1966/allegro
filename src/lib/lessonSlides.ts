@@ -1,13 +1,17 @@
 import PptxGenJS from 'pptxgenjs';
 import type { Lesson, LessonPack, PackSlide } from '@shared/schemas';
 import { blocks, inline, runsText, type Block, type Inline } from '@shared/markdownBlocks';
+import { describeVisual, parseVisual } from '@shared/visuals';
 import { PRINT } from '@/lib/printColours';
+import { visualImage } from '@/lib/visualCache';
 
 // Smart board slides (.pptx) for a lesson. Built to survive PowerPoint, Google Slides import and
 // interactive whiteboard software that opens PowerPoint (SMART Notebook, ActivInspire, OneScreen):
 // plain text boxes, simple tables and rectangles only. No masters with placeholders, animations,
-// transitions, SmartArt, embedded fonts, gradients or images. Arial everywhere, dark ink on white,
-// large type. Problems are shown without answers, with blank space for the board pen.
+// transitions, SmartArt, embedded fonts or gradients. Maths diagrams go in as plain PNG pictures
+// (drawn at 3x so they stay sharp), the one image type every one of those programs handles.
+// Arial everywhere, dark ink on white, large type. Problems are shown without answers, with
+// blank space for the board pen.
 
 const W = 10; // LAYOUT_16x9 is 10 x 5.625 inches
 const H = 5.625;
@@ -16,6 +20,8 @@ const CW = W - 2 * X;
 const FONT = 'Arial';
 const BOTTOM = 5.1; // above the footer
 const MIN_WRITING = 1.6;
+const PIC_W = 3.7; // the diagram column on the right
+const PIC_GAP = 0.3;
 
 const pt = (size: number) => size / 72; // points to inches
 
@@ -61,6 +67,49 @@ function textRuns(bs: Block[], size: number): { runs: Run[]; lines: string[] } {
 }
 
 const cellText = (c: Inline[]) => runsText(c);
+
+const base64 = (data: Uint8Array) => {
+  let s = '';
+  for (let i = 0; i < data.length; i += 0x8000)
+    s += String.fromCharCode(...data.subarray(i, i + 0x8000));
+  return btoa(s);
+};
+
+/**
+ * Draws the slide's diagram in the right-hand column, from `top` down to at most `maxH` inches,
+ * keeping its shape. Without a drawn picture (the browser couldn't draw it), says what it shows.
+ */
+function addVisual(slide: PptxGenJS.Slide, raw: string, top: number, maxH: number) {
+  const v = parseVisual(raw);
+  const alt = v.ok ? describeVisual(v.spec) : 'Diagram';
+  const x = W - X - PIC_W;
+  const img = visualImage(raw);
+  if (!img) {
+    slide.addText(`Diagram: ${alt}`, {
+      x,
+      y: top,
+      w: PIC_W,
+      h: Math.min(maxH, 1.5),
+      fontFace: FONT,
+      fontSize: 14,
+      italic: true,
+      color: PRINT.muted,
+      valign: 'top',
+      margin: 0,
+    });
+    return;
+  }
+  const ratio = img.height / img.width;
+  const w = Math.min(PIC_W, maxH / ratio);
+  slide.addImage({
+    data: `image/png;base64,${base64(img.data)}`,
+    x: x + (PIC_W - w) / 2,
+    y: top,
+    w,
+    h: w * ratio,
+    altText: alt,
+  });
+}
 
 function addFooter(slide: PptxGenJS.Slide, disclosure: string, n: number, total: number) {
   slide.addText(`${disclosure}   ·   ${n} of ${total}`, {
@@ -165,15 +214,20 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
   addHeading(slide, s.heading);
   const bs = blocks(s.body_md);
   const tables = bs.filter((b): b is Extract<Block, { kind: 'table' }> => b.kind === 'table');
-  const text = bs.filter((b) => b.kind !== 'table');
+  const text = bs.filter((b) => b.kind === 'para' || b.kind === 'list');
+  const visual = bs.find((b): b is Extract<Block, { kind: 'visual' }> => b.kind === 'visual');
   const hasOptions = s.kind === 'hinge' && s.options.length > 0;
+  // A diagram takes a column on the right; text, tables, options and the working space share
+  // the left, so the board pen still has its room.
+  const cw = visual ? CW - PIC_W - PIC_GAP : CW;
+  if (visual) addVisual(slide, visual.raw, 1.25, BOTTOM - 1.25);
 
   // Pick the largest type that leaves room for the working space (and options).
   let y = 1.25;
   let size = 28;
   for (const candidate of [32, 28, 24, 20]) {
     size = candidate;
-    const tH = text.length ? textHeight(textRuns(text, size).lines, size) : 0;
+    const tH = text.length ? textHeight(textRuns(text, size).lines, size, cw) : 0;
     const tabH = tables.reduce((h, t) => h + t.rows.length * pt(size) * 1.7 + 0.15, 0);
     const optH = hasOptions ? 1.0 : 0;
     const free = BOTTOM - (y + tH + tabH + optH);
@@ -183,11 +237,11 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
 
   if (text.length) {
     const { runs, lines } = textRuns(text, size);
-    const h = textHeight(lines, size);
+    const h = textHeight(lines, size, cw);
     slide.addText(runs, {
       x: X,
       y,
-      w: CW,
+      w: cw,
       h,
       fontFace: FONT,
       color: PRINT.ink,
@@ -199,7 +253,7 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
 
   for (const t of tables) {
     const cols = Math.max(...t.rows.map((r) => r.length));
-    const colW = Math.min(1.4, CW / cols);
+    const colW = Math.min(1.4, cw / cols);
     const rowH = pt(size) * 1.7;
     slide.addTable(
       t.rows.map((r, ri) =>
@@ -232,7 +286,7 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
   if (hasOptions) {
     const n = s.options.length;
     const gap = 0.25;
-    const bw = (CW - gap * (n - 1)) / n;
+    const bw = (cw - gap * (n - 1)) / n;
     s.options.forEach((o, i) => {
       slide.addText(
         [
@@ -257,7 +311,7 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
     y += 1.0;
   }
 
-  if (s.writing_space) writingArea(slide, y + 0.1);
+  if (s.writing_space) writingArea(slide, y + 0.1, X, cw);
   return slide;
 }
 
