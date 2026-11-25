@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Content review document (25 November 2026)
+
+- `npm run content:export-review` writes `review/allegro-content-review.docx` and a `.md` copy (TECH_SPEC 10.3): how to review, a summary table, one page per unit (hook, core idea, worked example, check questions with answers and feedback, linked misconceptions, try tomorrow, reflection prompt), then the misconception bank and the diagnostic items. Each has a box for AC v9 and NSW codes, notes and Approved (Y/N). Maths is written as it looks on paper.
+- `npm run content:approve -- <unit-id> --by "Name" --on YYYY-MM-DD` for Craig: sets the review fields and the content hash, and adds a line to `docs/review-log.md`.
+
 ### M5: Leader preview, feedback and hardening (25 November 2026)
 
 - /leader: preview for a fictional school (confidence by area, most-used units, out-of-field topics, suggested focus). No teacher names or reflections.

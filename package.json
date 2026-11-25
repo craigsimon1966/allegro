@@ -25,7 +25,8 @@
     "predev": "npm run prompts:build",
     "prebuild": "npm run prompts:build",
     "pretest": "npm run prompts:build",
-    "security:dist": "tsx scripts/check-dist-secrets.ts"
+    "security:dist": "tsx scripts/check-dist-secrets.ts",
+    "content:approve": "tsx scripts/content-approve.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.13.0",
@@ -59,6 +60,7 @@
     "@vitejs/plugin-react": "4.7.0",
     "autoprefixer": "10.7.0",
     "concurrently": "9.2.5",
+    "docx": "9.15.4",
     "eslint": "9.39.5",
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-react-refresh": "0.4.26",
