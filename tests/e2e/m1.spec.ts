@@ -113,3 +113,57 @@ test('sign-in page is accessible', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await axeClean(page);
 });
+
+test("own situation: This week uses the AI's checked choices, or rules if the AI is down", async ({
+  page,
+}) => {
+  await page.route('**/api/diagnose', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(tammyDiagnosis),
+    }),
+  );
+  const need = tammyDiagnosis.needs[0]!;
+  let pathwayCalls = 0;
+  await page.route('**/api/pathway', (r) => {
+    pathwayCalls++;
+    return r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        items: [
+          {
+            unitId: 'lin-02-table-to-rule',
+            needId: need.id,
+            reason: 'You said tables make sense, so this turns one into a rule.',
+            scheduledFor: '2026-11-24',
+            sortOrder: 0,
+          },
+        ],
+        external: [],
+        source: 'ai',
+      }),
+    });
+  });
+  await startOwn(page);
+  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page.getByRole('button', { name: /Show me what I need/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  await page.getByRole('button', { name: /Build my week/ }).click();
+  await expect(page).toHaveURL(/\/pathway$/);
+  await page.getByRole('button', { name: 'Why this?' }).first().click();
+  await expect(page.getByText(/so this turns one into a rule/)).toBeVisible();
+  expect(pathwayCalls).toBe(1);
+
+  // With the AI down, a changed need still gives a week, built by rules.
+  await page.unroute('**/api/pathway');
+  await page.route('**/api/pathway', (r) => r.abort());
+  await page.goto('/needs');
+  await page
+    .getByRole('button', { name: /Remove/ })
+    .first()
+    .click();
+  await page.getByRole('button', { name: /Build my week/ }).click();
+  await expect(page.getByRole('link', { name: /^Start:/ })).toBeVisible();
+});

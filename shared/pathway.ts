@@ -58,8 +58,16 @@ function reasonFor(need: PathwayNeed): string {
   return why ? `You told us: "${why}"` : `This builds on your need: ${need.topic}.`;
 }
 
-export function buildPathway(input: PathwayInput): PathwayItem[] {
-  const budget = Math.round(input.hoursPerWeek * 60);
+/** A unit the AI chose, before the code checks it (TECH_SPEC 7.3). */
+export interface PathwayPick {
+  unitId: string;
+  needId: string;
+  reason: string;
+}
+
+type Picked = { unit: MicroUnit; need: PathwayNeed; reason: string };
+
+function pickByRules(input: PathwayInput, budget: number): Picked[] {
   const needs = [...input.needs].sort(
     (a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority],
   );
@@ -78,7 +86,7 @@ export function buildPathway(input: PathwayInput): PathwayItem[] {
 
   // Take units need by need within each priority band, but give every "now" need its first
   // unit before any need gets a second, so the week isn't all one topic.
-  const picked: { unit: MicroUnit; need: PathwayNeed }[] = [];
+  const picked: Picked[] = [];
   let minutes = 0;
   for (const band of ['now', 'soon', 'later'] as const) {
     const bandQueues = queues.filter((q) => q.need.priority === band);
@@ -93,19 +101,51 @@ export function buildPathway(input: PathwayInput): PathwayItem[] {
         if (minutes + u.durationMinutes > budget) continue;
         used.add(u.id);
         minutes += u.durationMinutes;
-        picked.push({ unit: u, need: q.need });
+        picked.push({ unit: u, need: q.need, reason: reasonFor(q.need) });
       }
     }
   }
+  return picked;
+}
+
+/** Keeps only real units and needs, each unit once, inside the time budget. */
+function checkPicks(picks: PathwayPick[], input: PathwayInput, budget: number): Picked[] {
+  const used = new Set<string>();
+  const out: Picked[] = [];
+  let minutes = 0;
+  for (const p of picks) {
+    const unit = input.units.find((u) => u.id === p.unitId);
+    const need = input.needs.find((n) => n.id === p.needId);
+    if (!unit || !need || used.has(unit.id)) continue;
+    if (minutes + unit.durationMinutes > budget) continue;
+    used.add(unit.id);
+    minutes += unit.durationMinutes;
+    const reason = p.reason
+      .replace(/\u2014/g, ', ')
+      .trim()
+      .slice(0, 280);
+    out.push({ unit, need, reason: reason || reasonFor(need) });
+  }
+  return out;
+}
+
+/**
+ * The week of learning. With `picks` (from the AI), the code still enforces the catalogue,
+ * the time budget and the days; with none, or none that survive the checks, it uses rules.
+ */
+export function buildPathway(input: PathwayInput, picks?: PathwayPick[]): PathwayItem[] {
+  const budget = Math.round(input.hoursPerWeek * 60);
+  const checked = picks ? checkPicks(picks, input, budget) : [];
+  const picked = checked.length ? checked : pickByRules(input, budget);
 
   // Learning goes on non-teaching weekdays; if there are none, on teaching days.
   const free = [1, 2, 3, 4, 5].filter((d) => !input.teachingDays.includes(d));
   const days = free.length ? free : [1, 2, 3, 4, 5];
   const perDay = Math.ceil(picked.length / days.length);
-  return picked.map(({ unit, need }, i) => ({
+  return picked.map(({ unit, need, reason }, i) => ({
     unitId: unit.id,
     needId: need.id,
-    reason: reasonFor(need),
+    reason,
     scheduledFor: addDays(
       input.weekStart,
       days[Math.min(days.length - 1, Math.floor(i / perDay))]! - 1,

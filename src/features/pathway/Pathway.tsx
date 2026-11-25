@@ -14,11 +14,12 @@ import { UNITS, unitById } from '@shared/catalogue';
 import { buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
-import { loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
+import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 import { Thumbs } from '@/features/feedback/Thumbs';
 
-// This week (SPEC 7.5). Built by rules from the confirmed needs, inside the teacher's stated hours.
+// This week (SPEC 7.5). Demo personas get the rules version straight away. Everyone else gets the
+// AI's choices (checked on the server for hours, days and real units), or rules if the AI fails.
 
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 const DAY_LONG = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -54,6 +55,7 @@ export default function Pathway() {
   const [dragId, setDragId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const [loading, setLoading] = useState(mode === 'signed_in' && !diagnosis);
+  const [building, setBuilding] = useState(false);
 
   useEffect(() => {
     if (!loading) return;
@@ -75,20 +77,48 @@ export default function Pathway() {
 
   // Signed in: try the saved week first, then build a new one if it doesn't match.
   const triedLoad = useRef(mode !== 'signed_in');
+  const latestKey = useRef(key);
+  latestKey.current = key;
+  // The key the AI is building for, so a re-run of the effect doesn't ask twice.
+  const aiKey = useRef<string | null>(null);
   useEffect(() => {
     if (!diagnosis || key === pathwayKey) return;
     let cancelled = false;
+    const input = { needs: active, units: UNITS, hoursPerWeek: hours, teachingDays, weekStart };
+    const finish = (items: ReturnType<typeof buildPathway>) => {
+      // An AI reply can arrive after a re-run of this effect, so check the key, not `cancelled`.
+      if (latestKey.current !== key || useAppStore.getState().pathwayKey === key) return;
+      setPathway(items, key);
+      void savePathway(items).catch(() => undefined);
+    };
     const build = () => {
       if (cancelled || useAppStore.getState().pathwayKey === key) return;
-      const items = buildPathway({
-        needs: active,
-        units: UNITS,
+      // Personas are a scripted demo, so they never wait on the AI.
+      if (personaId || active.length === 0) return finish(buildPathway(input));
+      if (aiKey.current === key) return;
+      aiKey.current = key;
+      setBuilding(true);
+      void aiPathway({
+        needs: active.map((n) => ({
+          id: n.id,
+          topic: n.topic,
+          evidence: n.evidence,
+          priority: n.priority,
+          catalogue_tags: n.catalogue_tags,
+        })),
         hoursPerWeek: hours,
         teachingDays,
         weekStart,
-      });
-      setPathway(items, key);
-      void savePathway(items).catch(() => undefined);
+        yearLevels: diagnosis.context.year_levels,
+      })
+        .then((ai) => {
+          // The server already checked these; run them through the same rules again here.
+          finish(ai ? buildPathway(input, ai) : buildPathway(input));
+        })
+        .finally(() => {
+          if (aiKey.current === key) aiKey.current = null;
+          setBuilding(false);
+        });
     };
     if (triedLoad.current) build();
     else {
@@ -124,10 +154,10 @@ export default function Pathway() {
     [pathway],
   );
 
-  if (loading)
+  if (loading || (building && items.length === 0))
     return (
       <div className="flex min-h-screen items-center justify-center" role="status">
-        <p>Loading your week</p>
+        <p>{building ? 'Building your week' : 'Loading your week'}</p>
       </div>
     );
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;

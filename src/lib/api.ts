@@ -107,6 +107,36 @@ export async function diagnose(req: DiagnoseRequest): Promise<Diagnosis> {
   return parsed.data;
 }
 
+/**
+ * POST /api/pathway: the AI's week, already checked on the server (TECH_SPEC 7.3).
+ * Returns null if it fails or takes too long, so the caller can use the rules version.
+ */
+export async function aiPathway(
+  req: {
+    needs: {
+      id: string;
+      topic: string;
+      evidence: string;
+      priority: string;
+      catalogue_tags: string[];
+    }[];
+    hoursPerWeek: number;
+    teachingDays: number[];
+    weekStart: string;
+    yearLevels: string[];
+  },
+  timeoutMs = 20000,
+): Promise<PathwayItem[] | null> {
+  const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs));
+  const call = post('/api/pathway', req)
+    .then((data) => {
+      const items = (data as { items?: PathwayItem[] } | null)?.items;
+      return Array.isArray(items) && items.length ? items : null;
+    })
+    .catch(() => null);
+  return Promise.race([call, timeout]);
+}
+
 export async function hasAccessCookie(): Promise<boolean> {
   try {
     const res = await fetch('/api/access', { credentials: 'same-origin' });
