@@ -55,53 +55,38 @@ const PRODUCTS: {
   },
 ];
 
+// Petal centres in Craig's brand icon (public/brand/icon.svg, viewBox 375), measured from the
+// artwork. Clockwise from top-left: Equip, Embed, Evaluate, Elevate (SPEC 10.4).
+const PETALS = [
+  { name: 'Equip', x: 137, y: 121 },
+  { name: 'Embed', x: 250, y: 132 },
+  { name: 'Evaluate', x: 239, y: 250 },
+  { name: 'Elevate', x: 121, y: 236 },
+];
+
 function HeroMark() {
-  // The four circles with product names, clockwise from top-left (SPEC 10.4).
-  const labels = [
-    { x: 22, y: 22, text: 'Equip' },
-    { x: 66, y: 22, text: 'Embed' },
-    { x: 66, y: 69, text: 'Evaluate' },
-    { x: 22, y: 69, text: 'Elevate' },
-  ];
+  // The brand icon sits on the same sage as the hero, so only its white lines show.
   return (
-    <svg
-      viewBox="0 0 88 92"
-      className="h-auto w-full max-w-[320px]"
-      role="img"
-      aria-label="Four overlapping circles: Equip, Embed, Evaluate and Elevate"
-    >
-      {[
-        [30, 30],
-        [58, 30],
-        [58, 60],
-        [30, 60],
-      ].map(([cx, cy]) => (
-        <circle
-          key={`${cx}-${cy}`}
-          cx={cx}
-          cy={cy}
-          r={22}
-          fill="none"
-          stroke="var(--ink)"
-          strokeWidth={1.5}
-        />
-      ))}
-      {labels.map((l) => (
-        <text
-          key={l.text}
-          x={l.x}
-          y={l.y}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize={5}
-          fontFamily="var(--font-heading)"
-          fontWeight={600}
-          fill="var(--ink)"
-        >
-          {l.text}
-        </text>
-      ))}
-    </svg>
+    <figure className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-[400px]">
+      <img
+        src="/brand/icon.svg"
+        alt=""
+        width={400}
+        height={400}
+        className="absolute inset-0 h-full w-full"
+      />
+      <ul aria-label="Allegro's four products">
+        {PETALS.map((p) => (
+          <li
+            key={p.name}
+            className="absolute -translate-x-1/2 -translate-y-1/2 font-heading text-[17px] font-semibold text-ink sm:text-[22px]"
+            style={{ left: `${(p.x / 375) * 100}%`, top: `${(p.y / 375) * 100}%` }}
+          >
+            {p.name}
+          </li>
+        ))}
+      </ul>
+    </figure>
   );
 }
 
@@ -111,7 +96,7 @@ export function Landing() {
       <SiteHeader />
       <main id="main">
         <section className="bg-sage-500 text-ink" aria-labelledby="hero-title">
-          <div className="mx-auto grid max-w-[1200px] items-center gap-6 px-4 py-8 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="mx-auto grid max-w-[1200px] items-center gap-6 px-4 py-8 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_400px]">
             <div className="flex flex-col gap-4">
               <h1
                 id="hero-title"
@@ -130,7 +115,7 @@ export function Landing() {
                 <span className="text-[15px]">About 15 minutes. No sign-up needed.</span>
               </div>
             </div>
-            <div className="hidden justify-self-center lg:block">
+            <div className="w-full justify-self-center">
               <HeroMark />
             </div>
           </div>
