@@ -188,6 +188,8 @@ test("Tammy's lesson downloads as a pack: guide, worksheets and slides", async (
   const slides = await downloadOf(page, 'Smart board slides');
   expect(slides.name).toBe('from-table-to-rule-year-8-slides.pptx');
   expect(slides.bytes.subarray(0, 2).toString()).toBe('PK');
+  // So is the "I do" slide's graph.
+  expect(slides.bytes.includes('ppt/media/')).toBe(true);
   const sheets = await downloadOf(page, 'Student worksheets');
   expect(sheets.name).toBe('from-table-to-rule-year-8-worksheets.zip');
 });

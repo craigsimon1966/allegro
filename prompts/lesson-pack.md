@@ -58,6 +58,7 @@ Rules for slides (they are shown on a smart board, and the teacher writes on the
 - Set "writing_space" true on every example, problem and hinge slide, and on any slide where students' ideas will be written up. Set it false on title, intention and vocabulary slides.
 - Retrieval starter: one slide per question, or two short questions on one slide.
 - Hinge options: two to four short options, without saying which is right.
+- Diagrams: when the lesson block shows the problem with a ```visual diagram (a graph, bar model, number line and so on), put it on the slide too, copied exactly into "body_md" as its own fenced block. At most one diagram per slide; it sits beside the text. A diagram on a slide must not give the answer away: for a "find the rule" graph, keep the points and leave out the line and any label that states the rule.
 
 Other rules:
 

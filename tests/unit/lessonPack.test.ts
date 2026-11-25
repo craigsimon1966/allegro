@@ -14,10 +14,19 @@ import {
 import { LessonPackSchema } from '@shared/schemas';
 import { exitTicketDocument, lessonDocument, worksheetDocument } from '@/lib/lessonDocx';
 import { slidesBuffer } from '@/lib/lessonSlides';
+import { setVisualImage } from '@/lib/visualCache';
+import { visualBlocksIn } from '@shared/visuals';
 import { tokenColour } from '@/lib/printColours';
 
 const NOTICE = 'Drafted by Allegro AI. Please check before using.';
 const lesson = DEMO_LESSON.lesson;
+// A 1 x 1 PNG stands in for the browser's drawing.
+const PNG = Uint8Array.from(
+  atob(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+  ),
+  (c) => c.charCodeAt(0),
+);
 const docText = async (d: ReturnType<typeof lessonDocument>) => {
   const files = unzipSync(new Uint8Array(await Packer.toBuffer(d)));
   const body = strFromU8(files['word/document.xml']!).replace(/<[^>]+>/g, ' ');
@@ -142,6 +151,33 @@ describe('lesson pack files', () => {
     }
     const notes = Object.keys(files).filter((f) => /notesSlide\d+\.xml$/.test(f));
     for (const f of notes) expect(strFromU8(files[f]!)).not.toContain('y = 3x + 5');
+  });
+
+  it('puts a diagram on its slide as a picture beside the working space, without the rule', async () => {
+    const i = DEMO_PACK.slides.findIndex((s) => visualBlocksIn(s.body_md).length);
+    expect(i).toBeGreaterThan(0);
+    const slide = DEMO_PACK.slides[i]!;
+    const raw = visualBlocksIn(slide.body_md)[0]!;
+    expect(raw).not.toMatch(/"lines"/);
+    const file = `ppt/slides/slide${i + 1}.xml`;
+
+    // Without a drawn picture (no browser), the slide says what the diagram shows.
+    let files = unzipSync(await slidesBuffer(lesson, DEMO_PACK, NOTICE));
+    expect(strFromU8(files[file]!)).toContain('Diagram: Graph with x from');
+
+    setVisualImage(raw, { data: PNG, width: 300, height: 240 });
+    files = unzipSync(await slidesBuffer(lesson, DEMO_PACK, NOTICE));
+    const xml = strFromU8(files[file]!);
+    expect(xml).toContain('<p:pic>');
+    expect(xml).toMatch(/descr="Graph with x from/);
+    expect(xml).not.toContain('Diagram:');
+    expect(xml).toContain('Space for working');
+    expect(Object.keys(files).some((f) => /^ppt\/media\/.+\.png$/.test(f))).toBe(true);
+    // Only that one slide carries a picture.
+    const pics = Object.keys(files).filter(
+      (f) => /^ppt\/slides\/slide\d+\.xml$/.test(f) && strFromU8(files[f]!).includes('<p:pic>'),
+    );
+    expect(pics).toEqual([file]);
   });
 
   it('reads print colours from the design tokens', () => {
