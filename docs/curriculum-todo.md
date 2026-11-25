@@ -2,6 +2,8 @@
 
 Each unit's AC v9 content descriptions and NSW Mathematics K-10 outcomes, to be looked up by Craig or Denise on the ACARA and NSW Curriculum websites. Claude Code never fills these in.
 
+The review document (`npm run content:export-review`) has a box on each unit for Denise to write the codes. Codes she leaves blank are looked up here. Then replace `AC9-TODO` and `NSW-TODO` in the unit's `curriculumRefs` and fill in the last two columns.
+
 | Unit id                        | Title                                        | AC v9 needed | NSW outcome needed | Verified by | Date |
 | ------------------------------ | -------------------------------------------- | ------------ | ------------------ | ----------- | ---- |
 | lin-01-what-a-rule-tells-you   | What a linear rule tells you                 | Year 8, 9    | Year 8, 9          |             |      |
