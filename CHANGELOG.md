@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Sam and Priya walkthrough fixes: tapping the middle of an unrated confidence slider now records 3 of 5 (before, nothing happened); unrated sliders look faded; the thumbs-up and thumbs-down buttons stay together on narrow phones; the Growth numbers line up.
 - Quick Help opens over the current screen from "Ask a question" (a bottom sheet on phone, a side sheet on tablet), so teachers keep their place. The /help page still works.
 - Each build serves `/version.txt` (and an `allegro-build` meta tag) with its commit, so it is easy to see which version is live.
 - Sign-in: an "I already have a code" link opens the code box straight away, and the code box also appears if an email was sent a moment ago.
