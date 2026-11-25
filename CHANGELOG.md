@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Each screen now names the browser tab after its heading, for example "This week · Allegro Learning" (WCAG 2.4.2). Before, every tab said "Allegro Learning".
+- Moving to a new screen puts focus on its heading, so VoiceOver and NVDA announce the new page instead of staying silent (WCAG 2.4.3). The first page load is left alone.
 - Every screen now has a "Skip to main content" link as the first Tab stop (WCAG 2.4.1). It was on the manual checklist but had never been built.
 - New `tests/e2e/a11y.spec.ts` automates four rows of the manual accessibility checklist: skip link, no sideways scrolling at 320px (200% zoom) and at Chromebook 1366 x 768, visible keyboard focus on This week, and no animation with reduced motion. Those rows are marked "Pre-checked" in `docs/a11y-checklist.md`.
 - Each unit on This week has a day picker (SPEC 7.5: learning goes on non-teaching days by default, editable). Teaching days are marked "(teaching)". The choice is saved with the week, in the browser and in Supabase when signed in.

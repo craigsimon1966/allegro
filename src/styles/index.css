@@ -24,8 +24,10 @@
     outline-offset: 2px;
     box-shadow: 0 0 0 2px var(--white);
   }
-  /* The skip link focuses <main> so Tab continues inside it; the page itself needs no ring. */
-  main[tabindex='-1']:focus {
+  /* The skip link focuses <main>, and a new screen focuses its h1, so Tab continues from there.
+     Neither is a control, so neither needs a ring. */
+  main[tabindex='-1']:focus,
+  h1[tabindex='-1']:focus {
     outline: none;
     box-shadow: none;
   }
