@@ -3,6 +3,7 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { RouteFocus } from '@/components/RouteFocus';
 import { SkipLink } from '@/components/SkipLink';
+import { UpdateNotice } from '@/components/UpdateNotice';
 import { Landing } from '@/features/landing/Landing';
 import { AllegroMark } from '@/components/AllegroMark';
 import { Placeholder } from './Placeholder';
@@ -68,6 +69,7 @@ function Root() {
     <>
       <SkipLink />
       <RouteFocus />
+      <UpdateNotice />
       <Outlet />
     </>
   );
