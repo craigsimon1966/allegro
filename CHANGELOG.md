@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Quick Help opens over the current screen from "Ask a question" (a bottom sheet on phone, a side sheet on tablet), so teachers keep their place. The /help page still works.
 - Each build serves `/version.txt` (and an `allegro-build` meta tag) with its commit, so it is easy to see which version is live.
 - Sign-in: an "I already have a code" link opens the code box straight away, and the code box also appears if an email was sent a moment ago.
 

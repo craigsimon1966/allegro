@@ -97,7 +97,7 @@ test('a rate limit shows the friendly message, not a crash', async ({ page }) =>
   await page.getByRole('button', { name: /Tammy/ }).click();
   await page.goto('/help');
   await page.getByRole('textbox').first().fill('How do I explain gradient?');
-  await page.getByRole('button', { name: /^Ask/ }).click();
+  await page.getByRole('button', { name: 'Ask', exact: true }).click();
   await expect(page.getByText(/reached this hour's limit/)).toBeVisible();
 });
 
