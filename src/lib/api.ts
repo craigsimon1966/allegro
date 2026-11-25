@@ -1,5 +1,11 @@
 import type { Diagnosis, DiagnoseRequest, Lesson, LessonBlock } from '@shared/schemas';
-import { DiagnosisSchema, LessonBlockSchema, LessonSchema } from '@shared/schemas';
+import {
+  DiagnosisSchema,
+  LessonBlockSchema,
+  LessonPackSchema,
+  LessonSchema,
+  type LessonPack,
+} from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
 import { supabase } from './supabase';
 import {
@@ -338,6 +344,14 @@ export async function redoBlock(
       ...(instruction ? { instruction } : {}),
     }),
   );
+  if (!parsed.success)
+    throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
+  return parsed.data;
+}
+
+/** Worksheets, teacher steps and smart board slides for a finished lesson. */
+export async function draftLessonPack(lesson: Lesson): Promise<LessonPack> {
+  const parsed = LessonPackSchema.safeParse(await post('/api/lesson-pack', { lesson }));
   if (!parsed.success)
     throw new ApiError('ai_invalid_output', "We couldn't make sense of the AI's reply.");
   return parsed.data;

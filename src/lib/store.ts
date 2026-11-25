@@ -3,7 +3,7 @@ import { createJSONStorage, persist, type StateStorage } from 'zustand/middlewar
 import type { Diagnosis, Guided, Need } from '@shared/schemas';
 import type { DiagnosticResult } from '@shared/diagnostics';
 import type { PathwayItem } from '@shared/pathway';
-import type { Lesson } from '@shared/schemas';
+import type { Lesson, LessonPack } from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
 
 // App state (TECH_SPEC 3.1). Demo mode keeps everything here and in localStorage (SPEC 12.1).
@@ -65,6 +65,8 @@ export interface SavedLesson {
   checked: string[];
   /** Supabase row id once saved (signed in only). */
   dbId?: string;
+  /** The classroom pack, drafted for the lesson content with this key (shared/lessonPack.ts). */
+  pack?: { key: string; pack: LessonPack };
   updatedAt: string;
 }
 
