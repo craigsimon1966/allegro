@@ -19,3 +19,14 @@ The review document (`npm run content:export-review`) has a box on each unit for
 | pri-number-01                  | Early number: subitising and part-part-whole   | Year F, 1, 2 | Year F, 1, 2       |             |      |
 | prop-01-ratio-tables           | Ratio tables and the unit rate                 | Year 7, 8    | Year 7, 8          |             |      |
 | prop-02-percentages            | Percentages as proportion                      | Year 7, 8    | Year 7, 8          |             |      |
+
+## Victorian and WA placeholders
+
+Teachers who choose Victoria see a "Victorian Curriculum 2.0" row with `VC2-TODO`, and teachers who choose Western Australia see a "WA Curriculum" row with `WA-TODO`. These are placeholders set in `shared/states.ts`, not codes. Queensland, South Australia, Tasmania, the ACT and the NT use AC v9 directly, so they see only the AC v9 row.
+
+| Placeholder | Curriculum                                     | Where to look it up | Verified by | Date |
+| ----------- | ---------------------------------------------- | ------------------- | ----------- | ---- |
+| VC2-TODO    | Victorian Curriculum F-10 Version 2.0 (VCAA)   | VCAA website        |             |      |
+| WA-TODO     | Western Australian Curriculum (SCSA)           | SCSA website        |             |      |
+
+Each unit would need its own Victorian and WA codes, in a new field on `curriculumRefs`, once someone has looked them up.

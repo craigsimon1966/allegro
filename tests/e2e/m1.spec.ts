@@ -175,3 +175,33 @@ test("own situation: This week uses the AI's checked choices, or rules if the AI
   await page.getByRole('button', { name: /Build my week/ }).click();
   await expect(page.getByRole('link', { name: /^Start:/ })).toBeVisible();
 });
+
+test("a Victorian teacher gets the Victorian Curriculum, and no NSW-only links", async ({
+  page,
+}) => {
+  await page.route('**/api/diagnose', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(tammyDiagnosis),
+    }),
+  );
+  let sentState = '';
+  await page.route('**/api/pathway', async (r) => {
+    sentState = (r.request().postDataJSON() as { state?: string }).state ?? '';
+    await r.abort();
+  });
+  await startOwn(page);
+  await page.getByLabel('State or territory').selectOption('VIC');
+  await expect(page.getByText(/We'll use the Victorian Curriculum/)).toBeVisible();
+  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page.getByRole('button', { name: /Show me what I need/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  await page.getByRole('button', { name: /Build my week/ }).click();
+  await expect(page).toHaveURL(/\/pathway$/);
+  await page.getByText('Further reading (optional)').click();
+  await expect(page.locator('details li a').first()).toBeVisible();
+  await expect(page.locator('a[href*="curriculum.nsw.edu.au"]')).toHaveCount(0);
+  await expect(page.locator('a[href*="education.nsw.gov.au"]')).toHaveCount(0);
+  expect(sentState).toBe('VIC');
+});

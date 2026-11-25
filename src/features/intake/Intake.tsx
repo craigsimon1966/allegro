@@ -9,6 +9,7 @@ import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { findLikelyStudentNames } from '@shared/pii';
 import { fallbackDiagnosis } from '@shared/fallbackDiagnosis';
 import type { Diagnosis, Guided } from '@shared/schemas';
+import { STATES, stateById } from '@shared/states';
 import { ApiError, diagnose, saveIntakeAndNeeds } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
 import { GuidedFields } from './GuidedFields';
@@ -141,6 +142,33 @@ export default function Intake() {
           </form>
         ) : (
           <form onSubmit={submit} className="mt-6 flex flex-col gap-5">
+            <div>
+              <Label as="label" htmlFor="state" className="mb-1.5 block">
+                State or territory
+              </Label>
+              <select
+                id="state"
+                value={guided.state ?? ''}
+                onChange={(e) =>
+                  setGuided({ ...guided, state: (e.target.value || undefined) as Guided['state'] })
+                }
+                aria-describedby="state-note"
+                className="h-12 w-full max-w-sm rounded border-2 border-ink bg-field px-3 text-[17px] text-ink"
+              >
+                <option value="">Choose one</option>
+                {STATES.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+              <p id="state-note" className="mt-1.5 text-sm text-muted">
+                {stateById(guided.state)
+                  ? `We'll use the ${stateById(guided.state)!.curriculum}.`
+                  : "So we use your state's maths curriculum."}
+              </p>
+            </div>
+
             <div>
               <Label as="label" htmlFor="situation" className="mb-1.5 block">
                 Your situation

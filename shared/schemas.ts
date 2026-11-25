@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { STATE_IDS } from './states';
 
 // Shared Zod schemas used by the SPA and the Pages Functions (TECH_SPEC 3.1, 4).
 // Diagnosis and Lesson follow SPEC 8.3 and 8.4. Request schemas are added per milestone.
@@ -73,6 +74,8 @@ export const ApiErrorCode = z.enum([
 ]);
 
 export const GuidedSchema = z.object({
+  /** State or territory, for the right curriculum (shared/states.ts). */
+  state: z.enum(STATE_IDS).optional(),
   role: Role.optional(),
   subject: z.string().max(100).optional(),
   yearLevels: z.array(z.string().max(10)).max(13).optional(),

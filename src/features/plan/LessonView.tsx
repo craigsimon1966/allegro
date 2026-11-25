@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ChevronDown, ChevronUp, Pencil, Printer, RefreshCw, Copy } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
@@ -10,6 +10,7 @@ import { MarginNote } from '@/components/MarginNote';
 import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
 import { tagById } from '@shared/tags';
+import { curriculumRows } from '@shared/states';
 import { UNITS } from '@shared/catalogue';
 import type { LessonBlock } from '@shared/schemas';
 import { ApiError, loadLessonsFromSupabase, redoBlock, saveLesson } from '@/lib/api';
@@ -21,12 +22,14 @@ import { Thumbs } from '@/features/feedback/Thumbs';
 const linkBtn =
   'inline-flex min-h-tap items-center gap-1.5 font-bold text-plum-700 underline disabled:opacity-40';
 
-function toMarkdown(s: SavedLesson): string {
+function toMarkdown(s: SavedLesson, state?: string): string {
   const l = s.lesson;
   return [
     `# ${l.title}`,
     `Year ${l.year_level}, ${l.duration_minutes} minutes`,
-    `AC v9: ${l.curriculum_refs.ac9.join(', ')}. NSW: ${l.curriculum_refs.nsw.join(', ')}.`,
+    curriculumRows(l.curriculum_refs, state)
+      .map((r) => `${r.label}: ${r.codes.join(', ')}.`)
+      .join(' '),
     ...l.blocks.map((b) => `## ${b.title}\n\n${b.content_md}\n\n_Why this works: ${b.rationale}_`),
     AI_DISCLOSURE,
   ].join('\n\n');
@@ -238,6 +241,7 @@ export default function LessonView() {
   const { lessonId = '' } = useParams();
   const mode = useAppStore((s) => s.mode);
   const saved = useAppStore((s) => s.lessons[lessonId]);
+  const state = useAppStore((s) => s.intake?.guided.state);
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
   const [copied, setCopied] = useState(false);
@@ -318,7 +322,7 @@ export default function LessonView() {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(toMarkdown(saved));
+      await navigator.clipboard.writeText(toMarkdown(saved, state));
       setCopied(true);
     } catch {
       setCopied(false);
@@ -336,10 +340,12 @@ export default function LessonView() {
             </Label>
             <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
             <dl className="mt-2 grid max-w-prose grid-cols-[auto_1fr] gap-x-4 text-[15px]">
-              <dt className="font-bold">AC v9</dt>
-              <dd>{lesson.curriculum_refs.ac9.join(', ')} (to be verified)</dd>
-              <dt className="font-bold">NSW</dt>
-              <dd>{lesson.curriculum_refs.nsw.join(', ')} (to be verified)</dd>
+              {curriculumRows(lesson.curriculum_refs, state).map((r) => (
+                <Fragment key={r.label}>
+                  <dt className="font-bold">{r.label}</dt>
+                  <dd>{r.codes.join(', ')} (to be verified)</dd>
+                </Fragment>
+              ))}
             </dl>
             <p className="mt-2 text-sm text-plum-700">{AI_DISCLOSURE}</p>
 

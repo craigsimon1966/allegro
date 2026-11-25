@@ -1,3 +1,4 @@
+import { STATE_IDS } from './states';
 import { z } from 'zod';
 import { LessonSchema, type Lesson, type LessonBlock } from './schemas';
 import { MISCONCEPTIONS, UNITS } from './catalogue';
@@ -13,6 +14,7 @@ export const LessonRequestSchema = z.object({
   classProfile: z.string().max(300).default(''),
   lastLesson: z.string().max(300).optional(),
   carryIn: z.array(z.string().max(400)).max(5).optional(),
+  state: z.enum(STATE_IDS).optional(),
 });
 export type LessonRequest = z.infer<typeof LessonRequestSchema>;
 

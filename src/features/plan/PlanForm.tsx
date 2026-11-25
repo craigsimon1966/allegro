@@ -26,6 +26,7 @@ export default function PlanForm() {
   const moves = useAppStore((s) => s.lessonMoves);
   const lessons = useAppStore((s) => s.lessons);
   const putLesson = useAppStore((s) => s.putLesson);
+  const state = useAppStore((s) => s.intake?.guided.state);
 
   const needTag = needs
     .filter((n) => n.status === 'active')
@@ -54,6 +55,7 @@ export default function PlanForm() {
     classProfile: classProfile.trim(),
     ...(lastLesson.trim() ? { lastLesson: lastLesson.trim() } : {}),
     ...(carry.length ? { carryIn: carry } : {}),
+    ...(state ? { state } : {}),
   };
   const useCached =
     personaId === 'tammy' &&

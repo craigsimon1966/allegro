@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { Completer } from '../../functions/_lib/anthropic';
-import { handlePathway } from '../../functions/_lib/pathway';
+import { handlePathway, userMessage } from '../../functions/_lib/pathway';
 import { resetMemoryLimits } from '../../functions/_lib/ratelimit';
 import { UNITS, unitById } from '../../shared/catalogue';
 import { buildPathway, totalMinutes, type PathwayItem } from '../../shared/pathway';
@@ -69,6 +69,33 @@ describe('POST /api/pathway', () => {
     expect(r.items[0]!.reason).not.toMatch(/—/);
     // Tammy teaches Mon, Wed and Thu, so learning goes on Tue and Fri.
     for (const it of r.items) expect(['2026-11-24', '2026-11-27']).toContain(it.scheduledFor);
+    expect(r.external.map((e) => e.sourceId)).toEqual(['resolve']);
+  });
+
+  it("tells the AI the teacher's curriculum and drops NSW-only links outside NSW", async () => {
+    const vic = { ...body, yearLevels: ['8'], state: 'VIC' };
+    expect(userMessage(vic as Parameters<typeof userMessage>[0])).toContain('Victorian Curriculum');
+    let prompt = '';
+    const res = await handlePathway(
+      post(vic),
+      {},
+      {
+        complete: async (opts) => {
+          prompt = JSON.stringify(opts);
+          return {
+            text: JSON.stringify({
+              items: [],
+              external: [
+                { sourceId: 'nesa-maths-k10', reason: 'NSW syllabus.' },
+                { sourceId: 'resolve', reason: 'Good tasks.' },
+              ],
+            }),
+          };
+        },
+      },
+    );
+    const r = (await res.json()) as Res;
+    expect(prompt).not.toContain('nesa-maths-k10');
     expect(r.external.map((e) => e.sourceId)).toEqual(['resolve']);
   });
 

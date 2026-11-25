@@ -112,6 +112,7 @@ export default function Pathway() {
         teachingDays,
         weekStart,
         yearLevels: diagnosis.context.year_levels,
+        ...(intake?.guided.state ? { state: intake.guided.state } : {}),
       })
         .then((ai) => {
           // The server already checked these; run them through the same rules again here.
@@ -183,7 +184,7 @@ export default function Pathway() {
     ? `Year ${diagnosis.context.year_levels.join(' and ')}`
     : '';
   // Approved sources for their year levels, with the AI's picks (and reasons) first.
-  const forYears = sourcesFor(diagnosis.context.year_levels);
+  const forYears = sourcesFor(diagnosis.context.year_levels, intake?.guided.state);
   const picked = new Map(
     reading
       .filter((r) => forYears.some((s) => s.id === r.sourceId))

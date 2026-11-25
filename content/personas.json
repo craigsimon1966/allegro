@@ -9,6 +9,7 @@
       "situation": "PE teacher, now teaching Year 8 maths",
       "situationText": "I'm a PE and health teacher. Because of a gap in the timetable I'm now teaching two Year 8 maths classes. We start linear relationships next week and I only half remember how it works. I learned the rules but never really understood them. I teach three days a week and I'm happy to put time in on my days off.",
       "guided": {
+        "state": "NSW",
         "role": "out_of_field",
         "subject": "Mathematics",
         "yearLevels": ["8"],
@@ -82,6 +83,7 @@
       "situation": "Second-year teacher, regional NSW",
       "situationText": "I'm in my second year, teaching Year 7 and Year 9 maths at a regional high school in NSW. I'm fine with the maths itself. My Year 9 class takes ages to settle and I lose the first ten minutes most lessons. In Year 7 the range is huge: some kids are still unsure of times tables and others finish everything in five minutes.",
       "guided": {
+        "state": "NSW",
         "role": "early_career",
         "subject": "Mathematics",
         "yearLevels": ["7", "9"],
@@ -155,6 +157,7 @@
       "situation": "Casual teacher, Year 1 for three weeks",
       "situationText": "I'm secondary trained and doing casual relief. I've been given a Year 1 class at a small rural school in Victoria for the next three weeks. I've never taught little ones. I'm not sure how long they can concentrate, how to run the morning, or how to teach early number properly.",
       "guided": {
+        "state": "NSW",
         "role": "casual",
         "subject": "Primary (all subjects)",
         "yearLevels": ["1"],
