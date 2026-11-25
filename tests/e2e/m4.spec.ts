@@ -85,3 +85,40 @@ test('Reflect still saves when the AI is down', async ({ page }) => {
   await page.getByRole('button', { name: /Save and see/ }).click();
   await expect(page.getByRole('heading', { level: 1, name: /saved/ })).toBeVisible();
 });
+
+test('Quick Help slides over the current screen on a phone and keeps the teacher in place', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/api/help', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        answer: 'Use numbers. Ask: if $x = 5$, is $2x$ equal to 7 or 10?',
+        tryTomorrow: 'A two-row table of $2x$ and $x + 2$ as a starter.',
+        detail: 'They only match when $x = 2$.',
+        unitId: 'mc-02-pronumerals',
+      }),
+    }),
+  );
+  await tammy(page);
+  await page.goto('/pathway');
+  await page.getByRole('button', { name: 'Ask a question' }).click();
+  const panel = page.getByRole('dialog', { name: 'Quick Help' });
+  await expect(panel).toBeVisible();
+  await panel.getByRole('button', { name: /2x means 2 \+ x/ }).click();
+  await expect(panel.getByText(/is.*equal to 7 or 10/)).toBeVisible();
+  const results = await new AxeBuilder({ page }).include('[role="dialog"]').analyze();
+  expect(results.violations.map((v) => v.id)).toEqual([]);
+  await page.keyboard.press('Escape');
+  await expect(panel).toHaveCount(0);
+  await expect(page).toHaveURL(/\/pathway$/);
+  await expect(page.getByRole('button', { name: 'Ask a question' })).toBeFocused();
+  // Following the related unit closes the panel and opens the unit.
+  await page.getByRole('button', { name: 'Ask a question' }).click();
+  await panel.getByRole('button', { name: /2x means 2 \+ x/ }).click();
+  await panel.getByRole('link', { name: /Related unit/ }).click();
+  await expect(page).toHaveURL(/\/learn\/mc-02-pronumerals$/);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+});

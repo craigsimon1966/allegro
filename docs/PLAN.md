@@ -112,7 +112,7 @@ Status (25 Nov 2026): built. All three done-when checks have tests.
 - `POST /api/reflect`, `POST /api/help` (streamed, final JSON line).
 - `/reflect`, `/growth` (chart plus text alternative, no badges or streaks), Quick Help slide-over and `/help`. Match `design/Mobile-07`, `Mobile-08`.
 
-Status (25 Nov 2026): built (help is a page; the slide-over is not built). All three done-when checks have tests or a live RLS check.
+Status (25 Nov 2026): built. Quick Help is a page and, on phone and tablet, a slide-over (laptop docking not built). All three done-when checks have tests or a live RLS check.
 
 Done when: Quick Help answers are under 120 words by default; reflections are private to their owner; the growth chart has a text alternative.
 
@@ -124,7 +124,7 @@ Done when: Quick Help answers are under 120 words by default; reflections are pr
 - Pilot gate in CI: zero unreviewed units, zero changed-since-review, zero TODO codes.
 - Production deploy, real-AI Tammy loop, manual screen reader pass in `docs/a11y-checklist.md`.
 
-Status (25 Nov 2026): built except the production deploy steps. Still to do: fill in `docs/a11y-checklist.md` (manual), real-AI Tammy loop on the live site, Supabase plan and demo domain, `content:validate` and `content:export-review` scripts (C1, not yet written). The pilot gate will fail until Denise's review and the curriculum codes are done.
+Status (25 Nov 2026): built except the production deploy steps. Still to do: fill in `docs/a11y-checklist.md` (manual), real-AI Tammy loop on the live site, Supabase plan and demo domain (the content scripts `content:validate`, `content:report`, `content:export-review`, `content:import-review` and `content:approve` are all written). The pilot gate will fail until Denise's review and the curriculum codes are done.
 
 Decisions needed first: Supabase plan (Pro for backups), demo domain.
 
