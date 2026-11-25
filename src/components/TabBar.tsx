@@ -14,7 +14,9 @@ export function TabBar() {
           to={item.to}
           className={({ isActive }) =>
             `flex items-center justify-center text-[15px] no-underline ${
-              isActive ? 'font-bold text-ink shadow-[inset_0_-4px_0_var(--plum-500)]' : 'text-muted'
+              isActive
+                ? 'font-bold text-ink shadow-[inset_0_-4px_0_var(--plum-500)]'
+                : 'text-muted'
             }`
           }
         >
