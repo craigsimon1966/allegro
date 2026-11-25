@@ -27,7 +27,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: 'How AI is used',
     body: [
-      'AI helps understand your situation, choose and order learning that fits, and draft lesson ideas, explanations and quick answers. People write and check the learning content, and the common misconceptions and curriculum details in a lesson always come from that checked content, not from the AI.',
+      'AI helps understand your situation, choose and order learning that fits, and draft lesson ideas, explanations and quick answers. The learning in Allegro has been shaped by experienced maths educators, and the common misconceptions and curriculum details in a lesson always come from that learning content, not from the AI.',
       "Anything drafted by AI is labelled and can be edited. Please check it before using it with a class. Please don't include student names or personal details. If something looks like a student's name, Allegro will ask you to remove it.",
     ],
   },
