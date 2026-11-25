@@ -25,7 +25,7 @@ export function RuledRow({ margin, title, meta, aside, done, current, to }: Prop
         className={`w-margin shrink-0 pt-3 text-center ${
           done
             ? 'font-margin text-[28px] leading-none text-green-700'
-            : 'font-heading text-[22px] font-semibold text-green-700'
+            : 'font-heading text-[22px] font-semibold text-plum-500'
         }`}
       >
         {done ? <span aria-label="Done">✓</span> : margin}

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { MAIN_NAV } from './nav';
 
-/** Phone and tablet bottom tabs. Active tab: bold ink with a 4px green underline. Hidden on laptop. */
+/** Phone and tablet bottom tabs. Active tab: bold ink with a 4px plum underline. Hidden on laptop. */
 export function TabBar() {
   return (
     <nav
@@ -15,7 +15,7 @@ export function TabBar() {
           className={({ isActive }) =>
             `flex items-center justify-center text-[15px] no-underline ${
               isActive
-                ? 'font-bold text-ink shadow-[inset_0_-4px_0_var(--green-700)]'
+                ? 'font-bold text-ink shadow-[inset_0_-4px_0_var(--plum-500)]'
                 : 'text-muted'
             }`
           }
