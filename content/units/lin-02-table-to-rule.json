@@ -47,7 +47,75 @@
       ],
       "answer": "$y = 4x + 3$",
       "feedbackCorrect": "Yes. $y$ goes up by 4 each step and starts at 3.",
-      "feedbackIncorrect": "Look at the change in $y$ (it goes up by 4 each step) and the value when $x = 0$ (3). So $y = 4x + 3$."
+      "feedbackIncorrect": "Look at the change in $y$ (it goes up by 4 each step) and the value when $x = 0$ (3). So $y = 4x + 3$.",
+      "incremental": true,
+      "skill": "algebra.table-to-rule",
+      "wrongAnswers": [
+        {
+          "answer": "$y = x + 4$",
+          "misconceptionId": "mis-linear-constant-only",
+          "feedback": "\"Goes up by 4\" tells you the number in front of $x$, not the number added on. So the rule starts $y = 4x$. Then find $y$ when $x = 0$: it is 3. The rule is $y = 4x + 3$."
+        },
+        {
+          "answer": "$y = 3x + 4$",
+          "misconceptionId": "mis-gradient-intercept-swap",
+          "feedback": "The two numbers are swapped. The change in $y$ each step (4) goes in front of $x$, and the value when $x = 0$ (3) is added on. So $y = 4x + 3$."
+        }
+      ],
+      "parallels": [
+        {
+          "id": "lin-02-q1-p1",
+          "stemMd": "A table has $x$: 0, 1, 2, 3 and $y$: 2, 5, 8, 11. What is the rule?",
+          "type": "mcq",
+          "options": [
+            "$y = 3x + 2$",
+            "$y = x + 3$",
+            "$y = 2x + 3$"
+          ],
+          "answer": "$y = 3x + 2$",
+          "feedbackCorrect": "Yes. $y$ goes up by 3 each step, so $3x$, and $y = 2$ when $x = 0$, so $+ 2$. You used both parts of the method.",
+          "feedbackIncorrect": "$y$ goes up by 3 each step, so the rule starts $3x$. When $x = 0$, $y = 2$, so add 2: $y = 3x + 2$.",
+          "wrongAnswers": [
+            {
+              "answer": "$y = x + 3$",
+              "misconceptionId": "mis-linear-constant-only",
+              "feedback": "The step (3) goes in front of $x$, not on the end. Then $y = 2$ when $x = 0$, so $y = 3x + 2$."
+            },
+            {
+              "answer": "$y = 2x + 3$",
+              "misconceptionId": "mis-gradient-intercept-swap",
+              "feedback": "The numbers are swapped. The step (3) goes in front of $x$, and the starting value (2) is added on: $y = 3x + 2$."
+            }
+          ],
+          "workedSolutionMd": "| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 2 | 5 | 8 | 11 |\n\n1. $x$ goes up by 1 each step, so look at the change in $y$: $5 - 2 = 3$. It goes up by 3 every step, so the rule starts $3x$.\n2. When $x = 0$, $y = 2$. So add 2.\n3. $y = 3x + 2$\n4. **Check:** $x = 3$ gives $3 \\times 3 + 2 = 11$. ✓"
+        },
+        {
+          "id": "lin-02-q1-p2",
+          "stemMd": "A table has $x$: 0, 1, 2, 3 and $y$: 7, 9, 11, 13. What is the rule?",
+          "type": "mcq",
+          "options": [
+            "$y = x + 2$",
+            "$y = 7x + 2$",
+            "$y = 2x + 7$"
+          ],
+          "answer": "$y = 2x + 7$",
+          "feedbackCorrect": "Yes. Up by 2 each step gives $2x$, and starting at 7 gives $+ 7$.",
+          "feedbackIncorrect": "$y$ goes up by 2 each step, so the rule starts $2x$. When $x = 0$, $y = 7$, so add 7: $y = 2x + 7$.",
+          "wrongAnswers": [
+            {
+              "answer": "$y = x + 2$",
+              "misconceptionId": "mis-linear-constant-only",
+              "feedback": "\"Up by 2\" means $2x$, not $+ 2$. Then add the value when $x = 0$, which is 7: $y = 2x + 7$."
+            },
+            {
+              "answer": "$y = 7x + 2$",
+              "misconceptionId": "mis-gradient-intercept-swap",
+              "feedback": "The numbers are swapped. The step (2) goes in front of $x$, and the starting value (7) is added on: $y = 2x + 7$."
+            }
+          ],
+          "workedSolutionMd": "| *x* | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| *y* | 7 | 9 | 11 | 13 |\n\n1. Change in $y$ each step: $9 - 7 = 2$. So the rule starts $2x$.\n2. When $x = 0$, $y = 7$. So add 7.\n3. $y = 2x + 7$\n4. **Check:** $x = 3$ gives $2 \\times 3 + 7 = 13$. ✓"
+        }
+      ]
     },
     {
       "id": "lin-02-q2",

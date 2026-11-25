@@ -11,6 +11,7 @@ import {
   type UnitProgress,
 } from './store';
 import type { PathwayItem } from '@shared/pathway';
+import type { CheckAttempt } from '@shared/quickCheck';
 import type { FeedbackRow } from '@/features/admin/feedbackSummary';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
@@ -272,7 +273,7 @@ export async function saveUnitProgress(unitId: string, p: UnitProgress): Promise
     unit_id: unitId,
     started_at: p.completedAt,
     completed_at: p.completedAt,
-    check_answers: { correct: p.checkCorrect },
+    check_answers: { correct: p.checkCorrect, attempts: p.attempts ?? {} },
     reflect_note: p.reflection.slice(0, 1000) || null,
   });
 }
@@ -296,6 +297,9 @@ export async function loadPathwayFromSupabase(key: string, weekStart: string): P
           {
             completedAt: (r.completed_at as string | null) ?? null,
             checkCorrect: Number((r.check_answers as { correct?: number } | null)?.correct ?? 0),
+            attempts:
+              (r.check_answers as { attempts?: Record<string, CheckAttempt> } | null)?.attempts ??
+              {},
             reflection: (r.reflect_note as string | null) ?? '',
           },
         ]),
