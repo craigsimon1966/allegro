@@ -85,3 +85,8 @@ Decisions not covered by SPEC.md or TECH_SPEC.md. Newest first.
 ## 26 Nov 2026: more plum accents
 
 Craig asked for more purple. Plum now marks secondary buttons, the Ask (AI) button (solid plum), section headings, margin numbers, the active sidebar and tab item, completed step squares, the AI waiting bar and a 4px plum line on top of the site header. Primary actions stay green. AI content is still marked by its plum band, the "AI" label and the disclosure line, which are unchanged. Plum still never sits on sage or green.
+
+## 26 Nov 2026: number choice in worked examples
+
+Craig asked that worked examples avoid ambiguous numbers (two letters both equal to 1, 2 + 2 next to 2 × 2), vary the numbers, include negatives, and judge whether a real context or numbers alone suits each example. The rules live in one prompt part, `prompts/_maths-examples.md`, pulled into the lesson, redo-block, explain and Quick Help prompts with a new `{{> _part}}` include in `buildPrompt`. AI lessons are not retried or rejected when a check fails (a retry would double a 60 to 90 second wait); instead the lesson editor shows a "Number check" note under the block so the teacher can redo or edit it. The checks are pattern based, so they catch the common cases rather than every possible one, and a teacher's maths check is still required.
+

@@ -167,3 +167,13 @@ test('a lesson downloads as a Word file', async ({ page }) => {
   // A .docx is a zip file: it starts with "PK".
   expect(Buffer.concat(bytes).subarray(0, 2).toString()).toBe('PK');
 });
+
+test('a number check appears when an edit gives two letters the same value', async ({ page }) => {
+  await tammyLesson(page);
+  await expect(page.locator('.number-check')).toHaveCount(0);
+  await page.getByRole('button', { name: /^Edit Retrieval starter/ }).click();
+  await page.getByLabel('Edit Retrieval starter (5 minutes)').fill('When $x = 1$, $y = 1$.');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(page.locator('.number-check')).toContainText('x and y are both 1');
+  await axeClean(page);
+});

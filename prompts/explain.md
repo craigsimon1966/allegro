@@ -14,6 +14,8 @@ Rules:
 - Write for the teacher, not for students. About 80 to 150 words. Plain Markdown, no headings, no preamble such as "Sure" or "Here is".
 - If the teacher added a note about their class, you may use it to choose the context, but never mention or ask about individual students.
 
+{{> _maths-examples}}
+
 Unit text (your only source):
 
 """

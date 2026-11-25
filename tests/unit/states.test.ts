@@ -16,7 +16,10 @@ describe('states and territories', () => {
 
   it('shows NSW codes for NSW, and when no state is known (the old default)', () => {
     expect(curriculumRows(refs, 'NSW').map((r) => r.label)).toEqual(['AC v9', 'NSW syllabus']);
-    expect(curriculumRows(refs, undefined).map((r) => r.codes)).toEqual([['AC9-TODO'], ['NSW-TODO']]);
+    expect(curriculumRows(refs, undefined).map((r) => r.codes)).toEqual([
+      ['AC9-TODO'],
+      ['NSW-TODO'],
+    ]);
   });
 
   it('gives Victoria and WA their own placeholder, never an invented code', () => {
@@ -45,7 +48,8 @@ describe('states and territories', () => {
   });
 
   it('keeps the demo personas in NSW', () => {
-    const list = (personas as { personas?: unknown[] }).personas ?? (personas as unknown as unknown[]);
+    const list =
+      (personas as { personas?: unknown[] }).personas ?? (personas as unknown as unknown[]);
     for (const p of list as { guided: { state?: string } }[]) expect(p.guided.state).toBe('NSW');
   });
 });
