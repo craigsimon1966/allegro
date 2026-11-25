@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Each build serves `/version.txt` (and an `allegro-build` meta tag) with its commit, so it is easy to see which version is live.
 - Sign-in: an "I already have a code" link opens the code box straight away, and the code box also appears if an email was sent a moment ago.
 
 ### Read the marked-up review back in (25 November 2026)
