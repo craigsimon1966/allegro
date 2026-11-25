@@ -16,6 +16,9 @@ const Pathway = lazy(() => import('@/features/pathway/Pathway'));
 const Learn = lazy(() => import('@/features/learn/Learn'));
 const PlanForm = lazy(() => import('@/features/plan/PlanForm'));
 const LessonView = lazy(() => import('@/features/plan/LessonView'));
+const Reflect = lazy(() => import('@/features/reflect/Reflect'));
+const Growth = lazy(() => import('@/features/growth/Growth'));
+const Help = lazy(() => import('@/features/help/Help'));
 
 function Loading() {
   return (
@@ -42,40 +45,9 @@ export const routes = [
   { path: '/learn/:unitId', element: lazyPage(<Learn />) },
   { path: '/plan', element: lazyPage(<PlanForm />) },
   { path: '/plan/:lessonId', element: lazyPage(<LessonView />) },
-  {
-    path: '/reflect',
-    element: (
-      <Placeholder
-        title="Reflect"
-        milestone="M4"
-        shell
-        step={6}
-        blurb="Soon you'll look back on how the lesson went and Allegro will adjust next week's learning."
-      />
-    ),
-  },
-  {
-    path: '/growth',
-    element: (
-      <Placeholder
-        title="Your growth"
-        milestone="M4"
-        shell
-        blurb="Soon you'll see your progress across topics over the term."
-      />
-    ),
-  },
-  {
-    path: '/help',
-    element: (
-      <Placeholder
-        title="Quick Help"
-        milestone="M4"
-        shell
-        blurb="Soon you'll be able to ask a quick question about a topic or a class and get an answer in a minute."
-      />
-    ),
-  },
+  { path: '/reflect', element: lazyPage(<Reflect />) },
+  { path: '/growth', element: lazyPage(<Growth />) },
+  { path: '/help', element: lazyPage(<Help />) },
   { path: '/leader', element: <Placeholder title="Leader preview" milestone="M5" /> },
   { path: '/admin/feedback', element: <Placeholder title="Pilot feedback" milestone="M5" /> },
   { path: '*', element: <Placeholder title="Page not found" /> },

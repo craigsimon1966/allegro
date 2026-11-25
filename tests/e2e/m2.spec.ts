@@ -59,16 +59,6 @@ test("Tammy's week and a full micro-unit", async ({ page }) => {
   await expect(page.getByRole('link', { name: /^Continue:/ })).toBeVisible();
 });
 
-test('unbuilt screens say what is coming and lead back to the week', async ({ page }) => {
-  await page.goto('/demo');
-  await page.getByRole('button', { name: /Tammy/ }).click();
-  for (const path of ['/reflect', '/growth', '/help']) {
-    await page.goto(path);
-    await expect(page.getByText('Coming soon')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Back to this week' })).toBeVisible();
-  }
-});
-
 test('Explain this differently shows a labelled AI answer', async ({ page }) => {
   await page.route('**/api/explain', (r) =>
     r.fulfill({
