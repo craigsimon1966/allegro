@@ -14,6 +14,9 @@ import { UNITS, unitById } from '@shared/catalogue';
 import { addDays, buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
+import { teacherProfile, ROLE_SHORT } from '@shared/profile';
+import { builtForLine } from '@shared/curriculum';
+import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore, type ReadingPick } from '@/lib/store';
 import { AIProgress } from '@/components/AIProgress';
@@ -74,11 +77,22 @@ export default function Pathway() {
   const hours = intake?.guided.hoursPerWeek ?? diagnosis?.context.hours_per_week ?? 2;
   const teachingDays = intake?.guided.teachingDays ?? [];
   const weekStart = sydneyWeekStart();
+  // What the teacher told us about themselves wins over what the AI read into their words.
+  const profile = teacherProfile(intake?.guided, diagnosis);
+  const pathwayNeeds = active.map((n) => ({
+    id: n.id,
+    topic: n.topic,
+    evidence: n.evidence,
+    priority: n.priority,
+    catalogue_tags: n.catalogue_tags,
+    concern: n.selfRating,
+  }));
   const key = JSON.stringify([
-    active.map((n) => [n.id, n.priority, n.catalogue_tags]),
+    active.map((n) => [n.id, n.priority, n.catalogue_tags, n.selfRating]),
     hours,
     teachingDays,
     weekStart,
+    profile.years,
   ]);
 
   // Signed in: try the saved week first, then build a new one if it doesn't match.
@@ -90,7 +104,14 @@ export default function Pathway() {
   useEffect(() => {
     if (!diagnosis || key === pathwayKey) return;
     let cancelled = false;
-    const input = { needs: active, units: UNITS, hoursPerWeek: hours, teachingDays, weekStart };
+    const input = {
+      needs: pathwayNeeds,
+      units: UNITS,
+      hoursPerWeek: hours,
+      teachingDays,
+      weekStart,
+      yearLevels: profile.years,
+    };
     const finish = (items: ReturnType<typeof buildPathway>, reading: ReadingPick[] = []) => {
       // An AI reply can arrive after a re-run of this effect, so check the key, not `cancelled`.
       if (latestKey.current !== key || useAppStore.getState().pathwayKey === key) return;
@@ -105,18 +126,14 @@ export default function Pathway() {
       aiKey.current = key;
       setBuilding(true);
       void aiPathway({
-        needs: active.map((n) => ({
-          id: n.id,
-          topic: n.topic,
-          evidence: n.evidence,
-          priority: n.priority,
-          catalogue_tags: n.catalogue_tags,
-        })),
+        needs: pathwayNeeds,
         hoursPerWeek: hours,
         teachingDays,
         weekStart,
-        yearLevels: diagnosis.context.year_levels,
-        ...(intake?.guided.state ? { state: intake.guided.state } : {}),
+        yearLevels: profile.years,
+        ...(profile.state ? { state: profile.state } : {}),
+        ...(profile.role ? { role: profile.role } : {}),
+        ...(profile.locationType ? { locationType: profile.locationType } : {}),
       })
         .then((ai) => {
           // The server already checked these; run them through the same rules again here.
@@ -200,11 +217,14 @@ export default function Pathway() {
   const urgent = todo.filter((it) => nowNeedIds.has(it.needId)).slice(0, 3);
   const next = todo[0];
   const persona = personaId ? personaById(personaId) : undefined;
-  const yearLabel = diagnosis.context.year_levels.length
-    ? `Year ${diagnosis.context.year_levels.join(' and ')}`
-    : '';
+  const yearLabel = profile.years.length ? `Year ${profile.years.join(' and ')}` : '';
+  const builtFor = builtForLine({
+    years: profile.years,
+    state: profile.state,
+    role: profile.role ? ROLE_SHORT[profile.role] : null,
+  });
   // Approved sources for their year levels, with the AI's picks (and reasons) first.
-  const forYears = sourcesFor(diagnosis.context.year_levels, intake?.guided.state);
+  const forYears = sourcesFor(profile.years, profile.state);
   const picked = new Map(
     reading
       .filter((r) => forYears.some((s) => s.id === r.sourceId))
@@ -228,6 +248,11 @@ export default function Pathway() {
           <p className="mt-1 text-muted">
             {doneMinutes} of {planned} minutes done · you have {budget} minutes this week
           </p>
+          {builtFor && (
+            <p className="mt-1 text-[15px]" data-testid="built-for">
+              <span className="font-bold text-plum-700">Built for:</span> {builtFor}
+            </p>
+          )}
 
           {items.length === 0 ? (
             <div className="mt-6 max-w-prose">
@@ -359,6 +384,13 @@ export default function Pathway() {
                             </select>
                             {isNext ? ' · up next' : ''}
                           </div>
+                          <CurriculumCodes
+                            refs={u.curriculumRefs}
+                            state={profile.state}
+                            years={profile.years}
+                            compact
+                            className="mt-1"
+                          />
                           <div className="mt-1 flex flex-wrap items-center gap-x-4">
                             <button
                               type="button"

@@ -79,22 +79,6 @@ export const STATE_IDS = STATES.map((s) => s.id) as [StateId, ...StateId[]];
 
 export const stateById = (id: string | null | undefined) => STATES.find((s) => s.id === id);
 
-/**
- * The curriculum rows for a lesson plan: AC v9 always (every state's maths builds on it), then
- * the teacher's own state's version when it has one. With no state chosen, AC v9 and NSW, as
- * before.
- */
-export function curriculumRows(
-  refs: { ac9: string[]; nsw: string[] },
-  state: string | null | undefined,
-): { label: string; codes: string[] }[] {
-  const rows = [{ label: 'AC v9', codes: refs.ac9 }];
-  const s = stateById(state) ?? stateById('NSW')!;
-  if (s.id === 'NSW') rows.push({ label: s.label, codes: refs.nsw });
-  else if (s.placeholder) rows.push({ label: s.label, codes: [s.placeholder] });
-  return rows;
-}
-
 /** One line for AI prompts, so wording follows the teacher's curriculum. Never asks for codes. */
 export function curriculumContext(state: string | null | undefined): string {
   const s = stateById(state);

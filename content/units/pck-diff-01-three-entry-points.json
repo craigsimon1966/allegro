@@ -23,12 +23,8 @@
   ],
   "difficulty": 2,
   "curriculumRefs": {
-    "ac9": [
-      "AC9-TODO"
-    ],
-    "nsw": [
-      "NSW-TODO"
-    ]
+    "ac9": [],
+    "nsw": []
   },
   "aitslStandards": [],
   "hook": "One class, a wide range of students, and you have one lesson. A single task with three entry points means everyone works on the same maths.",

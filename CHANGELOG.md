@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Curriculum codes are real and checked. The official AC v9 (240 content descriptions) and NSW (130 outcomes) lists are in `content/curriculum/`, rebuilt by `npm run curriculum:import`. Units, the week and lesson plans show only codes that are in the official list and belong to the teacher's year or NSW stage; tap a code to read its official wording. Victoria and WA see AC v9 only, and no `-TODO` placeholder shows anywhere.
+- The AI now treats the teacher's year, role, state and situation as fixed facts. Topics and units for other years are removed by code from the situation reading, the week (AI and rules), lessons and Ask. Screens show a "Built for: Year 8, NSW Stage 4, ..." line.
+- Plan a lesson: year level first, then only the topics taught in that year. The server refuses a topic for the wrong year and sends back a lesson written for another year.
+- Concern ratings now shape the week: a big concern (4 or 5) moves up and comes first. The demo teachers' weeks are unchanged. Growth's chart now goes up as a concern eases.
 - The landing page's four-circle diagram is now Craig's Allegro icon, larger and centred, with Equip, Embed, Evaluate and Elevate centred in their circles. It now shows on phones too, below the call to action.
 - Lessons can be downloaded as a Word file ("Download as Word"). It opens in Microsoft Word and in Google Docs, uses real headings, lists and tables, and carries "Drafted by Allegro AI. Please check before using." under the title and in every page footer. The Markdown helper behind the content review document moved to `shared/markdownBlocks.ts` so both use it.
 - Fixed the real cause of lesson drafts failing: the AI model thinks before it answers by default, and that thinking counts towards the reply limit. A lesson used its whole 8,000-token allowance thinking and never finished the lesson. Thinking is now turned off for every Allegro AI call (Sonnet 5.5 and Haiku 5.5), so the whole allowance goes on the answer, and replies are faster.

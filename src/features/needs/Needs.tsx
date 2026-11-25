@@ -12,6 +12,9 @@ import { useAppStore, type TeacherNeed } from '@/lib/store';
 import type { Need } from '@shared/schemas';
 import { DiagnosticCheck } from './DiagnosticCheck';
 import { Thumbs } from '@/features/feedback/Thumbs';
+import { builtForLine, topicFitsYear } from '@shared/curriculum';
+import { ROLE_SHORT } from '@shared/profile';
+import { useTeacherProfile } from '@/lib/useTeacherProfile';
 
 // "Here's what we heard" (SPEC 7.4).
 
@@ -31,6 +34,12 @@ export default function Needs() {
   const needs = useAppStore((s) => s.needs);
   const updateNeed = useAppStore((s) => s.updateNeed);
   const addNeed = useAppStore((s) => s.addNeed);
+  const profile = useTeacherProfile();
+  const builtFor = builtForLine({
+    years: profile.years,
+    state: profile.state,
+    role: profile.role ? ROLE_SHORT[profile.role] : null,
+  });
 
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(summary);
@@ -68,7 +77,12 @@ export default function Needs() {
   const usedTags = new Set(
     needs.filter((n) => n.status === 'active').flatMap((n) => n.catalogue_tags),
   );
-  const addable = TAGS.filter((t) => !usedTags.has(t.id));
+  // Only topics taught in the teacher's years can be added.
+  const addable = TAGS.filter(
+    (t) =>
+      !usedTags.has(t.id) &&
+      (!profile.years.length || profile.years.some((y) => topicFitsYear(t.id, y))),
+  );
   const wellbeing = diagnosis.safety_flags.includes('wellbeing_concern');
 
   const add = () => {
@@ -93,6 +107,11 @@ export default function Needs() {
     <AppShell step={2} setup backTo="/start">
       <MarginLayout>
         <h1 className="text-[30px] leading-tight">Here&apos;s what we heard</h1>
+        {builtFor && (
+          <p className="mt-1 text-[15px]" data-testid="built-for">
+            <span className="font-bold text-plum-700">Built for:</span> {builtFor}
+          </p>
+        )}
 
         <div className="mt-4">
           <AIBlock

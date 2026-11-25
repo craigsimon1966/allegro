@@ -11,6 +11,8 @@ import { findLikelyStudentNames } from '@shared/pii';
 import { DOMAIN_LABELS } from '@shared/tags';
 import type { CheckItem, MicroUnit } from '@shared/types';
 import { useAppStore } from '@/lib/store';
+import { useTeacherProfile } from '@/lib/useTeacherProfile';
+import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { AIBlock } from '@/components/AIBlock';
 import { ApiError, explain, saveUnitProgress } from '@/lib/api';
 import { Thumbs } from '@/features/feedback/Thumbs';
@@ -211,6 +213,7 @@ export default function Learn() {
   const { unitId = '' } = useParams();
   const navigate = useNavigate();
   const mode = useAppStore((s) => s.mode);
+  const profile = useTeacherProfile();
   const saved = useAppStore((s) => s.progress[unitId]);
   const saveProgress = useAppStore((s) => s.saveProgress);
   const addLessonMove = useAppStore((s) => s.addLessonMove);
@@ -321,6 +324,15 @@ export default function Learn() {
         <p className="mt-4 text-[15px] text-muted">
           <MathText inline>{unit.title}</MathText>
         </p>
+        {page === 0 && (
+          <CurriculumCodes
+            refs={unit.curriculumRefs}
+            state={profile.state}
+            years={profile.years}
+            compact
+            className="mt-1"
+          />
+        )}
         <h1 className="mt-1 text-[30px] leading-tight">{current.label}</h1>
         <div className="mt-4" key={current.key}>
           {current.body}

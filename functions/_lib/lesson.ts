@@ -4,6 +4,8 @@ import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../sh
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
 import { curriculumContext } from '../../shared/states';
+import { topicFitsYear, yearLabel } from '../../shared/curriculum';
+import { ROLE_PROMPT } from '../../shared/profile';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
@@ -77,12 +79,23 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
   const req = parsed.data;
   const tag = tagById(req.topicTag);
   if (!tag) return error('invalid_input', 'Please choose a topic from the list.');
-  if (namesIn(req.classProfile, req.lastLesson, ...(req.carryIn ?? []))) return PII();
+  // A topic is only planned for a year it is taught in (content/tags.json, checked against AC v9).
+  if (!topicFitsYear(req.topicTag, req.yearLevel))
+    return error(
+      'invalid_input',
+      `${tag.label} isn't taught in ${yearLabel(req.yearLevel)}. Please choose a topic for that year.`,
+      { reason: 'topic_year' },
+    );
+  if (namesIn(req.classProfile, req.lastLesson, req.situation, ...(req.carryIn ?? [])))
+    return PII();
 
   const parts = [
     curriculumContext(req.state),
+    `Fixed facts from the teacher (follow them exactly; never change them):`,
+    `- Year level: ${yearLabel(req.yearLevel)}. Every question, example and number must suit ${yearLabel(req.yearLevel)} students. Do not use content from a later year. year_level must be "${req.yearLevel}".`,
+    req.role ? `- The teacher: ${ROLE_PROMPT[req.role]}` : '',
+    req.situation ? `- Their situation, in summary: ${req.situation}` : '',
     `Topic: ${tag.label}`,
-    `Year level: ${req.yearLevel}`,
     `Lesson length: ${req.durationMinutes} minutes`,
     `Class profile (general): ${req.classProfile || 'not given'}`,
     req.lastLesson ? `Covered last lesson: ${req.lastLesson}` : '',
@@ -98,7 +111,11 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
       messages: [{ role: 'user', content: parts.join('\n') }],
       maxTokens: MAX_TOKENS.lesson,
     },
-    LessonSchema,
+    // Post-check: a plan written for another year is sent back once to be redone.
+    LessonSchema.refine((l) => l.year_level.replace(/^year\s*/i, '') === req.yearLevel, {
+      message: `year_level must be "${req.yearLevel}": the whole lesson is for ${yearLabel(req.yearLevel)}`,
+      path: ['year_level'],
+    }),
   );
   await logAiCall(
     g.subject,

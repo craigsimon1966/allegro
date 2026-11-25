@@ -404,7 +404,13 @@ export interface HelpAnswer {
 
 export async function askHelp(
   question: string,
-  context?: { unitId?: string; yearLevel?: string },
+  context?: {
+    unitId?: string;
+    yearLevel?: string;
+    yearLevels?: string[];
+    role?: string;
+    state?: string;
+  },
 ): Promise<HelpAnswer> {
   return (await post('/api/help', { question, ...(context ? { context } : {}) })) as HelpAnswer;
 }

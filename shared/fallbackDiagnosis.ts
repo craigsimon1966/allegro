@@ -1,5 +1,6 @@
 import type { Diagnosis, Guided, Need } from './schemas';
 import { tagById } from './tags';
+import { topicFitsYear } from './curriculum';
 
 // Rules-based diagnosis used when the AI is unavailable or returns invalid output twice
 // (SPEC 8.3 "fall back to the guided form"). It is deliberately simple and says so in the summary.
@@ -106,7 +107,10 @@ const DEFAULT_TAGS = [
 ];
 
 export function fallbackDiagnosis(situationText: string, guided: Guided = {}): Diagnosis {
-  const matched = RULES.filter((r) => r.test(situationText, guided));
+  // Same rule as the AI path: a topic from another year is never suggested.
+  const years = guided.yearLevels ?? [];
+  const fits = (tag: string) => !years.length || years.some((y) => topicFitsYear(tag, y));
+  const matched = RULES.filter((r) => fits(r.tag) && r.test(situationText, guided));
   // Keep 3 to 6 needs and at most 3 "now", as the AI is asked to (SPEC 8.6).
   let nowCount = 0;
   const needs: Need[] = matched.slice(0, 6).map((r, i) => {

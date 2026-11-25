@@ -6,25 +6,69 @@
       "id": "algebra.linear",
       "domain": "CK",
       "label": "Linear relationships (gradient, tables, graphs and rules)",
-      "yearLevels": ["8", "9"]
+      "yearLevels": ["7", "8", "9"],
+      "curriculum": {
+        "ac9": [
+          "AC9M7A04",
+          "AC9M7A05",
+          "AC9M8A02",
+          "AC9M8A03",
+          "AC9M8A04",
+          "AC9M9A03",
+          "AC9M9A05",
+          "AC9M9A06"
+        ],
+        "nsw": ["MA4-LIN-C-01", "MA5-LIN-C-01", "MA5-LIN-C-02"]
+      }
     },
     {
       "id": "algebra.foundations",
       "domain": "CK",
       "label": "Algebraic thinking (pronumerals, equivalence, simplifying)",
-      "yearLevels": ["7", "8"]
+      "yearLevels": ["7", "8"],
+      "curriculum": {
+        "ac9": ["AC9M7A01", "AC9M7A02", "AC9M7A03", "AC9M8A01"],
+        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01"]
+      }
     },
     {
       "id": "number.proportional",
       "domain": "CK",
       "label": "Proportional reasoning (ratio, rates, percentages)",
-      "yearLevels": ["7", "8"]
+      "yearLevels": ["7", "8"],
+      "curriculum": {
+        "ac9": [
+          "AC9M7N04",
+          "AC9M7N06",
+          "AC9M7N08",
+          "AC9M7N09",
+          "AC9M7M06",
+          "AC9M8M05",
+          "AC9M8M07",
+          "AC9M8N05"
+        ],
+        "nsw": ["MA4-RAT-C-01", "MA4-FRC-C-01"]
+      }
     },
     {
       "id": "pck.algebra-misconceptions",
       "domain": "PCK",
       "label": "Common student errors in algebra and how to respond",
-      "yearLevels": ["7", "8", "9"]
+      "yearLevels": ["7", "8", "9"],
+      "curriculum": {
+        "ac9": [
+          "AC9M7A01",
+          "AC9M7A02",
+          "AC9M7A03",
+          "AC9M7A05",
+          "AC9M8A01",
+          "AC9M8A02",
+          "AC9M8A04",
+          "AC9M9A02",
+          "AC9M9A03"
+        ],
+        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01", "MA4-LIN-C-01", "MA5-ALG-C-01", "MA5-LIN-C-01"]
+      }
     },
     {
       "id": "pck.differentiation",
@@ -66,7 +110,11 @@
       "id": "primary.early-number",
       "domain": "CK",
       "label": "Early number (counting, subitising, part-part-whole)",
-      "yearLevels": ["F", "1", "2"]
+      "yearLevels": ["F", "1", "2"],
+      "curriculum": {
+        "ac9": ["AC9MFN02", "AC9MFN04", "AC9M1N02", "AC9M1N04", "AC9M2N02"],
+        "nsw": ["MAE-CSQ-02", "MAE-RWN-01", "MA1-CSQ-01", "MA1-RWN-02"]
+      }
     },
     {
       "id": "assessment.success-criteria",

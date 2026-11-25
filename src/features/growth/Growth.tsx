@@ -34,7 +34,8 @@ function MiniChart({ title, points }: { title: string; points: Point[] }) {
     points.length === 1
       ? (pad.l + w - pad.r) / 2
       : pad.l + (i * (w - pad.l - pad.r)) / (points.length - 1);
-  const y = (v: number) => pad.t + ((5 - v) * (h - pad.t - pad.b)) / 4;
+  // Upside down on purpose: 1 (not a concern) at the top, so a line going up means progress.
+  const y = (v: number) => pad.t + ((v - 1) * (h - pad.t - pad.b)) / 4;
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
@@ -160,8 +161,8 @@ export default function Growth() {
         <div className="mt-8 max-w-prose">
           <SectionRule>How much each topic concerns you</SectionRule>
           <p className="mt-2 text-[15px] text-muted">
-            1 is not a concern and 5 is a big concern, so a line going down means it worries you
-            less.
+            Big concerns (5) sit at the bottom and no concern (1) at the top, so a line going up
+            means it worries you less.
           </p>
           {!hasRatings ? (
             <p className="mt-3 text-muted">

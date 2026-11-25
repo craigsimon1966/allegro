@@ -104,3 +104,13 @@ describe('personas', () => {
     expect(personaById('tammy')?.guided.teachingDays).toEqual([1, 3, 4]);
   });
 });
+
+describe('teacher facts are fixed', () => {
+  it('the rules fallback never suggests a topic from another year', () => {
+    const d = fallbackDiagnosis('linear graphs and ratio, I am new', { yearLevels: ['2'] });
+    const tags = d.needs.flatMap((n) => n.catalogue_tags);
+    expect(tags).not.toContain('algebra.linear');
+    expect(tags).not.toContain('number.proportional');
+    expect(d.context.year_levels).toEqual(['2']);
+  });
+});

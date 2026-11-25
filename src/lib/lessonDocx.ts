@@ -15,7 +15,7 @@ import {
 import { blockMinutes } from '@shared/lesson';
 import type { Lesson } from '@shared/schemas';
 import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks';
-import { curriculumRows } from '@shared/states';
+import { curriculumRows } from '@shared/curriculum';
 
 // "Download as Word" for a lesson plan. Plain Word structure (real headings, lists as text,
 // simple tables, Calibri) so the file opens cleanly in Microsoft Word and in Google Docs.
@@ -97,9 +97,12 @@ export function lessonDocument(lesson: Lesson, disclosure: string, state?: strin
       children: [new TextRun({ text: lesson.title, font: FONT })],
     }),
     para([{ text: `Year ${lesson.year_level}, ${lesson.duration_minutes} minutes` }]),
-    ...curriculumRows(lesson.curriculum_refs, state).map((r) =>
+    ...curriculumRows(lesson.curriculum_refs, state, [lesson.year_level]).map((r) =>
       para(
-        [{ text: `${r.label}: `, bold: true }, { text: `${r.codes.join(', ')} (to be verified)` }],
+        [
+          { text: `${r.label}: `, bold: true },
+          { text: r.codes.map((c) => `${c.code} (${c.text})`).join('; ') },
+        ],
         {
           after: 40,
         },
