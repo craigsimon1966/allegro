@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### M5: Leader preview, feedback and hardening (25 November 2026)
+
+- /leader: preview for a fictional school (confidence by area, most-used units, out-of-field topics, suggested focus). No teacher names or reflections.
+- Thumbs on the needs, week, unit, lesson and help screens, and the end-of-loop survey at /survey. `POST /api/feedback` stores anonymous answers (random session id, never a user id) with the student-name check on comments.
+- /admin/feedback for admin accounts (`profiles.is_admin`): thumbs by screen, survey averages, comments, CSV download. Everyone else is sent home.
+- `POST /api/account/delete`: checks the teacher's token, then deletes the account with the service role (every teacher table cascades) and their usage rows. Plain message if the service role key isn't set.
+- Full /about-demo (SPEC 7.12): what the demo does and doesn't do, how AI is used, data, voice input, who to contact, delete my account, and "Clear demo data" for demo users.
+- Offline message across the app; rate limits show a friendly message.
+- `npm run content:report` with `--gate` (pilot gate) and `--hash`; a "Pilot gate" workflow on `main` that fails until every unit is reviewed and every code is filled in.
+- `npm run security:dist` fails the build if an Anthropic key, Supabase secret key or service-role token is in `dist`; runs in CI.
+- `docs/a11y-checklist.md` for the manual screen reader pass.
+- Tests: account deletion, feedback summary and CSV, content report; Playwright for the About page, admin redirect, offline and 429.
+
 ### M4: Reflect, growth and Quick Help (25 November 2026)
 
 - `POST /api/help` and `POST /api/reflect` on the fast model with `prompts/help.md` and `prompts/reflect.md`. Unit ids checked against the catalogue, answers capped at 120 words in code, student-name checks, em dashes removed.

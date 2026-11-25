@@ -71,3 +71,32 @@ test('admin feedback sends anyone not signed in home', async ({ page }) => {
   await page.goto('/admin/feedback');
   await expect(page).toHaveURL(/\/$/);
 });
+
+test('an offline message shows when the connection drops', async ({ page, context }) => {
+  await page.goto('/demo');
+  await context.setOffline(true);
+  await expect(page.getByText(/You're offline/)).toBeVisible();
+  await context.setOffline(false);
+  await expect(page.getByText(/You're offline/)).toHaveCount(0);
+});
+
+test('a rate limit shows the friendly message, not a crash', async ({ page }) => {
+  await page.route('**/api/help', (r) =>
+    r.fulfill({
+      status: 429,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        error: {
+          code: 'rate_limited',
+          message: "You've reached this hour's limit. Please try again a little later.",
+        },
+      }),
+    }),
+  );
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/help');
+  await page.getByRole('textbox').first().fill('How do I explain gradient?');
+  await page.getByRole('button', { name: /^Ask/ }).click();
+  await expect(page.getByText(/reached this hour's limit/)).toBeVisible();
+});

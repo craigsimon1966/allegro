@@ -124,6 +124,8 @@ Done when: Quick Help answers are under 120 words by default; reflections are pr
 - Pilot gate in CI: zero unreviewed units, zero changed-since-review, zero TODO codes.
 - Production deploy, real-AI Tammy loop, manual screen reader pass in `docs/a11y-checklist.md`.
 
+Status (25 Nov 2026): built except the production deploy steps. Still to do: fill in `docs/a11y-checklist.md` (manual), real-AI Tammy loop on the live site, Supabase plan and demo domain, `content:validate` and `content:export-review` scripts (C1, not yet written). The pilot gate will fail until Denise's review and the curriculum codes are done.
+
 Decisions needed first: Supabase plan (Pro for backups), demo domain.
 
 ## Risks worth watching
