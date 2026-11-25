@@ -1,10 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { STATES, curriculumContext, curriculumRows, stateById } from '@shared/states';
+import { STATES, curriculumContext, stateById } from '@shared/states';
 import { sourcesFor } from '@shared/sources';
 import { GuidedSchema } from '@shared/schemas';
 import personas from '../../content/personas.json';
-
-const refs = { ac9: ['AC9-TODO'], nsw: ['NSW-TODO'] };
 
 describe('states and territories', () => {
   it('lists all eight, with no em dashes in the copy', () => {
@@ -12,27 +10,6 @@ describe('states and territories', () => {
       ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'].sort(),
     );
     for (const s of STATES) expect(JSON.stringify(s)).not.toContain('—');
-  });
-
-  it('shows NSW codes for NSW, and when no state is known (the old default)', () => {
-    expect(curriculumRows(refs, 'NSW').map((r) => r.label)).toEqual(['AC v9', 'NSW syllabus']);
-    expect(curriculumRows(refs, undefined).map((r) => r.codes)).toEqual([
-      ['AC9-TODO'],
-      ['NSW-TODO'],
-    ]);
-  });
-
-  it('gives Victoria and WA their own placeholder, never an invented code', () => {
-    expect(curriculumRows(refs, 'VIC')).toEqual([
-      { label: 'AC v9', codes: ['AC9-TODO'] },
-      { label: 'Victorian Curriculum 2.0', codes: ['VC2-TODO'] },
-    ]);
-    expect(curriculumRows(refs, 'WA')[1]).toEqual({ label: 'WA Curriculum', codes: ['WA-TODO'] });
-  });
-
-  it('shows only AC v9 for states that use it directly', () => {
-    for (const id of ['QLD', 'SA', 'TAS', 'ACT', 'NT'])
-      expect(curriculumRows(refs, id).map((r) => r.label)).toEqual(['AC v9']);
   });
 
   it('tells the AI the curriculum, and never asks for codes', () => {

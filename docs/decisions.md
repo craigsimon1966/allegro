@@ -110,3 +110,31 @@ Craig asked for actual images wherever content names a representation. Diagrams 
 
 Craig asked for an equation editor in worked examples and wherever teachers edit, especially success criteria. Chosen: MathLive 0.111.4 in a dialog behind an "Insert maths" button, saving LaTeX between $ signs so everything else (KaTeX rendering, the AI, the number checks) keeps working on plain Markdown. MathLive is lazy-loaded (about 230 KB gzipped, only when the dialog opens), draws with the KaTeX fonts already on the page (`fontsDirectory = null`, so no font files are added) and has sounds and its own pop-up keyboard turned off; a row of symbol buttons does the keyboard's job and works inside the dialog on phones. The Word download turns the LaTeX into Word equations (OMML) with a small converter (`src/lib/latexToDocx.ts`) covering fractions, powers, subscripts, roots, brackets and common symbols; anything it doesn't know stays as plain text.
 
+## 26 Nov 2026: real curriculum codes, checked before they show
+
+Craig asked for codes on content examples, the week and lesson plans, checked before they reach the screen.
+
+- The official lists are in the repo: `content/curriculum/ac9-maths.json` (all 240 AC v9 Mathematics content descriptions, Foundation to Year 10, from ACARA's curriculum API) and `content/curriculum/nsw-maths.json` (130 NESA Mathematics K-10 (2022) outcomes). `scripts/curriculum-import.ts` rebuilds both from the source, so nothing is typed by hand.
+- Units and lesson topics now carry real codes picked from those lists (Claude Code's mapping, so it still needs an educator's check; see docs/curriculum-todo.md). This replaces `AC9-TODO` and `NSW-TODO`. A code taken from the official list is not an invented code.
+- Every code passes `shared/curriculum.ts` before it shows: it must be in the official list and belong to the teacher's year (AC v9) or the NSW stage that covers it. Anything else, including placeholders and anything a model might write, is dropped. Lesson codes never come from the model. Tap or hover a code to read its official wording.
+- Victoria and WA see AC v9 only. The `VC2-TODO` and `WA-TODO` placeholders no longer show anywhere. Each state's own codes can be added later.
+- "(to be verified)" is gone from lesson plans, because each code is now checked against the official list. The mapping itself is still a draft until Denise or Craig signs it off.
+
+## 26 Nov 2026: the teacher's own answers are fixed facts for the AI
+
+Craig found the AI ignoring his year, experience and situation. Causes found: the week used the year levels the AI guessed rather than the ones he chose, units were never filtered by year, and the lesson and Ask calls didn't know his role or situation.
+
+- What the teacher chose (year levels, role, state, location) now overrides the AI's reading everywhere (`shared/profile.ts`). The situation reading copies these facts into its result, and the prompts list them as fixed facts.
+- Topics and units for other years are removed by code, whatever the AI picks: in the situation reading, the rules fallback, the week (AI and rules) and Ask's unit suggestion.
+- A lesson topic must be taught in the chosen year, or the server refuses it before any AI call. A lesson the model writes for another year is sent back once to be redone.
+- The week, needs and lesson screens show a "Built for" line (for example "Year 8, NSW Stage 4, teaching out of field").
+
+## 26 Nov 2026: concern ratings order the week, and Growth goes up
+
+- A need rated 4 or 5 moves up one band (later to soon, soon to now), and within a band the bigger concern comes first. This applies to the rules week and to the order of the AI's picks. Unrated needs keep their order, so the demo teachers' weeks don't change (a test checks this). This replaces the earlier note that ratings don't feed the pathway.
+- Growth's charts are upside down on purpose: no concern (1) at the top and a big concern (5) at the bottom, so a line going up means progress.
+
+## 26 Nov 2026: Plan a lesson asks for the year first
+
+The year level comes first and defaults to the teacher's own year. The topic list then shows only topics taught in that year with official AC v9 content for it (a test fails if a topic is offered for a year with no matching code). Teaching approaches without maths content of their own (such as "One maths task, three entry points") are learnt in the week rather than offered as a lesson topic. Linear relationships now covers Year 7 too, because AC v9 starts it there (AC9M7A04, AC9M7A05).
+

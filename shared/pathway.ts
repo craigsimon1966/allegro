@@ -9,6 +9,8 @@ export interface PathwayNeed {
   evidence: string;
   priority: 'now' | 'soon' | 'later';
   catalogue_tags: string[];
+  /** The teacher's own rating, 1 (not a concern) to 5 (a big concern). Null or absent if unrated. */
+  concern?: number | null;
 }
 
 export interface PathwayItem {
@@ -28,9 +30,48 @@ export interface PathwayInput {
   teachingDays: number[];
   /** Monday of the week, YYYY-MM-DD. */
   weekStart: string;
+  /** The year levels the teacher teaches. Units for other years are never scheduled. */
+  yearLevels?: string[];
 }
 
 const PRIORITY_RANK = { now: 0, soon: 1, later: 2 } as const;
+const BANDS = ['now', 'soon', 'later'] as const;
+
+/**
+ * The band a need is scheduled in. A big concern (4 or 5) moves it up one band, so what worries
+ * the teacher most comes first in the week.
+ */
+export function effectivePriority(need: PathwayNeed): PathwayNeed['priority'] {
+  const rank = PRIORITY_RANK[need.priority];
+  return (need.concern ?? 0) >= 4 ? BANDS[Math.max(0, rank - 1)]! : need.priority;
+}
+
+/** Needs in scheduling order: band first, then the teacher's concern, highest first. Stable. */
+export function orderNeeds(needs: PathwayNeed[]): PathwayNeed[] {
+  return [...needs].sort(
+    (a, b) =>
+      PRIORITY_RANK[effectivePriority(a)] - PRIORITY_RANK[effectivePriority(b)] ||
+      (b.concern ?? 0) - (a.concern ?? 0),
+  );
+}
+
+const PRIMARY_YEARS = ['F', '1', '2', '3', '4', '5', '6'];
+
+/**
+ * Does a unit suit a teacher of these years? A unit for set years must share one; a general unit
+ * marked for primary or secondary teachers must match the phase. No years given: every unit.
+ */
+export function unitFitsYears(unit: MicroUnit, years: string[] | undefined): boolean {
+  if (!years?.length) return true;
+  if (unit.yearLevels.length) return unit.yearLevels.some((y) => years.includes(y));
+  const primary = years.some((y) => PRIMARY_YEARS.includes(y));
+  const secondary = years.some((y) => !PRIMARY_YEARS.includes(y));
+  const forPrimary = unit.audience.includes('primary');
+  const forSecondary = unit.audience.includes('secondary');
+  if (forPrimary && !forSecondary) return primary;
+  if (forSecondary && !forPrimary) return secondary;
+  return true;
+}
 
 export function addDays(iso: string, days: number): string {
   const [y, m, d] = iso.split('-').map(Number);
@@ -68,9 +109,7 @@ export interface PathwayPick {
 type Picked = { unit: MicroUnit; need: PathwayNeed; reason: string };
 
 function pickByRules(input: PathwayInput, budget: number): Picked[] {
-  const needs = [...input.needs].sort(
-    (a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority],
-  );
+  const needs = orderNeeds(input.needs);
 
   // Units per need, easiest first. A unit is used once, for the most urgent need it matches.
   const used = new Set<string>();
@@ -89,7 +128,7 @@ function pickByRules(input: PathwayInput, budget: number): Picked[] {
   const picked: Picked[] = [];
   let minutes = 0;
   for (const band of ['now', 'soon', 'later'] as const) {
-    const bandQueues = queues.filter((q) => q.need.priority === band);
+    const bandQueues = queues.filter((q) => effectivePriority(q.need) === band);
     let progress = true;
     while (progress) {
       progress = false;
@@ -133,10 +172,17 @@ function checkPicks(picks: PathwayPick[], input: PathwayInput, budget: number): 
  * The week of learning. With `picks` (from the AI), the code still enforces the catalogue,
  * the time budget and the days; with none, or none that survive the checks, it uses rules.
  */
-export function buildPathway(input: PathwayInput, picks?: PathwayPick[]): PathwayItem[] {
+export function buildPathway(raw: PathwayInput, picks?: PathwayPick[]): PathwayItem[] {
+  const input = { ...raw, units: raw.units.filter((u) => unitFitsYears(u, raw.yearLevels)) };
   const budget = Math.round(input.hoursPerWeek * 60);
   const checked = picks ? checkPicks(picks, input, budget) : [];
-  const picked = checked.length ? checked : pickByRules(input, budget);
+  let picked = checked.length ? checked : pickByRules(input, budget);
+  // When the teacher has rated their concerns, those ratings set the order of the week,
+  // whatever order the AI suggested. Unrated needs (the demo teachers) keep the order as chosen.
+  if (checked.length && input.needs.some((n) => n.concern != null)) {
+    const order = orderNeeds(input.needs).map((n) => n.id);
+    picked = [...picked].sort((a, b) => order.indexOf(a.need.id) - order.indexOf(b.need.id));
+  }
 
   // Learning goes on non-teaching weekdays; if there are none, on teaching days.
   const free = [1, 2, 3, 4, 5].filter((d) => !input.teachingDays.includes(d));

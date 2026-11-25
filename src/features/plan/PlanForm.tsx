@@ -5,15 +5,17 @@ import { MarginLayout } from '@/components/MarginLayout';
 import { Label, SectionRule } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { AIProgress } from '@/components/AIProgress';
-import { TAGS, tagById } from '@shared/tags';
-import { DEMO_LESSON } from '@shared/lesson';
+import { tagById } from '@shared/tags';
+import { DEMO_LESSON, curriculumRefsFor } from '@shared/lesson';
+import { YEAR_LEVELS, lessonTopicsFor, topicFitsYear, yearLabel } from '@shared/curriculum';
+import { CurriculumCodes } from '@/components/CurriculumCodes';
+import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, draftLesson, loadLessonsFromSupabase, saveLesson } from '@/lib/api';
 import { useAppStore, type SavedLesson } from '@/lib/store';
 
 // Lesson Builder inputs (SPEC 7.7).
 
-const LESSON_TAGS = TAGS.filter((t) => t.domain === 'CK' || t.domain === 'PCK');
 const LENGTHS = [30, 45, 50, 60, 75, 90];
 const field = 'w-full rounded border-2 border-ink bg-field px-3 text-[17px] text-ink';
 
@@ -26,14 +28,24 @@ export default function PlanForm() {
   const moves = useAppStore((s) => s.lessonMoves);
   const lessons = useAppStore((s) => s.lessons);
   const putLesson = useAppStore((s) => s.putLesson);
-  const state = useAppStore((s) => s.intake?.guided.state);
+  const profile = useTeacherProfile();
+  const state = profile.state ?? undefined;
+  const myYears = profile.years.filter((y) => (YEAR_LEVELS as readonly string[]).includes(y));
 
-  const needTag = needs
-    .filter((n) => n.status === 'active')
-    .flatMap((n) => n.catalogue_tags)
-    .find((t) => LESSON_TAGS.some((x) => x.id === t && x.domain === 'CK'));
-  const [topicTag, setTopicTag] = useState(needTag ?? 'algebra.linear');
-  const [yearLevel, setYearLevel] = useState(diagnosis?.context.year_levels[0] ?? '8');
+  // The topic the teacher's needs point to, if it is taught in this year.
+  const needTagFor = (year: string) =>
+    needs
+      .filter((n) => n.status === 'active')
+      .flatMap((n) => n.catalogue_tags)
+      .find((t) => lessonTopicsFor(year).some((x) => x.id === t && x.domain === 'CK'));
+  const firstTopic = (year: string) => needTagFor(year) ?? lessonTopicsFor(year)[0]?.id ?? '';
+  const [yearLevel, setYearLevel] = useState(myYears[0] ?? '8');
+  const [topicTag, setTopicTag] = useState(() => firstTopic(myYears[0] ?? '8'));
+  const topics = lessonTopicsFor(yearLevel);
+  const chooseYear = (y: string) => {
+    setYearLevel(y);
+    if (!topicFitsYear(topicTag, y)) setTopicTag(firstTopic(y));
+  };
   const [duration, setDuration] = useState(60);
   const [classProfile, setClassProfile] = useState('');
   const [lastLesson, setLastLesson] = useState('');
@@ -48,6 +60,8 @@ export default function PlanForm() {
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;
 
   const names = findLikelyStudentNames([classProfile, lastLesson].join('\n'));
+  // The situation summary helps the AI pitch the lesson; it goes only if it has no likely names.
+  const situation = (diagnosis?.summary ?? '').slice(0, 600);
   const inputs = {
     topicTag,
     yearLevel,
@@ -56,6 +70,8 @@ export default function PlanForm() {
     ...(lastLesson.trim() ? { lastLesson: lastLesson.trim() } : {}),
     ...(carry.length ? { carryIn: carry } : {}),
     ...(state ? { state } : {}),
+    ...(profile.role ? { role: profile.role } : {}),
+    ...(situation && !findLikelyStudentNames(situation).length ? { situation } : {}),
   };
   const useCached =
     personaId === 'tammy' &&
@@ -124,41 +140,68 @@ export default function PlanForm() {
               void submit();
             }}
           >
-            <div>
-              <label htmlFor="topic" className="block text-[15px] font-bold">
-                Topic
+            <div className="w-48">
+              <label htmlFor="year" className="block text-[15px] font-bold">
+                Year level
               </label>
               <select
-                id="topic"
-                value={topicTag}
-                onChange={(e) => setTopicTag(e.target.value)}
+                id="year"
+                value={yearLevel}
+                onChange={(e) => chooseYear(e.target.value)}
                 className={`${field} h-12`}
               >
-                {LESSON_TAGS.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.label}
+                {YEAR_LEVELS.map((y) => (
+                  <option key={y} value={y}>
+                    {yearLabel(y)}
+                    {myYears.includes(y) ? ' (your class)' : ''}
                   </option>
                 ))}
               </select>
             </div>
-            <div className="flex flex-wrap gap-5">
-              <div className="w-32">
-                <label htmlFor="year" className="block text-[15px] font-bold">
-                  Year level
-                </label>
+            <div>
+              <label htmlFor="topic" className="block text-[15px] font-bold">
+                Topic for {yearLabel(yearLevel)}
+              </label>
+              {topics.length ? (
                 <select
-                  id="year"
-                  value={yearLevel}
-                  onChange={(e) => setYearLevel(e.target.value)}
+                  id="topic"
+                  value={topicTag}
+                  onChange={(e) => setTopicTag(e.target.value)}
                   className={`${field} h-12`}
                 >
-                  {['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map((y) => (
-                    <option key={y} value={y}>
-                      {y === 'F' ? 'Foundation' : `Year ${y}`}
-                    </option>
-                  ))}
+                  {(['CK', 'PCK'] as const).map((d) => {
+                    const list = topics.filter((t) => t.domain === d);
+                    return list.length ? (
+                      <optgroup
+                        key={d}
+                        label={d === 'CK' ? 'Maths topics' : 'Teaching a topic well'}
+                      >
+                        {list.map((t) => (
+                          <option key={t.id} value={t.id}>
+                            {t.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ) : null;
+                  })}
                 </select>
-              </div>
+              ) : (
+                <p id="topic" className="mt-1" role="status">
+                  Allegro doesn&apos;t have lesson topics for {yearLabel(yearLevel)} yet. Choose
+                  another year level.
+                </p>
+              )}
+              {topics.length > 0 && (
+                <CurriculumCodes
+                  refs={curriculumRefsFor(topicTag, yearLevel)}
+                  state={state}
+                  years={[yearLevel]}
+                  compact
+                  className="mt-2"
+                />
+              )}
+            </div>
+            <div className="flex flex-wrap gap-5">
               <div className="w-40">
                 <label htmlFor="length" className="block text-[15px] font-bold">
                   Lesson length
@@ -236,7 +279,7 @@ export default function PlanForm() {
               </p>
             )}
             <div>
-              <Button type="submit" disabled={names.length > 0}>
+              <Button type="submit" disabled={names.length > 0 || !topics.length}>
                 Draft my lesson <span aria-hidden="true">→</span>
               </Button>
             </div>

@@ -73,8 +73,14 @@ describe('groundLesson', () => {
       expect(m[0]!.content_md).toContain(x.studentSays);
     expect(g.blocks[2]!.type).toBe('misconceptions');
   });
-  it('takes curriculum refs from the units, never the model', () => {
-    expect(g.curriculum_refs).toEqual({ ac9: ['AC9-TODO'], nsw: ['NSW-TODO'] });
+  it('takes curriculum refs from the official list for the lesson year, never the model', () => {
+    expect(g.curriculum_refs).toEqual({
+      ac9: ['AC9M8A02', 'AC9M8A03', 'AC9M8A04'],
+      nsw: ['MA4-LIN-C-01'],
+    });
+    const y9 = groundLesson({ ...aiLesson, year_level: '9' }, 'algebra.linear');
+    expect(y9.curriculum_refs.ac9.every((c) => c.startsWith('AC9M9'))).toBe(true);
+    expect(y9.curriculum_refs.nsw.every((c) => c.startsWith('MA5-'))).toBe(true);
   });
   it('marks every other block as an AI draft that needs a maths check, with no em dashes', () => {
     for (const b of g.blocks.filter((b) => b.type !== 'misconceptions')) {
@@ -105,10 +111,53 @@ describe('POST /api/lesson', () => {
     const res = await handleLesson(post('/api/lesson', body), {}, { complete });
     expect(res.status).toBe(200);
     const l = LessonSchema.parse(await res.json());
-    expect(l.curriculum_refs.ac9).toEqual(['AC9-TODO']);
+    expect(l.curriculum_refs.ac9).toEqual(['AC9M8A02', 'AC9M8A03', 'AC9M8A04']);
     expect(l.lesson_id).not.toBe('x');
     expect(seen?.system).toContain('From table to rule');
     expect(seen?.model).toBe('claude-sonnet-5-5');
+  });
+  it('puts the teacher facts in the prompt as fixed rules', async () => {
+    let seen: CompleteArgs | undefined;
+    const complete: Completer = async (a) => {
+      seen = a;
+      return { text: JSON.stringify(aiLesson) };
+    };
+    await handleLesson(
+      post('/api/lesson', { ...body, role: 'out_of_field', situation: 'PE teacher, new to maths' }),
+      {},
+      { complete },
+    );
+    const msg = String(seen?.messages[0]?.content);
+    expect(msg).toContain('Fixed facts from the teacher');
+    expect(msg).toContain('Year 8');
+    expect(msg).toContain('outside their trained subject');
+    expect(msg).toContain('PE teacher, new to maths');
+  });
+  it('refuses a topic that is not taught in the chosen year, before any AI call', async () => {
+    let called = false;
+    const complete: Completer = async () => {
+      called = true;
+      return { text: '{}' };
+    };
+    const res = await handleLesson(
+      post('/api/lesson', { ...body, topicTag: 'algebra.linear', yearLevel: '3' }),
+      {},
+      { complete },
+    );
+    expect(res.status).toBe(400);
+    expect(((await res.json()) as { error: { reason: string } }).error.reason).toBe('topic_year');
+    expect(called).toBe(false);
+  });
+  it('sends a lesson written for another year back to be redone', async () => {
+    const replies = [
+      { ...aiLesson, year_level: '10' },
+      { ...aiLesson, year_level: '8' },
+    ];
+    let calls = 0;
+    const complete: Completer = async () => ({ text: JSON.stringify(replies[calls++]) });
+    const res = await handleLesson(post('/api/lesson', body), {}, { complete });
+    expect(res.status).toBe(200);
+    expect(calls).toBe(2);
   });
   it('rejects unknown topics and student names', async () => {
     const complete: Completer = async () => ({ text: '{}' });

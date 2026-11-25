@@ -1,7 +1,8 @@
 import { STATE_IDS } from './states';
 import { z } from 'zod';
-import { LessonSchema, type Lesson, type LessonBlock } from './schemas';
+import { LessonSchema, Role, type Lesson, type LessonBlock } from './schemas';
 import { MISCONCEPTIONS, UNITS } from './catalogue';
+import { checkRefs, topicRefs } from './curriculum';
 import demoLessonFile from '../content/lessons/demo-tammy-linear.json';
 
 // Lesson Builder grounding (SPEC 7.7, TECH_SPEC 7.3). Runs on the server after the model replies,
@@ -15,6 +16,9 @@ export const LessonRequestSchema = z.object({
   lastLesson: z.string().max(300).optional(),
   carryIn: z.array(z.string().max(400)).max(5).optional(),
   state: z.enum(STATE_IDS).optional(),
+  /** The teacher's role and situation from their profile, so the plan fits them, not a generic teacher. */
+  role: Role.optional(),
+  situation: z.string().max(600).optional(),
 });
 export type LessonRequest = z.infer<typeof LessonRequestSchema>;
 
@@ -65,13 +69,22 @@ export function misconceptionsBlock(topicTag: string, id = 'misconceptions'): Le
   };
 }
 
-/** Curriculum refs always come from the unit metadata, never the model. */
-export function curriculumRefsFor(topicTag: string) {
+/**
+ * Curriculum refs never come from the model. They are the topic's codes (content/tags.json) plus
+ * its units' codes, kept only when the official list has them for this year level (or its NSW
+ * stage). A topic with no code for the year gets none, rather than a code from another year.
+ */
+export function curriculumRefsFor(topicTag: string, yearLevel: string) {
   const units = UNITS.filter((u) => u.tags.includes(topicTag));
-  const uniq = (xs: string[]) => [...new Set(xs)];
-  const ac9 = uniq(units.flatMap((u) => u.curriculumRefs.ac9));
-  const nsw = uniq(units.flatMap((u) => u.curriculumRefs.nsw));
-  return { ac9: ac9.length ? ac9 : ['AC9-TODO'], nsw: nsw.length ? nsw : ['NSW-TODO'] };
+  const t = topicRefs(topicTag);
+  const checked = checkRefs(
+    {
+      ac9: [...t.ac9, ...units.flatMap((u) => u.curriculumRefs.ac9)],
+      nsw: [...t.nsw, ...units.flatMap((u) => u.curriculumRefs.nsw)],
+    },
+    [yearLevel],
+  );
+  return { ac9: checked.ac9.map((c) => c.code), nsw: checked.nsw.map((c) => c.code) };
 }
 
 /** Code-enforced rules on any lesson, whatever the model wrote. */
@@ -94,7 +107,7 @@ export function groundLesson(lesson: Lesson, topicTag: string): Lesson {
     });
   const at = blocks.findIndex((b) => b.type === 'explicit_teaching');
   blocks.splice(at >= 0 ? at + 1 : blocks.length, 0, misconceptionsBlock(topicTag));
-  return { ...lesson, curriculum_refs: curriculumRefsFor(topicTag), blocks };
+  return { ...lesson, curriculum_refs: curriculumRefsFor(topicTag, lesson.year_level), blocks };
 }
 
 /** Rough minutes per block, scaled to the lesson length, for the margin timings. */

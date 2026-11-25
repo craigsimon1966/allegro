@@ -18,7 +18,10 @@ describe('lesson Word download', () => {
     const text = doc.replace(/<[^>]+>/g, '');
     expect(text).toContain(lesson.title);
     expect(text).toContain(NOTICE);
-    expect(text).toContain('Victorian Curriculum 2.0');
+    // Victoria sees AC v9 only (its own codes are not looked up yet), never a placeholder.
+    expect(text).toContain('AC v9: AC9M8A02');
+    expect(text).not.toContain('TODO');
+    expect(text).not.toContain('Victorian Curriculum 2.0');
     for (const b of lesson.blocks) expect(text).toContain(b.title);
     expect(text).not.toContain('$');
     expect(doc).toContain('w:pStyle w:val="Heading2"');

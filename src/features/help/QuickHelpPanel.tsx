@@ -8,7 +8,7 @@ import { MathTextarea } from '@/components/MathTextarea';
 import { unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, askHelp, type HelpAnswer } from '@/lib/api';
-import { useAppStore } from '@/lib/store';
+import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { Thumbs } from '@/features/feedback/Thumbs';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 
@@ -30,7 +30,7 @@ interface Props {
 
 export default function QuickHelpPanel({ headingLevel = 1, onLeave }: Props) {
   const fieldId = useId();
-  const year = useAppStore((s) => s.diagnosis?.context.year_levels[0]);
+  const profile = useTeacherProfile();
   const [question, setQuestion] = useState('');
   const [asked, setAsked] = useState('');
   const [answer, setAnswer] = useState<HelpAnswer | null>(null);
@@ -48,7 +48,13 @@ export default function QuickHelpPanel({ headingLevel = 1, onLeave }: Props) {
     setMore(false);
     setAsked(text);
     try {
-      setAnswer(await askHelp(text, year ? { yearLevel: year } : undefined));
+      setAnswer(
+        await askHelp(text, {
+          ...(profile.years.length ? { yearLevels: profile.years } : {}),
+          ...(profile.role ? { role: profile.role } : {}),
+          ...(profile.state ? { state: profile.state } : {}),
+        }),
+      );
       setQuestion('');
     } catch (e) {
       setProblem(
