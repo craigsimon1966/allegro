@@ -86,6 +86,9 @@ Decisions not covered by SPEC.md or TECH_SPEC.md. Newest first.
 | 2026-11-26 | Slides never show answers, and their speaker notes hold only "Say" and "Ask" lines, not answers; all answers are in the teacher guide's answer key | Craig wants the teacher to write the working and answers live on the smart board; notes can show on a mirrored screen |
 | 2026-11-26 | Slides use only text boxes, simple tables, lines and rectangles in Arial, with list numbers and bullets typed as text | Google Slides import and whiteboard software (SMART Notebook, ActivInspire) drop or change masters, placeholders, animations, transitions, automatic bullets and uncommon fonts |
 | 2026-11-26 | Office files read their colours from `tokens.css` at build time (`src/lib/printColours.ts`, `?raw` import) | Keeps tokens.css the only home of raw colour values |
+| 2026-11-26 | Quick check follow-ups are authored in the unit JSON (`incremental`, `skill`, `wrongAnswers`, `parallels`, `workedSolutionMd`), not written live by the AI. Only 4 questions are marked incremental: alg-01-q1, alg-02-q1, lin-02-q1 and prop-03-q1, where question 2 uses question 1's skill. lin-01 and lin-04 are not, because their two questions check separate ideas | Follow-ups go through Denise's review like the rest of the unit, and `tests/unit/quickCheck.test.ts` recomputes every answer and distractor from the numbers in the question. No AI cost or wait in a quick check |
+| 2026-11-26 | Two follow-ups at most; after a second wrong answer the teacher can move on, and the skill is flagged | Keeps a teacher from getting stuck in a 5-minute unit |
+| 2026-11-26 | Attempts are stored in `unit_progress.check_answers` (`{ correct, attempts }`), which is already JSON, so no migration. Flagged skills show on the needs page and become a need only when the teacher taps "Add to my needs" | No new table; the teacher stays in charge of their needs list |
 
 ## 26 Nov 2026: more plum accents
 
