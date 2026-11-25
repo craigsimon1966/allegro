@@ -74,6 +74,10 @@
   .allegro-mark-loading circle:nth-child(4) {
     animation-delay: 1.2s;
   }
+  /* Brand plum on alternate circles, so the waiting mark fills green, plum, green, plum. */
+  .allegro-mark-loading circle:nth-child(even) {
+    color: var(--plum-500);
+  }
   @keyframes allegro-fill {
     0%,
     20% {
