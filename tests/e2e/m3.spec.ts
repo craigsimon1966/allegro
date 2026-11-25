@@ -75,7 +75,9 @@ test('redoing one block leaves the others unchanged', async ({ page }) => {
   );
   await page.getByRole('button', { name: 'Redo this block: Hinge question' }).click();
   await page.getByRole('button', { name: 'Redo', exact: true }).click();
-  await expect(page.getByText('Quick and diagnostic.')).toBeVisible();
+  await expect(
+    page.getByRole('main').locator('.lesson-block').getByText('Quick and diagnostic.'),
+  ).toBeVisible();
   const after = await page.locator('.lesson-block').allInnerTexts();
   const changed = after.filter((t, i) => t !== before[i]);
   expect(changed).toHaveLength(1);
@@ -135,4 +137,21 @@ test('AI lesson for another topic, with the AI mocked', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: 'Unit rates' })).toBeVisible();
   await page.goto('/plan');
   await expect(page.getByRole('link', { name: 'Unit rates' })).toBeVisible();
+});
+
+test('on a laptop, "Why this block works" follows the block the teacher is in', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 820 });
+  await tammyLesson(page);
+  const why = page.getByRole('complementary', { name: 'Why this works' });
+  await expect(why).toBeVisible();
+  await expect(why.getByRole('link', { name: /min$/ }).first()).toBeVisible();
+  const blocks = page.locator('[data-block-id]');
+  const last = blocks.last();
+  const title = await last.getByRole('heading', { level: 2 }).innerText();
+  await last.getByRole('button', { name: /^Edit / }).focus();
+  await expect(why.getByText(title, { exact: true })).toBeVisible();
+  await page.screenshot({ path: '/tmp/claude-0/why.png' });
+  await axeClean(page);
 });

@@ -21,7 +21,9 @@
     padding: 0 !important;
   }
   main > div,
-  main > div > div {
+  main > div > div,
+  .lesson-wrap > div,
+  .lesson-wrap > div > div {
     min-height: 0 !important;
     max-width: none !important;
     padding: 0 !important;

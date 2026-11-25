@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- On a laptop, a lesson plan has a "Why this block works" panel on the right (design/Desktop-Lesson). It follows the block you are reading or editing and links the related units.
 - Quick Help has the microphone too (SPEC 10.6a), where the browser supports speech input, with the same privacy note as the situation box.
 - On a laptop, Quick Help docks on the right of This week (design/Desktop-Pathway), so teachers can ask while looking at their week.
 - Sam and Priya walkthrough fixes: tapping the middle of an unrated confidence slider now records 3 of 5 (before, nothing happened); unrated sliders look faded; the thumbs-up and thumbs-down buttons stay together on narrow phones; the Growth numbers line up.
