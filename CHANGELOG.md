@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- New `POST /api/pathway` (TECH_SPEC 7.2, 7.3) with `prompts/pathway.md`. For teachers using their own situation or signed in, the AI now chooses the week's units and writes each "Why this?" reason. The code keeps only real units and needs, never goes over the hours, keeps learning off teaching days, and only passes on approved source ids. If the AI is down or picks nothing usable, the rules week is used. Demo personas stay on rules, with no AI call.
 - The Me tab opens a new /me page: who you are, Sign out (or Leave the demo, Try a different teacher), and links to your needs, your situation, the pilot survey and About this demo.
 - `npm run content:validate` now exists (it was listed but never written). It checks every unit against the schema, tags, misconception and module links, 3 to 8 minutes, MCQ answers and em dashes, and the same checks run in `npm run check`.
 - This week has an optional "Further reading" section (SPEC 7.5) with the 7 sources Craig approved, kept in `content/approved-sources.json`. Primary teachers don't see the 7 to 10 syllabus page. A unit test fails if any other external link appears in the app or content.
