@@ -8,6 +8,9 @@ import './styles/index.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element missing');
 
+// Loaded after first paint so the landing page stays small.
+void import('./lib/session').then((m) => m.restoreSession());
+
 createRoot(root).render(
   <StrictMode>
     <OfflineNotice />
