@@ -41,6 +41,11 @@ export interface TeacherNeed extends Need {
   diagnosticResult: DiagnosticResult | null;
 }
 
+export interface ReadingPick {
+  sourceId: string;
+  reason: string;
+}
+
 export interface UnitProgress {
   completedAt: string | null;
   checkCorrect: number;
@@ -91,6 +96,8 @@ interface State {
   pathway: PathwayItem[] | null;
   /** Needs signature the pathway was built from, so edited needs rebuild it. */
   pathwayKey: string;
+  /** The AI's further reading picks for this week: approved source ids only, checked on the server. */
+  pathwayReading: ReadingPick[];
   progress: Record<string, UnitProgress>;
   lessonMoves: LessonMove[];
   lessons: Record<string, SavedLesson>;
@@ -102,7 +109,7 @@ interface State {
   setSummary: (s: string) => void;
   updateNeed: (id: string, patch: Partial<TeacherNeed>) => void;
   addNeed: (need: TeacherNeed) => void;
-  setPathway: (items: PathwayItem[], key: string) => void;
+  setPathway: (items: PathwayItem[], key: string, reading?: ReadingPick[]) => void;
   moveItem: (unitId: string, dir: -1 | 1) => void;
   saveProgress: (unitId: string, patch: Partial<UnitProgress>) => void;
   addLessonMove: (move: LessonMove) => void;
@@ -130,6 +137,7 @@ const empty = {
   needs: [] as TeacherNeed[],
   pathway: null,
   pathwayKey: '',
+  pathwayReading: [] as ReadingPick[],
   progress: {} as Record<string, UnitProgress>,
   lessonMoves: [] as LessonMove[],
   lessons: {} as Record<string, SavedLesson>,
@@ -152,7 +160,8 @@ export const useAppStore = create<State>()(
       updateNeed: (id, patch) =>
         set((s) => ({ needs: s.needs.map((n) => (n.id === id ? { ...n, ...patch } : n)) })),
       addNeed: (need) => set((s) => ({ needs: [...s.needs, need] })),
-      setPathway: (pathway, pathwayKey) => set({ pathway, pathwayKey }),
+      setPathway: (pathway, pathwayKey, pathwayReading = []) =>
+        set({ pathway, pathwayKey, pathwayReading }),
       moveItem: (unitId, dir) =>
         set((s) => {
           if (!s.pathway) return {};

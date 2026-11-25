@@ -141,7 +141,7 @@ test("own situation: This week uses the AI's checked choices, or rules if the AI
             sortOrder: 0,
           },
         ],
-        external: [],
+        external: [{ sourceId: 'resolve', reason: 'Has ready tasks on tables and rules.' }],
         source: 'ai',
       }),
     });
@@ -155,6 +155,14 @@ test("own situation: This week uses the AI's checked choices, or rules if the AI
   await page.getByRole('button', { name: 'Why this?' }).first().click();
   await expect(page.getByText(/so this turns one into a rule/)).toBeVisible();
   expect(pathwayCalls).toBe(1);
+  await page.getByText('Further reading (optional)').click();
+  await expect(page.getByText('1 suggested for you')).toBeVisible();
+  await expect(page.getByText('Has ready tasks on tables and rules.')).toBeVisible();
+  // The AI's pick comes first, and its link still comes from the approved list.
+  await expect(page.locator('details li a').first()).toHaveAttribute(
+    'href',
+    'https://resolve.edu.au/',
+  );
 
   // With the AI down, a changed need still gives a week, built by rules.
   await page.unroute('**/api/pathway');
