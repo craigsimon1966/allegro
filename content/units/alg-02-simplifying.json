@@ -31,7 +31,7 @@
   "aitslStandards": [],
   "hook": "$2a + 3b$ cannot be simplified. Students often want to write $5ab$. Knowing why not is the heart of simplifying.",
   "coreIdeaMd": "**Like terms** have exactly the same pronumeral part. $3x$ and $5x$ are like terms. $3x$ and $5y$ are not, and neither are $x$ and $x^2$.\n\nTo simplify:\n\n1. **Find the like terms.** Underline or colour each group.\n2. **Add or subtract the numbers in front** (the coefficients). The pronumeral stays the same.\n3. **Unlike terms stay separate.** $2a + 3b$ is already as simple as it gets.\n\nA helpful picture: $3x$ is three of the same thing. You can add three bananas and two bananas, but three bananas and two apples stay as they are.",
-  "workedExampleMd": "**Simplify $4x + 3y - x + 2y$.**\n\n1. Like terms: $4x$ and $-x$; $3y$ and $2y$.\n2. $4x - x = 3x$.\n3. $3y + 2y = 5y$.\n4. Answer: $3x + 5y$.\n5. **Check:** put $x = 1$ and $y = 1$ in both. The original gives $4 + 3 - 1 + 2 = 8$, and $3 + 5 = 8$. ✓\n\n**In class:** checking with small numbers shows students for themselves that $2a + 3b$ is not $5ab$.",
+  "workedExampleMd": "**Simplify $4x + 3y - x + 2y$.**\n\n1. Like terms: $4x$ and $-x$; $3y$ and $2y$.\n2. $4x - x = 3x$.\n3. $3y + 2y = 5y$.\n4. Answer: $3x + 5y$.\n5. **Check:** put $x = 2$ and $y = 3$ in both (two different values, so you can tell which letter is which). The original gives $8 + 9 - 2 + 6 = 21$, and $6 + 15 = 21$. ✓\n\n**In class:** checking with small numbers shows students for themselves that $2a + 3b$ is not $5ab$.",
   "misconceptionIds": [
     "mis-conjoining",
     "mis-brackets-first-term"
