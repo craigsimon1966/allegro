@@ -1,0 +1,47 @@
+{
+  "id": "pk-explicit-02-i-do-we-do-you-do",
+  "moduleId": "mod-explicit",
+  "title": "I do, we do, you do",
+  "domain": "PK",
+  "tags": [
+    "pk.explicit-instruction"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "casual",
+    "secondary"
+  ],
+  "yearLevels": [],
+  "durationMinutes": 5,
+  "format": [
+    "text"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": []
+  },
+  "aitslStandards": [],
+  "hook": "New maths is easier to learn when students watch it done, try it with help, then do it alone. Three short stages, in that order.",
+  "coreIdeaMd": "1. **I do.** You model one example and think aloud: \"First I look at... because...\". Keep it short and complete.\n2. **We do.** Work two or three examples together. Students do each step on mini whiteboards and you check before moving on.\n3. **You do.** Students practise on their own with similar questions. Walk the room and look for the first mistake, not the last.\n\nMove to the next stage only when most of the class is ready. If many students struggle in \"you do\", go back to \"we do\" with one more example.",
+  "misconceptionIds": [],
+  "checkItems": [
+    {
+      "id": "pke-02-q1",
+      "stemMd": "During \"we do\", most students get the second step wrong. What should you do next?",
+      "type": "mcq",
+      "options": [
+        "Move on to \"you do\" so they can practise",
+        "Work another example together, focusing on that step",
+        "Give them the answers"
+      ],
+      "answer": "Work another example together, focusing on that step",
+      "feedbackCorrect": "Yes. Stay in \"we do\" until most students can do each step.",
+      "feedbackIncorrect": "Moving on too early means students practise the mistake. Do another example together, slowing down on the step that went wrong."
+    }
+  ],
+  "tryTomorrow": "Plan tomorrow's new skill as one \"I do\" example, two \"we do\" examples and five \"you do\" questions.",
+  "reflectPrompt": "Which stage do you usually spend the least time on? What would change if you gave it more?",
+  "reviewedBy": null
+}

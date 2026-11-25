@@ -7,7 +7,17 @@
       "unitIds": [
         "lin-01-what-a-rule-tells-you",
         "lin-02-table-to-rule",
-        "lin-03-tables-graphs-rules"
+        "lin-03-tables-graphs-rules",
+        "lin-04-graphing-errors"
+      ]
+    },
+    {
+      "id": "mod-algebra-foundations",
+      "title": "Algebraic thinking foundations",
+      "summary": "The equals sign as a balance, and collecting like terms.",
+      "unitIds": [
+        "alg-01-equals-sign",
+        "alg-02-simplifying"
       ]
     },
     {
@@ -35,7 +45,8 @@
       "summary": "",
       "unitIds": [
         "prop-01-ratio-tables",
-        "prop-02-percentages"
+        "prop-02-percentages",
+        "prop-03-ratio-vs-fraction"
       ]
     },
     {
@@ -51,7 +62,8 @@
       "title": "Classroom routines",
       "summary": "",
       "unitIds": [
-        "pk-routines-01-entry"
+        "pk-routines-01-entry",
+        "pk-routines-02-transitions"
       ]
     },
     {
@@ -67,7 +79,8 @@
       "title": "Explicit instruction",
       "summary": "",
       "unitIds": [
-        "pk-explicit-01-worked-examples"
+        "pk-explicit-01-worked-examples",
+        "pk-explicit-02-i-do-we-do-you-do"
       ]
     },
     {
