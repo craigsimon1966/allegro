@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import {
   ChevronDown,
@@ -20,7 +20,10 @@ import { MarginNote } from '@/components/MarginNote';
 import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
 import { tagById } from '@shared/tags';
-import { curriculumRows } from '@shared/states';
+import { builtForLine, curriculumRows } from '@shared/curriculum';
+import { ROLE_SHORT } from '@shared/profile';
+import { CurriculumCodes } from '@/components/CurriculumCodes';
+import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { UNITS } from '@shared/catalogue';
 import type { LessonBlock, LessonPack } from '@shared/schemas';
 import { lessonNumberIssues, type NumberIssue } from '@shared/numberChecks';
@@ -44,8 +47,8 @@ function toMarkdown(s: SavedLesson, state?: string): string {
   return [
     `# ${l.title}`,
     `Year ${l.year_level}, ${l.duration_minutes} minutes`,
-    curriculumRows(l.curriculum_refs, state)
-      .map((r) => `${r.label}: ${r.codes.join(', ')}.`)
+    curriculumRows(l.curriculum_refs, state, [l.year_level])
+      .map((r) => `${r.label}: ${r.codes.map((c) => `${c.code} (${c.text})`).join('; ')}.`)
       .join(' '),
     ...l.blocks.map((b) => `## ${b.title}\n\n${b.content_md}\n\n_Why this works: ${b.rationale}_`),
     AI_DISCLOSURE,
@@ -271,7 +274,8 @@ export default function LessonView() {
   const { lessonId = '' } = useParams();
   const mode = useAppStore((s) => s.mode);
   const saved = useAppStore((s) => s.lessons[lessonId]);
-  const state = useAppStore((s) => s.intake?.guided.state);
+  const profile = useTeacherProfile();
+  const state = profile.state ?? undefined;
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
   const [packState, setPackState] = useState<'idle' | 'drafting' | 'building' | 'failed'>('idle');
@@ -404,14 +408,20 @@ export default function LessonView() {
               {lesson.duration_minutes} min
             </Label>
             <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
-            <dl className="mt-2 grid max-w-prose grid-cols-[auto_1fr] gap-x-4 text-[15px]">
-              {curriculumRows(lesson.curriculum_refs, state).map((r) => (
-                <Fragment key={r.label}>
-                  <dt className="font-bold">{r.label}</dt>
-                  <dd>{r.codes.join(', ')} (to be verified)</dd>
-                </Fragment>
-              ))}
-            </dl>
+            <p className="mt-1 text-[15px] print:hidden" data-testid="built-for">
+              <span className="font-bold text-plum-700">Built for:</span>{' '}
+              {builtForLine({
+                years: [lesson.year_level],
+                state,
+                role: profile.role ? ROLE_SHORT[profile.role] : null,
+              })}
+            </p>
+            <CurriculumCodes
+              refs={lesson.curriculum_refs}
+              state={state}
+              years={[lesson.year_level]}
+              className="mt-2"
+            />
             <p className="mt-2 text-sm text-plum-700">{AI_DISCLOSURE}</p>
 
             <div

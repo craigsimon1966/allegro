@@ -232,3 +232,44 @@ describe('anthropicCompleter', () => {
     expect(r).toMatchObject({ text: '{"ok":true}', stopReason: 'end_turn', outputTokens: 3 });
   });
 });
+
+describe('diagnosis keeps the teacher facts', () => {
+  it('copies the guided answers over the model reading and drops topics for other years', async () => {
+    const { cleanDiagnosis, userMessage } = await import('../../functions/_lib/diagnose');
+    const d = cleanDiagnosis(
+      {
+        summary: 's',
+        context: {
+          role: 'experienced',
+          subject: 'Maths',
+          year_levels: ['10'],
+          school_type: 'unknown',
+          location_type: 'unknown',
+          timeframe_weeks: null,
+          hours_per_week: null,
+        },
+        needs: [
+          {
+            id: 'n1',
+            domain: 'CK',
+            topic: 'Ratio',
+            catalogue_tags: ['number.proportional', 'algebra.linear', 'pk.routines'],
+            evidence: 'e',
+            priority: 'now',
+          },
+        ],
+        clarifying_questions: [],
+        safety_flags: [],
+      },
+      { yearLevels: ['9'], role: 'out_of_field', locationType: 'rural' },
+    );
+    expect(d.context.year_levels).toEqual(['9']);
+    expect(d.context.role).toBe('out_of_field');
+    expect(d.context.location_type).toBe('rural');
+    expect(d.needs[0]!.catalogue_tags).toEqual(['algebra.linear', 'pk.routines']);
+    const msg = userMessage({ situationText: 'hi', guided: { yearLevels: ['9'], state: 'NSW' } });
+    expect(msg).toContain('Fixed facts the teacher chose');
+    expect(msg).toContain('Year 9');
+    expect(msg).toContain('New South Wales');
+  });
+});

@@ -28,7 +28,8 @@
     "security:dist": "tsx scripts/check-dist-secrets.ts",
     "size:dist": "tsx scripts/check-dist-size.ts",
     "content:approve": "tsx scripts/content-approve.ts",
-    "content:import-review": "tsx scripts/content-import-review.ts"
+    "content:import-review": "tsx scripts/content-import-review.ts",
+    "curriculum:import": "NODE_USE_ENV_PROXY=1 tsx scripts/curriculum-import.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.13.0",

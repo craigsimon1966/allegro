@@ -1,4 +1,9 @@
 import { z } from 'zod';
+import { Role } from '../../shared/schemas';
+import { STATE_IDS, curriculumContext } from '../../shared/states';
+import { yearLabel } from '../../shared/curriculum';
+import { ROLE_PROMPT } from '../../shared/profile';
+import { unitFitsYears } from '../../shared/pathway';
 import { UNITS, unitById } from '../../shared/catalogue';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
@@ -17,7 +22,10 @@ export interface Deps {
 }
 
 export const unitList = () =>
-  UNITS.map((u) => `- ${u.id}: ${u.title} [${u.tags.join(', ')}]`).join('\n');
+  UNITS.map(
+    (u) =>
+      `- ${u.id}: ${u.title} [${u.tags.join(', ')}]${u.yearLevels.length ? ` (Years ${u.yearLevels.join(', ')})` : ''}`,
+  ).join('\n');
 
 const noDash = (s: string) => s.replace(/—/g, ', ').trim();
 
@@ -64,7 +72,15 @@ const LIMIT = (wait: number) =>
 
 export const HelpRequestSchema = z.object({
   question: z.string().trim().min(3).max(600),
-  context: z.object({ unitId: z.string().optional(), yearLevel: z.string().optional() }).optional(),
+  context: z
+    .object({
+      unitId: z.string().optional(),
+      yearLevel: z.string().optional(),
+      yearLevels: z.array(z.string().max(10)).max(13).optional(),
+      role: Role.optional(),
+      state: z.enum(STATE_IDS).optional(),
+    })
+    .optional(),
 });
 const HelpReplySchema = z.object({
   answer: z.string().min(1),
@@ -86,8 +102,17 @@ export async function handleHelp(request: Request, env: Env, deps: Deps = {}) {
   if (wait) return LIMIT(wait);
 
   const model = fastModel(env);
+  const years = req.context?.yearLevels?.length
+    ? req.context.yearLevels
+    : req.context?.yearLevel
+      ? [req.context.yearLevel]
+      : [];
   const ctx = [
-    req.context?.yearLevel ? `Year level: ${req.context.yearLevel}` : '',
+    curriculumContext(req.context?.state),
+    years.length
+      ? `Fixed fact: they teach ${years.map(yearLabel).join(', ')}. Keep examples to these years.`
+      : '',
+    req.context?.role ? `The teacher is ${ROLE_PROMPT[req.context.role]}` : '',
     req.context?.unitId && unitById(req.context.unitId)
       ? `They are working on the unit "${unitById(req.context.unitId)!.title}".`
       : '',
@@ -124,7 +149,9 @@ export async function handleHelp(request: Request, env: Env, deps: Deps = {}) {
     answer: capWords(noDash(r.answer)),
     tryTomorrow: noDash(r.tryTomorrow ?? ''),
     detail: noDash(r.detail ?? ''),
-    unitId: r.unitId && unitById(r.unitId) ? r.unitId : null,
+    // A suggested unit must exist and suit the teacher's years.
+    unitId:
+      r.unitId && unitById(r.unitId) && unitFitsYears(unitById(r.unitId)!, years) ? r.unitId : null,
   });
 }
 

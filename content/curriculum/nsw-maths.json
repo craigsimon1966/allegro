@@ -1,0 +1,1156 @@
+[
+  {
+    "code": "MA1-2DS-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "recognises, describes and represents shapes including quadrilaterals and other common polygons"
+  },
+  {
+    "code": "MA1-2DS-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "measures and compares areas using uniform informal units in rows and columns"
+  },
+  {
+    "code": "MA1-3DS-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "recognises, describes and represents familiar three-dimensional objects"
+  },
+  {
+    "code": "MA1-3DS-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "measures, records, compares and estimates internal volumes (capacities) and volumes using uniform informal units"
+  },
+  {
+    "code": "MA1-CHAN-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "recognises and describes the element of chance in everyday events"
+  },
+  {
+    "code": "MA1-CSQ-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "uses number bonds and the relationship between addition and subtraction to solve problems involving partitioning"
+  },
+  {
+    "code": "MA1-DATA-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "gathers and organises data, displays data in lists, tables and picture graphs"
+  },
+  {
+    "code": "MA1-DATA-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "reasons about representations of data to describe and interpret the results"
+  },
+  {
+    "code": "MA1-FG-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "uses the structure of equal groups to solve multiplication problems, and shares or groups to solve division problems"
+  },
+  {
+    "code": "MA1-GM-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "represents and describes the positions of objects in familiar locations"
+  },
+  {
+    "code": "MA1-GM-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "measures, records, compares and estimates lengths and distances using uniform informal units, as well as metres and centimetres"
+  },
+  {
+    "code": "MA1-GM-03",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "creates and recognises halves, quarters and eighths as part measures of a whole length"
+  },
+  {
+    "code": "MA1-NSM-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "measures, records, compares and estimates the masses of objects using uniform informal units"
+  },
+  {
+    "code": "MA1-NSM-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "describes, compares and orders durations of events, and reads half- and quarter-hour time"
+  },
+  {
+    "code": "MA1-RWN-01",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "applies an understanding of place value and the role of zero to read, write and order two- and three-digit numbers"
+  },
+  {
+    "code": "MA1-RWN-02",
+    "stage": "Stage 1",
+    "years": [
+      "1",
+      "2"
+    ],
+    "text": "reasons about representations of whole numbers to 1000, partitioning numbers to use and record quantity values"
+  },
+  {
+    "code": "MA2-2DS-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "compares two-dimensional shapes and describes their features"
+  },
+  {
+    "code": "MA2-2DS-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "performs transformations by combining and splitting two-dimensional shapes"
+  },
+  {
+    "code": "MA2-2DS-03",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "estimates, measures and compares areas using square centimetres and square metres"
+  },
+  {
+    "code": "MA2-3DS-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "makes and sketches models and nets of three-dimensional objects including prisms and pyramids"
+  },
+  {
+    "code": "MA2-3DS-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "estimates, measures and compares capacities (internal volumes) using litres, millilitres and volumes using cubic centimetres"
+  },
+  {
+    "code": "MA2-AR-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "selects and uses mental and written strategies for addition and subtraction involving 2- and 3-digit numbers"
+  },
+  {
+    "code": "MA2-AR-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "completes number sentences involving addition and subtraction by finding missing values"
+  },
+  {
+    "code": "MA2-CHAN-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "records and compares the results of chance experiments"
+  },
+  {
+    "code": "MA2-DATA-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "collects discrete data and constructs graphs using a given scale"
+  },
+  {
+    "code": "MA2-DATA-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "interprets data in tables, dot plots and column graphs"
+  },
+  {
+    "code": "MA2-GM-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "uses grid maps and directional language to locate positions and follow routes"
+  },
+  {
+    "code": "MA2-GM-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "measures and estimates lengths in metres, centimetres and millimetres"
+  },
+  {
+    "code": "MA2-GM-03",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "identifies angles and classifies them by comparing to a right angle"
+  },
+  {
+    "code": "MA2-MR-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "represents and uses the structure of multiplicative relations to 10 × 10 to solve problems"
+  },
+  {
+    "code": "MA2-MR-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "completes number sentences involving multiplication and division by finding missing values"
+  },
+  {
+    "code": "MA2-NSM-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "estimates, measures and compares the masses of objects using kilograms and grams"
+  },
+  {
+    "code": "MA2-NSM-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "represents and interprets analog and digital time in hours, minutes and seconds"
+  },
+  {
+    "code": "MA2-PF-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "represents and compares halves, quarters, thirds and fifths as lengths on a number line and their related fractions formed by halving (eighths, sixths and tenths)"
+  },
+  {
+    "code": "MA2-RN-01",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "applies an understanding of place value and the role of zero to represent numbers to at least tens of thousands"
+  },
+  {
+    "code": "MA2-RN-02",
+    "stage": "Stage 2",
+    "years": [
+      "3",
+      "4"
+    ],
+    "text": "represents and compares decimals up to 2 decimal places using place value"
+  },
+  {
+    "code": "MA3-2DS-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "investigates and classifies two-dimensional shapes, including triangles and quadrilaterals based on their properties"
+  },
+  {
+    "code": "MA3-2DS-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and uses the appropriate unit to calculate areas, including areas of rectangles"
+  },
+  {
+    "code": "MA3-2DS-03",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "combines, splits and rearranges shapes to determine the area of parallelograms and triangles"
+  },
+  {
+    "code": "MA3-3DS-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "visualises, sketches and constructs three-dimensional objects, including prisms and pyramids, making connections to two-dimensional representations"
+  },
+  {
+    "code": "MA3-3DS-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and uses the appropriate unit to estimate, measure and calculate volumes and capacities"
+  },
+  {
+    "code": "MA3-AR-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and applies appropriate strategies to solve addition and subtraction problems"
+  },
+  {
+    "code": "MA3-CHAN-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "conducts chance experiments and quantifies the probability"
+  },
+  {
+    "code": "MA3-DATA-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "constructs graphs using many-to-one scales"
+  },
+  {
+    "code": "MA3-DATA-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "interprets data displays, including timelines and line graphs"
+  },
+  {
+    "code": "MA3-GM-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "locates and describes points on a coordinate plane"
+  },
+  {
+    "code": "MA3-GM-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and uses the appropriate unit and device to measure lengths and distances including perimeters"
+  },
+  {
+    "code": "MA3-GM-03",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "measures and constructs angles, and identifies the relationships between angles on a straight line and angles at a point"
+  },
+  {
+    "code": "MA3-MR-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and applies appropriate strategies to solve multiplication and division problems"
+  },
+  {
+    "code": "MA3-MR-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "constructs and completes number sentences involving multiplicative relations, applying the order of operations to calculations"
+  },
+  {
+    "code": "MA3-NSM-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "selects and uses the appropriate unit and device to measure the masses of objects"
+  },
+  {
+    "code": "MA3-NSM-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "measures and compares duration, using 12- and 24-hour time and am and pm notation"
+  },
+  {
+    "code": "MA3-RN-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "applies an understanding of place value and the role of zero to represent the properties of numbers"
+  },
+  {
+    "code": "MA3-RN-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "compares and orders decimals up to 3 decimal places"
+  },
+  {
+    "code": "MA3-RN-03",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "determines percentages of quantities, and finds equivalent fractions and decimals for benchmark percentage values"
+  },
+  {
+    "code": "MA3-RQF-01",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "compares and orders fractions with denominators of 2, 3, 4, 5, 6, 8 and 10"
+  },
+  {
+    "code": "MA3-RQF-02",
+    "stage": "Stage 3",
+    "years": [
+      "5",
+      "6"
+    ],
+    "text": "determines 1/2, 1/4, 1/5 and 1/10 of measures and quantities"
+  },
+  {
+    "code": "MA4-ALG-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "generalises number properties to operate with algebraic expressions including expansion and factorisation"
+  },
+  {
+    "code": "MA4-ANG-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "applies angle relationships to solve problems, including those related to transversals on sets of parallel lines"
+  },
+  {
+    "code": "MA4-ARE-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "applies knowledge of area and composite area involving triangles, quadrilaterals and circles to solve problems"
+  },
+  {
+    "code": "MA4-DAT-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "classifies and displays data using a variety of graphical representations"
+  },
+  {
+    "code": "MA4-DAT-C-02",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "analyses simple datasets using measures of centre, range and shape of the data"
+  },
+  {
+    "code": "MA4-EQU-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "solves linear equations of up to 2 steps and quadratic equations of the form ax^2=c"
+  },
+  {
+    "code": "MA4-FRC-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "represents and operates with fractions, decimals and percentages to solve problems"
+  },
+  {
+    "code": "MA4-GEO-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "identifies and applies the properties of triangles and quadrilaterals to solve problems"
+  },
+  {
+    "code": "MA4-IND-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "operates with primes and roots, positive-integer and zero indices involving numerical bases and establishes the relevant index laws"
+  },
+  {
+    "code": "MA4-INT-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "compares, orders and calculates with integers to solve problems"
+  },
+  {
+    "code": "MA4-LEN-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "applies knowledge of the perimeter of plane shapes and the circumference of circles to solve problems"
+  },
+  {
+    "code": "MA4-LIN-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "creates and displays number patterns and finds graphical solutions to problems involving linear relationships"
+  },
+  {
+    "code": "MA4-PRO-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "solves problems involving the probabilities of simple chance experiments"
+  },
+  {
+    "code": "MA4-PYT-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "applies Pythagoras’ theorem to solve problems in various contexts"
+  },
+  {
+    "code": "MA4-RAT-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "solves problems involving ratios and rates, and analyses distance–time graphs"
+  },
+  {
+    "code": "MA4-VOL-C-01",
+    "stage": "Stage 4",
+    "years": [
+      "7",
+      "8"
+    ],
+    "text": "applies knowledge of volume and capacity to solve problems involving right prisms and cylinders"
+  },
+  {
+    "code": "MA5-ALG-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "simplifies algebraic fractions with numerical denominators and expands algebraic expressions"
+  },
+  {
+    "code": "MA5-ALG-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "simplifies algebraic fractions involving indices, and expands and factorises algebraic expressions (Path: Adv)"
+  },
+  {
+    "code": "MA5-ALG-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "selects and applies appropriate algebraic techniques to operate with algebraic fractions, and expands, factorises and simplifies algebraic expressions (Path: Adv)"
+  },
+  {
+    "code": "MA5-ARE-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves problems involving the surface area of right prisms and practical problems involving the area of composite shapes and solids"
+  },
+  {
+    "code": "MA5-ARE-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies knowledge of the surface area of right pyramids and cones, spheres and composite solids to solve problems (Path: Stn, Adv)"
+  },
+  {
+    "code": "MA5-CIR-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies deductive reasoning to prove circle theorems and solve related problems (Path: Ext)"
+  },
+  {
+    "code": "MA5-DAT-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "compares and analyses datasets using summary statistics and graphical representations"
+  },
+  {
+    "code": "MA5-DAT-C-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "displays and interprets datasets involving bivariate data"
+  },
+  {
+    "code": "MA5-DAT-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "plans, conducts and reviews a statistical inquiry into a question of interest (Path: Stn, Adv)"
+  },
+  {
+    "code": "MA5-EQU-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves linear equations of up to 3 steps, limited to one algebraic fraction"
+  },
+  {
+    "code": "MA5-EQU-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves monic quadratic equations, linear inequalities and cubic equations of the form ax^3=k (Path: Adv)"
+  },
+  {
+    "code": "MA5-EQU-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves linear equations of more than 3 steps, monic and non-monic quadratic equations, and linear simultaneous equations (Path: Adv)"
+  },
+  {
+    "code": "MA5-FIN-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves financial problems involving simple interest, earning money and spending money"
+  },
+  {
+    "code": "MA5-FIN-C-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves financial problems involving compound interest and depreciation"
+  },
+  {
+    "code": "MA5-FNC-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "uses function notation to describe and graph functions of one variable and graphs inequalities in one and 2 variables (Path: Adv)"
+  },
+  {
+    "code": "MA5-GEO-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "identifies and applies the properties of similar figures and scale drawings to solve problems"
+  },
+  {
+    "code": "MA5-GEO-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "establishes conditions for congruent triangles and similar triangles and solves problems relating to properties of similar figures and plane shapes (Path: Ext)"
+  },
+  {
+    "code": "MA5-GEO-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "constructs proofs involving congruent triangles and similar triangles and proves properties of plane shapes (Path: Ext)"
+  },
+  {
+    "code": "MA5-IND-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "simplifies algebraic expressions involving positive-integer and zero indices, and establishes the meaning of negative indices for numerical bases"
+  },
+  {
+    "code": "MA5-IND-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies the index laws to operate with algebraic expressions involving negative-integer indices (Path: Adv)"
+  },
+  {
+    "code": "MA5-IND-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "describes and performs operations with surds and fractional indices (Path: Adv)"
+  },
+  {
+    "code": "MA5-LIN-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "determines the midpoint, gradient and length of an interval, and graphs linear relationships, with and without digital tools"
+  },
+  {
+    "code": "MA5-LIN-C-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "graphs and interprets linear relationships using the gradient/slope-intercept form"
+  },
+  {
+    "code": "MA5-LIN-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "describes and applies transformations, the midpoint, gradient/slope and distance formulas, and equations of lines to solve problems (Path: Adv)"
+  },
+  {
+    "code": "MA5-LOG-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "establishes and applies the laws of logarithms to solve problems (Path: Adv)"
+  },
+  {
+    "code": "MA5-MAG-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves measurement problems by using scientific notation to represent numbers and rounding to a given number of significant figures"
+  },
+  {
+    "code": "MA5-NET-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves problems involving the characteristics of graphs/networks, planar graphs and Eulerian trails and circuits (Path: Stn)"
+  },
+  {
+    "code": "MA5-NLI-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "identifies connections between algebraic and graphical representations of quadratic and exponential relationships in various contexts"
+  },
+  {
+    "code": "MA5-NLI-C-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "identifies and compares features of parabolas and exponential curves in various contexts"
+  },
+  {
+    "code": "MA5-NLI-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "interprets and compares non-linear relationships and their transformations, both algebraically and graphically (Path: Adv)"
+  },
+  {
+    "code": "MA5-POL-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "defines, operates with and graphs polynomials and applies the factor and remainder theorems to solve problems (Path: Adv, Ext)"
+  },
+  {
+    "code": "MA5-PRO-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves problems involving probabilities in multistage chance experiments and simulations"
+  },
+  {
+    "code": "MA5-PRO-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves problems involving Venn diagrams, 2-way tables and conditional probability (Path: Adv)"
+  },
+  {
+    "code": "MA5-RAT-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "identifies and solves problems involving direct and inverse variation and their graphical representations (Path: Stn, Adv)"
+  },
+  {
+    "code": "MA5-RAT-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "analyses and constructs graphs relating to rates of change (Path: Stn, Adv)"
+  },
+  {
+    "code": "MA5-TRG-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies trigonometric ratios to solve right-angled triangle problems"
+  },
+  {
+    "code": "MA5-TRG-C-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies trigonometry to solve problems, including bearings and angles of elevation and depression"
+  },
+  {
+    "code": "MA5-TRG-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies Pythagoras’ theorem and trigonometry to solve 3-dimensional problems and applies the sine, cosine and area rules to solve 2-dimensional problems, including bearings (Path: Stn, Adv)"
+  },
+  {
+    "code": "MA5-TRG-P-02",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "establishes and applies the properties of trigonometric functions and finds solutions to trigonometric equations (Path: Adv)"
+  },
+  {
+    "code": "MA5-VOL-C-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "solves problems involving the volume of composite solids consisting of right prisms and cylinders"
+  },
+  {
+    "code": "MA5-VOL-P-01",
+    "stage": "Stage 5",
+    "years": [
+      "9",
+      "10"
+    ],
+    "text": "applies knowledge of the volume of right pyramids, cones and spheres to solve problems involving related composite solids (Path: Stn, Adv)"
+  },
+  {
+    "code": "MAE-2DS-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "sorts, describes, names and makes two-dimensional shapes, including triangles, circles, squares and rectangles"
+  },
+  {
+    "code": "MAE-2DS-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "describes and compares areas of similar shapes"
+  },
+  {
+    "code": "MAE-3DS-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "manipulates, describes and sorts three-dimensional objects"
+  },
+  {
+    "code": "MAE-3DS-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "describes and compares volumes"
+  },
+  {
+    "code": "MAE-CSQ-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "reasons about number relations to model addition and subtraction by combining and separating, and comparing collections"
+  },
+  {
+    "code": "MAE-CSQ-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "represents the relations between the parts that form the whole, with numbers up to 10"
+  },
+  {
+    "code": "MAE-DATA-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "contributes to collecting data and interprets data displays made from objects"
+  },
+  {
+    "code": "MAE-FG-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "recognises, describes and continues repeating patterns"
+  },
+  {
+    "code": "MAE-FG-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "forms equal groups by sharing and counting collections of objects"
+  },
+  {
+    "code": "MAE-GM-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "describes position and gives and follows simple directions"
+  },
+  {
+    "code": "MAE-GM-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "describes and compares lengths"
+  },
+  {
+    "code": "MAE-GM-03",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "identifies half the length and the halfway point"
+  },
+  {
+    "code": "MAE-NSM-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "describes and compares the masses of objects"
+  },
+  {
+    "code": "MAE-NSM-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "sequences events and reads hour time on clocks"
+  },
+  {
+    "code": "MAE-RWN-01",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "demonstrates an understanding of how whole numbers indicate quantity"
+  },
+  {
+    "code": "MAE-RWN-02",
+    "stage": "Early Stage 1",
+    "years": [
+      "F"
+    ],
+    "text": "reads numerals and represents whole numbers to at least 20"
+  }
+]

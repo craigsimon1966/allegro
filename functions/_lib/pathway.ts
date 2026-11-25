@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { UNITS } from '../../shared/catalogue';
-import { buildPathway, type PathwayItem } from '../../shared/pathway';
+import { buildPathway, orderNeeds, unitFitsYears, type PathwayItem } from '../../shared/pathway';
+import { Role } from '../../shared/schemas';
+import { ROLE_PROMPT } from '../../shared/profile';
+import { yearLabel } from '../../shared/curriculum';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { APPROVED_SOURCES, sourcesFor } from '../../shared/sources';
 import { STATE_IDS, curriculumContext } from '../../shared/states';
@@ -29,6 +32,7 @@ export const PathwayRequestSchema = z.object({
         evidence: z.string().max(600),
         priority: z.enum(['now', 'soon', 'later']),
         catalogue_tags: z.array(z.string().max(80)).max(12),
+        concern: z.number().int().min(1).max(5).nullable().optional(),
       }),
     )
     .min(1)
@@ -38,6 +42,8 @@ export const PathwayRequestSchema = z.object({
   weekStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   yearLevels: z.array(z.string().max(20)).max(13).optional(),
   state: z.enum(STATE_IDS).optional(),
+  role: Role.optional(),
+  locationType: z.enum(['metro', 'regional', 'rural', 'remote', 'unknown']).optional(),
 });
 export type PathwayRequest = z.infer<typeof PathwayRequestSchema>;
 
@@ -56,7 +62,7 @@ export interface PathwayResponse {
 /** The compact listing the prompt gets: only units that match the needs' tags (TECH_SPEC 7.5). */
 export function catalogueFor(req: PathwayRequest): string {
   const tags = new Set(req.needs.flatMap((n) => n.catalogue_tags));
-  return UNITS.filter((u) => u.tags.some((t) => tags.has(t)))
+  return UNITS.filter((u) => u.tags.some((t) => tags.has(t)) && unitFitsYears(u, req.yearLevels))
     .map(
       (u) =>
         `- ${u.id}: ${u.title} | ${u.domain} | tags ${u.tags.join(', ')} | ${u.durationMinutes} min | difficulty ${u.difficulty} | for ${u.audience.join(', ')}`,
@@ -65,21 +71,33 @@ export function catalogueFor(req: PathwayRequest): string {
 }
 
 export function userMessage(req: PathwayRequest): string {
-  const needs = req.needs
+  const needs = orderNeeds(req.needs)
     .map(
       (n) =>
-        `- ${n.id} (${n.priority}): ${n.topic}. Evidence: "${n.evidence}". Tags: ${n.catalogue_tags.join(', ')}`,
+        `- ${n.id} (${n.priority}${n.concern ? `, concern ${n.concern} of 5` : ''}): ${n.topic}. Evidence: "${n.evidence}". Tags: ${n.catalogue_tags.join(', ')}`,
     )
     .join('\n');
+  const facts = [
+    req.yearLevels?.length
+      ? `- Year levels taught: ${req.yearLevels.map(yearLabel).join(', ')}. Only choose units for these years.`
+      : '',
+    req.role ? `- The teacher is ${ROLE_PROMPT[req.role]}` : '',
+    req.locationType && req.locationType !== 'unknown'
+      ? `- School location: ${req.locationType}`
+      : '',
+    req.needs.some((n) => n.concern)
+      ? "- Concern ratings are the teacher's own (5 is a big concern). Put the biggest concerns first."
+      : '',
+  ].filter(Boolean);
   const days = req.teachingDays.length
     ? `Teaching days (1 is Monday): ${req.teachingDays.join(', ')}`
     : 'Teaching days: not given';
   return [
     curriculumContext(req.state),
-    `Needs:\n${needs}`,
+    facts.length ? `Fixed facts from the teacher (follow them exactly):\n${facts.join('\n')}` : '',
+    `Needs (most urgent first):\n${needs}`,
     `Time for learning this week: ${Math.round(req.hoursPerWeek * 60)} minutes`,
     days,
-    req.yearLevels?.length ? `Year levels taught: ${req.yearLevels.join(', ')}` : '',
   ]
     .filter(Boolean)
     .join('\n\n');
@@ -96,6 +114,7 @@ export function finishPathway(
     hoursPerWeek: req.hoursPerWeek,
     teachingDays: req.teachingDays,
     weekStart: req.weekStart,
+    yearLevels: req.yearLevels,
   };
   const items = buildPathway(input, reply?.items ?? []);
   const fromAi =

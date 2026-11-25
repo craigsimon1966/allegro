@@ -22,10 +22,12 @@
   "difficulty": 1,
   "curriculumRefs": {
     "ac9": [
-      "AC9-TODO"
+      "AC9M7N04",
+      "AC9M7N08"
     ],
     "nsw": [
-      "NSW-TODO"
+      "MA4-RAT-C-01",
+      "MA4-FRC-C-01"
     ]
   },
   "aitslStandards": [],

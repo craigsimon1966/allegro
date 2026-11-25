@@ -56,7 +56,7 @@ export interface MicroUnit {
   durationMinutes: number;
   format: Format[];
   difficulty: 1 | 2 | 3;
-  /** 'AC9-TODO' / 'NSW-TODO' until a human verifies them. Never invented. */
+  /** Codes from the official lists in content/curriculum/ (checked by shared/curriculum.ts). Never invented. */
   curriculumRefs: { ac9: string[]; nsw: string[] };
   aitslStandards: string[];
   hook: string;

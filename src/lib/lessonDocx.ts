@@ -17,7 +17,7 @@ import {
 import { blockMinutes } from '@shared/lesson';
 import type { Lesson, LessonPack, PackItem } from '@shared/schemas';
 import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks';
-import { curriculumRows } from '@shared/states';
+import { curriculumRows } from '@shared/curriculum';
 import { LEVEL_NAMES, packLevels, slideRange, slidesByBlock } from '@shared/lessonPack';
 import { PRINT } from '@/lib/printColours';
 
@@ -222,9 +222,12 @@ export function lessonDocument(
       { text: pack ? 'Teacher guide · ' : '' },
       { text: `Year ${lesson.year_level}, ${lesson.duration_minutes} minutes` },
     ]),
-    ...curriculumRows(lesson.curriculum_refs, state).map((r) =>
+    ...curriculumRows(lesson.curriculum_refs, state, [lesson.year_level]).map((r) =>
       para(
-        [{ text: `${r.label}: `, bold: true }, { text: `${r.codes.join(', ')} (to be verified)` }],
+        [
+          { text: `${r.label}: `, bold: true },
+          { text: r.codes.map((c) => `${c.code} (${c.text})`).join('; ') },
+        ],
         { after: 40 },
       ),
     ),

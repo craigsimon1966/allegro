@@ -108,6 +108,9 @@ test('tapping the middle of an unrated concern slider records 3 of 5', async ({ 
 
 test('on a laptop, units can be dragged into a new order', async ({ page }, info) => {
   test.skip(info.project.name !== 'laptop');
+  // Tall enough that the first three rows (now with their curriculum codes) fit on screen:
+  // Playwright's drag can't scroll part way through a native drag.
+  await page.setViewportSize({ width: 1280, height: 1100 });
   await page.goto('/demo');
   await page.getByRole('button', { name: /Tammy/ }).click();
   await page.goto('/pathway');
