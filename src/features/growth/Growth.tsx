@@ -119,7 +119,10 @@ export default function Growth() {
             ['Minutes learning', minutes],
             ['Lessons planned', lessonCount],
           ].map(([k, v]) => (
-            <div key={k} className="border-r border-rule px-3 py-3 last:border-r-0">
+            <div
+              key={k}
+              className="flex flex-col justify-between border-r border-rule px-3 py-3 last:border-r-0"
+            >
               <dt className="text-[13px] text-muted">{k}</dt>
               <dd className="font-heading text-[28px] font-semibold">{v}</dd>
             </div>

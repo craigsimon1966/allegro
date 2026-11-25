@@ -89,3 +89,13 @@ test('Explain this differently says so when the AI is down', async ({ page }) =>
   await page.getByRole('button', { name: 'With a different example' }).click();
   await expect(page.getByText(/couldn't reach Allegro/)).toBeVisible();
 });
+
+test('tapping the middle of an unrated confidence slider records 3 of 5', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Sam/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  const slider = page.getByRole('slider').first();
+  await expect(page.getByText(/How confident are you\? Not rated/).first()).toBeVisible();
+  await slider.click();
+  await expect(slider).toHaveAttribute('aria-valuetext', '3 of 5');
+});

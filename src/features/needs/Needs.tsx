@@ -188,7 +188,11 @@ export default function Needs() {
                           value={n.selfRating ?? 3}
                           aria-valuetext={n.selfRating ? `${n.selfRating} of 5` : 'Not rated'}
                           onChange={(e) => patch(n, { selfRating: Number(e.target.value) })}
-                          className="w-full accent-green-700"
+                          // Unrated sits in the middle; a tap there (no value change) still counts as 3.
+                          onPointerUp={(e) =>
+                            !n.selfRating && patch(n, { selfRating: Number(e.currentTarget.value) })
+                          }
+                          className={`w-full accent-green-700 ${n.selfRating ? '' : 'opacity-50'}`}
                         />
                         <div className="flex justify-between text-[13px] text-muted">
                           <span>Not yet</span>

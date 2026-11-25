@@ -33,29 +33,31 @@ export function Thumbs({ target, label = 'Was this useful?' }: { target: string;
     >
       <div className="flex flex-wrap items-center gap-3">
         <span className="text-[15px]">{label}</span>
-        {([1, -1] as const).map((t) => (
-          <button
-            key={t}
-            type="button"
-            aria-pressed={thumbs === t}
-            onClick={() => {
-              setThumbs(t);
-              void send(t);
-            }}
-            className={`inline-flex h-tap w-tap items-center justify-center rounded border-2 ${
-              thumbs === t
-                ? 'border-green-700 bg-sage-100 text-green-700'
-                : 'border-rule-strong text-ink'
-            }`}
-          >
-            {t === 1 ? (
-              <ThumbsUp size={20} strokeWidth={1.5} aria-hidden="true" />
-            ) : (
-              <ThumbsDown size={20} strokeWidth={1.5} aria-hidden="true" />
-            )}
-            <span className="sr-only">{t === 1 ? 'Helpful' : 'Not quite'}</span>
-          </button>
-        ))}
+        <span className="flex gap-3">
+          {([1, -1] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              aria-pressed={thumbs === t}
+              onClick={() => {
+                setThumbs(t);
+                void send(t);
+              }}
+              className={`inline-flex h-tap w-tap items-center justify-center rounded border-2 ${
+                thumbs === t
+                  ? 'border-green-700 bg-sage-100 text-green-700'
+                  : 'border-rule-strong text-ink'
+              }`}
+            >
+              {t === 1 ? (
+                <ThumbsUp size={20} strokeWidth={1.5} aria-hidden="true" />
+              ) : (
+                <ThumbsDown size={20} strokeWidth={1.5} aria-hidden="true" />
+              )}
+              <span className="sr-only">{t === 1 ? 'Helpful' : 'Not quite'}</span>
+            </button>
+          ))}
+        </span>
       </div>
       {thumbs !== null && (
         <div className="mt-2">
