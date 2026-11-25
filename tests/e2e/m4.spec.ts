@@ -122,3 +122,22 @@ test('Quick Help slides over the current screen on a phone and keeps the teacher
   await expect(page).toHaveURL(/\/learn\/mc-02-pronumerals$/);
   await expect(page.getByRole('dialog')).toHaveCount(0);
 });
+
+test('on a laptop, Quick Help docks on the right of This week', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 820 });
+  await page.route('**/api/help', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ answer: 'Use numbers. Is $2x$ equal to 7 or 10 when $x = 5$?' }),
+    }),
+  );
+  await tammy(page);
+  await page.goto('/pathway');
+  const dock = page.getByRole('complementary', { name: 'Quick Help' });
+  await expect(dock).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Ask a question' })).toBeHidden();
+  await dock.getByRole('button', { name: /2x means 2 \+ x/ }).click();
+  await expect(dock.getByText(/equal to 7 or 10/)).toBeVisible();
+  await axeClean(page);
+});

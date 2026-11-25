@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { MarginLayout } from '@/components/MarginLayout';
+import { DockedQuickHelp } from '@/components/DockedQuickHelp';
 import { Label, SectionRule } from '@/components/Label';
 import { Highlight } from '@/components/Highlight';
 import { DraftBadge } from '@/components/DraftBadge';
@@ -135,177 +136,185 @@ export default function Pathway() {
 
   return (
     <AppShell step={3}>
-      <MarginLayout>
-        <Label>
-          Week of {formatDay(weekStart)}
-          {persona ? ` · ${persona.name}` : ''}
-        </Label>
-        <h1 className="mt-1 text-[30px] leading-tight">This week</h1>
-        <p className="mt-1 text-muted">
-          {doneMinutes} of {planned} minutes done · you have {budget} minutes this week
-        </p>
+      <div className="lg:flex">
+        <MarginLayout className="lg:min-w-0 lg:flex-1">
+          <Label>
+            Week of {formatDay(weekStart)}
+            {persona ? ` · ${persona.name}` : ''}
+          </Label>
+          <h1 className="mt-1 text-[30px] leading-tight">This week</h1>
+          <p className="mt-1 text-muted">
+            {doneMinutes} of {planned} minutes done · you have {budget} minutes this week
+          </p>
 
-        {items.length === 0 ? (
-          <div className="mt-6 max-w-prose">
-            <p>
-              We don&apos;t have learning units for these needs yet. Try adding another need, or ask
-              a question.
-            </p>
-            <p className="mt-4">
-              <Link to="/needs" className="font-bold text-green-700 underline">
-                Back to your needs
-              </Link>
-            </p>
-          </div>
-        ) : (
-          <>
-            {urgent.length > 0 && (
-              <section
-                aria-labelledby="before-monday"
-                className="-ml-content mt-6 border-y-2 border-rule-strong bg-sage-100 py-4 pl-content pr-5"
-              >
-                <h2 id="before-monday" className="text-[20px] font-semibold">
-                  Before {firstTeaching}
-                  {yearLabel ? `, ${yearLabel}` : ''}
-                </h2>
-                <p className="mt-1">
-                  {urgent.length === 1 ? 'One short unit' : `${urgent.length} short units`} before
-                  your next lesson:
-                </p>
-                <ul className="mt-1 list-disc pl-5">
-                  {urgent.map((it) => (
-                    <li key={it.unitId}>
-                      <MathText inline>{unitById(it.unitId)?.title ?? ''}</MathText>
-                    </li>
-                  ))}
-                </ul>
-                {next && (
-                  <ButtonLink to={`/learn/${next.unitId}`} variant="ink" className="mt-3">
-                    {done.length ? 'Continue' : 'Start'}:{' '}
-                    <MathText inline>{unitById(next.unitId)?.title ?? ''}</MathText>{' '}
-                    <span aria-hidden="true">→</span>
-                  </ButtonLink>
-                )}
-              </section>
-            )}
-
-            <div className="mt-8">
-              <SectionRule>Your learning this week</SectionRule>
-              {items.some((it) => !unitById(it.unitId)?.reviewedBy) && (
-                <div className="mt-3">
-                  <DraftBadge reviewedBy={null} />
-                  <p className="mt-1 text-[13px] text-muted">
-                    These units are drafts until a maths educator has reviewed them.
+          {items.length === 0 ? (
+            <div className="mt-6 max-w-prose">
+              <p>
+                We don&apos;t have learning units for these needs yet. Try adding another need, or
+                ask a question.
+              </p>
+              <p className="mt-4">
+                <Link to="/needs" className="font-bold text-green-700 underline">
+                  Back to your needs
+                </Link>
+              </p>
+            </div>
+          ) : (
+            <>
+              {urgent.length > 0 && (
+                <section
+                  aria-labelledby="before-monday"
+                  className="-ml-content mt-6 border-y-2 border-rule-strong bg-sage-100 py-4 pl-content pr-5"
+                >
+                  <h2 id="before-monday" className="text-[20px] font-semibold">
+                    Before {firstTeaching}
+                    {yearLabel ? `, ${yearLabel}` : ''}
+                  </h2>
+                  <p className="mt-1">
+                    {urgent.length === 1 ? 'One short unit' : `${urgent.length} short units`} before
+                    your next lesson:
                   </p>
-                </div>
+                  <ul className="mt-1 list-disc pl-5">
+                    {urgent.map((it) => (
+                      <li key={it.unitId}>
+                        <MathText inline>{unitById(it.unitId)?.title ?? ''}</MathText>
+                      </li>
+                    ))}
+                  </ul>
+                  {next && (
+                    <ButtonLink to={`/learn/${next.unitId}`} variant="ink" className="mt-3">
+                      {done.length ? 'Continue' : 'Start'}:{' '}
+                      <MathText inline>{unitById(next.unitId)?.title ?? ''}</MathText>{' '}
+                      <span aria-hidden="true">→</span>
+                    </ButtonLink>
+                  )}
+                </section>
               )}
-              <ol>
-                {items.map((it, i) => {
-                  const u = unitById(it.unitId);
-                  if (!u) return null;
-                  const isDone = Boolean(progress[it.unitId]?.completedAt);
-                  const isNext = next?.unitId === it.unitId;
-                  return (
-                    <li key={it.unitId} className="flex items-start border-b border-rule">
-                      <div
-                        className={`w-margin shrink-0 pt-3 text-center ${
-                          isDone
-                            ? 'font-margin text-[28px] leading-none text-green-700'
-                            : 'font-heading text-[22px] font-semibold text-green-700'
-                        }`}
-                      >
-                        {isDone ? <span aria-label="Done">✓</span> : i + 1}
-                      </div>
-                      <div className="min-w-0 flex-1 py-3 pl-4">
-                        <Link
-                          to={`/learn/${u.id}`}
-                          className={`text-[17px] text-ink no-underline hover:underline ${
-                            isNext ? 'font-bold' : ''
-                          } ${isDone ? 'text-muted line-through decoration-green-700' : ''}`}
+
+              <div className="mt-8">
+                <SectionRule>Your learning this week</SectionRule>
+                {items.some((it) => !unitById(it.unitId)?.reviewedBy) && (
+                  <div className="mt-3">
+                    <DraftBadge reviewedBy={null} />
+                    <p className="mt-1 text-[13px] text-muted">
+                      These units are drafts until a maths educator has reviewed them.
+                    </p>
+                  </div>
+                )}
+                <ol>
+                  {items.map((it, i) => {
+                    const u = unitById(it.unitId);
+                    if (!u) return null;
+                    const isDone = Boolean(progress[it.unitId]?.completedAt);
+                    const isNext = next?.unitId === it.unitId;
+                    return (
+                      <li key={it.unitId} className="flex items-start border-b border-rule">
+                        <div
+                          className={`w-margin shrink-0 pt-3 text-center ${
+                            isDone
+                              ? 'font-margin text-[28px] leading-none text-green-700'
+                              : 'font-heading text-[22px] font-semibold text-green-700'
+                          }`}
                         >
-                          {isNext ? (
-                            <Highlight>
-                              <MathText inline>{u.title}</MathText>
-                            </Highlight>
-                          ) : (
-                            <MathText inline>{u.title}</MathText>
-                          )}
-                        </Link>
-                        <div className="text-[13px] text-muted">
-                          {DOMAIN_LABELS[u.domain]} · {u.durationMinutes} min ·{' '}
-                          {formatDay(it.scheduledFor)}
-                          {isNext ? ' · up next' : ''}
+                          {isDone ? <span aria-label="Done">✓</span> : i + 1}
                         </div>
-                        <div className="mt-1 flex flex-wrap items-center gap-x-4">
+                        <div className="min-w-0 flex-1 py-3 pl-4">
+                          <Link
+                            to={`/learn/${u.id}`}
+                            className={`text-[17px] text-ink no-underline hover:underline ${
+                              isNext ? 'font-bold' : ''
+                            } ${isDone ? 'text-muted line-through decoration-green-700' : ''}`}
+                          >
+                            {isNext ? (
+                              <Highlight>
+                                <MathText inline>{u.title}</MathText>
+                              </Highlight>
+                            ) : (
+                              <MathText inline>{u.title}</MathText>
+                            )}
+                          </Link>
+                          <div className="text-[13px] text-muted">
+                            {DOMAIN_LABELS[u.domain]} · {u.durationMinutes} min ·{' '}
+                            {formatDay(it.scheduledFor)}
+                            {isNext ? ' · up next' : ''}
+                          </div>
+                          <div className="mt-1 flex flex-wrap items-center gap-x-4">
+                            <button
+                              type="button"
+                              className="min-h-tap text-[15px] font-bold text-green-700 underline"
+                              aria-expanded={openWhy === it.unitId}
+                              onClick={() => setOpenWhy(openWhy === it.unitId ? null : it.unitId)}
+                            >
+                              Why this?
+                            </button>
+                            {u.reviewedBy && (
+                              <span className="text-[13px] text-muted">Reviewed</span>
+                            )}
+                          </div>
+                          {openWhy === it.unitId && (
+                            <p className="mt-1 max-w-prose text-[15px]">{it.reason}</p>
+                          )}
+                        </div>
+                        <div className="flex shrink-0 flex-col pr-2 pt-1">
                           <button
                             type="button"
-                            className="min-h-tap text-[15px] font-bold text-green-700 underline"
-                            aria-expanded={openWhy === it.unitId}
-                            onClick={() => setOpenWhy(openWhy === it.unitId ? null : it.unitId)}
+                            className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
+                            onClick={() => move(it.unitId, -1)}
+                            disabled={i === 0}
+                            aria-label={`Move ${u.title} up`}
                           >
-                            Why this?
+                            <ChevronUp size={22} strokeWidth={1.5} aria-hidden="true" />
                           </button>
-                          {u.reviewedBy && <span className="text-[13px] text-muted">Reviewed</span>}
+                          <button
+                            type="button"
+                            className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
+                            onClick={() => move(it.unitId, 1)}
+                            disabled={i === items.length - 1}
+                            aria-label={`Move ${u.title} down`}
+                          >
+                            <ChevronDown size={22} strokeWidth={1.5} aria-hidden="true" />
+                          </button>
                         </div>
-                        {openWhy === it.unitId && (
-                          <p className="mt-1 max-w-prose text-[15px]">{it.reason}</p>
-                        )}
-                      </div>
-                      <div className="flex shrink-0 flex-col pr-2 pt-1">
-                        <button
-                          type="button"
-                          className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
-                          onClick={() => move(it.unitId, -1)}
-                          disabled={i === 0}
-                          aria-label={`Move ${u.title} up`}
-                        >
-                          <ChevronUp size={22} strokeWidth={1.5} aria-hidden="true" />
-                        </button>
-                        <button
-                          type="button"
-                          className="inline-flex h-tap w-tap items-center justify-center text-ink disabled:opacity-30"
-                          onClick={() => move(it.unitId, 1)}
-                          disabled={i === items.length - 1}
-                          aria-label={`Move ${u.title} down`}
-                        >
-                          <ChevronDown size={22} strokeWidth={1.5} aria-hidden="true" />
-                        </button>
-                      </div>
-                    </li>
-                  );
-                })}
-                <li className="flex min-h-[64px] items-start border-b border-rule">
-                  <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-green-700">
-                    {items.length + 1}
-                  </div>
-                  <div className="min-w-0 flex-1 py-3 pl-4">
-                    <Link to="/plan" className="text-[17px] text-ink no-underline hover:underline">
-                      Plan {firstTeaching}&apos;s lesson
-                    </Link>
-                    <div className="text-[13px] text-muted">Lesson builder · about 10 min</div>
-                  </div>
-                </li>
-              </ol>
-            </div>
+                      </li>
+                    );
+                  })}
+                  <li className="flex min-h-[64px] items-start border-b border-rule">
+                    <div className="w-margin shrink-0 pt-3 text-center font-heading text-[22px] font-semibold text-green-700">
+                      {items.length + 1}
+                    </div>
+                    <div className="min-w-0 flex-1 py-3 pl-4">
+                      <Link
+                        to="/plan"
+                        className="text-[17px] text-ink no-underline hover:underline"
+                      >
+                        Plan {firstTeaching}&apos;s lesson
+                      </Link>
+                      <div className="text-[13px] text-muted">Lesson builder · about 10 min</div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
 
-            <p className="mt-6 max-w-prose text-[15px] text-muted">
-              {teachingDays.length
-                ? `${listDays(teachingDays)} ${teachingDays.length > 1 ? 'are' : 'is'} teaching days. `
-                : ''}
-              {freeDays.length && teachingDays.length
-                ? `Learning is planned for ${listDays(freeDays)}.`
-                : 'Learning is spread across the week.'}{' '}
-              Use the arrows to change the order.
-            </p>
-            <p className="mt-2">
-              <Link to="/needs" className="text-green-700 underline">
-                Change my needs
-              </Link>
-            </p>
-            <Thumbs target="pathway" label="Does this week fit your time?" />
-          </>
-        )}
-      </MarginLayout>
+              <p className="mt-6 max-w-prose text-[15px] text-muted">
+                {teachingDays.length
+                  ? `${listDays(teachingDays)} ${teachingDays.length > 1 ? 'are' : 'is'} teaching days. `
+                  : ''}
+                {freeDays.length && teachingDays.length
+                  ? `Learning is planned for ${listDays(freeDays)}.`
+                  : 'Learning is spread across the week.'}{' '}
+                Use the arrows to change the order.
+              </p>
+              <p className="mt-2">
+                <Link to="/needs" className="text-green-700 underline">
+                  Change my needs
+                </Link>
+              </p>
+              <Thumbs target="pathway" label="Does this week fit your time?" />
+            </>
+          )}
+        </MarginLayout>
+        <DockedQuickHelp />
+      </div>
     </AppShell>
   );
 }
