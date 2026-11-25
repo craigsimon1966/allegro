@@ -1,5 +1,18 @@
-# Local dev config for Cloudflare Pages Functions. Production settings live in the Pages dashboard.
+# Cloudflare Pages config. Because this file exists, Cloudflare reads plain environment
+# variables from [vars] below, and only secrets can be set in the dashboard.
+# Secrets (never in this file): ANTHROPIC_API_KEY, SUPABASE_SERVICE_ROLE_KEY,
+# ACCESS_COOKIE_SECRET, DEMO_ACCESS_CODE. Set them with the dashboard or
+# `npx wrangler pages secret put NAME --project-name <your project>`.
+# Build-time VITE_* values live in .env.production, because [vars] are runtime only.
 name = "allegro-demo"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-06-01"
 compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SUPABASE_URL = "https://ffwasexoqbdjqdsaiuek.supabase.co"
+SUPABASE_ANON_KEY = "sb_publishable_Bfmv6Tv1vB9L_zGzp-K9fA_8W3wqX8-"
+ANTHROPIC_MODEL = "claude-sonnet-5-5"
+ANTHROPIC_MODEL_FAST = "claude-haiku-5-5"
+RATE_LIMIT_USER_PER_HOUR = "40"
+RATE_LIMIT_DEMO_PER_HOUR = "15"
