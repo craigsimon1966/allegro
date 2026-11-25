@@ -2,7 +2,13 @@ import type { Diagnosis, DiagnoseRequest, Lesson, LessonBlock } from '@shared/sc
 import { DiagnosisSchema, LessonBlockSchema, LessonSchema } from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
 import { supabase } from './supabase';
-import { useAppStore, type SavedLesson, type TeacherNeed, type UnitProgress } from './store';
+import {
+  useAppStore,
+  type Reflection,
+  type SavedLesson,
+  type TeacherNeed,
+  type UnitProgress,
+} from './store';
 import type { PathwayItem } from '@shared/pathway';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
@@ -353,4 +359,47 @@ export async function loadLessonsFromSupabase(): Promise<void> {
     };
   }
   useAppStore.setState({ lessons });
+}
+
+export interface HelpAnswer {
+  answer: string;
+  tryTomorrow: string;
+  detail: string;
+  unitId: string | null;
+}
+
+export async function askHelp(
+  question: string,
+  context?: { unitId?: string; yearLevel?: string },
+): Promise<HelpAnswer> {
+  return (await post('/api/help', { question, ...(context ? { context } : {}) })) as HelpAnswer;
+}
+
+export async function reflectOn(
+  r: Pick<Reflection, 'tried' | 'happened' | 'nextTime'>,
+  needs: { topic: string; tags: string[] }[],
+): Promise<{ observation: string; suggestedUnitId: string | null }> {
+  return (await post('/api/reflect', { ...r, needs })) as {
+    observation: string;
+    suggestedUnitId: string | null;
+  };
+}
+
+/** Saves a reflection and its confidence ratings (signed in only). Private by RLS. */
+export async function saveReflection(r: Reflection): Promise<void> {
+  const { mode, lessons } = useAppStore.getState();
+  if (mode !== 'signed_in' || !supabase) return;
+  const dbLessonId = r.lessonId ? (lessons[r.lessonId]?.dbId ?? null) : null;
+  await supabase.from('reflections').insert({
+    lesson_id: dbLessonId,
+    tried: r.tried,
+    happened: r.happened,
+    next_time: r.nextTime,
+    ai_observation: r.observation,
+    suggested_unit_id: r.suggestedUnitId,
+  });
+  const rows = Object.entries(r.ratings)
+    .filter(([needId]) => UUID.test(needId))
+    .map(([need_id, rating]) => ({ need_id, rating }));
+  if (rows.length) await supabase.from('confidence_ratings').insert(rows);
 }

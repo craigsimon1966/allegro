@@ -383,6 +383,10 @@ export default function LessonView() {
           To save a PDF, choose &ldquo;Save as PDF&rdquo; in the print window.
         </p>
         <p className="no-print mt-4">
+          <Link to="/reflect" className="font-bold text-green-700 underline">
+            After you teach it: reflect
+          </Link>
+          {' · '}
           <Link to="/plan" className="text-green-700 underline">
             Back to the lesson builder
           </Link>

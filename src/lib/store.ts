@@ -63,6 +63,18 @@ export interface SavedLesson {
   updatedAt: string;
 }
 
+export interface Reflection {
+  id: string;
+  at: string;
+  lessonId: string | null;
+  tried: string;
+  happened: string;
+  nextTime: string;
+  ratings: Record<string, number>;
+  observation: string | null;
+  suggestedUnitId: string | null;
+}
+
 export interface Intake {
   situationText: string;
   guided: Guided;
@@ -82,6 +94,7 @@ interface State {
   progress: Record<string, UnitProgress>;
   lessonMoves: LessonMove[];
   lessons: Record<string, SavedLesson>;
+  reflections: Reflection[];
   startDemo: (personaId: string | null) => void;
   setSignedIn: () => void;
   setIntake: (intake: Intake) => void;
@@ -95,6 +108,8 @@ interface State {
   addLessonMove: (move: LessonMove) => void;
   putLesson: (saved: SavedLesson) => void;
   updateLesson: (id: string, fn: (l: SavedLesson) => SavedLesson) => void;
+  addReflection: (r: Reflection) => void;
+  updateReflection: (id: string, patch: Partial<Reflection>) => void;
   reset: () => void;
 }
 
@@ -118,6 +133,7 @@ const empty = {
   progress: {} as Record<string, UnitProgress>,
   lessonMoves: [] as LessonMove[],
   lessons: {} as Record<string, SavedLesson>,
+  reflections: [] as Reflection[],
 };
 
 export const useAppStore = create<State>()(
@@ -173,6 +189,11 @@ export const useAppStore = create<State>()(
             lessons: { ...s.lessons, [id]: { ...fn(cur), updatedAt: new Date().toISOString() } },
           };
         }),
+      addReflection: (r) => set((s) => ({ reflections: [...s.reflections, r] })),
+      updateReflection: (id, patch) =>
+        set((s) => ({
+          reflections: s.reflections.map((r) => (r.id === id ? { ...r, ...patch } : r)),
+        })),
       reset: () => set({ mode: 'anonymous', personaId: null, demoSessionId: null, ...empty }),
     }),
     { name: 'allegro-demo', storage: createJSONStorage(() => safeStorage), version: 1 },
