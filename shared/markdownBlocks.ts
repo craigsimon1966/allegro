@@ -1,7 +1,13 @@
 // Turns Markdown (with $maths$) into plain blocks for Word documents: the content review
 // (TECH_SPEC 10.3) and lesson downloads. Kept small and pure so it can be unit tested.
 
-export type Inline = { text: string; bold?: boolean; italic?: boolean };
+export type Inline = {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  /** For maths: the original LaTeX, so Word downloads can build a real equation. */
+  tex?: string;
+};
 export type Block =
   | { kind: 'para'; runs: Inline[] }
   | { kind: 'list'; ordered: boolean; items: Inline[][] }
@@ -40,7 +46,7 @@ export function inline(md: string): Inline[] {
     if (m.index! > last) out.push({ text: md.slice(last, m.index) });
     if (m[1] !== undefined) out.push(...inline(m[1]).map((r) => ({ ...r, bold: true })));
     else if (m[2] !== undefined) out.push({ text: m[2], italic: true });
-    else out.push({ text: plainMaths(m[3]!) });
+    else out.push({ text: plainMaths(m[3]!), tex: m[3]! });
     last = m.index! + m[0].length;
   }
   if (last < md.length) out.push({ text: md.slice(last) });

@@ -4,6 +4,7 @@ import {
   Footer,
   HeadingLevel,
   ImageRun,
+  Math as WordMath,
   Packer,
   PageNumber,
   Paragraph,
@@ -19,6 +20,7 @@ import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks'
 import { curriculumRows } from '@shared/states';
 import { describeVisual, parseVisual, visualBlocksIn } from '@shared/visuals';
 import { visualToPng, type VisualImage } from './visualPng';
+import { latexToMath } from './latexToDocx';
 
 /** Drawn diagrams keyed by their raw ```visual spec. */
 export type VisualImages = Map<string, VisualImage>;
@@ -30,15 +32,17 @@ export type VisualImages = Map<string, VisualImage>;
 const FONT = 'Calibri';
 
 const runs = (rs: Inline[], extra: { size?: number; italics?: boolean } = {}) =>
-  rs.map(
-    (r) =>
-      new TextRun({
-        text: r.text,
-        bold: r.bold,
-        italics: r.italic || extra.italics,
-        font: FONT,
-        size: extra.size,
-      }),
+  rs.map((r) =>
+    // Maths becomes a real Word equation (editable in Word); everything else is text.
+    r.tex
+      ? new WordMath({ children: latexToMath(r.tex) })
+      : new TextRun({
+          text: r.text,
+          bold: r.bold,
+          italics: r.italic || extra.italics,
+          font: FONT,
+          size: extra.size,
+        }),
   );
 
 const para = (rs: Inline[], opts: { after?: number; italics?: boolean } = {}) =>

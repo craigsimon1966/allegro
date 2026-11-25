@@ -180,3 +180,27 @@ test('a number check appears when an edit gives two letters the same value', asy
   await expect(page.locator('.number-check')).toContainText('x and y are both 1');
   await axeClean(page);
 });
+
+test('the equation editor inserts a fraction into the success criteria', async ({ page }) => {
+  await tammyLesson(page);
+  await page.getByRole('button', { name: /^Edit Learning intention/ }).click();
+  const box = page.getByLabel(/^Edit Learning intention/);
+  await box.click();
+  await box.press('Control+End');
+  await box.pressSequentially('\n- I can write a rule such as');
+  await page.getByRole('button', { name: /Insert maths/ }).click();
+  await expect(page.getByRole('dialog', { name: 'Insert maths' })).toBeVisible();
+  await expect(page.locator('math-field')).toBeFocused();
+  await page.keyboard.type('y=');
+  await page.getByRole('button', { name: 'Fraction' }).click();
+  await page.keyboard.type('3');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('4');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.type('x-5');
+  await page.getByRole('button', { name: 'Insert equation' }).click();
+  await expect(box).toHaveValue(/such as \$y=\\frac\{3\}\{4\}x-5\$$/);
+  await expect(page.locator('.math-preview .katex')).not.toHaveCount(0);
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await axeClean(page);
+});

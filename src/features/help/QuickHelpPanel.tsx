@@ -4,6 +4,7 @@ import { Label } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { AIBlock } from '@/components/AIBlock';
 import { MathText } from '@/components/MathText';
+import { MathTextarea } from '@/components/MathTextarea';
 import { unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { ApiError, askHelp, type HelpAnswer } from '@/lib/api';
@@ -143,10 +144,10 @@ export default function QuickHelpPanel({ headingLevel = 1, onLeave }: Props) {
           Your question
         </label>
         <div className="mt-1 flex items-start gap-2">
-          <textarea
+          <MathTextarea
             id={fieldId}
             value={question}
-            onChange={(e) => setQuestion(e.target.value)}
+            onChange={setQuestion}
             rows={3}
             maxLength={600}
             className="w-full rounded border-2 border-ink bg-field p-3 text-[17px] text-ink"

@@ -6,6 +6,7 @@ import { Label } from '@/components/Label';
 import { Button } from '@/components/Button';
 import { AIBlock } from '@/components/AIBlock';
 import { MathText } from '@/components/MathText';
+import { MathTextarea } from '@/components/MathTextarea';
 import { unitById } from '@shared/catalogue';
 import { findLikelyStudentNames } from '@shared/pii';
 import { reflectOn, saveNeedEdit, saveReflection } from '@/lib/api';
@@ -170,11 +171,11 @@ export default function Reflect() {
             <label htmlFor="tried" className="mt-2 block text-[15px] font-bold">
               {latest ? 'Anything else? (optional)' : 'In a sentence or two'}
             </label>
-            <textarea
+            <MathTextarea
               id="tried"
               rows={2}
               value={tried}
-              onChange={(e) => setTried(e.target.value)}
+              onChange={setTried}
               className={field}
               maxLength={500}
             />
@@ -199,11 +200,11 @@ export default function Reflect() {
             <label htmlFor="note" className="mt-2 block text-[15px] font-bold">
               Anything to remember? (optional, no names)
             </label>
-            <textarea
+            <MathTextarea
               id="note"
               rows={2}
               value={note}
-              onChange={(e) => setNote(e.target.value)}
+              onChange={setNote}
               className={field}
               maxLength={500}
               placeholder="For example: several still wrote y = x + 2 on the exit ticket"
@@ -214,11 +215,11 @@ export default function Reflect() {
             <label htmlFor="next" className="block text-[20px] font-semibold">
               3. What will you keep or change?
             </label>
-            <textarea
+            <MathTextarea
               id="next"
               rows={2}
               value={nextTime}
-              onChange={(e) => setNextTime(e.target.value)}
+              onChange={setNextTime}
               className={field}
               maxLength={500}
             />
