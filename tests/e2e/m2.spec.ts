@@ -99,3 +99,20 @@ test('tapping the middle of an unrated confidence slider records 3 of 5', async 
   await slider.click();
   await expect(slider).toHaveAttribute('aria-valuetext', '3 of 5');
 });
+
+test('on a laptop, units can be dragged into a new order', async ({ page }, info) => {
+  test.skip(info.project.name !== 'laptop');
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/pathway');
+  const rows = page.locator('li[draggable="true"]');
+  const titles = async () =>
+    (await rows.allInnerTexts()).map((t) => t.split('\n').find((l) => l.trim().length > 3));
+  await expect(rows.first()).toBeVisible();
+  const before = await titles();
+  await rows.nth(0).dragTo(rows.nth(2));
+  await expect.poll(titles).not.toEqual(before);
+  const after = await titles();
+  expect(after[2]).toBe(before[0]);
+  expect(after[0]).toBe(before[1]);
+});

@@ -49,6 +49,9 @@ export default function Pathway() {
   const progress = useAppStore((s) => s.progress);
   const personaId = useAppStore((s) => s.personaId);
   const [openWhy, setOpenWhy] = useState<string | null>(null);
+  // Drag to reorder with a mouse (SPEC 7.5); the up and down buttons stay for touch and keyboard.
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
   const [loading, setLoading] = useState(mode === 'signed_in' && !diagnosis);
 
   useEffect(() => {
@@ -102,6 +105,16 @@ export default function Pathway() {
 
   const move = (unitId: string, dir: -1 | 1) => {
     moveItem(unitId, dir);
+    void savePathway(useAppStore.getState().pathway ?? []).catch(() => undefined);
+  };
+
+  const dropOn = (targetId: string) => {
+    const from = items.findIndex((x) => x.unitId === dragId);
+    const to = items.findIndex((x) => x.unitId === targetId);
+    setDragId(null);
+    setOverId(null);
+    if (from < 0 || to < 0 || from === to || !dragId) return;
+    for (let k = 0; k < Math.abs(to - from); k++) moveItem(dragId, to > from ? 1 : -1);
     void savePathway(useAppStore.getState().pathway ?? []).catch(() => undefined);
   };
 
@@ -208,7 +221,31 @@ export default function Pathway() {
                     const isDone = Boolean(progress[it.unitId]?.completedAt);
                     const isNext = next?.unitId === it.unitId;
                     return (
-                      <li key={it.unitId} className="flex items-start border-b border-rule">
+                      <li
+                        key={it.unitId}
+                        draggable
+                        onDragStart={(e) => {
+                          setDragId(it.unitId);
+                          e.dataTransfer.effectAllowed = 'move';
+                          e.dataTransfer.setData('text/plain', it.unitId);
+                        }}
+                        onDragOver={(e) => {
+                          if (!dragId) return;
+                          e.preventDefault();
+                          setOverId(it.unitId);
+                        }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          dropOn(it.unitId);
+                        }}
+                        onDragEnd={() => {
+                          setDragId(null);
+                          setOverId(null);
+                        }}
+                        className={`flex items-start border-b border-rule lg:cursor-grab ${
+                          dragId === it.unitId ? 'opacity-50' : ''
+                        } ${overId === it.unitId && dragId !== it.unitId ? 'shadow-[inset_0_3px_0_var(--green-700)]' : ''}`}
+                      >
                         <div
                           className={`w-margin shrink-0 pt-3 text-center ${
                             isDone
