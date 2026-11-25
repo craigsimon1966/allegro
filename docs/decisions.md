@@ -141,7 +141,3 @@ The year level comes first and defaults to the teacher's own year. The topic lis
 ## 26 Nov 2026: diagrams on the smart board slides
 
 Craig asked for the lesson diagrams on the slides too. They go in as PNG pictures (rendered from the same SVG at 3x), not as PowerPoint shapes or SVG: Google Slides and SMART Notebook / ActivInspire import a PNG reliably, while SVG and grouped shapes are dropped or rearranged. A diagram takes a fixed right-hand column (3.7 inches) and everything else, including the working space, uses the left. One diagram per slide. The drawn pictures are cached in `src/lib/visualCache.ts`, shared by the Word and PowerPoint builders. On slides, a diagram must show the problem only, so the AI is told to leave out a graph's line and rule.
-
-## 26 Nov 2026: changelog and decision notes, one file per change
-
-Almost every merge conflict on 26 Nov was two PRs adding a line at the top of `CHANGELOG.md` or the end of `docs/decisions.md`. Each change now writes `changelog.d/<topic>.md` and, when it makes a decision, `decisions.d/<topic>.md`. `npm run notes:assemble` (scripts/assemble-notes.ts) folds them into the two files at release time, in its own PR. Fragments are named by topic, not PR number, so they can be written before the PR exists. The existing files stay as they are.
