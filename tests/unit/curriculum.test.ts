@@ -2,11 +2,13 @@ import { describe, expect, it } from 'vitest';
 import {
   AC9,
   NSW,
+  SENIOR,
   SENIOR_YEARS,
   YEAR_LEVELS,
   builtForLine,
   checkAc9,
   checkNsw,
+  checkSenior,
   curriculumRows,
   lessonTopicsFor,
   nswStageFor,
@@ -146,6 +148,30 @@ describe('topics and the years they are taught in', () => {
       'MST-12-S2-06',
       'MST-12-S2-07',
     ]);
+  });
+
+  it('offers SACE topics in SA and the NT, and TASC topics in Tasmania, from their official documents', () => {
+    expect(SENIOR.filter((o) => o.course.startsWith('SACE')).length).toBeGreaterThanOrEqual(25);
+    expect(SENIOR.filter((o) => o.course.startsWith('TASC')).length).toBe(16);
+    for (const o of SENIOR) expect(o.text).not.toMatch(/<|TODO/);
+    for (const state of ['SA', 'NT', 'TAS'])
+      for (const y of SENIOR_YEARS) {
+        const topics = lessonTopicsFor(y, state);
+        expect(topics.length, `${state} Year ${y}`).toBeGreaterThanOrEqual(4);
+        for (const t of topics)
+          expect(
+            (topicRefs(t.id).senior ?? []).some((c) => checkSenior(c, [y], state)),
+            `${state} ${t.id}`,
+          ).toBe(true);
+      }
+    expect(seniorCourseFor('SA')).toBe('SACE General Mathematics');
+    expect(seniorCourseFor('TAS')).toBe('TASC General Mathematics');
+    // A Tasmanian code never shows for a South Australian teacher, and Stage 2 never in Year 11.
+    expect(checkSenior('MTG315123 Outcome 7', ['12'], 'SA')).toBeNull();
+    expect(checkSenior('Stage 2 Subtopic 4.1', ['11'], 'SA')).toBeNull();
+    const rows = curriculumRows(curriculumRefsFor('senior.financial', '12'), 'TAS', ['12']);
+    expect(rows.map((r) => r.label)).toEqual(['TASC General Mathematics']);
+    expect(rows[0]!.codes.map((c) => c.code)).toEqual(['MTG315123 Outcome 7']);
   });
 
   it('marks a topic lesson-only exactly when no learning unit uses it', () => {

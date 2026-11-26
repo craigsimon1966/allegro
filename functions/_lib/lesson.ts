@@ -20,7 +20,9 @@ import { curriculumContext } from '../../shared/states';
 import {
   checkAc9,
   checkNsw,
+  checkSenior,
   isSeniorYear,
+  seniorCourseFor,
   topicFitsYear,
   yearLabel,
 } from '../../shared/curriculum';
@@ -93,8 +95,18 @@ export function referenceFor(topicTag: string): string {
  * The official AC v9 content for this topic in this year, so a broad topic (for example area,
  * volume and angles) is narrowed to what this year actually teaches.
  */
-export function curriculumFocus(topicTag: string, yearLevel: string): string {
+export function curriculumFocus(topicTag: string, yearLevel: string, state?: string): string {
+  const course = seniorCourseFor(state);
+  if (isSeniorYear(yearLevel) && course && course !== 'NSW Mathematics Standard') {
+    const items = curriculumRefsFor(topicTag, yearLevel)
+      .senior?.map((c) => checkSenior(c, [yearLevel], state))
+      .flatMap((c) => (c ? [`- ${c.level}, ${c.code}: ${c.text}`] : []));
+    return items?.length
+      ? `Course: ${course}. The official ${yearLabel(yearLevel)} content in this topic. Choose one focus from this list that fits a single lesson:\n${items.join('\n')}`
+      : '';
+  }
   if (isSeniorYear(yearLevel)) {
+    if (!course) return '';
     const outcomes = curriculumRefsFor(topicTag, yearLevel)
       .nsw.map((c) => checkNsw(c, [yearLevel]))
       .flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : []));
@@ -144,7 +156,7 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
       : '',
     req.situation ? `- Their situation, in summary: ${req.situation}` : '',
     `Topic: ${tag.label}`,
-    curriculumFocus(req.topicTag, req.yearLevel),
+    curriculumFocus(req.topicTag, req.yearLevel, req.state),
     `Lesson length: ${req.durationMinutes} minutes`,
     `Class profile (general): ${req.classProfile || 'not given'}`,
     req.lastLesson ? `Covered last lesson: ${req.lastLesson}` : '',

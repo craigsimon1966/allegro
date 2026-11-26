@@ -69,7 +69,11 @@ export const LessonSchema = z.object({
   title: z.string(),
   year_level: z.string(),
   duration_minutes: z.number().int().positive(),
-  curriculum_refs: z.object({ ac9: z.array(z.string()), nsw: z.array(z.string()) }),
+  curriculum_refs: z.object({
+    ac9: z.array(z.string()),
+    nsw: z.array(z.string()),
+    senior: z.array(z.string()).optional(),
+  }),
   blocks: z.array(LessonBlockSchema),
 });
 
