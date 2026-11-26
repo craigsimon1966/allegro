@@ -26,12 +26,14 @@ export interface PathwayInput {
   needs: PathwayNeed[];
   units: MicroUnit[];
   hoursPerWeek: number;
-  /** 1 = Monday to 5 = Friday. */
-  teachingDays: number[];
+  /** How many days a week the teacher teaches (1 to 5), or null if not given. */
+  teachingDaysPerWeek: number | null;
   /** Monday of the week, YYYY-MM-DD. */
   weekStart: string;
   /** The year levels the teacher teaches. Units for other years are never scheduled. */
   yearLevels?: string[];
+  /** Year levels that are new to the teacher. Units for these years come first for each need. */
+  focusYears?: string[];
 }
 
 const PRIORITY_RANK = { now: 0, soon: 1, later: 2 } as const;
@@ -71,6 +73,19 @@ export function unitFitsYears(unit: MicroUnit, years: string[] | undefined): boo
   if (forPrimary && !forSecondary) return primary;
   if (forSecondary && !forPrimary) return secondary;
   return true;
+}
+
+/**
+ * The weekdays (1 = Monday) learning is first planned for. We only know how many days a teacher
+ * teaches, not which, so the days off are spread through the week. The teacher can move any unit.
+ */
+export function learningDays(teachingDaysPerWeek: number | null | undefined): number[] {
+  const off = 5 - (teachingDaysPerWeek ?? 5);
+  return (
+    ({ 1: [5], 2: [2, 5], 3: [1, 3, 5], 4: [1, 2, 4, 5] } as Record<number, number[]>)[off] ?? [
+      1, 2, 3, 4, 5,
+    ]
+  );
 }
 
 export function addDays(iso: string, days: number): string {
@@ -119,7 +134,16 @@ function pickByRules(input: PathwayInput, budget: number): Picked[] {
       .filter((u) => u.tags.some((t) => need.catalogue_tags.includes(t)))
       .sort((a, b) => {
         const primary = (u: MicroUnit) => (need.catalogue_tags.includes(u.tags[0] ?? '') ? 0 : 1);
-        return primary(a) - primary(b) || a.difficulty - b.difficulty || a.id.localeCompare(b.id);
+        const focus = (u: MicroUnit) =>
+          input.focusYears?.length && u.yearLevels.some((y) => input.focusYears!.includes(y))
+            ? 0
+            : 1;
+        return (
+          primary(a) - primary(b) ||
+          focus(a) - focus(b) ||
+          a.difficulty - b.difficulty ||
+          a.id.localeCompare(b.id)
+        );
       }),
   }));
 
@@ -184,9 +208,8 @@ export function buildPathway(raw: PathwayInput, picks?: PathwayPick[]): PathwayI
     picked = [...picked].sort((a, b) => order.indexOf(a.need.id) - order.indexOf(b.need.id));
   }
 
-  // Learning goes on non-teaching weekdays; if there are none, on teaching days.
-  const free = [1, 2, 3, 4, 5].filter((d) => !input.teachingDays.includes(d));
-  const days = free.length ? free : [1, 2, 3, 4, 5];
+  // Learning is spread over as many days as the teacher has off; with none, across the week.
+  const days = learningDays(input.teachingDaysPerWeek);
   const perDay = Math.ceil(picked.length / days.length);
   return picked.map(({ unit, need, reason }, i) => ({
     unitId: unit.id,

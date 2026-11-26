@@ -1,6 +1,9 @@
 import type { Guided } from '@shared/schemas';
+import { SITUATIONS, daysPerWeek, normaliseGuided } from '@shared/profile';
 
-// Optional guided fields for the intake (SPEC 7.3). Also the fallback when the AI is unavailable.
+// Guided fields for the intake (SPEC 7.3). Also the fallback when the AI is unavailable.
+// AboutYouFields (role and situation) sit in the open form because they shape every AI call;
+// GuidedFields hold the optional details.
 
 const ROLES: { value: NonNullable<Guided['role']>; label: string }[] = [
   { value: 'out_of_field', label: 'Teaching outside my trained subject' },
@@ -11,7 +14,7 @@ const ROLES: { value: NonNullable<Guided['role']>; label: string }[] = [
 ];
 
 const YEARS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+const DAYS_PER_WEEK = [1, 2, 3, 4, 5];
 
 const field = 'h-12 w-full rounded border-2 border-ink bg-field px-3 text-[17px] text-ink';
 const legend = 'mb-1.5 text-[15px] font-bold';
@@ -25,7 +28,48 @@ function hoursLabel(h: number) {
   return h < 1 ? `${h * 60} min` : `${h} hour${h === 1 ? '' : 's'}`;
 }
 
-export function GuidedFields({
+const chip = (on: boolean) =>
+  `inline-flex min-h-tap min-w-tap cursor-pointer items-center justify-center rounded border-2 px-2 font-bold ${on ? 'border-green-700 bg-sage-100 text-ink' : 'border-border text-ink'}`;
+
+function YearChips({
+  legendText,
+  hint,
+  value,
+  onChange,
+}: {
+  legendText: string;
+  hint?: string;
+  value: string[] | undefined;
+  onChange: (v: string[]) => void;
+}) {
+  return (
+    <fieldset>
+      <legend className={legend}>
+        {legendText}
+        {hint && <span className="font-normal text-muted"> {hint}</span>}
+      </legend>
+      <div className="flex flex-wrap gap-2">
+        {YEARS.map((y) => {
+          const on = value?.includes(y) ?? false;
+          return (
+            <label key={y} className={chip(on)}>
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={on}
+                onChange={() => onChange(toggle(value, y))}
+              />
+              {y === 'F' ? 'F' : `Yr ${y}`}
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
+/** Role, situation and year levels: who the teacher is right now. */
+export function AboutYouFields({
   value,
   onChange,
 }: {
@@ -33,7 +77,8 @@ export function GuidedFields({
   onChange: (g: Guided) => void;
 }) {
   const set = (patch: Partial<Guided>) => onChange({ ...value, ...patch });
-  const hours = value.hoursPerWeek ?? 2;
+  const situations = value.situations ?? [];
+  const askLevels = situations.includes('new_stage') || situations.includes('harder_course');
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -56,28 +101,72 @@ export function GuidedFields({
       </div>
 
       <fieldset>
-        <legend className={legend}>Year levels you teach</legend>
-        <div className="flex flex-wrap gap-2">
-          {YEARS.map((y) => {
-            const on = value.yearLevels?.includes(y) ?? false;
+        <legend className={legend}>
+          Your situation <span className="font-normal text-muted">(choose any that fit)</span>
+        </legend>
+        <div className="flex flex-col gap-2">
+          {SITUATIONS.map((s) => {
+            const on = situations.includes(s.id);
             return (
               <label
-                key={y}
-                className={`inline-flex min-h-tap min-w-tap cursor-pointer items-center justify-center rounded border-2 px-2 font-bold ${on ? 'border-green-700 bg-sage-100 text-ink' : 'border-border text-ink'}`}
+                key={s.id}
+                className={`flex min-h-tap cursor-pointer items-start gap-3 rounded border-2 px-3 py-2 ${on ? 'border-green-700 bg-sage-100' : 'border-border'}`}
               >
                 <input
                   type="checkbox"
-                  className="sr-only"
+                  className="mt-1 h-5 w-5 shrink-0 accent-green-700"
                   checked={on}
-                  onChange={() => set({ yearLevels: toggle(value.yearLevels, y) })}
+                  onChange={() => set({ situations: toggle(value.situations, s.id) })}
                 />
-                {y === 'F' ? 'F' : `Yr ${y}`}
+                <span>
+                  <span className="font-bold">{s.label}</span>
+                  {s.hint && <span className="block text-[15px] text-muted">{s.hint}</span>}
+                </span>
               </label>
             );
           })}
         </div>
       </fieldset>
 
+      <YearChips
+        legendText="Year levels you teach"
+        value={value.yearLevels}
+        onChange={(yearLevels) => set({ yearLevels })}
+      />
+
+      {askLevels && (
+        <>
+          <YearChips
+            legendText="Confident teaching"
+            hint="(years you know well)"
+            value={value.confidentYears}
+            onChange={(confidentYears) => set({ confidentYears })}
+          />
+          <YearChips
+            legendText="New to"
+            hint="(years or courses you haven't taught before)"
+            value={value.newToYears}
+            onChange={(newToYears) => set({ newToYears })}
+          />
+        </>
+      )}
+    </div>
+  );
+}
+
+/** The optional details: subject, school, time frame and time for learning. */
+export function GuidedFields({
+  value,
+  onChange,
+}: {
+  value: Guided;
+  onChange: (g: Guided) => void;
+}) {
+  const set = (patch: Partial<Guided>) => onChange({ ...value, ...patch });
+  const hours = value.hoursPerWeek ?? 2;
+  const days = daysPerWeek(value);
+  return (
+    <div className="flex flex-col gap-5">
       <div>
         <label htmlFor="g-subject" className={legend + ' block'}>
           Subject
@@ -151,29 +240,32 @@ export function GuidedFields({
         />
       </div>
 
-      <fieldset>
-        <legend className={legend}>Days you teach</legend>
-        <div className="flex flex-wrap gap-2">
-          {DAYS.map((d, i) => {
-            const n = i + 1;
-            const on = value.teachingDays?.includes(n) ?? false;
-            return (
-              <label
-                key={d}
-                className={`inline-flex min-h-tap min-w-[56px] cursor-pointer items-center justify-center rounded border-2 px-2 font-bold ${on ? 'border-green-700 bg-sage-100 text-ink' : 'border-border text-ink'}`}
-              >
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={on}
-                  onChange={() => set({ teachingDays: toggle(value.teachingDays, n).sort() })}
-                />
-                {d}
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
+      <div>
+        <label htmlFor="g-days" className={legend + ' block'}>
+          How many days a week do you teach?
+        </label>
+        <select
+          id="g-days"
+          className={field + ' max-w-[10rem]'}
+          value={days ?? ''}
+          onChange={(e) =>
+            onChange(
+              normaliseGuided({
+                ...value,
+                teachingDays: undefined,
+                teachingDaysPerWeek: e.target.value ? Number(e.target.value) : undefined,
+              }),
+            )
+          }
+        >
+          <option value="">Choose one</option>
+          {DAYS_PER_WEEK.map((n) => (
+            <option key={n} value={n}>
+              {n} day{n === 1 ? '' : 's'}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div>
         <label htmlFor="g-hours" className={legend + ' block'}>

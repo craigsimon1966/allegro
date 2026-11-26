@@ -17,7 +17,8 @@
         "locationType": "metro",
         "weeks": 10,
         "hoursPerWeek": 2,
-        "teachingDays": [1, 3, 4]
+        "teachingDaysPerWeek": 3,
+        "situations": ["out_of_field"]
       },
       "cachedDiagnosis": {
         "summary": "You're new to teaching maths and start linear relationships with Year 8 next week. You'd like to understand the ideas, not just the rules, and you have about 2 hours a week on your days off.",
@@ -91,7 +92,8 @@
         "locationType": "regional",
         "weeks": null,
         "hoursPerWeek": 1.5,
-        "teachingDays": [1, 2, 3, 4, 5]
+        "teachingDaysPerWeek": 5,
+        "situations": ["early_career"]
       },
       "cachedDiagnosis": {
         "summary": "Your maths is strong. What's hard is getting Year 9 settled quickly and pitching Year 7 work for a very wide range of students. You have about an hour and a half a week for learning.",
@@ -165,7 +167,9 @@
         "locationType": "rural",
         "weeks": 3,
         "hoursPerWeek": 1,
-        "teachingDays": [1, 2, 3, 4, 5]
+        "teachingDaysPerWeek": 5,
+        "situations": ["casual_cover", "new_stage"],
+        "newToYears": ["1"]
       },
       "cachedDiagnosis": {
         "summary": "You're secondary trained and have a Year 1 class for three weeks. You want to know how to run the day, how long young children can focus, and how to teach early number well.",

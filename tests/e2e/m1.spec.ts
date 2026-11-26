@@ -63,11 +63,46 @@ test('own situation with the AI mocked goes to needs', async ({ page }) => {
   await startOwn(page);
   await axeClean(page);
   await page
-    .getByLabel('Your situation')
+    .getByLabel('Tell us more about your situation')
     .fill('I teach PE and now have a Year 8 maths class doing linear relationships.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page).toHaveURL(/\/needs$/);
   await expect(page.getByText(tammyDiagnosis.summary)).toBeVisible();
+});
+
+test('situation choices and days a week go to the AI as fixed facts', async ({ page }) => {
+  let sent: { situationText?: string; guided?: Record<string, unknown> } = {};
+  await page.route('**/api/diagnose', (r) => {
+    sent = r.request().postDataJSON();
+    return r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(tammyDiagnosis),
+    });
+  });
+  await startOwn(page);
+  await page.getByLabel('Your role').selectOption('experienced');
+  await page.getByText('Confident in maths, new to this year level or stage').click();
+  const newTo = page.getByRole('group', { name: /^New to/ });
+  await newTo.getByText('Yr 5').click();
+  await page
+    .getByRole('group', { name: /^Confident teaching/ })
+    .getByText('Yr 2')
+    .click();
+  await page.getByText('More details (optional)').click();
+  await page.getByLabel('How many days a week do you teach?').selectOption('3');
+  await axeClean(page);
+  // No writing needed once a situation is chosen.
+  await page.getByRole('button', { name: /Show me what I need/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  expect(sent.situationText).toMatch(/new to this year level or stage/);
+  expect(sent.guided).toMatchObject({
+    role: 'experienced',
+    situations: ['new_stage'],
+    newToYears: ['5'],
+    confidentYears: ['2'],
+    teachingDaysPerWeek: 3,
+  });
 });
 
 test('invalid AI output falls back to the guided questions', async ({ page }) => {
@@ -75,7 +110,9 @@ test('invalid AI output falls back to the guided questions', async ({ page }) =>
     r.fulfill({ status: 200, contentType: 'application/json', body: '{"summary": 42}' }),
   );
   await startOwn(page);
-  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page
+    .getByLabel('Tell us more about your situation')
+    .fill('Year 8 maths, linear relationships next week.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page.getByRole('alert')).toContainText("couldn't make sense");
   await page.getByRole('button', { name: 'Use the guided questions instead' }).click();
@@ -100,7 +137,7 @@ test('a student name blocks sending', async ({ page }) => {
   });
   await startOwn(page);
   await page
-    .getByLabel('Your situation')
+    .getByLabel('Tell us more about your situation')
     .fill('One student, Jack Smith, finds algebra really hard.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page.getByRole('alert')).toContainText('Jack Smith');
@@ -147,7 +184,9 @@ test("own situation: This week uses the AI's checked choices, or rules if the AI
     });
   });
   await startOwn(page);
-  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page
+    .getByLabel('Tell us more about your situation')
+    .fill('Year 8 maths, linear relationships next week.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page).toHaveURL(/\/needs$/);
   await page.getByRole('button', { name: /Build my week/ }).click();
@@ -194,7 +233,9 @@ test('a Victorian teacher gets the Victorian Curriculum, and no NSW-only links',
   await startOwn(page);
   await page.getByLabel('State or territory').selectOption('VIC');
   await expect(page.getByText(/We'll use the Victorian Curriculum/)).toBeVisible();
-  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page
+    .getByLabel('Tell us more about your situation')
+    .fill('Year 8 maths, linear relationships next week.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page).toHaveURL(/\/needs$/);
   await page.getByRole('button', { name: /Build my week/ }).click();
@@ -221,7 +262,9 @@ test('while the AI builds the week, the screen shows progress and time left', as
     await r.abort();
   });
   await startOwn(page);
-  await page.getByLabel('Your situation').fill('Year 8 maths, linear relationships next week.');
+  await page
+    .getByLabel('Tell us more about your situation')
+    .fill('Year 8 maths, linear relationships next week.');
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await page.getByRole('button', { name: /Build my week/ }).click();
   await expect(page.getByText('Building your week')).toBeVisible();

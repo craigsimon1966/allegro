@@ -4,6 +4,7 @@ import {
   buildPathway,
   effectivePriority,
   orderNeeds,
+  learningDays,
   sydneyWeekStart,
   totalMinutes,
   unitFitsYears,
@@ -55,7 +56,7 @@ describe('buildPathway', () => {
         ...base,
         needs: needsOf('tammy'),
         hoursPerWeek: hours,
-        teachingDays: [1, 3, 4],
+        teachingDaysPerWeek: 3,
       });
       expect(totalMinutes(items, UNITS)).toBeLessThanOrEqual(hours * 60);
       expect(items.length).toBeGreaterThan(0);
@@ -67,15 +68,15 @@ describe('buildPathway', () => {
       ...base,
       needs: needsOf('tammy'),
       hoursPerWeek: tammy.guided.hoursPerWeek!,
-      teachingDays: tammy.guided.teachingDays!,
+      teachingDaysPerWeek: tammy.guided.teachingDaysPerWeek!,
     });
-    // Tammy teaches Mon, Wed, Thu, so learning lands on Tue 24 and Fri 27.
+    // Tammy teaches 3 days a week, so learning is spread over 2 days: Tue 24 and Fri 27.
     for (const it of items) expect(['2026-11-24', '2026-11-27']).toContain(it.scheduledFor);
     const all = buildPathway({
       ...base,
       needs: needsOf('sam'),
       hoursPerWeek: 1.5,
-      teachingDays: [1, 2, 3, 4, 5],
+      teachingDaysPerWeek: 5,
     });
     expect(all.length).toBeGreaterThan(0);
   });
@@ -85,7 +86,7 @@ describe('buildPathway', () => {
       ...base,
       needs: needsOf('tammy'),
       hoursPerWeek: 2,
-      teachingDays: [1, 3, 4],
+      teachingDaysPerWeek: 3,
     });
     const firstThree = items.slice(0, 3).map((i) => i.needId);
     expect(new Set(firstThree)).toEqual(new Set(['tammy-1', 'tammy-2', 'tammy-3']));
@@ -99,7 +100,7 @@ describe('buildPathway', () => {
         ...base,
         needs: p.cachedDiagnosis.needs,
         hoursPerWeek: p.guided.hoursPerWeek ?? 2,
-        teachingDays: p.guided.teachingDays ?? [],
+        teachingDaysPerWeek: p.guided.teachingDaysPerWeek ?? null,
       };
       expect(buildPathway({ ...input, yearLevels: p.guided.yearLevels })).toEqual(
         buildPathway(input),
@@ -120,7 +121,7 @@ describe('buildPathway', () => {
         },
       ],
       hoursPerWeek: 5,
-      teachingDays: [],
+      teachingDaysPerWeek: null,
       yearLevels: ['9'],
     });
     expect(items.length).toBeGreaterThan(0);
@@ -158,10 +159,10 @@ describe('buildPathway', () => {
     ];
     expect(effectivePriority(needs[1]!)).toBe('now');
     expect(orderNeeds(needs).map((n) => n.id)).toEqual(['b', 'c', 'a']);
-    const items = buildPathway({ ...base, needs, hoursPerWeek: 2, teachingDays: [] });
+    const items = buildPathway({ ...base, needs, hoursPerWeek: 2, teachingDaysPerWeek: null });
     expect(items[0]!.needId).toBe('b');
     // The AI's order gives way to the teacher's ratings too.
-    const ai = buildPathway({ ...base, needs, hoursPerWeek: 2, teachingDays: [] }, [
+    const ai = buildPathway({ ...base, needs, hoursPerWeek: 2, teachingDaysPerWeek: null }, [
       { unitId: 'pk-routines-01-entry', needId: 'a', reason: 'r' },
       { unitId: 'lin-01-what-a-rule-tells-you', needId: 'b', reason: 'r' },
     ]);
@@ -174,10 +175,36 @@ describe('buildPathway', () => {
         ...base,
         needs: p.cachedDiagnosis.needs,
         hoursPerWeek: p.guided.hoursPerWeek ?? 2,
-        teachingDays: p.guided.teachingDays ?? [],
+        teachingDaysPerWeek: p.guided.teachingDaysPerWeek ?? null,
       });
       expect(items.length).toBeGreaterThanOrEqual(3);
     }
+  });
+});
+
+describe('days a week', () => {
+  const base = { units: UNITS, weekStart: '2026-11-23' };
+  it('spreads learning over the days off, or the whole week', () => {
+    expect(learningDays(3)).toEqual([2, 5]);
+    expect(learningDays(4)).toEqual([5]);
+    expect(learningDays(1)).toEqual([1, 2, 4, 5]);
+    expect(learningDays(5)).toEqual([1, 2, 3, 4, 5]);
+    expect(learningDays(null)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it('puts units for years new to the teacher first', () => {
+    const needs = [
+      {
+        id: 'n',
+        topic: 'Algebra misconceptions',
+        evidence: '',
+        priority: 'now' as const,
+        catalogue_tags: ['pck.algebra-misconceptions'],
+      },
+    ];
+    const input = { ...base, needs, hoursPerWeek: 5, teachingDaysPerWeek: null };
+    expect(buildPathway({ ...input, focusYears: ['9'] })[0]!.unitId).toBe('mc-01-goes-up-by');
+    expect(buildPathway({ ...input, focusYears: ['7'] })[0]!.unitId).toBe('mc-02-pronumerals');
   });
 });
 

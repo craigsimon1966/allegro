@@ -20,8 +20,12 @@ test("Tammy's week and a full micro-unit", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/pathway$/);
   await expect(page.getByRole('heading', { level: 1, name: 'This week' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Before Monday, Year 8/ })).toBeVisible();
-  await expect(page.getByText(/Mon, Wed and Thu are teaching days/)).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: /Before your next lesson, Year 8/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/You teach 3 days a week\. Learning is spread over 2 days/),
+  ).toBeVisible();
   await axeClean(page);
 
   await page.getByRole('button', { name: 'Why this?' }).first().click();
@@ -148,8 +152,9 @@ test('a unit can be moved to another day, and the choice is kept', async ({ page
   await page.goto('/pathway');
   const day = page.getByRole('combobox', { name: /^Day for / }).first();
   await expect(day).toBeVisible();
-  // Tammy teaches Mon, Wed and Thu, so those days are marked.
-  await expect(day.locator('option', { hasText: '(teaching)' })).toHaveCount(3);
+  // Any weekday can be chosen; no day is marked as a teaching day.
+  await expect(day.locator('option')).toHaveCount(5);
+  await expect(day.locator('option', { hasText: '(teaching)' })).toHaveCount(0);
   const monday = await day.locator('option').first().getAttribute('value');
   await day.selectOption(monday!);
   await page.reload();

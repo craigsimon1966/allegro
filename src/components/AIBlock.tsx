@@ -10,7 +10,7 @@ interface Props {
   title?: ReactNode;
   onRegenerate?: () => void;
   onEdit?: () => void;
-  /** When set, shows the "Check the maths" step until the teacher ticks it. */
+  /** When set, shows the "Check this for accuracy" step until the teacher ticks it. */
   mathsChecked?: boolean;
   onMathsCheckedChange?: (checked: boolean) => void;
   /** Heading level for the title, so the page outline stays in order. */
@@ -55,7 +55,7 @@ export function AIBlock({
             onChange={(e) => onMathsCheckedChange?.(e.target.checked)}
           />
           <label htmlFor={checkId} className="font-bold">
-            {mathsChecked ? 'Maths checked' : "Check the maths, then tick: I've checked this"}
+            {mathsChecked ? 'Checked for accuracy' : 'Check this for accuracy'}
           </label>
         </div>
       )}

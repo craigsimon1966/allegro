@@ -71,6 +71,9 @@ export default function PlanForm() {
     ...(carry.length ? { carryIn: carry } : {}),
     ...(state ? { state } : {}),
     ...(profile.role ? { role: profile.role } : {}),
+    ...(profile.situations.length ? { situations: profile.situations } : {}),
+    ...(profile.confidentYears.length ? { confidentYears: profile.confidentYears } : {}),
+    ...(profile.newToYears.length ? { newToYears: profile.newToYears } : {}),
     ...(situation && !findLikelyStudentNames(situation).length ? { situation } : {}),
   };
   const useCached =

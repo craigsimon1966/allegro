@@ -9,6 +9,7 @@ import { topicFitsYear, yearLabel } from '../../shared/curriculum';
 import { stateById } from '../../shared/states';
 import type { Guided } from '../../shared/schemas';
 import { findLikelyStudentNames } from '../../shared/pii';
+import { daysPerWeek, situationFacts } from '../../shared/profile';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify } from './auth';
@@ -33,6 +34,12 @@ export function fixedFacts(g: Guided | undefined): string {
     g.locationType ? `School location: ${g.locationType}` : '',
     g.schoolType ? `School type: ${g.schoolType}` : '',
     g.hoursPerWeek ? `Time for learning: ${g.hoursPerWeek} hours a week` : '',
+    ...situationFacts({
+      situations: g.situations,
+      confidentYears: g.confidentYears,
+      newToYears: g.newToYears,
+      daysPerWeek: daysPerWeek(g),
+    }).map((f) => f.replace(/^- /, '')),
   ].filter(Boolean);
   return facts.length
     ? `Fixed facts the teacher chose (copy them into context exactly; never contradict them; only choose content tags taught in these year levels):\n${facts.map((f) => `- ${f}`).join('\n')}`

@@ -33,13 +33,10 @@ test("Tammy's lesson: check the maths, edit, reorder, misconceptions from the ba
     page.getByText('It goes up by 2, so the rule is y = x + 2.', { exact: false }),
   ).toBeVisible();
 
-  const boxes = page.getByRole('checkbox', { name: /Check the maths/ });
+  const boxes = page.getByRole('checkbox', { name: 'Check this for accuracy' });
   const n = await boxes.count();
   for (let i = 0; i < n; i++)
-    await page
-      .getByRole('checkbox', { name: /Check the maths/ })
-      .first()
-      .check();
+    await page.getByRole('checkbox', { name: 'Check this for accuracy' }).first().check();
   await expect(page.getByText(/checked the maths in every block/)).toBeVisible();
 
   await page.getByRole('button', { name: /^Edit Retrieval starter/ }).click();

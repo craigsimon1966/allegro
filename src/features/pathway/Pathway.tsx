@@ -28,14 +28,6 @@ const AI_WEEK_SECONDS = 25;
 // This week (SPEC 7.5). Demo personas get the rules version straight away. Everyone else gets the
 // AI's choices (checked on the server for hours, days and real units), or rules if the AI fails.
 
-const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-const DAY_LONG = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-
-function listDays(days: number[]) {
-  const names = days.map((d) => DAY_NAMES[d - 1]);
-  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0];
-}
-
 function formatDay(iso: string) {
   const [y, m, d] = iso.split('-').map(Number);
   return new Intl.DateTimeFormat('en-AU', {
@@ -75,10 +67,10 @@ export default function Pathway() {
 
   const active = needs.filter((n) => n.status === 'active');
   const hours = intake?.guided.hoursPerWeek ?? diagnosis?.context.hours_per_week ?? 2;
-  const teachingDays = intake?.guided.teachingDays ?? [];
   const weekStart = sydneyWeekStart();
   // What the teacher told us about themselves wins over what the AI read into their words.
   const profile = teacherProfile(intake?.guided, diagnosis);
+  const teachingDaysPerWeek = profile.daysPerWeek;
   const pathwayNeeds = active.map((n) => ({
     id: n.id,
     topic: n.topic,
@@ -90,9 +82,10 @@ export default function Pathway() {
   const key = JSON.stringify([
     active.map((n) => [n.id, n.priority, n.catalogue_tags, n.selfRating]),
     hours,
-    teachingDays,
+    teachingDaysPerWeek,
     weekStart,
     profile.years,
+    profile.newToYears,
   ]);
 
   // Signed in: try the saved week first, then build a new one if it doesn't match.
@@ -108,9 +101,10 @@ export default function Pathway() {
       needs: pathwayNeeds,
       units: UNITS,
       hoursPerWeek: hours,
-      teachingDays,
+      teachingDaysPerWeek,
       weekStart,
       yearLevels: profile.years,
+      focusYears: profile.newToYears,
     };
     const finish = (items: ReturnType<typeof buildPathway>, reading: ReadingPick[] = []) => {
       // An AI reply can arrive after a re-run of this effect, so check the key, not `cancelled`.
@@ -128,9 +122,12 @@ export default function Pathway() {
       void aiPathway({
         needs: pathwayNeeds,
         hoursPerWeek: hours,
-        teachingDays,
+        teachingDaysPerWeek,
         weekStart,
         yearLevels: profile.years,
+        ...(profile.situations.length ? { situations: profile.situations } : {}),
+        ...(profile.confidentYears.length ? { confidentYears: profile.confidentYears } : {}),
+        ...(profile.newToYears.length ? { newToYears: profile.newToYears } : {}),
         ...(profile.state ? { state: profile.state } : {}),
         ...(profile.role ? { role: profile.role } : {}),
         ...(profile.locationType ? { locationType: profile.locationType } : {}),
@@ -233,8 +230,7 @@ export default function Pathway() {
   const furtherReading = [...forYears].sort(
     (a, b) => Number(picked.has(b.id)) - Number(picked.has(a.id)),
   );
-  const freeDays = [1, 2, 3, 4, 5].filter((d) => !teachingDays.includes(d));
-  const firstTeaching = teachingDays.length ? DAY_LONG[Math.min(...teachingDays) - 1] : 'Monday';
+  const daysOff = teachingDaysPerWeek ? 5 - teachingDaysPerWeek : 0;
 
   return (
     <AppShell step={3}>
@@ -274,12 +270,12 @@ export default function Pathway() {
                   className="-ml-content mt-6 border-y-2 border-rule-strong bg-sage-100 py-4 pl-content pr-5"
                 >
                   <h2 id="before-monday" className="text-[20px] font-semibold">
-                    Before {firstTeaching}
+                    Before your next lesson
                     {yearLabel ? `, ${yearLabel}` : ''}
                   </h2>
                   <p className="mt-1">
-                    {urgent.length === 1 ? 'One short unit' : `${urgent.length} short units`} before
-                    your next lesson:
+                    {urgent.length === 1 ? 'One short unit' : `${urgent.length} short units`} to do
+                    first:
                   </p>
                   <ul className="mt-1 list-disc pl-5">
                     {urgent.map((it) => (
@@ -377,7 +373,6 @@ export default function Pathway() {
                                 return (
                                   <option key={d} value={iso}>
                                     {formatDay(iso)}
-                                    {teachingDays.includes(d) ? ' (teaching)' : ''}
                                   </option>
                                 );
                               })}
@@ -440,7 +435,7 @@ export default function Pathway() {
                         to="/plan"
                         className="text-[17px] text-ink no-underline hover:underline"
                       >
-                        Plan {firstTeaching}&apos;s lesson
+                        Plan your next lesson
                       </Link>
                       <div className="text-[13px] text-muted">Lesson builder · about 10 min</div>
                     </div>
@@ -449,11 +444,11 @@ export default function Pathway() {
               </div>
 
               <p className="mt-6 max-w-prose text-[15px] text-muted">
-                {teachingDays.length
-                  ? `${listDays(teachingDays)} ${teachingDays.length > 1 ? 'are' : 'is'} teaching days. `
+                {teachingDaysPerWeek
+                  ? `You teach ${teachingDaysPerWeek} day${teachingDaysPerWeek === 1 ? '' : 's'} a week. `
                   : ''}
-                {freeDays.length && teachingDays.length
-                  ? `Learning is planned for ${listDays(freeDays)}.`
+                {daysOff
+                  ? `Learning is spread over ${daysOff} day${daysOff === 1 ? '' : 's'}. Move any unit to a day you're not teaching.`
                   : 'Learning is spread across the week.'}{' '}
                 Use the arrows, or drag with a mouse, to change the order.
               </p>

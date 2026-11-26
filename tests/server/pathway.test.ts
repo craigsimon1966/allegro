@@ -19,7 +19,7 @@ const needs = tammy.cachedDiagnosis.needs.map((n) => ({
 const body = {
   needs,
   hoursPerWeek: 0.5,
-  teachingDays: [1, 3, 4],
+  teachingDaysPerWeek: 3,
   weekStart: '2026-11-23',
   yearLevels: ['8'],
 };

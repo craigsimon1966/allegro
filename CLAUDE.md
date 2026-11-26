@@ -18,9 +18,9 @@ The build order and current status are in docs/PLAN.md. Known contradictions bet
 
 ## Working method
 
-- Small commits with clear messages. Update CHANGELOG.md at the end of each milestone.
+- Small commits with clear messages. Record each change in its own file, `changelog.d/<topic>.md`, never by editing CHANGELOG.md (see changelog.d/README.md). Parallel PRs then never conflict.
 - Run `npm run check` (typecheck, lint, unit tests) before saying a milestone is done.
-- If a decision is not in SPEC.md or TECH_SPEC.md, choose the simplest option, note it in docs/decisions.md and tell me.
+- If a decision is not in SPEC.md or TECH_SPEC.md, choose the simplest option, note it in its own file, `decisions.d/<topic>.md` (not by editing docs/decisions.md), and tell me.
 
 ## Commands
 
