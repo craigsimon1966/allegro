@@ -280,7 +280,8 @@ export default function LessonView() {
   const updateLesson = useAppStore((s) => s.updateLesson);
   const [loading, setLoading] = useState(mode === 'signed_in' && !saved);
   const [packState, setPackState] = useState<'idle' | 'drafting' | 'building' | 'failed'>('idle');
-  const [plainPack, setPlainPack] = useState(false);
+  /** What was built from the lesson text because the AI could not draft it, if anything. */
+  const [plainPack, setPlainPack] = useState<'all' | 'guide' | 'slides' | null>(null);
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const blockCount = saved?.lesson.blocks.length ?? 0;
@@ -367,11 +368,15 @@ export default function LessonView() {
     setPackState('drafting');
     try {
       const pack = await draftLessonPack(saved.lesson);
-      change((s) => ({ ...s, pack: { key, pack } }));
-      setPlainPack(false);
+      // A pack with a plain half is not kept, so the next download asks the AI again.
+      if (pack.plain?.length) setPlainPack(pack.plain.length > 1 ? 'all' : pack.plain[0]!);
+      else {
+        change((s) => ({ ...s, pack: { key, pack } }));
+        setPlainPack(null);
+      }
       return pack;
     } catch {
-      setPlainPack(true);
+      setPlainPack('all');
       return lp.fallbackPack(saved.lesson);
     }
   };
@@ -537,15 +542,18 @@ export default function LessonView() {
             <div role="status" className="mt-2 text-[15px]">
               {packState === 'drafting' && (
                 <p className="font-bold">
-                  Allegro is drafting the worksheets and slides. This usually takes about 40
-                  seconds.
+                  Allegro is drafting the worksheets and slides. This usually takes about a minute.
                 </p>
               )}
               {packState === 'building' && <p className="font-bold">Preparing your files…</p>}
               {plainPack && packState !== 'drafting' && (
                 <p>
-                  Allegro&apos;s AI wasn&apos;t available, so these files were built straight from
-                  the lesson plan and are plainer. Try again later for the full pack.
+                  {plainPack === 'slides'
+                    ? 'Allegro’s AI couldn’t draft the slides this time, so they were built straight from the lesson plan and are plainer.'
+                    : plainPack === 'guide'
+                      ? 'Allegro’s AI couldn’t draft the teacher steps and worksheets this time, so they were built straight from the lesson plan and are plainer.'
+                      : 'Allegro’s AI wasn’t available, so these files were built straight from the lesson plan and are plainer.'}{' '}
+                  Download again for the full pack.
                 </p>
               )}
             </div>
