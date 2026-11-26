@@ -5,7 +5,7 @@ interface Props {
   product?: Product;
   size?: number;
   tone?: 'green' | 'ink' | 'white';
-  /** Circles fill in sequence (loading state). Honours prefers-reduced-motion. */
+  /** Waiting state: Craig's icon in plum, turning slowly. Honours prefers-reduced-motion. */
   loading?: boolean;
   /** Accessible name. Omit when the mark is decorative. */
   label?: string;
@@ -36,13 +36,25 @@ export function AllegroMark({
   className,
 }: Props) {
   const colour = { green: 'var(--green-700)', ink: 'var(--ink)', white: 'var(--white)' }[tone];
+  if (loading)
+    // The waiting mark is Craig's own icon in plum, turning (public/brand/icon-plum.svg).
+    return (
+      <img
+        src="/brand/icon-plum.svg"
+        width={size}
+        height={size}
+        alt={label ?? ''}
+        aria-hidden={label ? undefined : true}
+        className={['allegro-mark-spin', className ?? ''].join(' ').trim()}
+      />
+    );
   return (
     <svg
       width={size}
       height={size}
       viewBox="54 54 268 268"
       style={{ color: colour }}
-      className={[loading ? 'allegro-mark-loading' : '', className ?? ''].join(' ').trim()}
+      className={className}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
@@ -55,7 +67,7 @@ export function AllegroMark({
           cx={c.cx}
           cy={c.cy}
           r={R}
-          fill={!loading && c.product === product ? colour : 'none'}
+          fill={c.product === product ? colour : 'none'}
           stroke={colour}
           strokeWidth={Math.max(1.5, size / 24)}
           vectorEffect="non-scaling-stroke"

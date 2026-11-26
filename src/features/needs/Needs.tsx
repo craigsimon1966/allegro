@@ -14,7 +14,7 @@ import { DiagnosticCheck } from './DiagnosticCheck';
 import { FromQuickChecks } from './FromQuickChecks';
 import { Thumbs } from '@/features/feedback/Thumbs';
 import { builtForLine, topicFitsYear } from '@shared/curriculum';
-import { ROLE_SHORT } from '@shared/profile';
+import { roleShort } from '@shared/profile';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
 
 // "Here's what we heard" (SPEC 7.4).
@@ -39,7 +39,7 @@ export default function Needs() {
   const builtFor = builtForLine({
     years: profile.years,
     state: profile.state,
-    role: profile.role ? ROLE_SHORT[profile.role] : null,
+    role: roleShort(profile),
   });
 
   const [editing, setEditing] = useState(false);

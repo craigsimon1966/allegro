@@ -69,43 +69,18 @@
     background-size: 20px 20px;
   }
 
-  /* Loading: the four circles fill in sequence (SPEC 10.7) */
-  .allegro-mark-loading circle {
-    animation: allegro-fill 1.6s var(--ease) infinite;
+  /* Loading: Craig's logo mark in plum, turning slowly (SPEC 10.7, Craig 26 Nov 2026) */
+  .allegro-mark-spin {
+    animation: allegro-spin 2.4s linear infinite;
   }
-  .allegro-mark-loading circle:nth-child(2) {
-    animation-delay: 0.4s;
-  }
-  .allegro-mark-loading circle:nth-child(3) {
-    animation-delay: 0.8s;
-  }
-  .allegro-mark-loading circle:nth-child(4) {
-    animation-delay: 1.2s;
-  }
-  /* Brand plum on alternate circles, so the waiting mark fills green, plum, green, plum. */
-  .allegro-mark-loading circle:nth-child(even) {
-    color: var(--plum-500);
-  }
-  @keyframes allegro-fill {
-    0%,
-    20% {
-      fill: transparent;
-    }
-    25%,
-    60% {
-      fill: currentColor;
-    }
-    65%,
-    100% {
-      fill: transparent;
+  @keyframes allegro-spin {
+    to {
+      transform: rotate(360deg);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .allegro-mark-loading circle {
+    .allegro-mark-spin {
       animation: none;
-    }
-    .allegro-mark-loading circle:first-child {
-      fill: currentColor;
     }
   }
 

@@ -9,7 +9,7 @@ import { topicFitsYear, yearLabel } from '../../shared/curriculum';
 import { stateById } from '../../shared/states';
 import type { Guided } from '../../shared/schemas';
 import { findLikelyStudentNames } from '../../shared/pii';
-import { daysPerWeek, situationFacts } from '../../shared/profile';
+import { ROLE_PROMPT, daysPerWeek, normaliseGuided, situationFacts } from '../../shared/profile';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
 import { identify } from './auth';
@@ -28,7 +28,7 @@ export function fixedFacts(g: Guided | undefined): string {
   if (!g) return '';
   const facts = [
     g.yearLevels?.length ? `Year levels they teach: ${g.yearLevels.map(yearLabel).join(', ')}` : '',
-    g.role ? `Role: ${g.role}` : '',
+    g.role ? `Role: ${ROLE_PROMPT[g.role]}` : '',
     g.state ? `State: ${stateById(g.state)?.name ?? g.state}` : '',
     g.subject ? `Subject: ${g.subject}` : '',
     g.locationType ? `School location: ${g.locationType}` : '',
@@ -119,7 +119,10 @@ export async function handleDiagnose(
   const parsed = DiagnoseRequestSchema.safeParse(body);
   if (!parsed.success)
     return error('invalid_input', 'Please describe your situation in 4,000 characters or fewer.');
-  const req = parsed.data;
+  const req = {
+    ...parsed.data,
+    ...(parsed.data.guided ? { guided: normaliseGuided(parsed.data.guided) } : {}),
+  };
 
   // Server-side backstop for the student-name warning (TECH_SPEC 5.4).
   const textToCheck = [req.situationText, ...(req.clarifyingAnswers ?? [])].join('\n');

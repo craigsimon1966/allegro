@@ -39,7 +39,7 @@ export const PathwayRequestSchema = z.object({
     .max(8),
   hoursPerWeek: z.number().min(0.25).max(20),
   teachingDaysPerWeek: z.number().int().min(1).max(5).nullable().optional(),
-  situations: z.array(Situation).max(6).optional(),
+  situations: z.array(Situation).max(12).optional(),
   confidentYears: z.array(z.string().max(10)).max(13).optional(),
   newToYears: z.array(z.string().max(10)).max(13).optional(),
   weekStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

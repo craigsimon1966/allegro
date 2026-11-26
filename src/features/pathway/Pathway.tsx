@@ -14,7 +14,7 @@ import { UNITS, unitById } from '@shared/catalogue';
 import { addDays, buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pathway';
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
-import { teacherProfile, ROLE_SHORT } from '@shared/profile';
+import { teacherProfile, roleShort } from '@shared/profile';
 import { builtForLine } from '@shared/curriculum';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
@@ -218,7 +218,7 @@ export default function Pathway() {
   const builtFor = builtForLine({
     years: profile.years,
     state: profile.state,
-    role: profile.role ? ROLE_SHORT[profile.role] : null,
+    role: roleShort(profile),
   });
   // Approved sources for their year levels, with the AI's picks (and reasons) first.
   const forYears = sourcesFor(profile.years, profile.state);

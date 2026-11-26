@@ -1,0 +1,1 @@
+- The waiting logo is now Craig's actual Allegro icon (the four interlocking circles), drawn in purple only and turning slowly. With reduced motion it stays still.
