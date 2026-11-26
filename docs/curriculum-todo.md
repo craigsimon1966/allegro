@@ -88,6 +88,8 @@ Imported from the NESA Mathematics Standard 11-12 (2024) outcomes page by `scrip
 | senior.statistics     | 11, 12 | MST-11-08, MST-12-S1-06, MST-12-S1-07, MST-12-S2-08, MST-12-S2-09, MST-12-S2-10 |
 | senior.networks       | 11, 12 | MST-11-07, MST-12-S2-06, MST-12-S2-07                                           |
 
+Senior units (Draft, 26 Nov): sen-fin-01 (MST-11-03, MST-12-S1-02, MST-12-S2-02), sen-lin-01 (MST-11-02, MST-12-S1-01, MST-12-S2-01), sen-meas-01 (MST-12-S2-04), sen-stat-01 (MST-11-08, MST-12-S1-06, MST-12-S2-08), sen-net-01 (MST-12-S2-07). Worth a check: sen-meas-01 covers the sine and cosine rules, which sit in Standard 2 only.
+
 ## SACE and TASC General Mathematics (SA, NT and Tasmania)
 
 Imported by `scripts/curriculum-import.ts` from the SACE Stage 1 and Stage 2 General Mathematics subject outlines and the TASC General Mathematics Level 2 (MTG215123) and Level 3 (MTG315123) course pages. These documents have no outcome codes, so each entry uses the document's own numbering, such as "Stage 2 Subtopic 4.1" or "MTG315123 Outcome 7". Stage 1 and Level 2 are treated as Year 11; Stage 2 and Level 3 as Year 12. TASC outcomes 1 to 4 (communication, planning, reasoning, technology) apply to every topic, so no topic lists them.

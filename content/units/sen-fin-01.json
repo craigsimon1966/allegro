@@ -1,0 +1,78 @@
+{
+  "id": "sen-fin-01",
+  "moduleId": "mod-senior-general",
+  "title": "Compound interest: match the rate to the period",
+  "domain": "CK",
+  "tags": [
+    "senior.financial"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "11",
+    "12"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": [
+      "MST-11-03",
+      "MST-12-S1-02",
+      "MST-12-S2-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Compound interest questions are rarely lost on the formula. They are lost when the yearly rate is used with monthly periods.",
+  "coreIdeaMd": "The compound interest formula is $FV = PV(1 + r)^n$.\n\n- $r$ is the interest rate **per compounding period**, as a decimal.\n- $n$ is the **number of compounding periods**.\n\nIf the rate is given per year (p.a.) but interest is added monthly, divide the rate by 12 and multiply the years by 12. Quarterly means 4 periods a year.\n\nCompare with simple interest, $I = Prn$, where interest is only ever earned on the original amount. Compound interest earns interest on interest, so it grows faster.",
+  "workedExampleMd": "**\\$8000 is invested at 6% p.a., compounded monthly, for 3 years. Find the future value.**\n\n1. Rate per month: $r = 0.06 \\div 12 = 0.005$.\n2. Number of months: $n = 3 \\times 12 = 36$.\n3. $FV = 8000 \\times 1.005^{36} \\approx 9573.44$.\n\nThe investment grows to about **\\$9573.44**.\n\n**Check:** simple interest would give $8000 + 8000 \\times 0.06 \\times 3 = 9440$. Compounding should give a little more, and it does. ✓",
+  "misconceptionIds": [
+    "mis-fin-compound-periods"
+  ],
+  "checkItems": [
+    {
+      "id": "sen-fin-01-q1",
+      "stemMd": "\\$5000 is invested at 3% p.a., compounded monthly, for 4 years. Which calculation gives the future value?",
+      "type": "mcq",
+      "options": [
+        "$5000 \\times 1.0025^{48}$",
+        "$5000 \\times 1.03^{48}$",
+        "$5000 \\times 1.03^{4}$"
+      ],
+      "answer": "$5000 \\times 1.0025^{48}$",
+      "feedbackCorrect": "Yes. Monthly rate $0.03 \\div 12 = 0.0025$, and $4 \\times 12 = 48$ months.",
+      "feedbackIncorrect": "Match the rate to the period: the monthly rate is $0.03 \\div 12 = 0.0025$, over $4 \\times 12 = 48$ months.",
+      "wrongAnswers": [
+        {
+          "answer": "$5000 \\times 1.03^{48}$",
+          "misconceptionId": "mis-fin-compound-periods",
+          "feedback": "This adds 3% every month, which is 36% a year. Divide the yearly rate by 12 when the periods are months."
+        },
+        {
+          "answer": "$5000 \\times 1.03^{4}$",
+          "misconceptionId": "mis-fin-compound-periods",
+          "feedback": "This compounds once a year. The question says monthly, so use 48 periods at 0.25% each."
+        }
+      ]
+    },
+    {
+      "id": "sen-fin-01-q2",
+      "stemMd": "\\$2400 is invested at 4.8% p.a., compounded quarterly, for 2 years. Find the future value, to the nearest dollar.",
+      "type": "numeric",
+      "answer": "2640",
+      "feedbackCorrect": "Right. $r = 0.048 \\div 4 = 0.012$ and $n = 8$, so $FV = 2400 \\times 1.012^{8} \\approx 2640.31$.",
+      "feedbackIncorrect": "Quarterly means 4 periods a year: $r = 0.012$ and $n = 2 \\times 4 = 8$. Then $2400 \\times 1.012^{8} \\approx 2640.31$, about \\$2640."
+    }
+  ],
+  "tryTomorrow": "Before students touch a calculator, have them write two lines for every compound interest question: rate per period, and number of periods.",
+  "reflectPrompt": "Do your students write down $r$ and $n$ before substituting, or do they go straight to the calculator?",
+  "reviewedBy": null
+}

@@ -1,0 +1,73 @@
+{
+  "id": "sen-lin-01",
+  "moduleId": "mod-senior-general",
+  "title": "Linear models: what the rate and the starting value mean",
+  "domain": "CK",
+  "tags": [
+    "senior.algebra-linear"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "11",
+    "12"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": [
+      "MST-11-02",
+      "MST-12-S1-01",
+      "MST-12-S2-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students can often find a gradient but can't say what it means. In a practical model, the meaning is the whole point.",
+  "coreIdeaMd": "A linear model has the form $y = mx + c$ (or $y = a + bx$).\n\n- The **gradient** is the rate of change: how much $y$ changes when $x$ goes up by 1, in units of $y$ per unit of $x$.\n- The **intercept** is the value of $y$ when $x = 0$: usually the starting value or a fixed amount.\n\nA negative gradient means $y$ goes down as $x$ goes up. Always say what each number means **with its units**, and check whether the model makes sense outside the data (a tank can't hold negative water).",
+  "workedExampleMd": "**A water tank is drained at a steady rate. The volume is modelled by $V = 4500 - 120t$, where $V$ is in litres and $t$ is in hours.**\n\n1. Intercept: when $t = 0$, $V = 4500$. The tank starts with **4500 L**.\n2. Gradient: $-120$. The tank **loses 120 L each hour**.\n3. When is it empty? $0 = 4500 - 120t$, so $t = 4500 \\div 120 = 37.5$ hours.\n\n**Check:** after 10 hours, $V = 4500 - 1200 = 3300$ L, which is less than the start. ✓ The model only makes sense from $t = 0$ to $t = 37.5$.",
+  "misconceptionIds": [
+    "mis-lin-rate-start-swap"
+  ],
+  "checkItems": [
+    {
+      "id": "sen-lin-01-q1",
+      "stemMd": "A plumber's charge is modelled by $C = 85 + 64h$, where $C$ is in dollars and $h$ is the number of hours worked. What does 64 tell you?",
+      "type": "mcq",
+      "options": [
+        "The charge goes up by \\$64 for each hour",
+        "The call-out fee is \\$64",
+        "The job takes 64 hours"
+      ],
+      "answer": "The charge goes up by \\$64 for each hour",
+      "feedbackCorrect": "Yes. 64 is the gradient: dollars per hour. The \\$85 is the fixed call-out fee.",
+      "feedbackIncorrect": "64 multiplies $h$, so it is the rate: \\$64 per hour. The number on its own, 85, is the fixed fee.",
+      "wrongAnswers": [
+        {
+          "answer": "The call-out fee is \\$64",
+          "misconceptionId": "mis-lin-rate-start-swap",
+          "feedback": "The fixed fee is the number that doesn't change with $h$, which is \\$85. The 64 is multiplied by the hours, so it is the hourly rate."
+        }
+      ]
+    },
+    {
+      "id": "sen-lin-01-q2",
+      "stemMd": "Using the plumber's model $C = 85 + 64h$, how many hours of work cost \\$341?",
+      "type": "numeric",
+      "answer": "4",
+      "feedbackCorrect": "Right. $341 - 85 = 256$, and $256 \\div 64 = 4$ hours.",
+      "feedbackIncorrect": "Take off the fixed fee first: $341 - 85 = 256$. Then divide by the hourly rate: $256 \\div 64 = 4$ hours."
+    }
+  ],
+  "tryTomorrow": "Give students a model in context and ask them to finish two sentences: \"The ___ goes up by ___ for every ___\" and \"When ___ is zero, ___ is ___.\"",
+  "reflectPrompt": "When your students find a gradient, do they also say what it means in the context, with units?",
+  "reviewedBy": null
+}

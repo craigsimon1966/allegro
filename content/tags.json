@@ -415,7 +415,6 @@
       "label": "Algebraic relationships and linear modelling",
       "yearLevels": ["11", "12"],
       "states": ["NSW", "SA", "NT", "TAS"],
-      "lessonOnly": true,
       "curriculum": {
         "ac9": [],
         "nsw": ["MST-11-01", "MST-11-02", "MST-12-S1-01", "MST-12-S2-01"],
@@ -436,7 +435,6 @@
       "label": "Financial maths: earning, interest, loans and annuities",
       "yearLevels": ["11", "12"],
       "states": ["NSW", "SA", "NT", "TAS"],
-      "lessonOnly": true,
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -465,7 +463,6 @@
       "label": "Measurement, trigonometry, and ratios and rates",
       "yearLevels": ["11", "12"],
       "states": ["NSW", "SA", "NT", "TAS"],
-      "lessonOnly": true,
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -496,7 +493,6 @@
       "label": "Statistics, bivariate data and probability",
       "yearLevels": ["11", "12"],
       "states": ["NSW", "SA", "NT", "TAS"],
-      "lessonOnly": true,
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -526,7 +522,6 @@
       "label": "Networks, matrices and decision maths",
       "yearLevels": ["11", "12"],
       "states": ["NSW", "SA", "NT", "TAS"],
-      "lessonOnly": true,
       "curriculum": {
         "ac9": [],
         "nsw": ["MST-11-07", "MST-12-S2-06", "MST-12-S2-07"],
