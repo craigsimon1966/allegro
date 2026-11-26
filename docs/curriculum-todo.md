@@ -6,21 +6,28 @@ What still needs a person is the **match**: whether each unit or topic really te
 
 ## Units
 
-| Unit id                        | Years         | AC v9                                  | NSW                                | Checked by | Date |
-| ------------------------------ | ------------- | -------------------------------------- | ---------------------------------- | ---------- | ---- |
-| alg-01-equals-sign             | Years 7, 8    | AC9M7A03, AC9M8A01                     | MA4-EQU-C-01, MA4-ALG-C-01         |            |      |
-| alg-02-simplifying             | Years 7, 8    | AC9M7A02, AC9M8A01                     | MA4-ALG-C-01                       |            |      |
-| lin-01-what-a-rule-tells-you   | Years 8, 9    | AC9M8A02, AC9M8A04, AC9M9A03           | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
-| lin-02-table-to-rule           | Years 8, 9    | AC9M8A02, AC9M8A04                     | MA4-LIN-C-01, MA5-LIN-C-01         |            |      |
-| lin-03-tables-graphs-rules     | Years 8, 9    | AC9M8A02, AC9M8A04, AC9M9A06           | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
-| lin-04-graphing-errors         | Years 8, 9    | AC9M8A02, AC9M9A03                     | MA4-LIN-C-01, MA5-LIN-C-01         |            |      |
-| mc-01-goes-up-by               | Years 8, 9    | AC9M8A04, AC9M9A03                     | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
-| mc-02-pronumerals              | Years 7, 8    | AC9M7A01, AC9M7A02, AC9M8A01           | MA4-ALG-C-01                       |            |      |
-| pck-diff-01-three-entry-points | Years 7, 8, 9 | none (teaching approach)               | none                               |            |      |
-| pri-number-01                  | Years F, 1, 2 | AC9MFN02, AC9MFN04, AC9M1N02, AC9M2N02 | MAE-CSQ-02, MAE-RWN-01, MA1-CSQ-01 |            |      |
-| prop-01-ratio-tables           | Years 7, 8    | AC9M7N08, AC9M8M05                     | MA4-RAT-C-01                       |            |      |
-| prop-02-percentages            | Years 7, 8    | AC9M7N06, AC9M7N09, AC9M8N05           | MA4-FRC-C-01                       |            |      |
-| prop-03-ratio-vs-fraction      | Years 7, 8    | AC9M7N04, AC9M7N08                     | MA4-RAT-C-01, MA4-FRC-C-01         |            |      |
+| Unit id                        | Years            | AC v9                                  | NSW                                | Checked by | Date |
+| ------------------------------ | ---------------- | -------------------------------------- | ---------------------------------- | ---------- | ---- |
+| alg-01-equals-sign             | Years 7, 8       | AC9M7A03, AC9M8A01                     | MA4-EQU-C-01, MA4-ALG-C-01         |            |      |
+| alg-02-simplifying             | Years 7, 8       | AC9M7A02, AC9M8A01                     | MA4-ALG-C-01                       |            |      |
+| lin-01-what-a-rule-tells-you   | Years 8, 9       | AC9M8A02, AC9M8A04, AC9M9A03           | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
+| lin-02-table-to-rule           | Years 8, 9       | AC9M8A02, AC9M8A04                     | MA4-LIN-C-01, MA5-LIN-C-01         |            |      |
+| lin-03-tables-graphs-rules     | Years 8, 9       | AC9M8A02, AC9M8A04, AC9M9A06           | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
+| lin-04-graphing-errors         | Years 8, 9       | AC9M8A02, AC9M9A03                     | MA4-LIN-C-01, MA5-LIN-C-01         |            |      |
+| mc-01-goes-up-by               | Years 8, 9       | AC9M8A04, AC9M9A03                     | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
+| mc-02-pronumerals              | Years 7, 8       | AC9M7A01, AC9M7A02, AC9M8A01           | MA4-ALG-C-01                       |            |      |
+| pck-diff-01-three-entry-points | Years 7, 8, 9    | none (teaching approach)               | none                               |            |      |
+| pri-number-01                  | Years F, 1, 2    | AC9MFN02, AC9MFN04, AC9M1N02, AC9M2N02 | MAE-CSQ-02, MAE-RWN-01, MA1-CSQ-01 |            |      |
+| pri-attention-01               | Years F, 1, 2    |                                        |                                    |            |      |
+| pri-chance-01                  | Years 3, 4, 5, 6 | AC9M3P02, AC9M4P02, AC9M5P01, AC9M6P01 | MA2-CHAN-01, MA3-CHAN-01           |            |      |
+| pri-frac-01                    | Years 3, 4, 5, 6 | AC9M3N02, AC9M4N04, AC9M5N03, AC9M6N03 | MA2-PF-01, MA3-RQF-01              |            |      |
+| pri-meas-01                    | Years 3, 4, 5, 6 | AC9M4M02, AC9M5M02, AC9M6M02           | MA2-2DS-03, MA3-2DS-02             |            |      |
+| pri-mult-01                    | Years 3, 4, 5, 6 | AC9M3N04, AC9M4N06, AC9M5N06           | MA2-MR-01, MA3-MR-01               |            |      |
+| pri-pv-01                      | Years 3, 4, 5, 6 | AC9M4N01, AC9M5N01, AC9M6N04           | MA2-RN-02, MA3-RN-02               |            |      |
+| pri-routines-01                | Years F, 1, 2    |                                        |                                    |            |      |
+| prop-01-ratio-tables           | Years 7, 8       | AC9M7N08, AC9M8M05                     | MA4-RAT-C-01                       |            |      |
+| prop-02-percentages            | Years 7, 8       | AC9M7N06, AC9M7N09, AC9M8N05           | MA4-FRC-C-01                       |            |      |
+| prop-03-ratio-vs-fraction      | Years 7, 8       | AC9M7N04, AC9M7N08                     | MA4-RAT-C-01, MA4-FRC-C-01         |            |      |
 
 ## Lesson topics
 

@@ -1,0 +1,71 @@
+{
+  "id": "pri-chance-01",
+  "moduleId": "mod-primary-number",
+  "title": "Chance has no memory",
+  "domain": "CK",
+  "tags": [
+    "statistics.data-chance"
+  ],
+  "audience": [
+    "primary",
+    "out_of_field",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M3P02",
+      "AC9M4P02",
+      "AC9M5P01",
+      "AC9M6P01"
+    ],
+    "nsw": [
+      "MA2-CHAN-01",
+      "MA3-CHAN-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "After four heads in a row, most students (and many adults) think tails is \"due\". Chance experiments in class are the best way to unpick this.",
+  "coreIdeaMd": "Each flip of a fair coin, or roll of a fair dice, is **independent**: it doesn't know what happened before.\n\n- Short runs of results **vary** a lot. Long runs settle close to the expected proportion.\n- Use the language of chance carefully: \"equally likely\", \"likely\", \"unlikely\", and by Year 6, a probability from 0 to 1.\n- Let students **collect** results and pool the class data. Seeing 10 flips and then 300 flips makes the idea of variation real.",
+  "workedExampleMd": "**A class pools its coin flips.**\n\n| Flips | Heads | Proportion of heads |\n|---|---|---|\n| First 10 | 7 | 0.7 |\n| First 50 | 29 | 0.58 |\n| All 300 | 154 | about 0.51 |\n\n1. Ten flips gave 7 heads, far from half. That is normal variation.\n2. As the number of flips grows, the proportion moves towards 0.5.\n3. No flip was \"due\". The long run evens out because the early results get swamped, not corrected.",
+  "misconceptionIds": [
+    "mis-chance-has-memory"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-chance-01-q1",
+      "stemMd": "A fair coin lands on heads 4 times in a row. What is true about the next flip?",
+      "type": "mcq",
+      "options": [
+        "Tails is more likely",
+        "Heads is more likely",
+        "Heads and tails are equally likely"
+      ],
+      "answer": "Heads and tails are equally likely",
+      "feedbackCorrect": "Yes. The coin has no memory, so each flip is still a half chance either way.",
+      "feedbackIncorrect": "Each flip of a fair coin is independent. The earlier results don't change the next one: heads and tails are equally likely.",
+      "wrongAnswers": [
+        {
+          "answer": "Tails is more likely",
+          "misconceptionId": "mis-chance-has-memory",
+          "feedback": "It feels like tails is due, but the coin doesn't know what came before. Each flip is still equally likely to be heads or tails."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Have pairs flip a coin 20 times and record the results, then pool the class data on the board. Ask: \"Did anyone get a run of 4 or more? Was the next flip more likely to change?\"",
+  "reflectPrompt": "Where do your students meet chance outside school (games, sport, apps)? How could you use that in a lesson?",
+  "reviewedBy": null
+}

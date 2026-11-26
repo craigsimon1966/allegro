@@ -95,6 +95,46 @@
       "whyItHappens": "Students divide the larger number by the smaller one out of habit, without asking what the answer means.",
       "howToRespond": "Ask what the answer is per: dollars per apple or apples per dollar. Estimate first: 5 apples for $2 must be less than $1 each. Then $2 ÷ 5 = $0.40 per apple.",
       "diagnosticQuestion": "3 pens cost $6. Work out the cost of one pen, and the number of pens you get per dollar."
+    },
+    {
+      "id": "mis-bigger-denominator",
+      "topicTag": "number.fractions",
+      "studentSays": "1/8 is bigger than 1/5 because 8 is bigger than 5.",
+      "whyItHappens": "Students apply whole-number thinking to each part of the fraction, and don't yet see the denominator as the number of equal parts the whole is cut into.",
+      "howToRespond": "Draw two equal bars, one cut into eighths and one into fifths, and compare one part of each. Ask: \"If more people share the same pizza, does each person get more or less?\"",
+      "diagnosticQuestion": "Which is larger, 1/7 or 1/3? Draw a picture to show why."
+    },
+    {
+      "id": "mis-partial-product-missed",
+      "topicTag": "number.multiplicative",
+      "studentSays": "34 × 5 is 150 and 4 more, so 154.",
+      "whyItHappens": "Students partition the number correctly but only multiply the tens, then add the ones on, because they haven't connected the parts to a picture of the whole product.",
+      "howToRespond": "Draw the area model: a rectangle split into 30 and 4 along one side, 5 along the other. Ask what each small rectangle is worth. Both parts need multiplying.",
+      "diagnosticQuestion": "Work out 46 × 3 and draw an area model to show your parts."
+    },
+    {
+      "id": "mis-longer-decimal-bigger",
+      "topicTag": "number.place-value",
+      "studentSays": "0.45 is bigger than 0.6 because 45 is bigger than 6.",
+      "whyItHappens": "Students read the digits after the point as a whole number, so more digits looks like a bigger number.",
+      "howToRespond": "Put both numbers in a place value chart and compare the tenths first. Write 0.6 as 0.60 and use money: 60 cents against 45 cents.",
+      "diagnosticQuestion": "Put these in order from smallest to largest: 0.6, 0.45, 0.405, 0.08."
+    },
+    {
+      "id": "mis-area-perimeter-confused",
+      "topicTag": "measurement.length-area-angles",
+      "studentSays": "The area of a 5 by 3 rectangle is 16.",
+      "whyItHappens": "Area and perimeter are taught with the same shapes and numbers, so students remember a procedure without picturing what each one measures.",
+      "howToRespond": "Have students cover the rectangle with square tiles to count the area, then run a finger around the edge for the perimeter. Use square units for area and plain units for perimeter every time.",
+      "diagnosticQuestion": "Draw two different rectangles with a perimeter of 16 cm. Do they have the same area?"
+    },
+    {
+      "id": "mis-chance-has-memory",
+      "topicTag": "statistics.data-chance",
+      "studentSays": "It's landed on heads four times, so tails is due.",
+      "whyItHappens": "People expect short runs to look like the long-run balance, so a streak feels like it must be corrected.",
+      "howToRespond": "Ask: \"Does the coin know what it landed on last time?\" Then run a class experiment, pooling many flips, and look at how often a streak was followed by a change.",
+      "diagnosticQuestion": "A fair dice has rolled 6 three times in a row. Is the next roll more likely, less likely, or just as likely to be a 6?"
     }
   ]
 }

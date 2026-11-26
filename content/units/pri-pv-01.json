@@ -1,0 +1,70 @@
+{
+  "id": "pri-pv-01",
+  "moduleId": "mod-primary-number",
+  "title": "Place value and decimals: longer is not larger",
+  "domain": "CK",
+  "tags": [
+    "number.place-value"
+  ],
+  "audience": [
+    "primary",
+    "out_of_field",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M4N01",
+      "AC9M5N01",
+      "AC9M6N04"
+    ],
+    "nsw": [
+      "MA2-RN-02",
+      "MA3-RN-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "\"0.45 is bigger than 0.6 because 45 is bigger than 6.\" This is one of the most common errors in primary maths, and it lasts into high school if nobody fixes it.",
+  "coreIdeaMd": "Place value works the same way on both sides of the decimal point: each place is **ten times** the place to its right.\n\n- Tenths are bigger than hundredths, just as tens are bigger than ones.\n- To compare decimals, compare the **largest place first**, not the number of digits.\n- Writing a zero to make the lengths match ($0.6 = 0.60$) helps students see this.\n\nUse place value charts, money (dollars, 10-cent and 1-cent coins) and number lines.",
+  "workedExampleMd": "**Which is larger, $0.38$ or $0.5$?**\n\n| | Ones | Tenths | Hundredths |\n|---|---|---|---|\n| 0.38 | 0 | 3 | 8 |\n| 0.5 | 0 | 5 | 0 |\n\n1. Compare the ones: both 0.\n2. Compare the tenths: 5 is more than 3.\n3. So $0.5 > 0.38$. The 8 hundredths can't make up for 2 missing tenths.\n\nIn money: 50 cents is more than 38 cents.",
+  "misconceptionIds": [
+    "mis-longer-decimal-bigger"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-pv-01-q1",
+      "stemMd": "Which is larger, $0.7$ or $0.25$?",
+      "type": "mcq",
+      "options": [
+        "$0.7$",
+        "$0.25$",
+        "They are equal"
+      ],
+      "answer": "$0.7$",
+      "feedbackCorrect": "Yes. 7 tenths is more than 2 tenths, so 0.7 is larger, whatever comes after.",
+      "feedbackIncorrect": "Compare the tenths first: 0.7 has 7 tenths and 0.25 has 2. So 0.7 is larger. In money, 70 cents beats 25 cents.",
+      "wrongAnswers": [
+        {
+          "answer": "$0.25$",
+          "misconceptionId": "mis-longer-decimal-bigger",
+          "feedback": "25 is bigger than 7 as a whole number, but here the digits are in different places. Write 0.7 as 0.70: 70 hundredths is more than 25 hundredths."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Write five decimals of different lengths on cards (for example 0.6, 0.45, 0.405, 0.5, 0.08) and ask groups to order them, then explain the hardest pair.",
+  "reflectPrompt": "Which of your students might be comparing decimals by length? How would you find out in one question?",
+  "reviewedBy": null
+}

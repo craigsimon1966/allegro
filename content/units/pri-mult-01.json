@@ -1,0 +1,65 @@
+{
+  "id": "pri-mult-01",
+  "moduleId": "mod-primary-number",
+  "title": "Multiplying by partitioning: the area model",
+  "domain": "CK",
+  "tags": [
+    "number.multiplicative"
+  ],
+  "audience": [
+    "primary",
+    "out_of_field",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M3N04",
+      "AC9M4N06",
+      "AC9M5N06"
+    ],
+    "nsw": [
+      "MA2-MR-01",
+      "MA3-MR-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Arrays and the area model explain **why** written multiplication works. Students who see the parts make far fewer errors with the algorithm later.",
+  "coreIdeaMd": "Multiplication can be split into easier parts: $27 \\times 6$ is $20 \\times 6$ plus $7 \\times 6$. This is the **distributive property**.\n\n- Start with **arrays** (rows and columns of dots) for facts such as $3 \\times 8$.\n- Move to the **area model**: a rectangle split by place value. Each small rectangle is one multiplication.\n- The written algorithm is the same steps, just shorter. Link them before moving on.",
+  "workedExampleMd": "**Work out $27 \\times 6$.**\n\n```visual\n{\"type\": \"area_model\", \"rows\": [20, 7], \"cols\": [6]}\n```\n\n1. Split 27 into tens and ones: $20 + 7$.\n2. Multiply each part: $20 \\times 6 = 120$ and $7 \\times 6 = 42$.\n3. Add the parts: $120 + 42 = 162$.\n\n**Check:** $27$ is close to $30$, and $30 \\times 6 = 180$, so 162 is reasonable.",
+  "misconceptionIds": [
+    "mis-partial-product-missed"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-mult-01-q1",
+      "stemMd": "Use partitioning to work out $34 \\times 5$.",
+      "type": "numeric",
+      "answer": "170",
+      "feedbackCorrect": "Yes. $30 \\times 5 = 150$ and $4 \\times 5 = 20$, so $150 + 20 = 170$.",
+      "feedbackIncorrect": "Split 34 into $30 + 4$. Then $30 \\times 5 = 150$ and $4 \\times 5 = 20$. Add them: $170$.",
+      "wrongAnswers": [
+        {
+          "answer": "154",
+          "misconceptionId": "mis-partial-product-missed",
+          "feedback": "It looks like the 4 was added on instead of multiplied. Both parts of 34 need multiplying by 5: $30 \\times 5 = 150$ and $4 \\times 5 = 20$, so the answer is 170."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Give pairs a 2-digit by 1-digit multiplication and ask them to draw it as an area model before calculating. Compare models on the board.",
+  "reflectPrompt": "How do you currently check that students understand why the written method works, not just the steps?",
+  "reviewedBy": null
+}
