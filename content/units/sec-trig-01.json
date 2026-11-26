@@ -1,0 +1,67 @@
+{
+  "id": "sec-trig-01",
+  "moduleId": "mod-years-9-10",
+  "title": "Which ratio? Name the sides from the angle",
+  "domain": "CK",
+  "tags": [
+    "measurement.trigonometry"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "9",
+    "10"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M9SP01",
+      "AC9M9M03",
+      "AC9M10M03"
+    ],
+    "nsw": [
+      "MA5-TRG-C-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Most trigonometry errors aren't calculation errors. Students pick the wrong ratio because they labelled the sides wrongly.",
+  "coreIdeaMd": "In a right-angled triangle, label the sides **from the angle you are using**:\n\n- **Hypotenuse:** the longest side, opposite the right angle. It never changes.\n- **Opposite:** the side across from the angle.\n- **Adjacent:** the side next to the angle that is not the hypotenuse.\n\nThen choose the ratio that links the side you know and the side you want: $\\sin = \\frac{O}{H}$, $\\cos = \\frac{A}{H}$, $\\tan = \\frac{O}{A}$.\n\nThe opposite and adjacent sides swap if you use the other acute angle, so always mark the angle first.",
+  "workedExampleMd": "**A ramp makes an angle of 35° with the ground. The ramp is 12 m long. How high does it rise?**\n\n1. Mark the 35° angle. The ramp (12 m) is the hypotenuse; the rise is opposite the angle.\n2. Opposite and hypotenuse means sine: $\\sin 35° = \\frac{h}{12}$.\n3. $h = 12 \\times \\sin 35° \\approx 12 \\times 0.574 \\approx 6.9$ m.\n\n**Check:** the rise must be shorter than the ramp, and 6.9 is less than 12. ✓",
+  "misconceptionIds": [
+    "mis-trig-side-labels"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-trig-01-q1",
+      "stemMd": "In a right-angled triangle, an angle is 50°. The side next to it (not the hypotenuse) is 8 m. You want the side opposite the 50° angle. Which ratio do you use?",
+      "type": "mcq",
+      "options": [
+        "tan",
+        "sin",
+        "cos"
+      ],
+      "answer": "tan",
+      "feedbackCorrect": "Yes. You know the adjacent side and want the opposite side, so $\\tan 50° = \\frac{O}{8}$.",
+      "feedbackIncorrect": "Label from the 50° angle: 8 m is adjacent, and you want the opposite. Opposite and adjacent means tan.",
+      "wrongAnswers": [
+        {
+          "answer": "sin",
+          "misconceptionId": "mis-trig-side-labels",
+          "feedback": "Sine needs the hypotenuse, which isn't given here. The 8 m side is next to the angle, so it is the adjacent side. Opposite and adjacent means tan."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Before any calculating, give students five triangles with one angle marked and ask them only to label O, A and H. Check these on mini whiteboards.",
+  "reflectPrompt": "When students get a trigonometry question wrong, do you check their labels before their calculation?",
+  "reviewedBy": null
+}

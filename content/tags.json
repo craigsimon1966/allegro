@@ -351,8 +351,7 @@
       "curriculum": {
         "ac9": ["AC9M9A01", "AC9M9A02", "AC9M10A01"],
         "nsw": ["MA5-ALG-C-01", "MA5-IND-C-01", "MA5-EQU-C-01"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "algebra.non-linear",
@@ -362,8 +361,7 @@
       "curriculum": {
         "ac9": ["AC9M9A04", "AC9M9A06", "AC9M10A03", "AC9M10A04"],
         "nsw": ["MA5-NLI-C-01", "MA5-NLI-C-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "measurement.trigonometry",
@@ -373,8 +371,7 @@
       "curriculum": {
         "ac9": ["AC9M9M03", "AC9M9SP01", "AC9M10M03"],
         "nsw": ["MA5-TRG-C-01", "MA5-TRG-C-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "assessment.success-criteria",

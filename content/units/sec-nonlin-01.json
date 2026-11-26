@@ -1,0 +1,62 @@
+{
+  "id": "sec-nonlin-01",
+  "moduleId": "mod-years-9-10",
+  "title": "Linear or exponential? Look at how it changes",
+  "domain": "CK",
+  "tags": [
+    "algebra.non-linear"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "9",
+    "10"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M10A03",
+      "AC9M10A04"
+    ],
+    "nsw": [
+      "MA5-NLI-C-01",
+      "MA5-NLI-C-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students often assume every pattern grows by adding the same amount. Spotting when something multiplies instead is the key idea behind exponential growth, interest and decay.",
+  "coreIdeaMd": "- **Linear:** add (or subtract) the same amount each step. The graph is a straight line.\n- **Exponential:** multiply by the same factor each step. The graph curves, slowly at first, then steeply.\n- To decide, look at the **differences** between terms (linear if they are equal) and the **ratios** (exponential if they are equal).\n\nReal contexts help: savings with interest, populations, a phone battery draining by a percentage.",
+  "workedExampleMd": "**Two tables of values.**\n\n| $x$ | 0 | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|---|\n| A | 2 | 5 | 8 | 11 | 14 |\n| B | 2 | 6 | 18 | 54 | 162 |\n\n1. A goes up by 3 each step: equal differences, so **linear**. The rule is $y = 3x + 2$.\n2. B multiplies by 3 each step: equal ratios, so **exponential**. The rule is $y = 2 \\times 3^x$.\n3. Both start at 2 and both use a 3, but by $x = 4$, B is more than ten times A.",
+  "misconceptionIds": [
+    "mis-exponential-as-linear"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-nonlin-01-q1",
+      "stemMd": "A pattern goes 5, 10, 20, 40. What is the next term?",
+      "type": "numeric",
+      "answer": "80",
+      "feedbackCorrect": "Yes. Each term doubles, so the next is $40 \\times 2 = 80$.",
+      "feedbackIncorrect": "Look at the ratios: each term is double the one before. So the next is $40 \\times 2 = 80$.",
+      "wrongAnswers": [
+        {
+          "answer": "50",
+          "misconceptionId": "mis-exponential-as-linear",
+          "feedback": "50 assumes the pattern adds 10 each time, but the differences are 5, 10, 20, so they aren't equal. Each term doubles, so the next is 80."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Offer students a choice: \\$100 a day for 30 days, or 1 cent on day 1, doubling each day. Ask them to predict, then work out which is worth more.",
+  "reflectPrompt": "How do your students currently decide whether a relationship is linear? Do they check differences, or just look at the graph?",
+  "reviewedBy": null
+}

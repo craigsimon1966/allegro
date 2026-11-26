@@ -125,7 +125,6 @@ describe('topics and the years they are taught in', () => {
 
   it('keeps lesson-only topics out of needs', () => {
     const lessonOnly = TAGS.filter((t) => t.lessonOnly).map((t) => t.id);
-    expect(lessonOnly.length).toBeGreaterThan(0);
     expect(NEED_TAGS.some((t) => t.lessonOnly)).toBe(false);
     expect(filterTags([...lessonOnly, 'algebra.linear'])).toEqual(['algebra.linear']);
   });
