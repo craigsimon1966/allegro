@@ -76,6 +76,17 @@ export function seniorCourseFor(state: string | null | undefined): string | null
 
 export const yearLabel = (year: string) => (year === 'F' ? 'Foundation' : `Year ${year}`);
 
+/** Several years for a heading: "Year 8", "Years 8, 9", "Foundation and Year 1". */
+export function yearsLabel(years: string[]): string {
+  const ys = [...new Set(years)].sort(
+    (a, b) => PLAN_YEARS.indexOf(a as never) - PLAN_YEARS.indexOf(b as never),
+  );
+  const rest = ys.filter((y) => y !== 'F');
+  const nums = rest.length === 1 ? `Year ${rest[0]}` : rest.length ? `Years ${rest.join(', ')}` : '';
+  if (!ys.includes('F')) return nums;
+  return nums ? `Foundation and ${nums}` : 'Foundation';
+}
+
 /** The NSW stage that covers a school year, e.g. "8" is Stage 4. */
 export function nswStageFor(year: string): string | null {
   const o = NSW.find((n) => n.years.includes(year));
@@ -209,12 +220,7 @@ export function builtForLine(opts: {
   const ys = [...new Set(opts.years)].sort(
     (a, b) => PLAN_YEARS.indexOf(a as never) - PLAN_YEARS.indexOf(b as never),
   );
-  if (ys.length)
-    parts.push(
-      ys.length === 1
-        ? yearLabel(ys[0]!)
-        : `Years ${ys.join(', ')}`.replace('Years F', 'Foundation'),
-    );
+  if (ys.length) parts.push(yearsLabel(ys));
   const s = stateById(opts.state);
   if (s?.id === 'NSW' && ys.length) {
     const stages = [...new Set(ys.map(nswStageFor).filter(Boolean))];

@@ -1,12 +1,14 @@
-import type { Diagnosis, DiagnoseRequest, Lesson, LessonBlock } from '@shared/schemas';
+import type { Diagnosis, DiagnoseRequest, Guided, Lesson, LessonBlock } from '@shared/schemas';
 import {
   DiagnosisSchema,
+  GuidedSchema,
   LessonBlockSchema,
   LessonPackSchema,
   LessonSchema,
   type LessonPack,
 } from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
+import { normaliseGuided } from '@shared/profile';
 import { supabase } from './supabase';
 import {
   useAppStore,
@@ -18,6 +20,9 @@ import {
 } from './store';
 import type { PathwayItem } from '@shared/pathway';
 import type { CheckAttempt } from '@shared/quickCheck';
+
+/** Where an intake row keeps the teacher's own answers, inside its diagnosis JSON. */
+const GUIDED_KEY = 'teacher_answers';
 import type { FeedbackRow } from '@/features/admin/feedbackSummary';
 
 // Data layer (TECH_SPEC 9.1). Features call these functions and never branch on mode:
@@ -167,12 +172,15 @@ export async function submitAccessCode(code: string): Promise<void> {
 export async function saveIntakeAndNeeds(
   situationText: string,
   diagnosis: Diagnosis,
+  guided: Guided = {},
 ): Promise<void> {
   const { mode } = useAppStore.getState();
   if (mode !== 'signed_in' || !supabase) return;
+  // The teacher's own answers (state, year levels, role, situations, days a week) are kept with
+  // the AI's reading, so signing in again or on another device keeps their state's curriculum.
   const { data: intake, error: intakeErr } = await supabase
     .from('intakes')
-    .insert({ situation_text: situationText, diagnosis })
+    .insert({ situation_text: situationText, diagnosis: { ...diagnosis, [GUIDED_KEY]: guided } })
     .select('id')
     .single();
   if (intakeErr)
@@ -224,13 +232,17 @@ export async function loadLatestFromSupabase(): Promise<boolean> {
   if (!intake) return false;
   const parsed = DiagnosisSchema.safeParse(intake.diagnosis);
   if (!parsed.success) return false;
+  const answers = GuidedSchema.safeParse(
+    (intake.diagnosis as Record<string, unknown> | null)?.[GUIDED_KEY] ?? {},
+  );
+  const guided = answers.success ? normaliseGuided(answers.data) : {};
   const { data: rows } = await supabase
     .from('needs')
     .select('id, domain, topic, tags, evidence, priority, self_rating, diagnostic_result, status')
     .eq('intake_id', intake.id)
     .order('created_at', { ascending: true });
   const store = useAppStore.getState();
-  store.setIntake({ situationText: intake.situation_text as string, guided: {} });
+  store.setIntake({ situationText: intake.situation_text as string, guided });
   store.setDiagnosis(parsed.data);
   if (rows?.length) {
     useAppStore.setState({

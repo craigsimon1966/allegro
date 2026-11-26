@@ -1,0 +1,5 @@
+- Money in lessons now shows properly. An AI lesson that wrote `$\$80$` (a dollar amount inside maths) broke the rest of the block into garbled italic letters on screen, and left stray `\` and `$` in the Word and PowerPoint downloads. Found in a live Year 11 financial maths lesson.
+- Plan a lesson: switching from Year 11 to Year 12 no longer keeps a topic that isn't taught in Year 12 (WA, SA, NT, TAS and ACT senior courses), which sent a lesson request for the wrong topic.
+- The browser tab name and keyboard focus now catch up after a screen that waits on the AI (such as building the week), instead of keeping the previous screen's name.
+- Foundation shows as "Foundation" rather than "Year F" on saved lessons, the lesson screen, the week and the downloads.
+- Signing in again, or on another device, now keeps the teacher's state, year levels, role, situation ticks and days a week. Before, only the needs came back, so a teacher outside NSW was quietly switched to the NSW curriculum.

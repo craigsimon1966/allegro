@@ -12,7 +12,6 @@ import {
   isSeniorYear,
   lessonTopicsFor,
   seniorCourseFor,
-  topicFitsYear,
   yearLabel,
 } from '@shared/curriculum';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
@@ -52,7 +51,9 @@ export default function PlanForm() {
   const topics = lessonTopicsFor(yearLevel, state);
   const chooseYear = (y: string) => {
     setYearLevel(y);
-    if (!topicFitsYear(topicTag, y)) setTopicTag(firstTopic(y));
+    // Keep the topic only if it is on the new year's list. Senior courses differ by year (some
+    // topics are Year 11 only), so a topic can fit the year in general and still not be offered.
+    if (!lessonTopicsFor(y, state).some((t) => t.id === topicTag)) setTopicTag(firstTopic(y));
   };
   const [duration, setDuration] = useState(60);
   const [classProfile, setClassProfile] = useState('');
@@ -314,7 +315,7 @@ export default function PlanForm() {
                     {l.lesson.title}
                   </Link>
                   <div className="text-[13px] text-muted">
-                    {tagById(l.inputs.topicTag)?.label ?? ''} · Year {l.lesson.year_level} ·{' '}
+                    {tagById(l.inputs.topicTag)?.label ?? ''} · {yearLabel(l.lesson.year_level)} ·{' '}
                     {l.lesson.duration_minutes} min
                   </div>
                 </li>

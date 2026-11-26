@@ -58,7 +58,7 @@ export default function Intake() {
     setIntake({ situationText: fullText, guided });
     setDiagnosis(d);
     try {
-      await saveIntakeAndNeeds(fullText, d);
+      await saveIntakeAndNeeds(fullText, d, guided);
     } catch {
       /* Saved locally; a signed-in save failure shouldn't block the teacher. */
     }

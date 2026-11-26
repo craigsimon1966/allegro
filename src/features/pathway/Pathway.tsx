@@ -15,7 +15,7 @@ import { addDays, buildPathway, sydneyWeekStart, totalMinutes } from '@shared/pa
 import { DOMAIN_LABELS } from '@shared/tags';
 import { personaById } from '@shared/personas';
 import { teacherProfile, roleShort } from '@shared/profile';
-import { builtForLine } from '@shared/curriculum';
+import { builtForLine, yearsLabel } from '@shared/curriculum';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway } from '@/lib/api';
 import { useAppStore, type ReadingPick } from '@/lib/store';
@@ -214,7 +214,7 @@ export default function Pathway() {
   const urgent = todo.filter((it) => nowNeedIds.has(it.needId)).slice(0, 3);
   const next = todo[0];
   const persona = personaId ? personaById(personaId) : undefined;
-  const yearLabel = profile.years.length ? `Year ${profile.years.join(' and ')}` : '';
+  const yearLabel = profile.years.length ? yearsLabel(profile.years) : '';
   const builtFor = builtForLine({
     years: profile.years,
     state: profile.state,

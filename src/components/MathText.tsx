@@ -4,6 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import type { Components } from 'react-markdown';
 import { MathVisual } from './MathVisual';
+import { KATEX_MACROS, protectDollars } from '@shared/dollars';
 
 /**
  * Renders Markdown (with tables) and KaTeX maths ($...$ inline, $$...$$ display).
@@ -34,12 +35,17 @@ export function MathText({
   const md = (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[[rehypeKatex, { output: 'htmlAndMathml', throwOnError: false }]]}
+      rehypePlugins={[
+        [
+          rehypeKatex,
+          { output: 'htmlAndMathml', throwOnError: false, macros: { ...KATEX_MACROS } },
+        ],
+      ]}
       components={
         inline ? { p: ({ children: c }) => <>{c}</>, pre: visualPre } : { pre: visualPre }
       }
     >
-      {children}
+      {protectDollars(children)}
     </ReactMarkdown>
   );
   return inline ? (
