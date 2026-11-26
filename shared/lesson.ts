@@ -19,7 +19,7 @@ export const LessonRequestSchema = z.object({
   /** The teacher's role and situation from their profile, so the plan fits them, not a generic teacher. */
   role: Role.optional(),
   situation: z.string().max(600).optional(),
-  situations: z.array(Situation).max(6).optional(),
+  situations: z.array(Situation).max(12).optional(),
   confidentYears: z.array(z.string().max(10)).max(13).optional(),
   newToYears: z.array(z.string().max(10)).max(13).optional(),
 });

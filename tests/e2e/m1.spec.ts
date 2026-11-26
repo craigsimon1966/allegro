@@ -81,7 +81,7 @@ test('situation choices and days a week go to the AI as fixed facts', async ({ p
     });
   });
   await startOwn(page);
-  await page.getByLabel('Your role').selectOption('experienced');
+  await page.getByLabel('Your role').selectOption('classroom');
   await page.getByText('Confident in maths, new to this year level or stage').click();
   const newTo = page.getByRole('group', { name: /^New to/ });
   await newTo.getByText('Yr 5').click();
@@ -97,12 +97,36 @@ test('situation choices and days a week go to the AI as fixed facts', async ({ p
   await expect(page).toHaveURL(/\/needs$/);
   expect(sent.situationText).toMatch(/new to this year level or stage/);
   expect(sent.guided).toMatchObject({
-    role: 'experienced',
+    role: 'classroom',
     situations: ['new_stage'],
     newToYears: ['5'],
     confidentYears: ['2'],
     teachingDaysPerWeek: 3,
   });
+});
+
+test('the situation ticks follow the role, and year levels sit beside the state', async ({
+  page,
+}) => {
+  await startOwn(page);
+  await expect(
+    page.getByText('Experienced and confident, looking to sharpen my practice'),
+  ).toBeVisible();
+  await page.getByText('In my first few years of teaching').click();
+  await page.getByLabel('Your role').selectOption('hod');
+  await expect(page.getByText('New to leading a maths team')).toBeVisible();
+  await expect(page.getByText('In my first few years of teaching')).toHaveCount(0);
+  await page.getByText('Still teaching my own classes').click();
+  await expect(page.getByText('In my first few years of teaching')).toBeVisible();
+  // The first tick was dropped when the role changed, so it isn't ticked now.
+  await expect(page.getByLabel('In my first few years of teaching')).not.toBeChecked();
+  const state = await page.getByLabel('State or territory').boundingBox();
+  const years = await page.getByRole('group', { name: 'Year levels you teach' }).boundingBox();
+  const role = await page.getByLabel('Your role').boundingBox();
+  expect(years!.y).toBeLessThan(role!.y);
+  if ((page.viewportSize()?.width ?? 0) >= 1024)
+    expect(Math.abs(years!.y - state!.y)).toBeLessThan(40);
+  await axeClean(page);
 });
 
 test('invalid AI output falls back to the guided questions', async ({ page }) => {
@@ -116,7 +140,7 @@ test('invalid AI output falls back to the guided questions', async ({ page }) =>
   await page.getByRole('button', { name: /Show me what I need/ }).click();
   await expect(page.getByRole('alert')).toContainText("couldn't make sense");
   await page.getByRole('button', { name: 'Use the guided questions instead' }).click();
-  await page.getByLabel('Your role').selectOption('out_of_field');
+  await page.getByLabel('Your role').selectOption('classroom');
   await page.getByRole('button', { name: 'Skip the AI, use my answers' }).click();
   await expect(page).toHaveURL(/\/needs$/);
   await expect(page.getByText(/couldn't reach Allegro's AI/)).toBeVisible();

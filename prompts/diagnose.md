@@ -16,7 +16,7 @@ Rules:
 {
 "summary": "string, 2-3 sentences, second person",
 "context": {
-"role": "out_of_field | early_career | casual | experienced | leader",
+"role": "classroom | casual | hod | leader | coach | preservice",
 "subject": "string",
 "year_levels": ["string"],
 "school_type": "government | catholic | independent | unknown",

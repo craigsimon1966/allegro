@@ -5,14 +5,53 @@ import { STATE_IDS } from './states';
 // Diagnosis and Lesson follow SPEC 8.3 and 8.4. Request schemas are added per milestone.
 
 export const Domain = z.enum(['CK', 'PK', 'PCK', 'ASSESSMENT', 'WELLBEING', 'CONTEXT']);
-export const Role = z.enum(['out_of_field', 'early_career', 'casual', 'experienced', 'leader']);
-/** Where the teacher is in their career and what is new to them (chosen on "Tell us about you"). */
+/**
+ * The teacher's role. The first six are what the form offers; out_of_field, early_career and
+ * experienced are older values, still read from saved profiles and the AI's reading of a
+ * teacher's words (they are situations now; see normaliseGuided in shared/profile.ts).
+ */
+export const Role = z.enum([
+  'classroom',
+  'casual',
+  'hod',
+  'leader',
+  'coach',
+  'preservice',
+  'out_of_field',
+  'early_career',
+  'experienced',
+]);
+/** Where the teacher is and what is new to them. Which ones are offered depends on the role. */
 export const Situation = z.enum([
+  // Classroom teacher
   'early_career',
   'out_of_field',
   'new_stage',
   'harder_course',
   'returning',
+  'sharpen',
+  // Casual or relief
+  'casual_out_of_field',
+  'block_placement',
+  // Head of Department
+  'new_to_leading',
+  'supporting_staff',
+  'preparing_relief',
+  'curriculum_change',
+  'still_teaching',
+  // School leader
+  'no_maths_background',
+  'staffing_out_of_field',
+  'building_capability',
+  // Instructional coach or mentor
+  'mentoring_early_career',
+  'supporting_out_of_field',
+  'coaching_team',
+  // Pre-service
+  'practicum',
+  'first_role',
+  'content_gaps',
+  // Older value, read from saved profiles only (now casual_out_of_field)
   'casual_cover',
 ]);
 export const Priority = z.enum(['now', 'soon', 'later']);
@@ -166,7 +205,7 @@ export const GuidedSchema = z.object({
   /** Old profiles only: the weekdays they taught (1 = Monday). Read as a count; see daysPerWeek. */
   teachingDays: z.array(z.number().int().min(1).max(5)).max(5).optional(),
   /** Their situation, any that apply. */
-  situations: z.array(Situation).max(6).optional(),
+  situations: z.array(Situation).max(12).optional(),
   /** Year levels they are confident teaching, and year levels that are new to them. */
   confidentYears: z.array(z.string().max(10)).max(13).optional(),
   newToYears: z.array(z.string().max(10)).max(13).optional(),

@@ -1,0 +1,4 @@
+- "Your role" now offers Classroom teacher, Casual or relief teacher, Head of Department, School leader, Instructional coach or mentor, and Pre-service teacher. "Experienced in this subject", "Early career" and "Teaching outside my trained subject" moved out of the role list and into the situation ticks, so the two no longer overlap.
+- The situation ticks change with the role (for example, a Head of Department sees "New to leading a maths team" and "Preparing lessons or cover for relief teachers"). A Head of Department who ticks "Still teaching my own classes" also sees the classroom ticks.
+- "Year levels you teach" moved to the top of the form, beside the state or territory (stacked on a phone).
+- Saved profiles with an old role carry over as Classroom teacher plus the matching tick. The demo teachers use the new roles.

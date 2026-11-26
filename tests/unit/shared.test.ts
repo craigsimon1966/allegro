@@ -11,7 +11,17 @@ import {
 import { PERSONAS, personaById } from '@shared/personas';
 import { DiagnosisSchema } from '@shared/schemas';
 import { TAG_IDS, filterTags } from '@shared/tags';
-import { daysPerWeek, normaliseGuided, situationFacts, teacherProfile } from '@shared/profile';
+import {
+  ROLES,
+  SITUATION_PROMPT,
+  daysPerWeek,
+  normaliseGuided,
+  roleShort,
+  situationFacts,
+  situationsFor,
+  teacherProfile,
+  type SituationId,
+} from '@shared/profile';
 
 describe('student name detection', () => {
   it('flags a full name next to a word about students', () => {
@@ -136,9 +146,34 @@ describe('teacher situation and days a week', () => {
     expect(facts).toMatch(/New to teaching: Year 5, Year 6/);
     expect(facts).toMatch(/teach 3 days a week/);
     expect(facts).not.toMatch(/—/);
-    expect(teacherProfile({ situations: ['casual_cover'] }, null).role).toBe('casual');
-    expect(teacherProfile({ role: 'leader', situations: ['casual_cover'] }, null).role).toBe(
-      'leader',
-    );
+    // Old roles become a role and a situation; the old casual tick takes its new name.
+    expect(teacherProfile({ role: 'out_of_field' }, null)).toMatchObject({
+      role: 'classroom',
+      situations: ['out_of_field'],
+    });
+    expect(normaliseGuided({ role: 'casual', situations: ['casual_cover'] })).toEqual({
+      role: 'casual',
+      situations: ['casual_out_of_field'],
+    });
+    expect(roleShort(teacherProfile({ role: 'out_of_field' }, null))).toBe('teaching out of field');
+    expect(roleShort(teacherProfile({ role: 'hod' }, null))).toBe('Head of Department');
+  });
+
+  it('offers the situation ticks for the role, with no overlap with the roles', () => {
+    const ids = (role: Parameters<typeof situationsFor>[0], t: SituationId[] = []) =>
+      situationsFor(role, t).map((x) => x.id);
+    expect(ids(undefined)).toEqual(ids('classroom'));
+    expect(ids('classroom')).toContain('sharpen');
+    expect(ids('hod')).not.toContain('new_stage');
+    // A Head of Department who still teaches also sees the classroom ticks.
+    expect(ids('hod', ['still_teaching'])).toEqual(expect.arrayContaining(ids('classroom')));
+    expect(ids('preservice')).toEqual(['practicum', 'first_role', 'content_gaps']);
+    for (const r of ROLES) {
+      expect(r.label).not.toMatch(/—/);
+      for (const x of situationsFor(r.id, ['still_teaching'])) {
+        expect(SITUATION_PROMPT[x.id]).toBeTruthy();
+        expect(x.label).not.toMatch(/—|\bmath\b|organiz/);
+      }
+    }
   });
 });

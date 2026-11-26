@@ -22,7 +22,7 @@ import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
 import { tagById } from '@shared/tags';
 import { builtForLine, curriculumRows } from '@shared/curriculum';
-import { ROLE_SHORT } from '@shared/profile';
+import { roleShort } from '@shared/profile';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { UNITS } from '@shared/catalogue';
@@ -419,7 +419,7 @@ export default function LessonView() {
               {builtForLine({
                 years: [lesson.year_level],
                 state,
-                role: profile.role ? ROLE_SHORT[profile.role] : null,
+                role: roleShort(profile),
               })}
             </p>
             <CurriculumCodes

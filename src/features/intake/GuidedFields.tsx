@@ -1,17 +1,10 @@
 import type { Guided } from '@shared/schemas';
-import { SITUATIONS, daysPerWeek, normaliseGuided } from '@shared/profile';
+import { ASKS_LEVELS, ROLES, daysPerWeek, normaliseGuided, situationsFor } from '@shared/profile';
 
 // Guided fields for the intake (SPEC 7.3). Also the fallback when the AI is unavailable.
-// AboutYouFields (role and situation) sit in the open form because they shape every AI call;
+// YearChips (beside the state) and AboutYouFields (role and situation) sit in the open form
+// because they shape every AI call;
 // GuidedFields hold the optional details.
-
-const ROLES: { value: NonNullable<Guided['role']>; label: string }[] = [
-  { value: 'out_of_field', label: 'Teaching outside my trained subject' },
-  { value: 'early_career', label: 'Early career (first few years)' },
-  { value: 'casual', label: 'Casual or relief' },
-  { value: 'experienced', label: 'Experienced in this subject' },
-  { value: 'leader', label: 'School leader' },
-];
 
 const YEARS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 const DAYS_PER_WEEK = [1, 2, 3, 4, 5];
@@ -31,7 +24,7 @@ function hoursLabel(h: number) {
 const chip = (on: boolean) =>
   `inline-flex min-h-tap min-w-tap cursor-pointer items-center justify-center rounded border-2 px-2 font-bold ${on ? 'border-green-700 bg-sage-100 text-ink' : 'border-border text-ink'}`;
 
-function YearChips({
+export function YearChips({
   legendText,
   hint,
   value,
@@ -68,7 +61,7 @@ function YearChips({
   );
 }
 
-/** Role, situation and year levels: who the teacher is right now. */
+/** Role and situation: who the teacher is right now. The ticks offered depend on the role. */
 export function AboutYouFields({
   value,
   onChange,
@@ -78,7 +71,13 @@ export function AboutYouFields({
 }) {
   const set = (patch: Partial<Guided>) => onChange({ ...value, ...patch });
   const situations = value.situations ?? [];
-  const askLevels = situations.includes('new_stage') || situations.includes('harder_course');
+  const options = situationsFor(value.role, situations);
+  const askLevels = situations.some((x) => ASKS_LEVELS.includes(x));
+  // A new role keeps only the ticks it also offers.
+  const chooseRole = (role: Guided['role']) => {
+    const keep = situationsFor(role, situations).map((o) => o.id);
+    set({ role, situations: situations.filter((x) => keep.includes(x)) });
+  };
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -89,11 +88,11 @@ export function AboutYouFields({
           id="g-role"
           className={field}
           value={value.role ?? ''}
-          onChange={(e) => set({ role: (e.target.value || undefined) as Guided['role'] })}
+          onChange={(e) => chooseRole((e.target.value || undefined) as Guided['role'])}
         >
           <option value="">Choose one</option>
           {ROLES.map((r) => (
-            <option key={r.value} value={r.value}>
+            <option key={r.id} value={r.id}>
               {r.label}
             </option>
           ))}
@@ -105,7 +104,7 @@ export function AboutYouFields({
           Your situation <span className="font-normal text-muted">(choose any that fit)</span>
         </legend>
         <div className="flex flex-col gap-2">
-          {SITUATIONS.map((s) => {
+          {options.map((s) => {
             const on = situations.includes(s.id);
             return (
               <label
@@ -127,12 +126,6 @@ export function AboutYouFields({
           })}
         </div>
       </fieldset>
-
-      <YearChips
-        legendText="Year levels you teach"
-        value={value.yearLevels}
-        onChange={(yearLevels) => set({ yearLevels })}
-      />
 
       {askLevels && (
         <>

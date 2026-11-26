@@ -12,8 +12,8 @@ import type { Diagnosis, Guided } from '@shared/schemas';
 import { STATES, stateById } from '@shared/states';
 import { ApiError, diagnose, saveIntakeAndNeeds } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
-import { SITUATIONS, normaliseGuided } from '@shared/profile';
-import { AboutYouFields, GuidedFields } from './GuidedFields';
+import { normaliseGuided, situationLabel } from '@shared/profile';
+import { AboutYouFields, GuidedFields, YearChips } from './GuidedFields';
 
 // Situation intake (SPEC 7.3).
 
@@ -51,7 +51,7 @@ export default function Intake() {
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;
 
   // The teacher can pick situations and skip writing; then the picks are their description.
-  const picked = SITUATIONS.filter((x) => guided.situations?.includes(x.id)).map((x) => x.label);
+  const picked = (guided.situations ?? []).map((x) => situationLabel(x, guided.role));
   const fullText = text.trim() || (picked.length ? `${picked.join('. ')}.` : '');
 
   const finish = async (d: Diagnosis) => {
@@ -156,31 +156,41 @@ export default function Intake() {
           </form>
         ) : (
           <form onSubmit={submit} className="mt-6 flex flex-col gap-5">
-            <div>
-              <Label as="label" htmlFor="state" className="mb-1.5 block">
-                State or territory
-              </Label>
-              <select
-                id="state"
-                value={guided.state ?? ''}
-                onChange={(e) =>
-                  setGuided({ ...guided, state: (e.target.value || undefined) as Guided['state'] })
-                }
-                aria-describedby="state-note"
-                className="h-12 w-full max-w-sm rounded border-2 border-ink bg-field px-3 text-[17px] text-ink"
-              >
-                <option value="">Choose one</option>
-                {STATES.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-              <p id="state-note" className="mt-1.5 text-sm text-muted">
-                {stateById(guided.state)
-                  ? `We'll use the ${stateById(guided.state)!.curriculum}.`
-                  : "So we use your state's maths curriculum."}
-              </p>
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+              <div>
+                <Label as="label" htmlFor="state" className="mb-1.5 block">
+                  State or territory
+                </Label>
+                <select
+                  id="state"
+                  value={guided.state ?? ''}
+                  onChange={(e) =>
+                    setGuided({
+                      ...guided,
+                      state: (e.target.value || undefined) as Guided['state'],
+                    })
+                  }
+                  aria-describedby="state-note"
+                  className="h-12 w-full max-w-sm rounded border-2 border-ink bg-field px-3 text-[17px] text-ink"
+                >
+                  <option value="">Choose one</option>
+                  {STATES.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+                <p id="state-note" className="mt-1.5 text-sm text-muted">
+                  {stateById(guided.state)
+                    ? `We'll use the ${stateById(guided.state)!.curriculum}.`
+                    : "So we use your state's maths curriculum."}
+                </p>
+              </div>
+              <YearChips
+                legendText="Year levels you teach"
+                value={guided.yearLevels}
+                onChange={(yearLevels) => setGuided({ ...guided, yearLevels })}
+              />
             </div>
 
             <AboutYouFields value={guided} onChange={setGuided} />
