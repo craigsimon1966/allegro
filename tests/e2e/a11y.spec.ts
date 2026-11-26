@@ -84,9 +84,11 @@ for (const size of [
 test('with reduced motion, the loading mark does not animate', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/styleguide');
-  const circle = page.locator('.allegro-mark-loading circle').first();
-  await expect(circle).toHaveCount(1);
-  expect(await circle.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+  const mark = page.locator('img.allegro-mark-spin').first();
+  await expect(mark).toHaveCount(1);
+  expect(await mark.evaluate((el) => getComputedStyle(el).animationName)).toBe('none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  expect(await mark.evaluate((el) => getComputedStyle(el).animationName)).toBe('allegro-spin');
 });
 
 test('each screen names the browser tab, and a new screen moves focus to its heading', async ({
