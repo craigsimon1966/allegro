@@ -8,11 +8,16 @@ import {
   type Lesson,
 } from '../../shared/schemas';
 import { fallbackPack, groundPack } from '../../shared/lessonPack';
-import { LessonRequestSchema, groundLesson, misconceptionsBlock } from '../../shared/lesson';
+import {
+  LessonRequestSchema,
+  curriculumRefsFor,
+  groundLesson,
+  misconceptionsBlock,
+} from '../../shared/lesson';
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
 import { curriculumContext } from '../../shared/states';
-import { topicFitsYear, yearLabel } from '../../shared/curriculum';
+import { checkAc9, topicFitsYear, yearLabel } from '../../shared/curriculum';
 import { ROLE_PROMPT, situationFacts } from '../../shared/profile';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
@@ -78,6 +83,19 @@ export function referenceFor(topicTag: string): string {
     .slice(0, 8000);
 }
 
+/**
+ * The official AC v9 content for this topic in this year, so a broad topic (for example area,
+ * volume and angles) is narrowed to what this year actually teaches.
+ */
+export function curriculumFocus(topicTag: string, yearLevel: string): string {
+  const lines = curriculumRefsFor(topicTag, yearLevel)
+    .ac9.map((c) => checkAc9(c, [yearLevel]))
+    .flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : []));
+  return lines.length
+    ? `What ${yearLabel(yearLevel)} learns in this topic (AC v9). Choose one focus from this list that fits a single lesson:\n${lines.join('\n')}`
+    : '';
+}
+
 export async function handleLesson(request: Request, env: Env, deps: Deps = {}) {
   const fetchImpl = deps.fetch ?? fetch;
   const g = await gate(request, env, fetchImpl);
@@ -112,6 +130,7 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
       : '',
     req.situation ? `- Their situation, in summary: ${req.situation}` : '',
     `Topic: ${tag.label}`,
+    curriculumFocus(req.topicTag, req.yearLevel),
     `Lesson length: ${req.durationMinutes} minutes`,
     `Class profile (general): ${req.classProfile || 'not given'}`,
     req.lastLesson ? `Covered last lesson: ${req.lastLesson}` : '',

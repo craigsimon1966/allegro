@@ -10,7 +10,7 @@ import {
   unitFitsYears,
 } from '@shared/pathway';
 import { personaById, PERSONAS } from '@shared/personas';
-import { TAG_IDS } from '@shared/tags';
+import { NEED_TAGS, TAG_IDS } from '@shared/tags';
 import { checkRefs } from '@shared/curriculum';
 
 const tammy = personaById('tammy')!;
@@ -40,7 +40,11 @@ describe('content catalogue', () => {
   });
 
   it('every tag has at least one unit, so no need leaves an empty week', () => {
-    for (const t of TAG_IDS) expect(UNITS.some((u) => u.tags.includes(t))).toBe(true);
+    for (const t of NEED_TAGS)
+      expect(
+        UNITS.some((u) => u.tags.includes(t.id)),
+        t.id,
+      ).toBe(true);
   });
 });
 

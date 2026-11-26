@@ -1,7 +1,12 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { CompleteArgs, Completer } from '../../functions/_lib/anthropic';
-import { handleLesson, handleLessonBlock, handleLessonPack } from '../../functions/_lib/lesson';
+import {
+  curriculumFocus,
+  handleLesson,
+  handleLessonBlock,
+  handleLessonPack,
+} from '../../functions/_lib/lesson';
 import { resetMemoryLimits } from '../../functions/_lib/ratelimit';
 import { DEMO_LESSON, blockMinutes, groundLesson, misconceptionsFor } from '../../shared/lesson';
 import { LessonPackSchema, LessonSchema, type Lesson } from '../../shared/schemas';
@@ -132,6 +137,14 @@ describe('POST /api/lesson', () => {
     expect(msg).toContain('Year 8');
     expect(msg).toContain('outside their trained subject');
     expect(msg).toContain('PE teacher, new to maths');
+  });
+  it("narrows a topic to that year's official content", () => {
+    const y7 = curriculumFocus('measurement.area-volume-angles', '7');
+    expect(y7).toContain('AC9M7M01');
+    expect(y7).not.toContain('AC9M8M06');
+    expect(y7).not.toMatch(/Pythagoras/);
+    expect(curriculumFocus('measurement.area-volume-angles', '8')).toMatch(/Pythagoras/);
+    expect(curriculumFocus('pck.differentiation', '8')).toBe('');
   });
   it('refuses a topic that is not taught in the chosen year, before any AI call', async () => {
     let called = false;

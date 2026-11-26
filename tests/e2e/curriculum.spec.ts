@@ -37,10 +37,16 @@ test('plan a lesson: year first, topics for that year, codes with their official
   await year.selectOption('1');
   await expect(topic.locator('option')).toHaveText([
     'Early number (counting, subitising, part-part-whole)',
+    'Patterns, skip counting and equal groups',
+    'Measuring length, mass, capacity and time',
+    'Shapes, objects and position',
+    'Collecting, sorting and showing data',
   ]);
   await year.selectOption('4');
-  await expect(page.getByText(/doesn't have lesson topics for Year 4 yet/)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Draft my lesson/ })).toBeDisabled();
+  await expect(topic.locator('option')).toHaveCount(5);
+  await expect(
+    topic.locator('option', { hasText: 'Fractions, decimals and percentages' }),
+  ).toHaveCount(1);
 
   await year.selectOption('8');
   await topic.selectOption('algebra.linear');

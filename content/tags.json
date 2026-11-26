@@ -6,7 +6,7 @@
       "id": "algebra.linear",
       "domain": "CK",
       "label": "Linear relationships (gradient, tables, graphs and rules)",
-      "yearLevels": ["7", "8", "9"],
+      "yearLevels": ["7", "8", "9", "10"],
       "curriculum": {
         "ac9": [
           "AC9M7A04",
@@ -16,7 +16,8 @@
           "AC9M8A04",
           "AC9M9A03",
           "AC9M9A05",
-          "AC9M9A06"
+          "AC9M9A06",
+          "AC9M10A02"
         ],
         "nsw": ["MA4-LIN-C-01", "MA5-LIN-C-01", "MA5-LIN-C-02"]
       }
@@ -115,6 +116,277 @@
         "ac9": ["AC9MFN02", "AC9MFN04", "AC9M1N02", "AC9M1N04", "AC9M2N02"],
         "nsw": ["MAE-CSQ-02", "MAE-RWN-01", "MA1-CSQ-01", "MA1-RWN-02"]
       }
+    },
+    {
+      "id": "primary.patterns-groups",
+      "domain": "CK",
+      "label": "Patterns, skip counting and equal groups",
+      "yearLevels": ["F", "1", "2"],
+      "curriculum": {
+        "ac9": [
+          "AC9MFA01",
+          "AC9MFN06",
+          "AC9M1A01",
+          "AC9M1A02",
+          "AC9M1N03",
+          "AC9M1N06",
+          "AC9M2A01",
+          "AC9M2A03",
+          "AC9M2N05"
+        ],
+        "nsw": ["MAE-FG-01", "MAE-FG-02", "MA1-FG-01"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "primary.measurement",
+      "domain": "CK",
+      "label": "Measuring length, mass, capacity and time",
+      "yearLevels": ["F", "1", "2"],
+      "curriculum": {
+        "ac9": [
+          "AC9MFM01",
+          "AC9MFM02",
+          "AC9M1M01",
+          "AC9M1M02",
+          "AC9M1M03",
+          "AC9M2M01",
+          "AC9M2M03",
+          "AC9M2M04"
+        ],
+        "nsw": ["MAE-GM-02", "MAE-NSM-01", "MAE-NSM-02", "MA1-GM-02", "MA1-NSM-01", "MA1-NSM-02"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "primary.shape-position",
+      "domain": "CK",
+      "label": "Shapes, objects and position",
+      "yearLevels": ["F", "1", "2"],
+      "curriculum": {
+        "ac9": ["AC9MFSP01", "AC9MFSP02", "AC9M1SP01", "AC9M1SP02", "AC9M2SP01", "AC9M2SP02"],
+        "nsw": ["MAE-2DS-01", "MAE-3DS-01", "MAE-GM-01", "MA1-2DS-01", "MA1-3DS-01", "MA1-GM-01"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "primary.data",
+      "domain": "CK",
+      "label": "Collecting, sorting and showing data",
+      "yearLevels": ["F", "1", "2"],
+      "curriculum": {
+        "ac9": ["AC9MFST01", "AC9M1ST01", "AC9M1ST02", "AC9M2ST01", "AC9M2ST02"],
+        "nsw": ["MAE-DATA-01", "MA1-DATA-01", "MA1-DATA-02"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "number.place-value",
+      "domain": "CK",
+      "label": "Place value, decimals and estimation",
+      "yearLevels": ["3", "4", "5", "6"],
+      "curriculum": {
+        "ac9": [
+          "AC9M3N01",
+          "AC9M3N03",
+          "AC9M3N05",
+          "AC9M4N01",
+          "AC9M4N07",
+          "AC9M5N01",
+          "AC9M5N08",
+          "AC9M6N04",
+          "AC9M6N06"
+        ],
+        "nsw": ["MA2-RN-01", "MA2-RN-02", "MA2-AR-01", "MA3-RN-01", "MA3-RN-02"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "number.multiplicative",
+      "domain": "CK",
+      "label": "Multiplication and division (facts, arrays, strategies, factors)",
+      "yearLevels": ["3", "4", "5", "6"],
+      "curriculum": {
+        "ac9": [
+          "AC9M3A03",
+          "AC9M3N04",
+          "AC9M4A02",
+          "AC9M4N05",
+          "AC9M4N06",
+          "AC9M5A01",
+          "AC9M5N02",
+          "AC9M5N06",
+          "AC9M5N07",
+          "AC9M6N02",
+          "AC9M6A02"
+        ],
+        "nsw": ["MA2-MR-01", "MA2-MR-02", "MA3-MR-01", "MA3-MR-02"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "number.fractions",
+      "domain": "CK",
+      "label": "Fractions, decimals and percentages",
+      "yearLevels": ["3", "4", "5", "6"],
+      "curriculum": {
+        "ac9": [
+          "AC9M3N02",
+          "AC9M4N03",
+          "AC9M4N04",
+          "AC9M5N03",
+          "AC9M5N04",
+          "AC9M5N05",
+          "AC9M6N03",
+          "AC9M6N05",
+          "AC9M6N07"
+        ],
+        "nsw": ["MA2-PF-01", "MA3-RQF-01", "MA3-RQF-02", "MA3-RN-03"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "measurement.length-area-angles",
+      "domain": "CK",
+      "label": "Length, perimeter, area and angles",
+      "yearLevels": ["3", "4", "5", "6"],
+      "curriculum": {
+        "ac9": [
+          "AC9M3M02",
+          "AC9M3M05",
+          "AC9M4M02",
+          "AC9M4M04",
+          "AC9M5M02",
+          "AC9M5M04",
+          "AC9M6M02",
+          "AC9M6M04"
+        ],
+        "nsw": ["MA2-GM-02", "MA2-GM-03", "MA2-2DS-03", "MA3-2DS-02", "MA3-2DS-03", "MA3-GM-03"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "statistics.data-chance",
+      "domain": "CK",
+      "label": "Data displays and chance",
+      "yearLevels": ["3", "4", "5", "6"],
+      "curriculum": {
+        "ac9": [
+          "AC9M3ST02",
+          "AC9M3P01",
+          "AC9M4ST01",
+          "AC9M4P01",
+          "AC9M5ST02",
+          "AC9M5P01",
+          "AC9M6ST01",
+          "AC9M6P01"
+        ],
+        "nsw": [
+          "MA2-DATA-01",
+          "MA2-DATA-02",
+          "MA2-CHAN-01",
+          "MA3-DATA-01",
+          "MA3-DATA-02",
+          "MA3-CHAN-01"
+        ]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "number.integers",
+      "domain": "CK",
+      "label": "Integers and negative numbers",
+      "yearLevels": ["7", "8"],
+      "curriculum": {
+        "ac9": ["AC9M7N07", "AC9M8N04"],
+        "nsw": ["MA4-INT-C-01"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "measurement.area-volume-angles",
+      "domain": "CK",
+      "label": "Area, volume, circles, angles and Pythagoras",
+      "yearLevels": ["7", "8"],
+      "curriculum": {
+        "ac9": [
+          "AC9M7M01",
+          "AC9M7M02",
+          "AC9M7M03",
+          "AC9M7M04",
+          "AC9M7M05",
+          "AC9M8M01",
+          "AC9M8M02",
+          "AC9M8M03",
+          "AC9M8M06"
+        ],
+        "nsw": ["MA4-ARE-C-01", "MA4-VOL-C-01", "MA4-LEN-C-01", "MA4-ANG-C-01", "MA4-PYT-C-01"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "statistics.probability",
+      "domain": "CK",
+      "label": "Statistics and probability (summary statistics, displays, chance)",
+      "yearLevels": ["7", "8", "9", "10"],
+      "curriculum": {
+        "ac9": [
+          "AC9M7ST01",
+          "AC9M7ST02",
+          "AC9M7P01",
+          "AC9M8ST02",
+          "AC9M8P01",
+          "AC9M8P02",
+          "AC9M9ST03",
+          "AC9M9P01",
+          "AC9M9P02",
+          "AC9M10ST02",
+          "AC9M10ST03",
+          "AC9M10P01"
+        ],
+        "nsw": [
+          "MA4-DAT-C-01",
+          "MA4-DAT-C-02",
+          "MA4-PRO-C-01",
+          "MA5-DAT-C-01",
+          "MA5-DAT-C-02",
+          "MA5-PRO-C-01"
+        ]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "algebra.techniques",
+      "domain": "CK",
+      "label": "Expanding, factorising, indices and solving equations",
+      "yearLevels": ["9", "10"],
+      "curriculum": {
+        "ac9": ["AC9M9A01", "AC9M9A02", "AC9M10A01"],
+        "nsw": ["MA5-ALG-C-01", "MA5-IND-C-01", "MA5-EQU-C-01"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "algebra.non-linear",
+      "domain": "CK",
+      "label": "Non-linear relationships (quadratics and exponentials)",
+      "yearLevels": ["9", "10"],
+      "curriculum": {
+        "ac9": ["AC9M9A04", "AC9M9A06", "AC9M10A03", "AC9M10A04"],
+        "nsw": ["MA5-NLI-C-01", "MA5-NLI-C-02"]
+      },
+      "lessonOnly": true
+    },
+    {
+      "id": "measurement.trigonometry",
+      "domain": "CK",
+      "label": "Pythagoras and right-angled trigonometry",
+      "yearLevels": ["9", "10"],
+      "curriculum": {
+        "ac9": ["AC9M9M03", "AC9M9SP01", "AC9M10M03"],
+        "nsw": ["MA5-TRG-C-01", "MA5-TRG-C-02"]
+      },
+      "lessonOnly": true
     },
     {
       "id": "assessment.success-criteria",
