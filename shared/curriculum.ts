@@ -5,6 +5,7 @@
 // placeholders and codes a model might make up, is dropped.
 import ac9File from '../content/curriculum/ac9-maths.json';
 import nswFile from '../content/curriculum/nsw-maths.json';
+import seniorFile from '../content/curriculum/senior-maths.json';
 import { TAGS, tagById } from './tags';
 import { stateById } from './states';
 
@@ -32,12 +33,23 @@ export interface CheckedCode {
 export interface CurriculumRefs {
   ac9: string[];
   nsw: string[];
+  /** Senior general maths outside NSW (SACE, TASC), named by each document's own numbering. */
+  senior?: string[];
+}
+export interface SeniorOutcome {
+  code: string;
+  states: string[];
+  course: string;
+  years: string[];
+  text: string;
 }
 
 export const AC9: Ac9Code[] = ac9File;
 export const NSW: NswOutcome[] = nswFile;
 const AC9_BY_CODE = new Map(AC9.map((c) => [c.code, c]));
 const NSW_BY_CODE = new Map(NSW.map((c) => [c.code, c]));
+export const SENIOR: SeniorOutcome[] = seniorFile;
+const SENIOR_BY_CODE = new Map(SENIOR.map((c) => [c.code, c]));
 
 export const YEAR_LEVELS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const;
 
@@ -47,9 +59,15 @@ export const SENIOR_YEARS = ['11', '12'] as const;
 export const PLAN_YEARS = [...YEAR_LEVELS, ...SENIOR_YEARS] as const;
 export const isSeniorYear = (year: string) => (SENIOR_YEARS as readonly string[]).includes(year);
 
-/** The senior general maths course Allegro has for a state, if any (NSW only so far). */
+/** The senior general maths course Allegro has for each state so far. */
+const SENIOR_COURSES: Record<string, string> = {
+  NSW: 'NSW Mathematics Standard',
+  SA: 'SACE General Mathematics',
+  NT: 'SACE General Mathematics',
+  TAS: 'TASC General Mathematics',
+};
 export function seniorCourseFor(state: string | null | undefined): string | null {
-  return (stateById(state)?.id ?? 'NSW') === 'NSW' ? 'NSW Mathematics Standard' : null;
+  return SENIOR_COURSES[stateById(state)?.id ?? 'NSW'] ?? null;
 }
 
 export const yearLabel = (year: string) => (year === 'F' ? 'Foundation' : `Year ${year}`);
@@ -82,12 +100,24 @@ export function checkNsw(code: string, years: string[] | null): CheckedCode | nu
   return { code: c.code, level: c.stage, text: c.text };
 }
 
+/** A senior outcome outside NSW, checked against the official list, the state and the year. */
+export function checkSenior(
+  code: string,
+  years: string[] | null,
+  state?: string | null,
+): CheckedCode | null {
+  const c = SENIOR_BY_CODE.get(code);
+  if (!c || !fitsYears(c.years, years)) return null;
+  if (state !== undefined && !c.states.includes(stateById(state)?.id ?? 'NSW')) return null;
+  return { code: c.code, level: c.course, text: c.text };
+}
+
 /** Keeps only the codes that pass both checks, in order, without repeats. */
 export function checkRefs(
   refs: CurriculumRefs,
   years: string[] | null,
-): { ac9: CheckedCode[]; nsw: CheckedCode[] } {
-  const keep = (codes: string[], check: typeof checkAc9) => {
+): { ac9: CheckedCode[]; nsw: CheckedCode[]; senior: CheckedCode[] } {
+  const keep = (codes: string[], check: (c: string, y: string[] | null) => CheckedCode | null) => {
     const seen = new Set<string>();
     return codes.flatMap((c) => {
       const r = seen.has(c) ? null : check(c, years);
@@ -95,7 +125,11 @@ export function checkRefs(
       return r ? [r] : [];
     });
   };
-  return { ac9: keep(refs.ac9, checkAc9), nsw: keep(refs.nsw, checkNsw) };
+  return {
+    ac9: keep(refs.ac9, checkAc9),
+    nsw: keep(refs.nsw, checkNsw),
+    senior: keep(refs.senior ?? [], checkSenior),
+  };
 }
 
 /**
@@ -111,8 +145,10 @@ export function curriculumRows(
   const checked = checkRefs(refs, years);
   const rows = [{ label: 'AC v9', codes: checked.ac9 }];
   // With no state chosen, NSW, as before (the demo teachers are all in NSW).
-  if ((stateById(state)?.id ?? 'NSW') === 'NSW')
-    rows.push({ label: 'NSW syllabus', codes: checked.nsw });
+  const s = stateById(state)?.id ?? 'NSW';
+  if (s === 'NSW') rows.push({ label: 'NSW syllabus', codes: checked.nsw });
+  const senior = checked.senior.filter((c) => SENIOR_BY_CODE.get(c.code)?.states.includes(s));
+  if (senior.length) rows.push({ label: seniorCourseFor(s) ?? 'Senior course', codes: senior });
   return rows.filter((r) => r.codes.length > 0);
 }
 
@@ -136,7 +172,9 @@ export function lessonTopicsFor(year: string, state?: string | null) {
         t.domain === 'CK' &&
         (t.states ?? []).includes(s) &&
         topicFitsYear(t.id, year) &&
-        topicRefs(t.id).nsw.some((c) => checkNsw(c, [year])),
+        (s === 'NSW'
+          ? topicRefs(t.id).nsw.some((c) => checkNsw(c, [year]))
+          : (topicRefs(t.id).senior ?? []).some((c) => checkSenior(c, [year], s))),
     );
   }
   return TAGS.filter(
@@ -154,7 +192,7 @@ export function lessonTopicsFor(year: string, state?: string | null) {
 /** A topic's codes (content/tags.json), for lessons. Checking against the year happens on display. */
 export function topicRefs(tagId: string): CurriculumRefs {
   const c = (tagById(tagId) as { curriculum?: CurriculumRefs } | undefined)?.curriculum;
-  return { ac9: c?.ac9 ?? [], nsw: c?.nsw ?? [] };
+  return { ac9: c?.ac9 ?? [], nsw: c?.nsw ?? [], senior: c?.senior ?? [] };
 }
 
 /** "Year 8, NSW Stage 4" or "Year 8, Queensland": the line that says who a plan was built for. */

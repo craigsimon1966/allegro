@@ -2,11 +2,15 @@
 //   AC v9: ACARA's curriculum API, one file per year (Foundation to Year 10).
 //   NSW:   the NESA Mathematics K-10 (2022) syllabus page, which embeds every outcome, and the
 //          Mathematics Standard 11-12 (2024) outcomes page (Stage 6, MST codes).
-// Writes content/curriculum/ac9-maths.json and content/curriculum/nsw-maths.json.
+//   Senior general maths for other states, from each authority's official course document:
+//          SACE Stage 1 and 2 General Mathematics subject outlines (SA and NT), and the TASC
+//          General Mathematics Level 2 and Level 3 course pages (Tasmania).
+// Writes content/curriculum/ac9-maths.json, nsw-maths.json and senior-maths.json.
 // Run with: NODE_USE_ENV_PROXY=1 npx tsx scripts/curriculum-import.ts
 // Nothing here is typed by hand: every code and its wording comes from the official source.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { unzipSync, strFromU8 } from 'fflate';
 
 const OUT = join(process.cwd(), 'content', 'curriculum');
 const ACARA = 'https://www.australiancurriculum.edu.au/conf/acara/api/spa/ac/curriculum.';
@@ -119,6 +123,83 @@ async function nswStandard() {
   return [...seen.values()].sort((a, b) => a.code.localeCompare(b.code));
 }
 
+// Senior general maths courses outside NSW. These documents have no outcome codes, so each entry
+// is named by the document's own numbering (for example "Stage 2 Subtopic 3.1").
+interface SeniorOutcome {
+  code: string;
+  states: string[];
+  course: string;
+  years: string[];
+  text: string;
+}
+
+const SACE_OUTLINES = [
+  {
+    stage: 'Stage 1',
+    year: '11',
+    url: 'https://www.sace.sa.edu.au/documents/652891/12131490/Stage+1+General+Mathematics+Subject+Outline.docx/84e3772f-9df4-8224-2bc9-740ed94330ec?version=1.0',
+  },
+  {
+    stage: 'Stage 2',
+    year: '12',
+    url: 'https://www.sace.sa.edu.au/documents/652891/12131490/Stage+2+General+Mathematics+Subject+Outline.docx/43d9668c-b2ac-50c4-7033-453c12652131?version=1.0',
+  },
+];
+
+async function sace(): Promise<SeniorOutcome[]> {
+  const out: SeniorOutcome[] = [];
+  for (const o of SACE_OUTLINES) {
+    const res = await fetch(o.url);
+    if (!res.ok) throw new Error(`SACE ${o.stage}: ${res.status}`);
+    const xml = strFromU8(unzipSync(new Uint8Array(await res.arrayBuffer()))['word/document.xml']!);
+    const paras = [...xml.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)].map((m) => clean(m[0]));
+    const topics = new Map<string, string>();
+    for (const p of paras) {
+      const t = /^Topic (\d+): (.+?)\.?$/.exec(p);
+      if (t && !topics.has(t[1]!)) topics.set(t[1]!, t[2]!);
+      const s = /^Subtopic (\d+)\.(\d+): (.+)$/.exec(p);
+      if (!s) continue;
+      const code = `${o.stage} Subtopic ${s[1]}.${s[2]}`;
+      if (out.some((x) => x.code === code)) continue;
+      out.push({
+        code,
+        states: ['SA', 'NT'],
+        course: `SACE ${o.stage} General Mathematics`,
+        years: [o.year],
+        text: `${s[3]} (Topic ${s[1]}: ${topics.get(s[1]!) ?? ''})`,
+      });
+    }
+  }
+  return out;
+}
+
+const TASC_COURSES = [
+  { code: 'MTG215123', level: 'Level 2', year: '11', path: 'mtg215123-3' },
+  { code: 'MTG315123', level: 'Level 3', year: '12', path: 'mtg315123-3' },
+];
+
+async function tasc(): Promise<SeniorOutcome[]> {
+  const out: SeniorOutcome[] = [];
+  for (const c of TASC_COURSES) {
+    const res = await fetch(`https://www.tasc.tas.gov.au/students/courses/mathematics/${c.path}/`);
+    if (!res.ok) throw new Error(`TASC ${c.code}: ${res.status}`);
+    const html = await res.text();
+    const at = html.indexOf('On successful completion of this course, learners will be able to');
+    const list = /<ol>([\s\S]*?)<\/ol>/.exec(html.slice(at));
+    if (at < 0 || !list) throw new Error(`TASC ${c.code}: learning outcomes not found`);
+    [...list[1]!.matchAll(/<li>([\s\S]*?)<\/li>/g)].forEach((m, i) =>
+      out.push({
+        code: `${c.code} Outcome ${i + 1}`,
+        states: ['TAS'],
+        course: `TASC General Mathematics ${c.level} (${c.code})`,
+        years: [c.year],
+        text: clean(m[1]!),
+      }),
+    );
+  }
+  return out;
+}
+
 const main = async () => {
   mkdirSync(OUT, { recursive: true });
   const a = await ac9();
@@ -132,6 +213,10 @@ const main = async () => {
     throw new Error(`Too few codes: AC9 ${a.length}, NSW ${n.length}`);
   writeFileSync(join(OUT, 'ac9-maths.json'), JSON.stringify(a, null, 2) + '\n');
   writeFileSync(join(OUT, 'nsw-maths.json'), JSON.stringify(n, null, 2) + '\n');
+  const senior = [...(await sace()), ...(await tasc())];
+  if (senior.length < 40) throw new Error(`Too few senior outcomes: ${senior.length}`);
+  writeFileSync(join(OUT, 'senior-maths.json'), JSON.stringify(senior, null, 2) + '\n');
+  console.log(`Senior (SACE, TASC): ${senior.length} entries.`);
   console.log(`AC v9: ${a.length} content descriptions. NSW: ${n.length} outcomes.`);
 };
 

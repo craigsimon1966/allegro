@@ -88,6 +88,20 @@ Imported from the NESA Mathematics Standard 11-12 (2024) outcomes page by `scrip
 | senior.statistics     | 11, 12 | MST-11-08, MST-12-S1-06, MST-12-S1-07, MST-12-S2-08, MST-12-S2-09, MST-12-S2-10 |
 | senior.networks       | 11, 12 | MST-11-07, MST-12-S2-06, MST-12-S2-07                                           |
 
+## SACE and TASC General Mathematics (SA, NT and Tasmania)
+
+Imported by `scripts/curriculum-import.ts` from the SACE Stage 1 and Stage 2 General Mathematics subject outlines and the TASC General Mathematics Level 2 (MTG215123) and Level 3 (MTG315123) course pages. These documents have no outcome codes, so each entry uses the document's own numbering, such as "Stage 2 Subtopic 4.1" or "MTG315123 Outcome 7". Stage 1 and Level 2 are treated as Year 11; Stage 2 and Level 3 as Year 12. TASC outcomes 1 to 4 (communication, planning, reasoning, technology) apply to every topic, so no topic lists them.
+
+| Topic                 | SACE                                         | TASC                        |
+| --------------------- | -------------------------------------------- | --------------------------- |
+| senior.algebra-linear | Stage 1 5.1, 5.2; Stage 2 1.1, 1.2           | MTG215123 5, 6; MTG315123 6 |
+| senior.financial      | Stage 1 1.1 to 1.4; Stage 2 4.1, 4.2         | MTG215123 6; MTG315123 7    |
+| senior.measurement    | Stage 1 2.1 to 2.4, 4.1 to 4.4               | MTG215123 8; MTG315123 8    |
+| senior.statistics     | Stage 1 3.1 to 3.5; Stage 2 3.1, 3.2         | MTG215123 7; MTG315123 5    |
+| senior.networks       | Stage 1 6.1, 6.2; Stage 2 2.1, 2.2, 5.1, 5.2 | MTG215123 5 (matrices)      |
+
+Worth a check: SACE Stage 2 has no measurement topic, so SA and NT Year 12 teachers see four topics. TASC Level 3 has no networks content, so Tasmanian Year 12 teachers see four topics.
+
 ## Victoria and WA
 
 Victoria (Victorian Curriculum 2.0) and Western Australia (WA Curriculum) publish their own versions. Until someone adds their codes, teachers in those states see AC v9 codes only, and no placeholder shows.

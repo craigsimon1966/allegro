@@ -414,11 +414,20 @@
       "domain": "CK",
       "label": "Algebraic relationships and linear modelling",
       "yearLevels": ["11", "12"],
-      "states": ["NSW"],
+      "states": ["NSW", "SA", "NT", "TAS"],
       "lessonOnly": true,
       "curriculum": {
         "ac9": [],
-        "nsw": ["MST-11-01", "MST-11-02", "MST-12-S1-01", "MST-12-S2-01"]
+        "nsw": ["MST-11-01", "MST-11-02", "MST-12-S1-01", "MST-12-S2-01"],
+        "senior": [
+          "Stage 1 Subtopic 5.1",
+          "Stage 1 Subtopic 5.2",
+          "Stage 2 Subtopic 1.1",
+          "Stage 2 Subtopic 1.2",
+          "MTG215123 Outcome 5",
+          "MTG215123 Outcome 6",
+          "MTG315123 Outcome 6"
+        ]
       }
     },
     {
@@ -426,7 +435,7 @@
       "domain": "CK",
       "label": "Financial maths: earning, interest, loans and annuities",
       "yearLevels": ["11", "12"],
-      "states": ["NSW"],
+      "states": ["NSW", "SA", "NT", "TAS"],
       "lessonOnly": true,
       "curriculum": {
         "ac9": [],
@@ -437,6 +446,16 @@
           "MST-12-S1-03",
           "MST-12-S2-02",
           "MST-12-S2-03"
+        ],
+        "senior": [
+          "Stage 1 Subtopic 1.1",
+          "Stage 1 Subtopic 1.2",
+          "Stage 1 Subtopic 1.3",
+          "Stage 1 Subtopic 1.4",
+          "Stage 2 Subtopic 4.1",
+          "Stage 2 Subtopic 4.2",
+          "MTG215123 Outcome 6",
+          "MTG315123 Outcome 7"
         ]
       }
     },
@@ -445,7 +464,7 @@
       "domain": "CK",
       "label": "Measurement, trigonometry, and ratios and rates",
       "yearLevels": ["11", "12"],
-      "states": ["NSW"],
+      "states": ["NSW", "SA", "NT", "TAS"],
       "lessonOnly": true,
       "curriculum": {
         "ac9": [],
@@ -456,6 +475,18 @@
           "MST-12-S1-05",
           "MST-12-S2-04",
           "MST-12-S2-05"
+        ],
+        "senior": [
+          "Stage 1 Subtopic 2.1",
+          "Stage 1 Subtopic 2.2",
+          "Stage 1 Subtopic 2.3",
+          "Stage 1 Subtopic 2.4",
+          "Stage 1 Subtopic 4.1",
+          "Stage 1 Subtopic 4.2",
+          "Stage 1 Subtopic 4.3",
+          "Stage 1 Subtopic 4.4",
+          "MTG215123 Outcome 8",
+          "MTG315123 Outcome 8"
         ]
       }
     },
@@ -464,7 +495,7 @@
       "domain": "CK",
       "label": "Statistics, bivariate data and probability",
       "yearLevels": ["11", "12"],
-      "states": ["NSW"],
+      "states": ["NSW", "SA", "NT", "TAS"],
       "lessonOnly": true,
       "curriculum": {
         "ac9": [],
@@ -475,19 +506,39 @@
           "MST-12-S2-08",
           "MST-12-S2-09",
           "MST-12-S2-10"
+        ],
+        "senior": [
+          "Stage 1 Subtopic 3.1",
+          "Stage 1 Subtopic 3.2",
+          "Stage 1 Subtopic 3.3",
+          "Stage 1 Subtopic 3.4",
+          "Stage 1 Subtopic 3.5",
+          "Stage 2 Subtopic 3.1",
+          "Stage 2 Subtopic 3.2",
+          "MTG215123 Outcome 7",
+          "MTG315123 Outcome 5"
         ]
       }
     },
     {
       "id": "senior.networks",
       "domain": "CK",
-      "label": "Networks and critical path analysis",
+      "label": "Networks, matrices and decision maths",
       "yearLevels": ["11", "12"],
-      "states": ["NSW"],
+      "states": ["NSW", "SA", "NT", "TAS"],
       "lessonOnly": true,
       "curriculum": {
         "ac9": [],
-        "nsw": ["MST-11-07", "MST-12-S2-06", "MST-12-S2-07"]
+        "nsw": ["MST-11-07", "MST-12-S2-06", "MST-12-S2-07"],
+        "senior": [
+          "Stage 1 Subtopic 6.1",
+          "Stage 1 Subtopic 6.2",
+          "Stage 2 Subtopic 2.1",
+          "Stage 2 Subtopic 2.2",
+          "Stage 2 Subtopic 5.1",
+          "Stage 2 Subtopic 5.2",
+          "MTG215123 Outcome 5"
+        ]
       }
     }
   ]

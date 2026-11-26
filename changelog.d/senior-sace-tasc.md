@@ -1,0 +1,1 @@
+- Plan a lesson now offers Years 11 and 12 for teachers in South Australia, the Northern Territory (SACE General Mathematics) and Tasmania (TASC General Mathematics). The topics are imported from the official SACE subject outlines and TASC course pages, and each lesson shows the matching subtopics or learning outcomes for that state and year.

@@ -1,0 +1,550 @@
+[
+  {
+    "code": "Stage 1 Subtopic 1.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Investing for interest (Topic 1: Investing and borrowing)"
+  },
+  {
+    "code": "Stage 1 Subtopic 1.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Investing in shares (Topic 1: Investing and borrowing)"
+  },
+  {
+    "code": "Stage 1 Subtopic 1.3",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Return on investment (Topic 1: Investing and borrowing)"
+  },
+  {
+    "code": "Stage 1 Subtopic 1.4",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Costs of borrowing (Topic 1: Investing and borrowing)"
+  },
+  {
+    "code": "Stage 1 Subtopic 2.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Application of measuring devices and units of measurement (Topic 2: Measurement)"
+  },
+  {
+    "code": "Stage 1 Subtopic 2.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Perimeter and area of plane shapes (Topic 2: Measurement)"
+  },
+  {
+    "code": "Stage 1 Subtopic 2.3",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Volume and surface area of solids (Topic 2: Measurement)"
+  },
+  {
+    "code": "Stage 1 Subtopic 2.4",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Scale and rates (Topic 2: Measurement)"
+  },
+  {
+    "code": "Stage 1 Subtopic 3.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "The statistical investigation process (Topic 3: Statistical investigation)"
+  },
+  {
+    "code": "Stage 1 Subtopic 3.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Sampling and collecting data (Topic 3: Statistical investigation)"
+  },
+  {
+    "code": "Stage 1 Subtopic 3.3",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Classifying and organising data (Topic 3: Statistical investigation)"
+  },
+  {
+    "code": "Stage 1 Subtopic 3.4",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "The shape, location, and spread of distributions of numerical data (Topic 3: Statistical investigation)"
+  },
+  {
+    "code": "Stage 1 Subtopic 3.5",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Forming and supporting conjectures across two or more groups (Topic 3: Statistical investigation)"
+  },
+  {
+    "code": "Stage 1 Subtopic 4.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Similarity (Topic 4: Applications of trigonometry)"
+  },
+  {
+    "code": "Stage 1 Subtopic 4.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Right triangle geometry (Topic 4: Applications of trigonometry)"
+  },
+  {
+    "code": "Stage 1 Subtopic 4.3",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Area of triangles (Topic 4: Applications of trigonometry)"
+  },
+  {
+    "code": "Stage 1 Subtopic 4.4",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Solving problems with non-right triangles (Topic 4: Applications of trigonometry)"
+  },
+  {
+    "code": "Stage 1 Subtopic 5.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Linear functions and graphs (Topic 5: Linear and exponential functions and their graphs)"
+  },
+  {
+    "code": "Stage 1 Subtopic 5.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Exponential functions and graphs (Topic 5: Linear and exponential functions and their graphs)"
+  },
+  {
+    "code": "Stage 1 Subtopic 6.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Matrix arithmetic and costing applications (Topic 6: Matrices and networks)"
+  },
+  {
+    "code": "Stage 1 Subtopic 6.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 1 General Mathematics",
+    "years": [
+      "11"
+    ],
+    "text": "Networks (Topic 6: Matrices and networks)"
+  },
+  {
+    "code": "Stage 2 Subtopic 1.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Simultaneous linear equations (Topic 1: Modelling with linear relationships)"
+  },
+  {
+    "code": "Stage 2 Subtopic 1.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Linear programming (Topic 1: Modelling with linear relationships)"
+  },
+  {
+    "code": "Stage 2 Subtopic 2.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Application of matrices to network problems (Topic 2: Modelling with matrices)"
+  },
+  {
+    "code": "Stage 2 Subtopic 2.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Application of matrices to transition problems (Topic 2: Modelling with matrices)"
+  },
+  {
+    "code": "Stage 2 Subtopic 3.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Bivariate statistics (Topic 3: Statistical models)"
+  },
+  {
+    "code": "Stage 2 Subtopic 3.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "The normal distribution (Topic 3: Statistical models)"
+  },
+  {
+    "code": "Stage 2 Subtopic 4.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Models for saving (Topic 4: Financial models)"
+  },
+  {
+    "code": "Stage 2 Subtopic 4.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Models for borrowing (Topic 4: Financial models)"
+  },
+  {
+    "code": "Stage 2 Subtopic 5.1",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Critical path analysis (Topic 5: Discrete models)"
+  },
+  {
+    "code": "Stage 2 Subtopic 5.2",
+    "states": [
+      "SA",
+      "NT"
+    ],
+    "course": "SACE Stage 2 General Mathematics",
+    "years": [
+      "12"
+    ],
+    "text": "Assignment problems (Topic 5: Discrete models)"
+  },
+  {
+    "code": "MTG215123 Outcome 1",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "communicate arguments and strategies, when solving mathematical and statistical problems, using appropriate mathematical or statistical language"
+  },
+  {
+    "code": "MTG215123 Outcome 2",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "plan, organise and manage learning in order to complete tasks and evaluate progress"
+  },
+  {
+    "code": "MTG215123 Outcome 3",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "apply modelling, problem solving and mathematical reasoning to interpret, represent and justify the reasonableness of solutions to problems and answers to statistical questions"
+  },
+  {
+    "code": "MTG215123 Outcome 4",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "choose and use technology appropriately and effectively"
+  },
+  {
+    "code": "MTG215123 Outcome 5",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "apply concepts and techniques to model and solve problems involving algebra and matrices"
+  },
+  {
+    "code": "MTG215123 Outcome 6",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "apply concepts and techniques to model and solve problems involving linear equations and finance"
+  },
+  {
+    "code": "MTG215123 Outcome 7",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "apply the statistical investigation process in situations involving univariate data analysis"
+  },
+  {
+    "code": "MTG215123 Outcome 8",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 2 (MTG215123)",
+    "years": [
+      "11"
+    ],
+    "text": "apply concepts and techniques in right-angled trigonometry, shape and measurement."
+  },
+  {
+    "code": "MTG315123 Outcome 1",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "communicate arguments and strategies, when solving mathematical and statistical problems, using appropriate mathematical or statistical language"
+  },
+  {
+    "code": "MTG315123 Outcome 2",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "plan, organise and manage learning in order to complete tasks and evaluate progress"
+  },
+  {
+    "code": "MTG315123 Outcome 3",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "apply modelling, problem solving and mathematical reasoning to interpret, represent and justify the reasonableness of solutions to problems and answers to statistical questions"
+  },
+  {
+    "code": "MTG315123 Outcome 4",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "choose and use technology appropriately and effectively"
+  },
+  {
+    "code": "MTG315123 Outcome 5",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "understand and apply concepts and techniques of bivariate data analysis and time series analysis using the statistical investigation process"
+  },
+  {
+    "code": "MTG315123 Outcome 6",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "understand and apply concepts and techniques to model and solve problems involving growth and decay in sequences"
+  },
+  {
+    "code": "MTG315123 Outcome 7",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "understand and apply concepts and techniques to solve problems involving loans, investment and annuities"
+  },
+  {
+    "code": "MTG315123 Outcome 8",
+    "states": [
+      "TAS"
+    ],
+    "course": "TASC General Mathematics Level 3 (MTG315123)",
+    "years": [
+      "12"
+    ],
+    "text": "understand and apply concepts and techniques to represent, analyse and solve problems in the two-dimensional plane."
+  }
+]
