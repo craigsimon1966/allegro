@@ -1,6 +1,5 @@
 import { useEffect, useId, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AllegroMark } from '@/components/AllegroMark';
 import { Button } from '@/components/Button';
 import { Label } from '@/components/Label';
 import { PERSONAS } from '@shared/personas';
@@ -76,13 +75,14 @@ export default function DemoPicker() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="relative flex flex-col gap-3 bg-sage-500 pb-6 pl-content pr-6 pt-9 text-ink">
-        <AllegroMark
-          product="equip"
-          tone="ink"
-          size={30}
-          className="absolute left-3.5 top-[38px]"
+        {/* Craig's logo exactly as supplied, on the same sage, so its background disappears. */}
+        <img
+          src="/brand/logo-sage.svg"
+          alt="Allegro Learning. All learn grow."
+          width={240}
+          height={59}
+          className="-ml-1.5 h-auto w-[200px] sm:w-[240px]"
         />
-        <div className="text-[13px] font-bold uppercase tracking-[0.14em]">Allegro Learning</div>
         <h1 className="max-w-[22ch] text-[32px] leading-[1.15]">
           Learn it in five minutes. Teach it with confidence.
         </h1>
