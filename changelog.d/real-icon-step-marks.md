@@ -1,0 +1,1 @@
+- The "Four ways Allegro helps" marks (and every other step mark) now use Craig's real Allegro icon, with the step's circle filled in purple, instead of the old simplified four circles.

@@ -10,18 +10,21 @@ import { RuledRow } from '@/components/RuledRow';
 import { StepSquares } from '@/components/StepSquares';
 
 describe('AllegroMark', () => {
-  it('fills only the circle for its product, clockwise from top-left', () => {
+  it('draws the real icon and fills only the circle for its product', () => {
     const { container } = render(<AllegroMark product="evaluate" />);
-    const circles = [...container.querySelectorAll('circle')];
-    expect(circles.map((c) => c.dataset.product)).toEqual([
-      'equip',
-      'embed',
-      'evaluate',
+    const areas = [...container.querySelectorAll<SVGPathElement>('path[data-product]')];
+    expect(areas.map((c) => c.dataset.product).sort()).toEqual([
       'elevate',
+      'embed',
+      'equip',
+      'evaluate',
     ]);
     expect(
-      circles.filter((c) => c.getAttribute('fill') !== 'none').map((c) => c.dataset.product),
+      areas
+        .filter((c) => c.getAttribute('fill') === 'var(--mark-fill)')
+        .map((c) => c.dataset.product),
     ).toEqual(['evaluate']);
+    expect(container.querySelectorAll('circle')).toHaveLength(0);
   });
 
   it('is hidden from screen readers unless labelled', () => {
