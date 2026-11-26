@@ -154,6 +154,18 @@
         "sec-nonlin-01",
         "sec-trig-01"
       ]
+    },
+    {
+      "id": "mod-senior-general",
+      "title": "Years 11 and 12: general maths",
+      "summary": "Compound interest, linear models, the sine and cosine rules, correlation and critical paths.",
+      "unitIds": [
+        "sen-fin-01",
+        "sen-lin-01",
+        "sen-meas-01",
+        "sen-stat-01",
+        "sen-net-01"
+      ]
     }
   ]
 }

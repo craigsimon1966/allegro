@@ -1,0 +1,75 @@
+{
+  "id": "sen-net-01",
+  "moduleId": "mod-senior-general",
+  "title": "Critical path: the longest path sets the finish time",
+  "domain": "CK",
+  "tags": [
+    "senior.networks"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "11",
+    "12"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": [
+      "MST-12-S2-07"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students trained to find shortest paths in networks often pick the shortest path in a project too. In critical path analysis, it's the longest one that matters.",
+  "coreIdeaMd": "In a project network, each activity takes a set time, and some must finish before others start.\n\n- The **critical path** is the **longest** path from start to finish. Its total time is the minimum time to complete the project, because every path has to be finished.\n- Activities on the critical path have **zero float**: any delay to them delays the whole project.\n- An activity off the critical path has **float**: the critical time minus the length of the longest path through that activity.",
+  "workedExampleMd": "**A project has activities A (4 days), then B (6 days) or C (2 days) then D (5 days), and finally E (3 days), which needs both B and D finished.**\n\n1. Path A, B, E: $4 + 6 + 3 = 13$ days.\n2. Path A, C, D, E: $4 + 2 + 5 + 3 = 14$ days.\n3. The longest path is A, C, D, E, so the project takes **14 days**, and that is the critical path.\n4. B is not on the critical path. Its float is $14 - 13 = 1$ day.\n\n**Check:** the critical path has more activities but each is short. Count the time, not the number of activities. ✓",
+  "misconceptionIds": [
+    "mis-net-shortest-critical"
+  ],
+  "checkItems": [
+    {
+      "id": "sen-net-01-q1",
+      "stemMd": "A project has two paths from start to finish. Path P, Q, T takes 15 days. Path P, R, S, T takes 12 days. What is the minimum time to complete the project?",
+      "type": "mcq",
+      "options": [
+        "15 days",
+        "12 days",
+        "27 days"
+      ],
+      "answer": "15 days",
+      "feedbackCorrect": "Yes. Both paths must be finished, so the longer one, 15 days, sets the finish time.",
+      "feedbackIncorrect": "Every activity has to be done, so the project can't finish until the longest path does: 15 days.",
+      "wrongAnswers": [
+        {
+          "answer": "12 days",
+          "misconceptionId": "mis-net-shortest-critical",
+          "feedback": "After 12 days, path P, Q, T still has work left. The project finishes when the longest path finishes: 15 days."
+        },
+        {
+          "answer": "27 days",
+          "feedback": "The two paths share P and T and run side by side, so you don't add them. The longer path, 15 days, sets the finish time."
+        }
+      ]
+    },
+    {
+      "id": "sen-net-01-q2",
+      "stemMd": "In that project, activity R is only on the 12-day path. What is the float of R, in days?",
+      "type": "numeric",
+      "answer": "3",
+      "feedbackCorrect": "Right. $15 - 12 = 3$ days. R can be delayed by up to 3 days without delaying the project.",
+      "feedbackIncorrect": "Float is the critical time minus the longest path through the activity: $15 - 12 = 3$ days."
+    }
+  ],
+  "tryTomorrow": "Before calculating, ask students to list every path from start to finish with its total time, then circle the longest.",
+  "reflectPrompt": "Do your students confuse the shortest path from earlier network work with the critical path?",
+  "reviewedBy": null
+}

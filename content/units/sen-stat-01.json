@@ -1,0 +1,78 @@
+{
+  "id": "sen-stat-01",
+  "moduleId": "mod-senior-general",
+  "title": "Correlation: strength, direction and causation",
+  "domain": "CK",
+  "tags": [
+    "senior.statistics"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "11",
+    "12"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": [
+      "MST-11-08",
+      "MST-12-S1-06",
+      "MST-12-S2-08"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "A negative correlation coefficient sounds weak to many students. And a strong one sounds like proof. Neither is true.",
+  "coreIdeaMd": "The correlation coefficient $r$ runs from $-1$ to $1$.\n\n- The **sign** gives the direction: positive (both go up together) or negative (one goes up as the other goes down).\n- The **size**, ignoring the sign, gives the strength of the **linear** relationship. $r = -0.87$ is stronger than $r = 0.62$.\n\nCorrelation does not show causation. Two variables can move together because a third variable drives both (for example, hot weather), or by coincidence.",
+  "workedExampleMd": "**A study of 20 towns finds $r = 0.81$ between ice-cream sales and the number of beach rescues each week. Does buying ice cream cause rescues?**\n\n1. Direction: positive, so weeks with more ice-cream sales tend to have more rescues.\n2. Strength: 0.81 is a strong linear relationship.\n3. Cause: no. Hot weather is a likely third variable: it increases both ice-cream sales and the number of people swimming.\n\n**Say it as:** \"There is a strong positive linear association, but this does not show that one causes the other.\"",
+  "misconceptionIds": [
+    "mis-stat-negative-r-weak"
+  ],
+  "checkItems": [
+    {
+      "id": "sen-stat-01-q1",
+      "stemMd": "Which value of $r$ shows the strongest linear relationship?",
+      "type": "mcq",
+      "options": [
+        "$r = -0.87$",
+        "$r = 0.62$",
+        "$r = 0.15$"
+      ],
+      "answer": "$r = -0.87$",
+      "feedbackCorrect": "Yes. Strength is the size of $r$, ignoring the sign, and 0.87 is the largest.",
+      "feedbackIncorrect": "Ignore the sign to judge strength. 0.87 is bigger than 0.62 and 0.15, so $r = -0.87$ is the strongest.",
+      "wrongAnswers": [
+        {
+          "answer": "$r = 0.62$",
+          "misconceptionId": "mis-stat-negative-r-weak",
+          "feedback": "A negative sign means the direction is downward, not that the relationship is weak. $-0.87$ is closer to $-1$ than 0.62 is to 1, so it is stronger."
+        }
+      ]
+    },
+    {
+      "id": "sen-stat-01-q2",
+      "stemMd": "Across many countries, $r = 0.74$ between the number of televisions per person and life expectancy. What is the best conclusion?",
+      "type": "mcq",
+      "options": [
+        "There is a strong positive association, but a third variable such as wealth may explain it",
+        "Buying more televisions makes people live longer",
+        "There is no relationship, because televisions can't affect health"
+      ],
+      "answer": "There is a strong positive association, but a third variable such as wealth may explain it",
+      "feedbackCorrect": "Yes. Wealthier countries tend to have both more televisions and better health care.",
+      "feedbackIncorrect": "The association is real (0.74 is strong), but correlation doesn't show cause. Wealth is a likely third variable."
+    }
+  ],
+  "tryTomorrow": "Ask students to write one sentence for each $r$ value you give them, naming the direction and the strength, then one possible third variable.",
+  "reflectPrompt": "How often do your students say \"causes\" when they mean \"is associated with\"?",
+  "reviewedBy": null
+}

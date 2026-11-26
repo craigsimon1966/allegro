@@ -1,0 +1,75 @@
+{
+  "id": "sen-meas-01",
+  "moduleId": "mod-senior-general",
+  "title": "Non-right-angled triangles: sine rule or cosine rule?",
+  "domain": "CK",
+  "tags": [
+    "senior.measurement"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "11",
+    "12"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 3,
+  "curriculumRefs": {
+    "ac9": [],
+    "nsw": [
+      "MST-12-S2-04"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students who know both rules still freeze, because nobody showed them how to choose. The choice depends on what you are given.",
+  "coreIdeaMd": "For a triangle with no right angle:\n\n- Use the **sine rule**, $\\frac{a}{\\sin A} = \\frac{b}{\\sin B}$, when you know a side **and the angle opposite it**, plus one more side or angle.\n- Use the **cosine rule**, $c^2 = a^2 + b^2 - 2ab\\cos C$, when you know **two sides and the angle between them** (to find the third side), or **all three sides** (to find an angle).\n\nA quick test: can you see a matching pair (a side and its opposite angle)? If yes, the sine rule. If not, the cosine rule.",
+  "workedExampleMd": "**Two sides of a triangular garden bed are 7 m and 10 m, with an angle of 52° between them. Find the third side.**\n\n1. Is there a matching pair? No: the 52° angle is between the known sides, not opposite one of them. Use the cosine rule.\n2. $c^2 = 7^2 + 10^2 - 2 \\times 7 \\times 10 \\times \\cos 52°$\n3. $c^2 = 149 - 140 \\times 0.6157 \\approx 62.81$\n4. $c \\approx 7.93$ m.\n\n**Check:** the third side must be shorter than $7 + 10 = 17$ and longer than $10 - 7 = 3$. ✓",
+  "misconceptionIds": [
+    "mis-meas-sine-rule-no-pair"
+  ],
+  "checkItems": [
+    {
+      "id": "sen-meas-01-q1",
+      "stemMd": "In a triangle you know two sides, 8 m and 11 m, and the angle between them, 38°. Which rule finds the third side?",
+      "type": "mcq",
+      "options": [
+        "Cosine rule",
+        "Sine rule",
+        "Pythagoras' theorem"
+      ],
+      "answer": "Cosine rule",
+      "feedbackCorrect": "Yes. Two sides and the included angle, with no matching pair, means the cosine rule.",
+      "feedbackIncorrect": "The 38° angle sits between the two known sides, so there is no side with its opposite angle. That means the cosine rule.",
+      "wrongAnswers": [
+        {
+          "answer": "Sine rule",
+          "misconceptionId": "mis-meas-sine-rule-no-pair",
+          "feedback": "The sine rule needs a side and the angle opposite it. Here the angle is between the two sides, so there is no matching pair. Use the cosine rule."
+        },
+        {
+          "answer": "Pythagoras' theorem",
+          "feedback": "Pythagoras only works when there is a right angle. This triangle has a 38° angle between the sides, so use the cosine rule."
+        }
+      ]
+    },
+    {
+      "id": "sen-meas-01-q2",
+      "stemMd": "Find the third side of that triangle (sides 8 m and 11 m, angle 38° between them), correct to one decimal place.",
+      "type": "numeric",
+      "answer": "6.8",
+      "feedbackCorrect": "Right. $c^2 = 64 + 121 - 176\\cos 38° \\approx 46.31$, so $c \\approx 6.8$ m.",
+      "feedbackIncorrect": "$c^2 = 8^2 + 11^2 - 2 \\times 8 \\times 11 \\times \\cos 38° = 185 - 176 \\times 0.788 \\approx 46.31$, so $c \\approx 6.8$ m."
+    }
+  ],
+  "tryTomorrow": "Show four triangles with the given information marked, and ask students only to say which rule and why. No calculating until the choice is right.",
+  "reflectPrompt": "When a student picks the wrong rule, do you ask them to find a matching pair first?",
+  "reviewedBy": null
+}

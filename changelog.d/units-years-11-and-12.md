@@ -1,0 +1,1 @@
+- Five Draft learning units for Years 11 and 12 general maths, in a new module "Years 11 and 12: general maths": compound interest periods, meaning of a linear model, choosing the sine or cosine rule, correlation strength and causation, and critical paths. Each has a matching misconception. The senior topics are no longer lesson-only, so a teacher's needs can now point to them.

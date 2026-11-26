@@ -215,6 +215,46 @@
       "whyItHappens": "Students label the sides by position on the page or by habit, instead of from the marked angle, so opposite and adjacent get mixed up or the hypotenuse is missed.",
       "howToRespond": "Have them mark the angle, then the right angle, then label H first (opposite the right angle), then O, then A. Practise labelling separately from calculating.",
       "diagnosticQuestion": "Label the sides of a right-angled triangle from each of its two acute angles. What changes?"
+    },
+    {
+      "id": "mis-fin-compound-periods",
+      "topicTag": "senior.financial",
+      "studentSays": "It's 3% a year, compounded monthly for 4 years, so I'll use 1.03 to the power of 48.",
+      "whyItHappens": "Students substitute the numbers as given without matching the rate to the compounding period, so the yearly rate is applied every month (or once a year when it should be monthly).",
+      "howToRespond": "Have them write the rate per period and the number of periods before substituting. Ask what 3% every month would add up to over a year.",
+      "diagnosticQuestion": "\\$1000 earns 12% p.a. compounded monthly. What is the rate per month, and how many periods are in 2 years?"
+    },
+    {
+      "id": "mis-lin-rate-start-swap",
+      "topicTag": "senior.algebra-linear",
+      "studentSays": "In C = 85 + 64h, the call-out fee is \\$64 because it's next to the h.",
+      "whyItHappens": "Students recognise the parts of y = mx + c by position rather than meaning, so when a model is written as y = a + bx they swap the rate and the starting value.",
+      "howToRespond": "Ask which number changes the total when the input goes up by 1, and which number is there even when the input is zero. Write models in both orders.",
+      "diagnosticQuestion": "A taxi fare is F = 3.60 + 2.25k, where k is kilometres. What does each number mean?"
+    },
+    {
+      "id": "mis-meas-sine-rule-no-pair",
+      "topicTag": "senior.measurement",
+      "studentSays": "It's not a right-angled triangle, so I'll use the sine rule.",
+      "whyItHappens": "The sine rule is often taught first and feels simpler, so students apply it without checking that they know a side and its opposite angle.",
+      "howToRespond": "Ask them to find a matching pair (a side and the angle opposite it) before choosing. No pair means the cosine rule.",
+      "diagnosticQuestion": "You know all three sides of a triangle and want an angle. Which rule, and why?"
+    },
+    {
+      "id": "mis-stat-negative-r-weak",
+      "topicTag": "senior.statistics",
+      "studentSays": "r = -0.87 is weaker than r = 0.62 because it's negative.",
+      "whyItHappens": "Students read r as an ordinary number on a number line, so a negative value seems smaller and weaker, instead of seeing the sign as direction and the size as strength.",
+      "howToRespond": "Separate the two questions: which way does it go (sign), and how close are the points to a line (size). Show scatterplots for r = 0.8 and r = -0.8 side by side.",
+      "diagnosticQuestion": "Put these in order from weakest to strongest: r = 0.35, r = -0.92, r = 0.71."
+    },
+    {
+      "id": "mis-net-shortest-critical",
+      "topicTag": "senior.networks",
+      "studentSays": "The critical path is the quickest way through, so the project takes 12 days.",
+      "whyItHappens": "Earlier network work focuses on shortest paths, and students carry that over without noticing that in a project every activity must be done.",
+      "howToRespond": "Ask whether the project is finished when the shortest path is done. List every path, add the times, and show the longest path still has work left.",
+      "diagnosticQuestion": "Two paths take 9 days and 11 days. One activity on the 9-day path is delayed by 1 day. Does the finish time change?"
     }
   ]
 }
