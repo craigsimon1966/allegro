@@ -7,7 +7,14 @@ import { Button } from '@/components/Button';
 import { AIProgress } from '@/components/AIProgress';
 import { tagById } from '@shared/tags';
 import { DEMO_LESSON, curriculumRefsFor } from '@shared/lesson';
-import { YEAR_LEVELS, lessonTopicsFor, topicFitsYear, yearLabel } from '@shared/curriculum';
+import {
+  PLAN_YEARS,
+  isSeniorYear,
+  lessonTopicsFor,
+  seniorCourseFor,
+  topicFitsYear,
+  yearLabel,
+} from '@shared/curriculum';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
 import { findLikelyStudentNames } from '@shared/pii';
@@ -30,18 +37,19 @@ export default function PlanForm() {
   const putLesson = useAppStore((s) => s.putLesson);
   const profile = useTeacherProfile();
   const state = profile.state ?? undefined;
-  const myYears = profile.years.filter((y) => (YEAR_LEVELS as readonly string[]).includes(y));
+  const myYears = profile.years.filter((y) => (PLAN_YEARS as readonly string[]).includes(y));
 
   // The topic the teacher's needs point to, if it is taught in this year.
   const needTagFor = (year: string) =>
     needs
       .filter((n) => n.status === 'active')
       .flatMap((n) => n.catalogue_tags)
-      .find((t) => lessonTopicsFor(year).some((x) => x.id === t && x.domain === 'CK'));
-  const firstTopic = (year: string) => needTagFor(year) ?? lessonTopicsFor(year)[0]?.id ?? '';
+      .find((t) => lessonTopicsFor(year, state).some((x) => x.id === t && x.domain === 'CK'));
+  const firstTopic = (year: string) =>
+    needTagFor(year) ?? lessonTopicsFor(year, state)[0]?.id ?? '';
   const [yearLevel, setYearLevel] = useState(myYears[0] ?? '8');
   const [topicTag, setTopicTag] = useState(() => firstTopic(myYears[0] ?? '8'));
-  const topics = lessonTopicsFor(yearLevel);
+  const topics = lessonTopicsFor(yearLevel, state);
   const chooseYear = (y: string) => {
     setYearLevel(y);
     if (!topicFitsYear(topicTag, y)) setTopicTag(firstTopic(y));
@@ -153,7 +161,7 @@ export default function PlanForm() {
                 onChange={(e) => chooseYear(e.target.value)}
                 className={`${field} h-12`}
               >
-                {YEAR_LEVELS.map((y) => (
+                {PLAN_YEARS.map((y) => (
                   <option key={y} value={y}>
                     {yearLabel(y)}
                     {myYears.includes(y) ? ' (your class)' : ''}
@@ -190,9 +198,13 @@ export default function PlanForm() {
                 </select>
               ) : (
                 <p id="topic" className="mt-1" role="status">
-                  Allegro doesn&apos;t have lesson topics for {yearLabel(yearLevel)} yet. Choose
-                  another year level.
+                  {isSeniorYear(yearLevel) && !seniorCourseFor(state)
+                    ? `Allegro has senior lesson topics for NSW Mathematics Standard so far. The senior course for your state is coming. Choose another year level.`
+                    : `Allegro doesn't have lesson topics for ${yearLabel(yearLevel)} yet. Choose another year level.`}
                 </p>
+              )}
+              {topics.length > 0 && isSeniorYear(yearLevel) && (
+                <p className="mt-2 text-[15px]">Course: {seniorCourseFor(state)}</p>
               )}
               {topics.length > 0 && (
                 <CurriculumCodes

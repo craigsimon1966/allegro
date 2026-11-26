@@ -408,6 +408,87 @@
       "domain": "CONTEXT",
       "label": "Short-term and casual placements",
       "yearLevels": []
+    },
+    {
+      "id": "senior.algebra-linear",
+      "domain": "CK",
+      "label": "Algebraic relationships and linear modelling",
+      "yearLevels": ["11", "12"],
+      "states": ["NSW"],
+      "lessonOnly": true,
+      "curriculum": {
+        "ac9": [],
+        "nsw": ["MST-11-01", "MST-11-02", "MST-12-S1-01", "MST-12-S2-01"]
+      }
+    },
+    {
+      "id": "senior.financial",
+      "domain": "CK",
+      "label": "Financial maths: earning, interest, loans and annuities",
+      "yearLevels": ["11", "12"],
+      "states": ["NSW"],
+      "lessonOnly": true,
+      "curriculum": {
+        "ac9": [],
+        "nsw": [
+          "MST-11-03",
+          "MST-11-04",
+          "MST-12-S1-02",
+          "MST-12-S1-03",
+          "MST-12-S2-02",
+          "MST-12-S2-03"
+        ]
+      }
+    },
+    {
+      "id": "senior.measurement",
+      "domain": "CK",
+      "label": "Measurement, trigonometry, and ratios and rates",
+      "yearLevels": ["11", "12"],
+      "states": ["NSW"],
+      "lessonOnly": true,
+      "curriculum": {
+        "ac9": [],
+        "nsw": [
+          "MST-11-05",
+          "MST-11-06",
+          "MST-12-S1-04",
+          "MST-12-S1-05",
+          "MST-12-S2-04",
+          "MST-12-S2-05"
+        ]
+      }
+    },
+    {
+      "id": "senior.statistics",
+      "domain": "CK",
+      "label": "Statistics, bivariate data and probability",
+      "yearLevels": ["11", "12"],
+      "states": ["NSW"],
+      "lessonOnly": true,
+      "curriculum": {
+        "ac9": [],
+        "nsw": [
+          "MST-11-08",
+          "MST-12-S1-06",
+          "MST-12-S1-07",
+          "MST-12-S2-08",
+          "MST-12-S2-09",
+          "MST-12-S2-10"
+        ]
+      }
+    },
+    {
+      "id": "senior.networks",
+      "domain": "CK",
+      "label": "Networks and critical path analysis",
+      "yearLevels": ["11", "12"],
+      "states": ["NSW"],
+      "lessonOnly": true,
+      "curriculum": {
+        "ac9": [],
+        "nsw": ["MST-11-07", "MST-12-S2-06", "MST-12-S2-07"]
+      }
     }
   ]
 }

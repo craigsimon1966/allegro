@@ -145,6 +145,12 @@ describe('POST /api/lesson', () => {
     expect(y7).not.toMatch(/Pythagoras/);
     expect(curriculumFocus('measurement.area-volume-angles', '8')).toMatch(/Pythagoras/);
     expect(curriculumFocus('pck.differentiation', '8')).toBe('');
+    // Senior years use the NSW Mathematics Standard outcomes for that year only.
+    const y11 = curriculumFocus('senior.financial', '11');
+    expect(y11).toContain('NSW Mathematics Standard');
+    expect(y11).toContain('MST-11-03');
+    expect(y11).not.toContain('MST-12-S2-03');
+    expect(curriculumFocus('senior.financial', '12')).toContain('annuities');
   });
   it('refuses a topic that is not taught in the chosen year, before any AI call', async () => {
     let called = false;

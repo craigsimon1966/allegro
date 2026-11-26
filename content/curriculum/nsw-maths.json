@@ -1152,5 +1152,205 @@
       "F"
     ],
     "text": "reads numerals and represents whole numbers to at least 20"
+  },
+  {
+    "code": "MST-11-01",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "selects and applies algebraic techniques to solve problems involving equations and formulas"
+  },
+  {
+    "code": "MST-11-02",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "models and interprets linear relationships to solve problems and make predictions in practical contexts"
+  },
+  {
+    "code": "MST-11-03",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "solves financial problems involving earning money and taxation"
+  },
+  {
+    "code": "MST-11-04",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "solves financial problems involving budgeting and purchasing"
+  },
+  {
+    "code": "MST-11-05",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "solves problems involving measurement in practical contexts"
+  },
+  {
+    "code": "MST-11-06",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "solves problems involving time and location in practical contexts"
+  },
+  {
+    "code": "MST-11-07",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "applies network techniques to solve network problems"
+  },
+  {
+    "code": "MST-11-08",
+    "stage": "Stage 6",
+    "years": [
+      "11"
+    ],
+    "text": "displays and analyses datasets using summary statistics and graphical representations"
+  },
+  {
+    "code": "MST-12-S1-01",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "represents and interprets the relationships between quantities in algebraic and graphical forms"
+  },
+  {
+    "code": "MST-12-S1-02",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "solves problems involving simple interest and compound interest to make decisions about financial situations"
+  },
+  {
+    "code": "MST-12-S1-03",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "solves problems involving interest and depreciation to make decisions about loans and credit cards"
+  },
+  {
+    "code": "MST-12-S1-04",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "applies Pythagoras’ theorem and trigonometry to solve problems involving right-angled triangles"
+  },
+  {
+    "code": "MST-12-S1-05",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "interprets ratios and rates to solve problems in practical contexts"
+  },
+  {
+    "code": "MST-12-S1-06",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "displays and interprets bivariate datasets to solve problems and make predictions"
+  },
+  {
+    "code": "MST-12-S1-07",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "models and solves problems involving the probabilities of simple and compound events"
+  },
+  {
+    "code": "MST-12-S2-01",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "represents the relationships between quantities algebraically and graphically to solve problems and make predictions in practical contexts"
+  },
+  {
+    "code": "MST-12-S2-02",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "models financial situations and solves problems involving interest, depreciation and borrowing money"
+  },
+  {
+    "code": "MST-12-S2-03",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "solves financial problems involving annuities"
+  },
+  {
+    "code": "MST-12-S2-04",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "applies trigonometry to solve problems involving right-angled and non-right-angled triangles"
+  },
+  {
+    "code": "MST-12-S2-05",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "solves practical problems involving ratios and rates"
+  },
+  {
+    "code": "MST-12-S2-06",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "applies network flow concepts to solve problems and model decision-making in practical contexts"
+  },
+  {
+    "code": "MST-12-S2-07",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "applies critical path analysis to solve problems and model decision-making in practical contexts"
+  },
+  {
+    "code": "MST-12-S2-08",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "analyses bivariate datasets using statistical processes"
+  },
+  {
+    "code": "MST-12-S2-09",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "models and solves problems involving the probabilities of multistage events"
+  },
+  {
+    "code": "MST-12-S2-10",
+    "stage": "Stage 6",
+    "years": [
+      "12"
+    ],
+    "text": "analyses normally distributed datasets using statistical processes"
   }
 ]

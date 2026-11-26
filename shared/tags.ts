@@ -11,6 +11,8 @@ export interface Tag {
    * point to it (the week would have nothing to learn for it). Remove the flag when its unit lands.
    */
   lessonOnly?: boolean;
+  /** Senior (Years 11 and 12) topics belong to one state's course, e.g. ["NSW"]. */
+  states?: string[];
 }
 
 export const TAGS: Tag[] = tagsFile.tags as Tag[];

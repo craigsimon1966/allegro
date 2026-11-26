@@ -17,7 +17,13 @@ import {
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
 import { curriculumContext } from '../../shared/states';
-import { checkAc9, topicFitsYear, yearLabel } from '../../shared/curriculum';
+import {
+  checkAc9,
+  checkNsw,
+  isSeniorYear,
+  topicFitsYear,
+  yearLabel,
+} from '../../shared/curriculum';
 import { ROLE_PROMPT, situationFacts } from '../../shared/profile';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
@@ -88,6 +94,14 @@ export function referenceFor(topicTag: string): string {
  * volume and angles) is narrowed to what this year actually teaches.
  */
 export function curriculumFocus(topicTag: string, yearLevel: string): string {
+  if (isSeniorYear(yearLevel)) {
+    const outcomes = curriculumRefsFor(topicTag, yearLevel)
+      .nsw.map((c) => checkNsw(c, [yearLevel]))
+      .flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : []));
+    return outcomes.length
+      ? `Course: NSW Mathematics Standard (Stage 6). The official ${yearLabel(yearLevel)} outcomes in this topic. Choose one focus from this list that fits a single lesson:\n${outcomes.join('\n')}`
+      : '';
+  }
   const lines = curriculumRefsFor(topicTag, yearLevel)
     .ac9.map((c) => checkAc9(c, [yearLevel]))
     .flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : []));
