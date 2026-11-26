@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
+import iconSvg from '@/assets/allegro-icon.svg?raw';
 export type Product = 'equip' | 'embed' | 'evaluate' | 'elevate' | 'all';
 
 interface Props {
-  /** Which circle is filled. 'all' shows the plain brand mark with every circle outlined. */
+  /** Which circle is filled in plum. 'all' shows the plain icon. */
   product?: Product;
   size?: number;
   tone?: 'green' | 'ink' | 'white';
@@ -13,19 +15,23 @@ interface Props {
 }
 
 // Clockwise from top-left: Equip, Embed, Evaluate, Elevate (SPEC 10.4, decided 27 Oct 2026).
-// Centres and radius are fitted to Craig's brand icon (public/brand/icon.svg, viewBox 375), so this
-// mark is the same four circles as the logo, not a simplified grid.
-const CIRCLES: { product: Exclude<Product, 'all'>; cx: number; cy: number }[] = [
-  { product: 'equip', cx: 136.6, cy: 133 },
-  { product: 'embed', cx: 235.9, cy: 132 },
-  { product: 'evaluate', cx: 239.5, cy: 239.8 },
-  { product: 'elevate', cx: 132.2, cy: 236.4 },
-];
-const R = 73.7;
+// The drawing is Craig's own icon (Logos/Allegro icon.svg, kept in src/assets/allegro-icon.svg with
+// its colours swapped for tokens), so the interlocking circles match the logo exactly. Each circle's
+// inner area carries data-product, and the step's circle is filled to highlight it.
+let instance = 0;
+function iconMarkup(product: Product, uid: string) {
+  return iconSvg
+    .replace(/id="([^"]+)"/g, `id="${uid}$1"`)
+    .replace(/url\(#([^)]+)\)/g, `url(#${uid}$1)`)
+    .replace(
+      `data-product="${product}" fill="var(--mark-bg)"`,
+      `data-product="${product}" data-on="true" fill="var(--mark-fill)"`,
+    );
+}
 
 /**
- * The four-circle Allegro mark, drawn in code (not an image) so a circle can be filled for a
- * product and the circles can fill in turn while something loads.
+ * The Allegro icon. A product's circle is filled in plum; 'all' leaves every circle open.
+ * While loading it shows the plum icon turning.
  */
 export function AllegroMark({
   product = 'all',
@@ -49,30 +55,41 @@ export function AllegroMark({
       />
     );
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="54 54 268 268"
-      style={{ color: colour }}
-      className={className}
+    <IconMark product={product} size={size} colour={colour} label={label} className={className} />
+  );
+}
+
+function IconMark({
+  product,
+  size,
+  colour,
+  label,
+  className,
+}: {
+  product: Product;
+  size: number;
+  colour: string;
+  label?: string;
+  className?: string;
+}) {
+  const html = useMemo(() => iconMarkup(product, `am${(instance += 1)}-`), [product]);
+  return (
+    <span
+      className={['inline-block', className ?? ''].join(' ').trim()}
+      style={
+        {
+          width: size,
+          height: size,
+          color: colour,
+          '--mark-bg': 'var(--surface)',
+          '--mark-fill': 'var(--plum-500)',
+        } as React.CSSProperties
+      }
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      focusable="false"
-    >
-      {CIRCLES.map((c) => (
-        <circle
-          key={c.product}
-          data-product={c.product}
-          cx={c.cx}
-          cy={c.cy}
-          r={R}
-          fill={c.product === product ? colour : 'none'}
-          stroke={colour}
-          strokeWidth={Math.max(1.5, size / 24)}
-          vectorEffect="non-scaling-stroke"
-        />
-      ))}
-    </svg>
+      data-product={product}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 }
