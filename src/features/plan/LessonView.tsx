@@ -185,7 +185,7 @@ function BlockView({
             checked={checked}
             onChange={(e) => onCheck(e.target.checked)}
           />
-          {checked ? 'Maths checked' : "Check the maths, then tick: I've checked this"}
+          {checked ? 'Checked for accuracy' : 'Check this for accuracy'}
         </label>
       )}
 
@@ -438,8 +438,8 @@ export default function LessonView() {
             >
               {unchecked ? (
                 <p className="font-bold">
-                  Check the maths: {unchecked} of {toCheck.length} blocks still to check before you
-                  teach this.
+                  Check for accuracy: {unchecked} of {toCheck.length} blocks still to check before
+                  you teach this.
                 </p>
               ) : (
                 <p className="font-bold text-green-700">

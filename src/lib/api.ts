@@ -129,10 +129,13 @@ export async function aiPathway(
       catalogue_tags: string[];
     }[];
     hoursPerWeek: number;
-    teachingDays: number[];
+    teachingDaysPerWeek: number | null;
     weekStart: string;
     yearLevels: string[];
     state?: string;
+    situations?: string[];
+    confidentYears?: string[];
+    newToYears?: string[];
   },
   timeoutMs = 45000,
 ): Promise<{ items: PathwayItem[]; external: ReadingPick[] } | null> {

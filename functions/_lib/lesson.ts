@@ -13,7 +13,7 @@ import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
 import { curriculumContext } from '../../shared/states';
 import { topicFitsYear, yearLabel } from '../../shared/curriculum';
-import { ROLE_PROMPT } from '../../shared/profile';
+import { ROLE_PROMPT, situationFacts } from '../../shared/profile';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { hasAccess } from './access';
 import { anthropicCompleter, generateJson, type Completer } from './anthropic';
@@ -102,6 +102,14 @@ export async function handleLesson(request: Request, env: Env, deps: Deps = {}) 
     `Fixed facts from the teacher (follow them exactly; never change them):`,
     `- Year level: ${yearLabel(req.yearLevel)}. Every question, example and number must suit ${yearLabel(req.yearLevel)} students. Do not use content from a later year. year_level must be "${req.yearLevel}".`,
     req.role ? `- The teacher: ${ROLE_PROMPT[req.role]}` : '',
+    ...situationFacts({
+      situations: req.situations,
+      confidentYears: req.confidentYears,
+      newToYears: req.newToYears,
+    }),
+    req.newToYears?.includes(req.yearLevel)
+      ? `- ${yearLabel(req.yearLevel)} is new to them, so explain what students at this level typically know and find hard.`
+      : '',
     req.situation ? `- Their situation, in summary: ${req.situation}` : '',
     `Topic: ${tag.label}`,
     `Lesson length: ${req.durationMinutes} minutes`,

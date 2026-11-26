@@ -1,0 +1,2 @@
+- AI lesson and unit blocks now ask "Check this for accuracy" (was "Check the maths, then tick: I've checked this"), and show "Checked for accuracy" once ticked. The lesson's status line and the Word teacher guide use the same wording.
+- Changelog entries and decision notes now go in their own files (`changelog.d/`, `decisions.d/`), so PRs built at the same time no longer conflict. `npm run notes:assemble` folds them into `CHANGELOG.md` and `docs/decisions.md`.

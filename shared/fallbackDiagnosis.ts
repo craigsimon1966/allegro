@@ -1,6 +1,7 @@
 import type { Diagnosis, Guided, Need } from './schemas';
 import { tagById } from './tags';
 import { topicFitsYear } from './curriculum';
+import { teacherProfile } from './profile';
 
 // Rules-based diagnosis used when the AI is unavailable or returns invalid output twice
 // (SPEC 8.3 "fall back to the guided form"). It is deliberately simple and says so in the summary.
@@ -14,6 +15,9 @@ interface Rule {
 
 const has = (text: string, ...words: string[]) =>
   words.some((w) => text.toLowerCase().includes(w.toLowerCase()));
+
+const sit = (g: Guided, id: NonNullable<Guided['situations']>[number]) =>
+  g.situations?.includes(id) ?? false;
 
 const isPrimary = (g: Guided) =>
   (g.yearLevels ?? []).some((y) => ['F', 'K', 'Prep', '1', '2', '3', '4', '5', '6'].includes(y));
@@ -55,13 +59,18 @@ const RULES: Rule[] = [
     evidence: 'You are teaching maths outside your trained subject.',
     test: (t, g) =>
       !isPrimary(g) &&
-      (g.role === 'out_of_field' || has(t, 'out of field', 'not a maths teacher', 'pe teacher')),
+      (g.role === 'out_of_field' ||
+        sit(g, 'out_of_field') ||
+        has(t, 'out of field', 'not a maths teacher', 'pe teacher')),
   },
   {
     tag: 'pk.routines',
     priority: 'now',
-    evidence: 'You mentioned behaviour or routines.',
-    test: (t) => has(t, 'behaviour', 'behavior', 'routine', 'manage', 'settle', 'noisy'),
+    evidence: 'You mentioned behaviour or routines, or you are new to the classroom.',
+    test: (t, g) =>
+      sit(g, 'early_career') ||
+      sit(g, 'casual_cover') ||
+      has(t, 'behaviour', 'behavior', 'routine', 'manage', 'settle', 'noisy'),
   },
   {
     tag: 'pck.differentiation',
@@ -88,7 +97,9 @@ const RULES: Rule[] = [
     priority: 'later',
     evidence: 'You are teaching outside your trained subject.',
     test: (t, g) =>
-      g.role === 'out_of_field' || has(t, 'out of field', 'pe teacher', 'not trained'),
+      g.role === 'out_of_field' ||
+      sit(g, 'out_of_field') ||
+      has(t, 'out of field', 'pe teacher', 'not trained'),
   },
   {
     tag: 'context.regional',
@@ -144,7 +155,7 @@ export function fallbackDiagnosis(situationText: string, guided: Guided = {}): D
     summary:
       "We couldn't reach Allegro's AI just now, so these needs come from your answers to the guided questions. Edit anything that doesn't fit.",
     context: {
-      role: guided.role ?? 'experienced',
+      role: teacherProfile(guided, null).role ?? 'experienced',
       subject: guided.subject ?? 'Mathematics',
       year_levels: guided.yearLevels ?? [],
       school_type: guided.schoolType ?? 'unknown',

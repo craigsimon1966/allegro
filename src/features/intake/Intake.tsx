@@ -12,7 +12,8 @@ import type { Diagnosis, Guided } from '@shared/schemas';
 import { STATES, stateById } from '@shared/states';
 import { ApiError, diagnose, saveIntakeAndNeeds } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
-import { GuidedFields } from './GuidedFields';
+import { SITUATIONS, normaliseGuided } from '@shared/profile';
+import { AboutYouFields, GuidedFields } from './GuidedFields';
 
 // Situation intake (SPEC 7.3).
 
@@ -31,7 +32,9 @@ export default function Intake() {
   const setDiagnosis = useAppStore((s) => s.setDiagnosis);
 
   const [text, setText] = useState(stored?.situationText ?? '');
-  const [guided, setGuided] = useState<Guided>(stored?.guided ?? { hoursPerWeek: 2 });
+  const [guided, setGuided] = useState<Guided>(() =>
+    normaliseGuided(stored?.guided ?? { hoursPerWeek: 2 }),
+  );
   const [showGuided, setShowGuided] = useState(false);
   const [phase, setPhase] = useState<Phase>('edit');
   const [names, setNames] = useState<string[]>([]);
@@ -47,11 +50,15 @@ export default function Intake() {
 
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;
 
+  // The teacher can pick situations and skip writing; then the picks are their description.
+  const picked = SITUATIONS.filter((x) => guided.situations?.includes(x.id)).map((x) => x.label);
+  const fullText = text.trim() || (picked.length ? `${picked.join('. ')}.` : '');
+
   const finish = async (d: Diagnosis) => {
-    setIntake({ situationText: text, guided });
+    setIntake({ situationText: fullText, guided });
     setDiagnosis(d);
     try {
-      await saveIntakeAndNeeds(text, d);
+      await saveIntakeAndNeeds(fullText, d);
     } catch {
       /* Saved locally; a signed-in save failure shouldn't block the teacher. */
     }
@@ -67,7 +74,7 @@ export default function Intake() {
     }
     setPhase('submitting');
     try {
-      const d = await diagnose({ situationText: text, guided, clarifyingAnswers });
+      const d = await diagnose({ situationText: fullText, guided, clarifyingAnswers });
       if (d.clarifying_questions.length && !clarifyingAnswers) {
         setPending(d);
         setAnswers(d.clarifying_questions.map(() => ''));
@@ -89,7 +96,7 @@ export default function Intake() {
   const openGuided = () => {
     setShowGuided(true);
     setPhase('edit');
-    setTimeout(() => guidedRef.current?.querySelector('select')?.focus(), 0);
+    setTimeout(() => document.getElementById('g-role')?.focus(), 0);
   };
 
   return (
@@ -176,9 +183,11 @@ export default function Intake() {
               </p>
             </div>
 
+            <AboutYouFields value={guided} onChange={setGuided} />
+
             <div>
               <Label as="label" htmlFor="situation" className="mb-1.5 block">
-                Your situation
+                Tell us more about your situation
               </Label>
               <div className="flex items-start gap-2">
                 <textarea
@@ -188,7 +197,6 @@ export default function Intake() {
                   onChange={(e) => setText(e.target.value)}
                   rows={7}
                   maxLength={4000}
-                  required
                   aria-describedby="privacy-note"
                   aria-invalid={names.length > 0}
                   className="min-h-[180px] w-full rounded border-2 border-ink bg-field p-3 text-[17px] leading-normal text-ink"
@@ -243,7 +251,7 @@ export default function Intake() {
               className="border-y border-rule py-3"
             >
               <summary className="min-h-tap cursor-pointer py-2 font-bold text-green-700">
-                Add details (optional): role, year levels, time available
+                More details (optional): school, days you teach, time available
               </summary>
               <div className="pt-3">
                 <GuidedFields value={guided} onChange={setGuided} />
@@ -258,7 +266,7 @@ export default function Intake() {
                   <Button
                     variant="secondary"
                     onClick={() =>
-                      showGuided ? void finish(fallbackDiagnosis(text, guided)) : openGuided()
+                      showGuided ? void finish(fallbackDiagnosis(fullText, guided)) : openGuided()
                     }
                   >
                     {showGuided ? 'Continue with my answers' : 'Use the guided questions instead'}
@@ -268,14 +276,14 @@ export default function Intake() {
             )}
 
             <div className="flex flex-wrap gap-3">
-              <Button type="submit" disabled={!text.trim()}>
+              <Button type="submit" disabled={!fullText}>
                 Show me what I need <span aria-hidden="true">→</span>
               </Button>
               {showGuided && phase !== 'error' && (
                 <Button
                   variant="secondary"
-                  disabled={!text.trim()}
-                  onClick={() => void finish(fallbackDiagnosis(text, guided))}
+                  disabled={!fullText}
+                  onClick={() => void finish(fallbackDiagnosis(fullText, guided))}
                 >
                   Skip the AI, use my answers
                 </Button>
