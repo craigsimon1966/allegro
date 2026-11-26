@@ -21,37 +21,36 @@ export function RouteFocus() {
   useEffect(() => {
     const moveFocus = last.current !== null && last.current !== pathname;
     last.current = pathname;
-    // Watch the page until the new screen's heading appears. Screens that wait on the AI (the
-    // week, a lesson) can show a progress screen with no heading for 30 seconds or more, so this
-    // waits up to 2 minutes rather than a few frames.
-    let observer: MutationObserver | null = null;
-    let timer = 0;
-    const stop = () => {
-      observer?.disconnect();
-      observer = null;
-      window.clearTimeout(timer);
-    };
+    // Watch the page for the new screen's heading. Screens that wait on the AI (the week, a
+    // lesson) can show a progress screen with no heading for 30 seconds or more, and can swap one
+    // heading for another as they load, so this keeps watching for up to 2 minutes: whenever the
+    // heading it named the tab after leaves the page, it names the tab after the new one, and
+    // moves focus there if focus was lost with it.
+    let found = false;
     const look = () => {
+      if (found && lastH1.current?.isConnected) return;
       const h1 =
         document.querySelector<HTMLElement>('main h1') ?? document.querySelector<HTMLElement>('h1');
-      const stale = moveFocus && h1 === lastH1.current && h1?.isConnected;
-      if (!h1 || stale) return false;
+      const stale = !found && moveFocus && h1 === lastH1.current && h1?.isConnected;
+      if (!h1 || stale) return;
+      const focusLost = !document.activeElement || document.activeElement === document.body;
       lastH1.current = h1;
       const name = h1.textContent?.trim();
       document.title = TITLES[pathname] ?? (name && name !== SITE ? `${name} · ${SITE}` : SITE);
-      if (moveFocus && !h1.contains(document.activeElement)) {
+      if (moveFocus && (!found || focusLost) && !h1.contains(document.activeElement)) {
         h1.setAttribute('tabindex', '-1');
         h1.focus({ preventScroll: true });
       }
-      return true;
+      found = true;
     };
-    if (!look()) {
-      observer = new MutationObserver(() => {
-        if (look()) stop();
-      });
-      observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-      timer = window.setTimeout(stop, 120_000);
-    }
+    look();
+    const observer = new MutationObserver(look);
+    observer.observe(document.body, { childList: true, subtree: true });
+    const timer = window.setTimeout(() => observer.disconnect(), 120_000);
+    const stop = () => {
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
     return stop;
   }, [pathname]);
 

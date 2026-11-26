@@ -7,7 +7,8 @@ import { KATEX_MACROS, protectDollars } from '@shared/dollars';
 import { inline, runsText } from '@shared/markdownBlocks';
 
 // A real Year 11 financial maths lesson from the live AI wrote money like this.
-const LESSON = 'Calculate $25\\%$ of $\\$80$. A worker earns $\\$22$ per hour: $22 \\times 7 = \\$154$.';
+const LESSON =
+  'Calculate $25\\%$ of $\\$80$. A worker earns $\\$22$ per hour: $22 \\times 7 = \\$154$.';
 
 describe('dollar signs in maths', () => {
   it('rewrites \\$ inside maths only, and is idempotent', () => {
@@ -39,7 +40,12 @@ describe('dollar signs in maths', () => {
   it('the lesson screen shows the money and no stray maths', () => {
     const { container } = render(<MathText>{LESSON}</MathText>);
     const mathml = [...container.querySelectorAll('annotation')].map((a) => a.textContent);
-    expect(mathml).toEqual(['25\\%', '\\dollar{}80', '\\dollar{}22', '22 \\times 7 = \\dollar{}154']);
+    expect(mathml).toEqual([
+      '25\\%',
+      '\\dollar{}80',
+      '\\dollar{}22',
+      '22 \\times 7 = \\dollar{}154',
+    ]);
     expect(container.querySelector('.katex-error')).toBeNull();
     expect(container.textContent).toContain('per hour');
   });
