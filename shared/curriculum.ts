@@ -6,6 +6,7 @@
 import ac9File from '../content/curriculum/ac9-maths.json';
 import nswFile from '../content/curriculum/nsw-maths.json';
 import seniorFile from '../content/curriculum/senior-maths.json';
+import seniorPdfFile from '../content/curriculum/senior-maths-pdf.json';
 import { TAGS, tagById } from './tags';
 import { stateById } from './states';
 
@@ -48,7 +49,7 @@ export const AC9: Ac9Code[] = ac9File;
 export const NSW: NswOutcome[] = nswFile;
 const AC9_BY_CODE = new Map(AC9.map((c) => [c.code, c]));
 const NSW_BY_CODE = new Map(NSW.map((c) => [c.code, c]));
-export const SENIOR: SeniorOutcome[] = seniorFile;
+export const SENIOR: SeniorOutcome[] = [...seniorFile, ...seniorPdfFile];
 const SENIOR_BY_CODE = new Map(SENIOR.map((c) => [c.code, c]));
 
 export const YEAR_LEVELS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const;
@@ -65,6 +66,9 @@ const SENIOR_COURSES: Record<string, string> = {
   SA: 'SACE General Mathematics',
   NT: 'SACE General Mathematics',
   TAS: 'TASC General Mathematics',
+  QLD: 'QCAA General Mathematics',
+  WA: 'SCSA Mathematics Applications ATAR',
+  ACT: 'BSSS Mathematical Applications',
 };
 export function seniorCourseFor(state: string | null | undefined): string | null {
   return SENIOR_COURSES[stateById(state)?.id ?? 'NSW'] ?? null;

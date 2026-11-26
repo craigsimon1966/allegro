@@ -414,7 +414,7 @@
       "domain": "CK",
       "label": "Algebraic relationships and linear modelling",
       "yearLevels": ["11", "12"],
-      "states": ["NSW", "SA", "NT", "TAS"],
+      "states": ["NSW", "SA", "NT", "TAS", "QLD", "WA", "ACT"],
       "curriculum": {
         "ac9": [],
         "nsw": ["MST-11-01", "MST-11-02", "MST-12-S1-01", "MST-12-S2-01"],
@@ -425,7 +425,17 @@
           "Stage 2 Subtopic 1.2",
           "MTG215123 Outcome 5",
           "MTG215123 Outcome 6",
-          "MTG315123 Outcome 6"
+          "MTG315123 Outcome 6",
+          "QCAA Unit 1 Topic 4",
+          "QCAA Unit 1 Topic 5",
+          "QCAA Unit 2 Topic 1",
+          "QCAA Unit 3 Topic 4",
+          "BSSS Unit 1 Topic 2",
+          "BSSS Unit 2 Topic 3",
+          "BSSS Unit 3 Topic 2",
+          "SCSA Topic 1.2",
+          "SCSA Topic 2.3",
+          "SCSA Topic 3.2"
         ]
       }
     },
@@ -434,7 +444,7 @@
       "domain": "CK",
       "label": "Financial maths: earning, interest, loans and annuities",
       "yearLevels": ["11", "12"],
-      "states": ["NSW", "SA", "NT", "TAS"],
+      "states": ["NSW", "SA", "NT", "TAS", "QLD", "WA", "ACT"],
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -453,7 +463,14 @@
           "Stage 2 Subtopic 4.1",
           "Stage 2 Subtopic 4.2",
           "MTG215123 Outcome 6",
-          "MTG315123 Outcome 7"
+          "MTG315123 Outcome 7",
+          "QCAA Unit 1 Topic 1",
+          "QCAA Unit 4 Topic 1",
+          "QCAA Unit 4 Topic 2",
+          "BSSS Unit 1 Topic 1",
+          "BSSS Unit 4 Topic 2",
+          "SCSA Topic 1.1",
+          "SCSA Topic 4.2"
         ]
       }
     },
@@ -462,7 +479,7 @@
       "domain": "CK",
       "label": "Measurement, trigonometry, and ratios and rates",
       "yearLevels": ["11", "12"],
-      "states": ["NSW", "SA", "NT", "TAS"],
+      "states": ["NSW", "SA", "NT", "TAS", "QLD", "WA", "ACT"],
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -483,7 +500,15 @@
           "Stage 1 Subtopic 4.3",
           "Stage 1 Subtopic 4.4",
           "MTG215123 Outcome 8",
-          "MTG315123 Outcome 8"
+          "MTG315123 Outcome 8",
+          "QCAA Unit 1 Topic 2",
+          "QCAA Unit 1 Topic 3",
+          "QCAA Unit 2 Topic 2",
+          "QCAA Unit 3 Topic 5",
+          "BSSS Unit 1 Topic 3",
+          "BSSS Unit 2 Topic 2",
+          "SCSA Topic 1.3",
+          "SCSA Topic 2.2"
         ]
       }
     },
@@ -492,7 +517,7 @@
       "domain": "CK",
       "label": "Statistics, bivariate data and probability",
       "yearLevels": ["11", "12"],
-      "states": ["NSW", "SA", "NT", "TAS"],
+      "states": ["NSW", "SA", "NT", "TAS", "QLD", "WA", "ACT"],
       "curriculum": {
         "ac9": [],
         "nsw": [
@@ -512,7 +537,18 @@
           "Stage 2 Subtopic 3.1",
           "Stage 2 Subtopic 3.2",
           "MTG215123 Outcome 7",
-          "MTG315123 Outcome 5"
+          "MTG315123 Outcome 5",
+          "QCAA Unit 2 Topic 4",
+          "QCAA Unit 2 Topic 5",
+          "QCAA Unit 3 Topic 1",
+          "QCAA Unit 3 Topic 2",
+          "QCAA Unit 3 Topic 3",
+          "BSSS Unit 2 Topic 1",
+          "BSSS Unit 3 Topic 1",
+          "BSSS Unit 4 Topic 1",
+          "SCSA Topic 2.1",
+          "SCSA Topic 3.1",
+          "SCSA Topic 4.1"
         ]
       }
     },
@@ -521,7 +557,7 @@
       "domain": "CK",
       "label": "Networks, matrices and decision maths",
       "yearLevels": ["11", "12"],
-      "states": ["NSW", "SA", "NT", "TAS"],
+      "states": ["NSW", "SA", "NT", "TAS", "QLD", "WA", "ACT"],
       "curriculum": {
         "ac9": [],
         "nsw": ["MST-11-07", "MST-12-S2-06", "MST-12-S2-07"],
@@ -532,7 +568,17 @@
           "Stage 2 Subtopic 2.2",
           "Stage 2 Subtopic 5.1",
           "Stage 2 Subtopic 5.2",
-          "MTG215123 Outcome 5"
+          "MTG215123 Outcome 5",
+          "QCAA Unit 2 Topic 3",
+          "QCAA Unit 4 Topic 3",
+          "QCAA Unit 4 Topic 4",
+          "QCAA Unit 4 Topic 5",
+          "BSSS Unit 1 Topic 2",
+          "BSSS Unit 3 Topic 3",
+          "BSSS Unit 4 Topic 3",
+          "SCSA Topic 1.2",
+          "SCSA Topic 3.3",
+          "SCSA Topic 4.3"
         ]
       }
     }

@@ -104,6 +104,20 @@ Imported by `scripts/curriculum-import.ts` from the SACE Stage 1 and Stage 2 Gen
 
 Worth a check: SACE Stage 2 has no measurement topic, so SA and NT Year 12 teachers see four topics. TASC Level 3 has no networks content, so Tasmanian Year 12 teachers see four topics.
 
+## QCAA, SCSA and BSSS (Queensland, WA and the ACT)
+
+Read from the official syllabus PDFs by `scripts/senior-pdf-import.ts` (see decisions.d/senior-qld-wa-act.md). Topic-level entries only.
+
+| Topic                 | QCAA                            | SCSA          | BSSS                |
+| --------------------- | ------------------------------- | ------------- | ------------------- |
+| senior.algebra-linear | U1 T4, T5; U2 T1; U3 T4         | 1.2, 2.3, 3.2 | U1 T2; U2 T3; U3 T2 |
+| senior.financial      | U1 T1; U4 T1, T2                | 1.1, 4.2      | U1 T1; U4 T2        |
+| senior.measurement    | U1 T2, T3; U2 T2; U3 T5         | 1.3, 2.2      | U1 T3; U2 T2        |
+| senior.statistics     | U2 T4, T5; U3 T1, T2, T3        | 2.1, 3.1, 4.1 | U2 T1; U3 T1; U4 T1 |
+| senior.networks       | U2 T3 (matrices); U4 T3, T4, T5 | 1.2, 3.3, 4.3 | U1 T2; U3 T3; U4 T3 |
+
+Worth a check: the BSSS course document is titled "from 2014"; confirm it is still the current accredited version. SCSA and BSSS Year 12 have no measurement topic, so those teachers see four Year 12 topics.
+
 ## Victoria and WA
 
 Victoria (Victorian Curriculum 2.0) and Western Australia (WA Curriculum) publish their own versions. Until someone adds their codes, teachers in those states see AC v9 codes only, and no placeholder shows.

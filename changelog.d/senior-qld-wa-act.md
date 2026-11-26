@@ -1,0 +1,1 @@
+- Plan a lesson now offers Years 11 and 12 for teachers in Queensland (QCAA General Mathematics), WA (SCSA Mathematics Applications ATAR) and the ACT (BSSS Mathematical Applications). The topics come from the official syllabus PDFs, read by `scripts/senior-pdf-import.ts`, because those sites block automated downloads. Victoria is the only state still to come.

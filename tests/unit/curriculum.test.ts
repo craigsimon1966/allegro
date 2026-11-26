@@ -154,7 +154,7 @@ describe('topics and the years they are taught in', () => {
     expect(SENIOR.filter((o) => o.course.startsWith('SACE')).length).toBeGreaterThanOrEqual(25);
     expect(SENIOR.filter((o) => o.course.startsWith('TASC')).length).toBe(16);
     for (const o of SENIOR) expect(o.text).not.toMatch(/<|TODO/);
-    for (const state of ['SA', 'NT', 'TAS'])
+    for (const state of ['SA', 'NT', 'TAS', 'QLD', 'WA', 'ACT'])
       for (const y of SENIOR_YEARS) {
         const topics = lessonTopicsFor(y, state);
         expect(topics.length, `${state} Year ${y}`).toBeGreaterThanOrEqual(4);
@@ -166,6 +166,20 @@ describe('topics and the years they are taught in', () => {
       }
     expect(seniorCourseFor('SA')).toBe('SACE General Mathematics');
     expect(seniorCourseFor('TAS')).toBe('TASC General Mathematics');
+    expect(seniorCourseFor('QLD')).toBe('QCAA General Mathematics');
+    expect(seniorCourseFor('WA')).toBe('SCSA Mathematics Applications ATAR');
+    expect(seniorCourseFor('ACT')).toBe('BSSS Mathematical Applications');
+    // Queensland, WA and the ACT come from the uploaded syllabuses: every unit, 3 to 5 topics each.
+    for (const [prefix, n] of [
+      ['QCAA', 20],
+      ['BSSS', 12],
+      ['SCSA', 12],
+    ] as const)
+      expect(SENIOR.filter((o) => o.code.startsWith(prefix)).length, prefix).toBe(n);
+    expect(checkSenior('QCAA Unit 4 Topic 1', ['12'], 'QLD')?.text).toBe(
+      'Loans, investments and annuities 1',
+    );
+    expect(checkSenior('SCSA Topic 3.3', ['12'], 'ACT')).toBeNull();
     // A Tasmanian code never shows for a South Australian teacher, and Stage 2 never in Year 11.
     expect(checkSenior('MTG315123 Outcome 7', ['12'], 'SA')).toBeNull();
     expect(checkSenior('Stage 2 Subtopic 4.1', ['11'], 'SA')).toBeNull();
