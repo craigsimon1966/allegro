@@ -1,6 +1,7 @@
 // Downloads the official maths curriculum lists that Allegro validates codes against.
 //   AC v9: ACARA's curriculum API, one file per year (Foundation to Year 10).
-//   NSW:   the NESA Mathematics K-10 (2022) syllabus page, which embeds every outcome.
+//   NSW:   the NESA Mathematics K-10 (2022) syllabus page, which embeds every outcome, and the
+//          Mathematics Standard 11-12 (2024) outcomes page (Stage 6, MST codes).
 // Writes content/curriculum/ac9-maths.json and content/curriculum/nsw-maths.json.
 // Run with: NODE_USE_ENV_PROXY=1 npx tsx scripts/curriculum-import.ts
 // Nothing here is typed by hand: every code and its wording comes from the official source.
@@ -11,6 +12,8 @@ const OUT = join(process.cwd(), 'content', 'curriculum');
 const ACARA = 'https://www.australiancurriculum.edu.au/conf/acara/api/spa/ac/curriculum.';
 const NESA =
   'https://curriculum.nsw.edu.au/learning-areas/mathematics/mathematics-k-10-2022/content/stage-4';
+const NESA_STANDARD =
+  'https://curriculum.nsw.edu.au/learning-areas/mathematics/mathematics-standard-11-12-2024/outcomes';
 const YEARS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
 // MathML (NESA) and LaTeX (ACARA) to plain text, enough for short outcome wording.
@@ -97,10 +100,32 @@ async function nsw() {
   return [...seen.values()].sort((a, b) => a.code.localeCompare(b.code));
 }
 
+// NSW Mathematics Standard 11-12 (Stage 6). Each outcome names its year (11 or 12) on the page.
+async function nswStandard() {
+  const res = await fetch(NESA_STANDARD);
+  if (!res.ok) throw new Error(`NESA Standard: ${res.status}`);
+  const html = await res.text();
+  const re =
+    /"code":\{"name":"[^"]*","type":"text","value":"(MST-[A-Z0-9-]+)"\},"title":\{[^}]*\},"description":\{.*?"type":"rich_text","value":"((?:[^"\\]|\\.)*)"\}(.{0,2500}?)"stages__stage_years":\{[^[]*\[(.*?)\]/gs;
+  const seen = new Map<string, { code: string; stage: string; years: string[]; text: string }>();
+  for (const m of html.matchAll(re)) {
+    const code = m[1]!;
+    if (seen.has(code)) continue;
+    const text = clean(JSON.parse(`"${m[2]}"`) as string);
+    const years = [...m[4]!.matchAll(/"name":"(11|12)"/g)].map((y) => y[1]!);
+    if (!text || years.length === 0) throw new Error(`NESA Standard: incomplete entry for ${code}`);
+    seen.set(code, { code, stage: 'Stage 6', years, text });
+  }
+  return [...seen.values()].sort((a, b) => a.code.localeCompare(b.code));
+}
+
 const main = async () => {
   mkdirSync(OUT, { recursive: true });
   const a = await ac9();
-  const n = await nsw();
+  const k10 = await nsw();
+  const standard = await nswStandard();
+  if (standard.length < 20) throw new Error(`Too few NSW Standard outcomes: ${standard.length}`);
+  const n = [...k10, ...standard];
   const odd = a.find((d) => !d.text || d.text.includes('\\'));
   if (odd) throw new Error(`AC v9: unconverted maths in ${odd.code}: ${odd.text}`);
   if (a.length < 200 || n.length < 100)

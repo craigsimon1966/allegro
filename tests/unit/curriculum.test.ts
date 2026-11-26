@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   AC9,
   NSW,
+  SENIOR_YEARS,
   YEAR_LEVELS,
   builtForLine,
   checkAc9,
@@ -9,6 +10,7 @@ import {
   curriculumRows,
   lessonTopicsFor,
   nswStageFor,
+  seniorCourseFor,
   topicFitsYear,
   topicRefs,
 } from '@shared/curriculum';
@@ -36,6 +38,7 @@ describe('official curriculum lists', () => {
       MA3: 'Stage 3',
       MA4: 'Stage 4',
       MA5: 'Stage 5',
+      MST: 'Stage 6',
     };
     for (const o of NSW) {
       expect(o.stage).toBe(prefix[o.code.slice(0, 3)]);
@@ -43,6 +46,11 @@ describe('official curriculum lists', () => {
     }
     expect(nswStageFor('8')).toBe('Stage 4');
     expect(nswStageFor('9')).toBe('Stage 5');
+    expect(nswStageFor('11')).toBe('Stage 6');
+    // Mathematics Standard 11-12: each outcome is for Year 11 or Year 12, never both.
+    const standard = NSW.filter((o) => o.code.startsWith('MST-'));
+    expect(standard.length).toBe(25);
+    for (const o of standard) expect(o.years).toEqual([o.code.startsWith('MST-11') ? '11' : '12']);
   });
 });
 
@@ -114,6 +122,30 @@ describe('topics and the years they are taught in', () => {
       const maths = lessonTopicsFor(y).filter((t) => t.domain === 'CK');
       expect(maths.length, `Year ${y}`).toBeGreaterThanOrEqual(5);
     }
+  });
+
+  it('offers NSW Mathematics Standard topics in Years 11 and 12, for NSW teachers only', () => {
+    for (const y of SENIOR_YEARS) {
+      const nsw = lessonTopicsFor(y, 'NSW');
+      expect(nsw.length, `Year ${y}`).toBeGreaterThanOrEqual(5);
+      // Every senior topic carries an official Stage 6 outcome for that year.
+      for (const t of nsw)
+        expect(
+          topicRefs(t.id).nsw.some((c) => checkNsw(c, [y])),
+          t.id,
+        ).toBe(true);
+      expect(lessonTopicsFor(y).map((t) => t.id)).toEqual(nsw.map((t) => t.id));
+      expect(lessonTopicsFor(y, 'VIC')).toEqual([]);
+      expect(seniorCourseFor('VIC')).toBeNull();
+    }
+    expect(seniorCourseFor('NSW')).toBe('NSW Mathematics Standard');
+    // Senior topics never appear in Years F to 10.
+    for (const y of YEAR_LEVELS)
+      expect(lessonTopicsFor(y, 'NSW').some((t) => t.id.startsWith('senior.'))).toBe(false);
+    expect(curriculumRefsFor('senior.networks', '12').nsw).toEqual([
+      'MST-12-S2-06',
+      'MST-12-S2-07',
+    ]);
   });
 
   it('marks a topic lesson-only exactly when no learning unit uses it', () => {

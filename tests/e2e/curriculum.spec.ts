@@ -48,6 +48,16 @@ test('plan a lesson: year first, topics for that year, codes with their official
     topic.locator('option', { hasText: 'Fractions, decimals and percentages' }),
   ).toHaveCount(1);
 
+  // Years 11 and 12: NSW Mathematics Standard topics with official Stage 6 outcomes.
+  await year.selectOption('11');
+  await expect(page.getByText('Course: NSW Mathematics Standard')).toBeVisible();
+  await expect(topic.locator('option')).toHaveCount(5);
+  await topic.selectOption('senior.networks');
+  await expect(page.getByText('MST-11-07', { exact: true })).toBeVisible();
+  await year.selectOption('12');
+  await expect(page.getByText('MST-12-S2-07', { exact: true })).toBeVisible();
+  await expect(page.getByText('MST-11-07', { exact: true })).toHaveCount(0);
+
   await year.selectOption('8');
   await topic.selectOption('algebra.linear');
   await page.getByRole('button', { name: /Draft my lesson/ }).click();

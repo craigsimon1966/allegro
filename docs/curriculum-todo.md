@@ -76,6 +76,18 @@ A lesson plan shows the codes for its topic that belong to the lesson's year.
 - `alg-01-equals-sign` maps to solving equations (AC9M7A03, MA4-EQU-C-01): AC v9 has no code for the meaning of the equals sign on its own.
 - `pck-diff-01-three-entry-points` has no codes, because it is a teaching approach rather than maths content.
 
+## NSW Mathematics Standard 11-12 (Stage 6)
+
+Imported from the NESA Mathematics Standard 11-12 (2024) outcomes page by `scripts/curriculum-import.ts` (25 outcomes, MST codes). Year 12 topics list both Standard 1 (S1) and Standard 2 (S2) outcomes. These topics have no AC v9 codes, because AC v9 stops at Year 10.
+
+| Topic                 | Years  | NSW Stage 6 outcomes                                                            |
+| --------------------- | ------ | ------------------------------------------------------------------------------- |
+| senior.algebra-linear | 11, 12 | MST-11-01, MST-11-02, MST-12-S1-01, MST-12-S2-01                                |
+| senior.financial      | 11, 12 | MST-11-03, MST-11-04, MST-12-S1-02, MST-12-S1-03, MST-12-S2-02, MST-12-S2-03    |
+| senior.measurement    | 11, 12 | MST-11-05, MST-11-06, MST-12-S1-04, MST-12-S1-05, MST-12-S2-04, MST-12-S2-05    |
+| senior.statistics     | 11, 12 | MST-11-08, MST-12-S1-06, MST-12-S1-07, MST-12-S2-08, MST-12-S2-09, MST-12-S2-10 |
+| senior.networks       | 11, 12 | MST-11-07, MST-12-S2-06, MST-12-S2-07                                           |
+
 ## Victoria and WA
 
 Victoria (Victorian Curriculum 2.0) and Western Australia (WA Curriculum) publish their own versions. Until someone adds their codes, teachers in those states see AC v9 codes only, and no placeholder shows.

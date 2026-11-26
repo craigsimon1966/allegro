@@ -41,6 +41,17 @@ const NSW_BY_CODE = new Map(NSW.map((c) => [c.code, c]));
 
 export const YEAR_LEVELS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const;
 
+/** Years 11 and 12 follow each state's own senior course, not AC v9. */
+export const SENIOR_YEARS = ['11', '12'] as const;
+/** Every year a teacher can plan a lesson for. */
+export const PLAN_YEARS = [...YEAR_LEVELS, ...SENIOR_YEARS] as const;
+export const isSeniorYear = (year: string) => (SENIOR_YEARS as readonly string[]).includes(year);
+
+/** The senior general maths course Allegro has for a state, if any (NSW only so far). */
+export function seniorCourseFor(state: string | null | undefined): string | null {
+  return (stateById(state)?.id ?? 'NSW') === 'NSW' ? 'NSW Mathematics Standard' : null;
+}
+
 export const yearLabel = (year: string) => (year === 'F' ? 'Foundation' : `Year ${year}`);
 
 /** The NSW stage that covers a school year, e.g. "8" is Stage 4. */
@@ -114,13 +125,25 @@ export function topicFitsYear(tagId: string, year: string): boolean {
 
 /**
  * Lesson topics for a year: maths topics (CK) and topic-specific teaching (PCK) that are tied to
- * the years they are taught in (content/tags.json, checked against AC v9).
+ * the years they are taught in (content/tags.json, checked against AC v9). Years 11 and 12 offer
+ * the topics of the state's senior course, checked against that state's official outcomes.
  */
-export function lessonTopicsFor(year: string) {
+export function lessonTopicsFor(year: string, state?: string | null) {
+  if (isSeniorYear(year)) {
+    const s = stateById(state)?.id ?? 'NSW';
+    return TAGS.filter(
+      (t) =>
+        t.domain === 'CK' &&
+        (t.states ?? []).includes(s) &&
+        topicFitsYear(t.id, year) &&
+        topicRefs(t.id).nsw.some((c) => checkNsw(c, [year])),
+    );
+  }
   return TAGS.filter(
     (t) =>
       (t.domain === 'CK' || t.domain === 'PCK') &&
       t.yearLevels.length > 0 &&
+      !t.states &&
       topicFitsYear(t.id, year) &&
       // A lesson topic is maths content with official codes. A general teaching approach
       // (such as differentiation) is learnt in the week, not planned as a lesson topic.
@@ -142,7 +165,7 @@ export function builtForLine(opts: {
 }): string {
   const parts: string[] = [];
   const ys = [...new Set(opts.years)].sort(
-    (a, b) => YEAR_LEVELS.indexOf(a as never) - YEAR_LEVELS.indexOf(b as never),
+    (a, b) => PLAN_YEARS.indexOf(a as never) - PLAN_YEARS.indexOf(b as never),
   );
   if (ys.length)
     parts.push(
