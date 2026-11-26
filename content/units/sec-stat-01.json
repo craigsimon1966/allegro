@@ -1,0 +1,60 @@
+{
+  "id": "sec-stat-01",
+  "moduleId": "mod-years-7-8",
+  "title": "Mean, median and the one big value",
+  "domain": "CK",
+  "tags": [
+    "statistics.probability"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M7ST01"
+    ],
+    "nsw": [
+      "MA4-DAT-C-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students can calculate a mean, but can they say when it misleads? One unusual value is enough to show the difference between mean and median.",
+  "coreIdeaMd": "- The **mean** shares the total out equally. Every value pulls on it, including an unusual one (an **outlier**).\n- The **median** is the middle value **once the data is in order**. An outlier barely moves it.\n- The **mode** is the most common value, useful for categories such as shoe sizes.\n\nThe question to teach is not just \"calculate\" but \"which one describes this data best, and why?\"",
+  "workedExampleMd": "**Five students' weekly screen time, in hours: 12, 15, 9, 14, 80.**\n\n1. Mean: total $12 + 15 + 9 + 14 + 80 = 130$, and $130 \\div 5 = 26$ hours.\n2. Median: order the data, 9, 12, 14, 15, 80. The middle value is 14 hours.\n3. Four of the five students are between 9 and 15 hours. The median (14) describes them well; the mean (26) is pulled up by the one value of 80.",
+  "misconceptionIds": [
+    "mis-median-unsorted"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-stat-01-q1",
+      "stemMd": "Find the median of 3, 8, 5, 6, 23.",
+      "type": "numeric",
+      "answer": "6",
+      "feedbackCorrect": "Yes. In order: 3, 5, 6, 8, 23. The middle value is 6.",
+      "feedbackIncorrect": "Put the data in order first: 3, 5, 6, 8, 23. The middle value is 6.",
+      "wrongAnswers": [
+        {
+          "answer": "5",
+          "misconceptionId": "mis-median-unsorted",
+          "feedback": "5 is the middle of the list as written. The median is the middle once the data is in order: 3, 5, 6, 8, 23, so the median is 6."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Give students a small data set with one outlier (for example, ages at a family party including a grandparent) and ask: \"Which average would you report, and why?\"",
+  "reflectPrompt": "Do your students ever have to choose between mean and median, or do they only calculate them when asked?",
+  "reviewedBy": null
+}

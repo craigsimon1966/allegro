@@ -32,6 +32,9 @@ import u28 from '../content/units/pri-routines-01.json';
 import u29 from '../content/units/prop-01-ratio-tables.json';
 import u30 from '../content/units/prop-02-percentages.json';
 import u31 from '../content/units/prop-03-ratio-vs-fraction.json';
-import u32 from '../content/units/wb-01-workload.json';
+import u32 from '../content/units/sec-int-01.json';
+import u33 from '../content/units/sec-meas-01.json';
+import u34 from '../content/units/sec-stat-01.json';
+import u35 from '../content/units/wb-01-workload.json';
 
-export const UNIT_FILES = [u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, u25, u26, u27, u28, u29, u30, u31, u32] as unknown as MicroUnit[];
+export const UNIT_FILES = [u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, u25, u26, u27, u28, u29, u30, u31, u32, u33, u34, u35] as unknown as MicroUnit[];

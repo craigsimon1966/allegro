@@ -1,0 +1,61 @@
+{
+  "id": "sec-meas-01",
+  "moduleId": "mod-years-7-8",
+  "title": "Triangle area: the height is perpendicular",
+  "domain": "CK",
+  "tags": [
+    "measurement.area-volume-angles"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M7M01",
+      "AC9M8M01"
+    ],
+    "nsw": [
+      "MA4-ARE-C-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students who learn \"half base times height\" as a rule often grab the wrong height: the slanted side. Knowing why the formula works fixes that.",
+  "coreIdeaMd": "A triangle is **half of a parallelogram** with the same base and height. Two copies of any triangle fit together to make one.\n\n- The **height** is the **perpendicular** distance from the base to the opposite corner: it meets the base at a right angle.\n- A slanted side is always longer than the height, so using it gives too big an area.\n- Area $= \\frac{1}{2} \\times \\text{base} \\times \\text{height}$, in square units.\n\nHave students cut a parallelogram into two triangles, or two triangles into a parallelogram, before they see the formula.",
+  "workedExampleMd": "**A triangle has a base of 10 cm, a slanted side of 7 cm and a perpendicular height of 6 cm. Find its area.**\n\n1. Find the height that meets the base at a right angle: 6 cm. Ignore the 7 cm side.\n2. Area $= \\frac{1}{2} \\times 10 \\times 6$.\n3. $= 30$ cm².\n\n**Check:** the parallelogram made from two copies has area $10 \\times 6 = 60$ cm², and the triangle is half of it.",
+  "misconceptionIds": [
+    "mis-slant-height"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-meas-01-q1",
+      "stemMd": "A triangle has a base of 8 cm, a slanted side of 6 cm and a perpendicular height of 5 cm. What is its area in cm²?",
+      "type": "numeric",
+      "answer": "20",
+      "feedbackCorrect": "Yes. $\\frac{1}{2} \\times 8 \\times 5 = 20$ cm². The 6 cm side isn't needed.",
+      "feedbackIncorrect": "Use the height that meets the base at a right angle, 5 cm: $\\frac{1}{2} \\times 8 \\times 5 = 20$ cm².",
+      "wrongAnswers": [
+        {
+          "answer": "24",
+          "misconceptionId": "mis-slant-height",
+          "feedback": "24 uses the slanted 6 cm side as the height. The height must be perpendicular to the base, which is 5 cm here: $\\frac{1}{2} \\times 8 \\times 5 = 20$ cm²."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Draw three triangles on the same base with the same perpendicular height but different slants. Ask students to predict which has the biggest area, then work it out.",
+  "reflectPrompt": "When students use a formula, how do you check they know what each letter means on the actual shape?",
+  "reviewedBy": null
+}

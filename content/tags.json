@@ -295,8 +295,7 @@
       "curriculum": {
         "ac9": ["AC9M7N07", "AC9M8N04"],
         "nsw": ["MA4-INT-C-01"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "measurement.area-volume-angles",
@@ -316,8 +315,7 @@
           "AC9M8M06"
         ],
         "nsw": ["MA4-ARE-C-01", "MA4-VOL-C-01", "MA4-LEN-C-01", "MA4-ANG-C-01", "MA4-PYT-C-01"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "statistics.probability",
@@ -347,8 +345,7 @@
           "MA5-DAT-C-02",
           "MA5-PRO-C-01"
         ]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "algebra.techniques",

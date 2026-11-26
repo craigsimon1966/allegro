@@ -28,6 +28,9 @@ What still needs a person is the **match**: whether each unit or topic really te
 | prop-01-ratio-tables           | Years 7, 8       | AC9M7N08, AC9M8M05                     | MA4-RAT-C-01                       |            |      |
 | prop-02-percentages            | Years 7, 8       | AC9M7N06, AC9M7N09, AC9M8N05           | MA4-FRC-C-01                       |            |      |
 | prop-03-ratio-vs-fraction      | Years 7, 8       | AC9M7N04, AC9M7N08                     | MA4-RAT-C-01, MA4-FRC-C-01         |            |      |
+| sec-int-01                     | Years 7, 8       | AC9M7N07, AC9M8N04                     | MA4-INT-C-01                       |            |      |
+| sec-meas-01                    | Years 7, 8       | AC9M7M01, AC9M8M01                     | MA4-ARE-C-01                       |            |      |
+| sec-stat-01                    | Years 7, 8       | AC9M7ST01                              | MA4-DAT-C-02                       |            |      |
 
 ## Lesson topics
 

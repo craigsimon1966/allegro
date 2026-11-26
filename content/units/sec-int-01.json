@@ -1,0 +1,61 @@
+{
+  "id": "sec-int-01",
+  "moduleId": "mod-years-7-8",
+  "title": "Subtracting a negative number",
+  "domain": "CK",
+  "tags": [
+    "number.integers"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "7",
+    "8"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M7N07",
+      "AC9M8N04"
+    ],
+    "nsw": [
+      "MA4-INT-C-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "\"Two negatives make a positive\" gets misapplied everywhere, from $-3 - 5$ to $-3 \\times 5$. A number line gives students something better than a slogan.",
+  "coreIdeaMd": "On a number line, **adding** moves you one way and **subtracting** moves you the opposite way.\n\n- Adding a positive: move right. Subtracting a positive: move left.\n- Adding a negative: move **left**. Subtracting a negative: do the opposite, move **right**.\n\nAnother view: subtraction is the **difference**, how far it is from one number to another. $3 - (-2)$ asks \"how far from $-2$ up to 3?\", which is 5.\n\nTemperature and bank balances are good contexts. Save sign rules for after students can explain the moves.",
+  "workedExampleMd": "**Work out $-2 - (-5)$.**\n\n```visual\n{\"type\": \"number_line\", \"min\": -6, \"max\": 5, \"step\": 1, \"points\": [{\"value\": -2, \"label\": \"start\"}], \"jumps\": [{\"from\": -2, \"to\": 3, \"label\": \"subtract -5\"}]}\n```\n\n1. Start at $-2$.\n2. Subtracting 5 would move 5 to the left, so subtracting $-5$ moves 5 to the **right**.\n3. You land on 3. So $-2 - (-5) = 3$.\n\n**Check with the difference:** $-2 - (-5)$ is the distance from $-5$ up to $-2$, which is 3 steps.",
+  "misconceptionIds": [
+    "mis-subtract-negative"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-int-01-q1",
+      "stemMd": "Work out $-4 - (-7)$.",
+      "type": "numeric",
+      "answer": "3",
+      "feedbackCorrect": "Yes. Subtracting $-7$ moves 7 to the right from $-4$, landing on 3.",
+      "feedbackIncorrect": "Start at $-4$. Subtracting a negative moves right, so move 7 to the right: $-4 \\to 3$.",
+      "wrongAnswers": [
+        {
+          "answer": "-11",
+          "misconceptionId": "mis-subtract-negative",
+          "feedback": "$-11$ is what you get from $-4 - 7$, moving 7 to the left. Subtracting $-7$ is the opposite move: 7 to the right, which lands on 3."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Draw a number line from $-10$ to 10 and ask students to act out $5 - (-3)$ and $-6 - (-2)$ by walking along it (or moving a counter), saying which way they move and why.",
+  "reflectPrompt": "What rule do your students say when they meet two negative signs? Does it help them or trip them up?",
+  "reviewedBy": null
+}
