@@ -1,0 +1,63 @@
+{
+  "id": "pri-groups-01",
+  "moduleId": "mod-primary",
+  "title": "Equal groups: the start of multiplication",
+  "domain": "CK",
+  "tags": [
+    "primary.patterns-groups"
+  ],
+  "audience": [
+    "primary",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9MFN06",
+      "AC9M1N03",
+      "AC9M2N05"
+    ],
+    "nsw": [
+      "MAE-FG-02",
+      "MA1-FG-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Long before times tables, children can see \"3 groups of 4\". Getting the word **groups** right now saves a lot of confusion later.",
+  "coreIdeaMd": "Multiplication starts with **equal groups**: the same number in every group.\n\n- **Sharing** asks how many in each group. **Grouping** asks how many groups.\n- **Skip counting** (4, 8, 12) is a quick way to count equal groups.\n- **Arrays**, rows of objects, show the groups lined up so they are easy to count.\n\nAsk children to say both numbers and what each one means: \"3 groups, 4 in each group.\"",
+  "workedExampleMd": "**How many counters are in 3 rows of 4?**\n\n```visual\n{\"type\": \"array\", \"rows\": 3, \"cols\": 4, \"caption\": \"3 rows of 4\"}\n```\n\n- Each row is a group of 4.\n- Skip count by 4s, one row at a time: 4, 8, 12.\n- So 3 groups of 4 is 12.\n\nAsk: \"What would 4 rows of 3 look like? Is it the same number?\"",
+  "misconceptionIds": [
+    "mis-groups-add"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-groups-01-q1",
+      "stemMd": "How many is 4 groups of 5?",
+      "type": "numeric",
+      "answer": "20",
+      "feedbackCorrect": "Yes. Skip count by 5s four times: 5, 10, 15, 20.",
+      "feedbackIncorrect": "4 groups of 5 means four lots of 5. Skip count by 5s: 5, 10, 15, 20.",
+      "wrongAnswers": [
+        {
+          "answer": "9",
+          "misconceptionId": "mis-groups-add",
+          "feedback": "9 is 4 and 5 added together. \"4 groups of 5\" means four groups with 5 in each, so skip count by 5s: 5, 10, 15, 20."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Hand out 12 counters to pairs and ask them to make equal groups in as many ways as they can. Ask each pair to say one way as \"___ groups of ___\".",
+  "reflectPrompt": "How often do your students hear and use the words \"groups of\" in maths lessons?",
+  "reviewedBy": null
+}

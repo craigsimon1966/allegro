@@ -116,7 +116,11 @@
       "unitIds": [
         "pri-routines-01",
         "pri-attention-01",
-        "pri-number-01"
+        "pri-number-01",
+        "pri-groups-01",
+        "pri-measure-01",
+        "pri-shape-01",
+        "pri-data-01"
       ]
     },
     {

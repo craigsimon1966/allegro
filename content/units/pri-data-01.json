@@ -1,0 +1,68 @@
+{
+  "id": "pri-data-01",
+  "moduleId": "mod-primary",
+  "title": "Picture graphs: count, don't just look",
+  "domain": "CK",
+  "tags": [
+    "primary.data"
+  ],
+  "audience": [
+    "primary",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9MFST01",
+      "AC9M1ST02",
+      "AC9M2ST02"
+    ],
+    "nsw": [
+      "MAE-DATA-01",
+      "MA1-DATA-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Young children compare picture graphs by which row looks longest. That only works if every picture is the same size and every row starts from the same line.",
+  "coreIdeaMd": "A picture graph shows **one picture for each item** (one-to-one).\n\n- Every picture should be the **same size**, lined up from the **same starting line**.\n- Then the longest row really is the biggest group.\n- If the pictures are different sizes, children need to **count**, not judge by length.\n\nStart with real objects (children standing in lines for their favourite fruit), then pictures, then simple graphs.",
+  "workedExampleMd": "**Favourite pets in a class of 19.**\n\n| Pet | Count |\n|---|---|\n| Dog | 8 |\n| Cat | 6 |\n| Fish | 5 |\n\n1. Make a picture graph with one same-sized picture per child, rows starting from one line.\n2. The dog row is longest, and the count agrees: 8 is the most.\n3. Ask: \"How many more chose dog than fish?\" Children can match the rows picture by picture to see 3 more.",
+  "misconceptionIds": [
+    "mis-data-row-length"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-data-01-q1",
+      "stemMd": "In a picture graph, the row for cats looks longer than the row for dogs, but the cat pictures are drawn bigger. How should you decide which pet was more popular?",
+      "type": "mcq",
+      "options": [
+        "Count the pictures in each row",
+        "Choose the longer row",
+        "Choose the row with bigger pictures"
+      ],
+      "answer": "Count the pictures in each row",
+      "feedbackCorrect": "Yes. Each picture stands for one choice, so counting tells you which has more.",
+      "feedbackIncorrect": "When pictures are different sizes, the row length can trick you. Count the pictures: each one is one choice.",
+      "wrongAnswers": [
+        {
+          "answer": "Choose the longer row",
+          "misconceptionId": "mis-data-row-length",
+          "feedback": "Length only works when every picture is the same size. Here the cat pictures are bigger, so count the pictures in each row instead."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Make a quick class picture graph with sticky notes of the same size, then make one with mixed sizes. Ask: \"Which graph is fair? Why?\"",
+  "reflectPrompt": "How do your students currently show you how they compared two groups?",
+  "reviewedBy": null
+}

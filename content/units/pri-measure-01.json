@@ -1,0 +1,68 @@
+{
+  "id": "pri-measure-01",
+  "moduleId": "mod-primary",
+  "title": "Measuring with units: end to end, no gaps",
+  "domain": "CK",
+  "tags": [
+    "primary.measurement"
+  ],
+  "audience": [
+    "primary",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9MFM01",
+      "AC9M1M02",
+      "AC9M2M01"
+    ],
+    "nsw": [
+      "MAE-GM-02",
+      "MA1-GM-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Measuring with paper clips or blocks teaches what a unit is. The rules children learn here (same size, no gaps, no overlaps) are the same ones a ruler relies on.",
+  "coreIdeaMd": "Before rulers, children measure with **informal units**: blocks, paper clips, hand spans.\n\n- Units must be the **same size**.\n- Units go **end to end**, with no gaps and no overlaps.\n- Start at one end of the object and stop at the other.\n\nComparing two objects directly (side by side, from the same starting line) comes first, then measuring with units.",
+  "workedExampleMd": "**Measuring a pencil with blocks.**\n\n1. Line the first block up with the end of the pencil.\n2. Place blocks end to end, touching, with no gaps.\n3. Count the blocks: the pencil is 7 blocks long.\n\nIf the blocks are spread out with gaps, fewer blocks reach the end, so the answer comes out **too small**. Ask: \"Why did two people get different answers for the same pencil?\"",
+  "misconceptionIds": [
+    "mis-unit-gaps"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-measure-01-q1",
+      "stemMd": "A student measures a book with paper clips but leaves gaps between the clips. What happens to their answer?",
+      "type": "mcq",
+      "options": [
+        "It is too small",
+        "It is too big",
+        "It is still correct"
+      ],
+      "answer": "It is too small",
+      "feedbackCorrect": "Yes. The gaps cover part of the length, so fewer clips are counted than are really needed.",
+      "feedbackIncorrect": "With gaps, each clip and its gap cover more of the book, so fewer clips get counted. The answer is too small.",
+      "wrongAnswers": [
+        {
+          "answer": "It is still correct",
+          "misconceptionId": "mis-unit-gaps",
+          "feedback": "The gaps are part of the length too, but nobody counts them. Fewer clips are counted than are needed to cover the book, so the answer is too small."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Ask two children to measure the same desk with blocks, one with gaps and one without. Compare the answers and ask the class to explain the difference.",
+  "reflectPrompt": "What do your students do when two measurements of the same thing don't match?",
+  "reviewedBy": null
+}

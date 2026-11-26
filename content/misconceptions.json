@@ -159,6 +159,38 @@
       "whyItHappens": "Students remember that the median is the middle value but skip the step of putting the data in order first.",
       "howToRespond": "Ask them to write the data in order before circling the middle. Then ask whether the median should change if you shuffle the list.",
       "diagnosticQuestion": "Find the median of 14, 9, 21, 6, 17. Does it matter what order they were written in?"
+    },
+    {
+      "id": "mis-groups-add",
+      "topicTag": "primary.patterns-groups",
+      "studentSays": "4 groups of 5 is 9.",
+      "whyItHappens": "Children see two numbers and add them, because addition is the operation they know best, and they haven't yet linked \"groups of\" to repeated counting.",
+      "howToRespond": "Ask them to build it with counters: 4 groups, 5 in each. Then skip count the groups together.",
+      "diagnosticQuestion": "Draw 3 groups of 6. How many altogether?"
+    },
+    {
+      "id": "mis-unit-gaps",
+      "topicTag": "primary.measurement",
+      "studentSays": "The table is 6 blocks long (with blocks spread out along it).",
+      "whyItHappens": "Children focus on counting the units and don't yet see that the units must cover the whole length with no gaps or overlaps.",
+      "howToRespond": "Have two children measure the same object, one with gaps and one without, and compare. Ask which answer is fair and why.",
+      "diagnosticQuestion": "Two students measure the same rope with blocks. One gets 9 and one gets 7. What might have happened?"
+    },
+    {
+      "id": "mis-shape-orientation",
+      "topicTag": "primary.shape-position",
+      "studentSays": "That's not a triangle, it's upside down.",
+      "whyItHappens": "Children often see shapes only in one standard position, so they link the name to the look rather than to features such as sides and corners.",
+      "howToRespond": "Turn the shape slowly while counting its sides and corners. Ask: \"Did the number of sides change? Then has the shape changed?\"",
+      "diagnosticQuestion": "Show a long thin triangle pointing down. Ask: \"What shape is this? How do you know?\""
+    },
+    {
+      "id": "mis-data-row-length",
+      "topicTag": "primary.data",
+      "studentSays": "Cats won because the cat row is longest.",
+      "whyItHappens": "Children compare rows by length, which works only when every picture is the same size and starts from the same line.",
+      "howToRespond": "Ask them to count the pictures in each row and compare the counts. Then redraw the graph with same-sized pictures to see why it matters.",
+      "diagnosticQuestion": "Show a picture graph where the longest row has the fewest pictures. Ask which group is biggest."
     }
   ]
 }
