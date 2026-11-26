@@ -1,0 +1,68 @@
+{
+  "id": "pri-shape-01",
+  "moduleId": "mod-primary",
+  "title": "A turned shape is still the same shape",
+  "domain": "CK",
+  "tags": [
+    "primary.shape-position"
+  ],
+  "audience": [
+    "primary",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "F",
+    "1",
+    "2"
+  ],
+  "durationMinutes": 5,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9MFSP01",
+      "AC9M1SP01",
+      "AC9M2SP01"
+    ],
+    "nsw": [
+      "MAE-2DS-01",
+      "MA1-2DS-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Many children only recognise a triangle if it sits flat on its base, and call a turned square a \"diamond\". Shape is about features, not which way up it is.",
+  "coreIdeaMd": "A shape is named by its **features**: the number of sides and corners, and whether sides are straight or curved.\n\n- Turning, flipping or resizing a shape doesn't change its name.\n- Show shapes in many orientations and sizes, including long thin triangles.\n- Ask children to give **reasons**: \"It's a triangle because it has 3 straight sides and 3 corners.\"",
+  "workedExampleMd": "**Is it still a square?**\n\n1. Start with a square sitting on one side. Count: 4 equal straight sides, 4 square corners.\n2. Turn it so it stands on one corner.\n3. Count again: still 4 equal straight sides and 4 square corners. It is still a square.\n\nAsk: \"What would have to change to make it a different shape?\"",
+  "misconceptionIds": [
+    "mis-shape-orientation"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-shape-01-q1",
+      "stemMd": "A square is turned so that it stands on one corner. What shape is it now?",
+      "type": "mcq",
+      "options": [
+        "A square",
+        "A diamond, not a square",
+        "A new shape"
+      ],
+      "answer": "A square",
+      "feedbackCorrect": "Yes. It still has 4 equal straight sides and 4 square corners, so it is still a square.",
+      "feedbackIncorrect": "Turning a shape doesn't change its sides or corners. It still has 4 equal sides and 4 square corners, so it is a square.",
+      "wrongAnswers": [
+        {
+          "answer": "A diamond, not a square",
+          "misconceptionId": "mis-shape-orientation",
+          "feedback": "\"Diamond\" is an everyday word for how it looks when turned. Its features haven't changed: 4 equal straight sides and 4 square corners, so it is still a square."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Hold up a paper triangle and slowly turn it. Each time, ask: \"Is it still a triangle? How do you know?\"",
+  "reflectPrompt": "Are the shapes on your classroom walls and in your books always shown the same way up?",
+  "reviewedBy": null
+}

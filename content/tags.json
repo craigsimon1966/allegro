@@ -135,8 +135,7 @@
           "AC9M2N05"
         ],
         "nsw": ["MAE-FG-01", "MAE-FG-02", "MA1-FG-01"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "primary.measurement",
@@ -155,8 +154,7 @@
           "AC9M2M04"
         ],
         "nsw": ["MAE-GM-02", "MAE-NSM-01", "MAE-NSM-02", "MA1-GM-02", "MA1-NSM-01", "MA1-NSM-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "primary.shape-position",
@@ -166,8 +164,7 @@
       "curriculum": {
         "ac9": ["AC9MFSP01", "AC9MFSP02", "AC9M1SP01", "AC9M1SP02", "AC9M2SP01", "AC9M2SP02"],
         "nsw": ["MAE-2DS-01", "MAE-3DS-01", "MAE-GM-01", "MA1-2DS-01", "MA1-3DS-01", "MA1-GM-01"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "primary.data",
@@ -177,8 +174,7 @@
       "curriculum": {
         "ac9": ["AC9MFST01", "AC9M1ST01", "AC9M1ST02", "AC9M2ST01", "AC9M2ST02"],
         "nsw": ["MAE-DATA-01", "MA1-DATA-01", "MA1-DATA-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "number.place-value",

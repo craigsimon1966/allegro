@@ -17,6 +17,10 @@ What still needs a person is the **match**: whether each unit or topic really te
 | mc-01-goes-up-by               | Years 8, 9       | AC9M8A04, AC9M9A03                     | MA4-LIN-C-01, MA5-LIN-C-02         |            |      |
 | mc-02-pronumerals              | Years 7, 8       | AC9M7A01, AC9M7A02, AC9M8A01           | MA4-ALG-C-01                       |            |      |
 | pck-diff-01-three-entry-points | Years 7, 8, 9    | none (teaching approach)               | none                               |            |      |
+| pri-data-01                    | Years F, 1, 2    | AC9MFST01, AC9M1ST02, AC9M2ST02        | MAE-DATA-01, MA1-DATA-01           |            |      |
+| pri-groups-01                  | Years F, 1, 2    | AC9MFN06, AC9M1N03, AC9M2N05           | MAE-FG-02, MA1-FG-01               |            |      |
+| pri-measure-01                 | Years F, 1, 2    | AC9MFM01, AC9M1M02, AC9M2M01           | MAE-GM-02, MA1-GM-02               |            |      |
+| pri-shape-01                   | Years F, 1, 2    | AC9MFSP01, AC9M1SP01, AC9M2SP01        | MAE-2DS-01, MA1-2DS-01             |            |      |
 | pri-number-01                  | Years F, 1, 2    | AC9MFN02, AC9MFN04, AC9M1N02, AC9M2N02 | MAE-CSQ-02, MAE-RWN-01, MA1-CSQ-01 |            |      |
 | pri-attention-01               | Years F, 1, 2    |                                        |                                    |            |      |
 | pri-chance-01                  | Years 3, 4, 5, 6 | AC9M3P02, AC9M4P02, AC9M5P01, AC9M6P01 | MA2-CHAN-01, MA3-CHAN-01           |            |      |

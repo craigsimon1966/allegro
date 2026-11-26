@@ -1,0 +1,1 @@
+- Four draft learning units for Foundation to Year 2, added to the "Early years" module: equal groups as the start of multiplication, measuring with units end to end, recognising turned shapes, and reading picture graphs by counting. Each quick check spots a common error linked to a new misconception. All Foundation to Year 2 topics now have units. Awaiting educator review.
