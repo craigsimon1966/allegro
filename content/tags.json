@@ -198,8 +198,7 @@
           "AC9M6N06"
         ],
         "nsw": ["MA2-RN-01", "MA2-RN-02", "MA2-AR-01", "MA3-RN-01", "MA3-RN-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "number.multiplicative",
@@ -221,8 +220,7 @@
           "AC9M6A02"
         ],
         "nsw": ["MA2-MR-01", "MA2-MR-02", "MA3-MR-01", "MA3-MR-02"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "number.fractions",
@@ -242,8 +240,7 @@
           "AC9M6N07"
         ],
         "nsw": ["MA2-PF-01", "MA3-RQF-01", "MA3-RQF-02", "MA3-RN-03"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "measurement.length-area-angles",
@@ -262,8 +259,7 @@
           "AC9M6M04"
         ],
         "nsw": ["MA2-GM-02", "MA2-GM-03", "MA2-2DS-03", "MA3-2DS-02", "MA3-2DS-03", "MA3-GM-03"]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "statistics.data-chance",
@@ -289,8 +285,7 @@
           "MA3-DATA-02",
           "MA3-CHAN-01"
         ]
-      },
-      "lessonOnly": true
+      }
     },
     {
       "id": "number.integers",

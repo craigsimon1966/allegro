@@ -1,0 +1,65 @@
+{
+  "id": "pri-meas-01",
+  "moduleId": "mod-primary-number",
+  "title": "Area and perimeter measure different things",
+  "domain": "CK",
+  "tags": [
+    "measurement.length-area-angles"
+  ],
+  "audience": [
+    "primary",
+    "out_of_field",
+    "early_career",
+    "casual"
+  ],
+  "yearLevels": [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 1,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M4M02",
+      "AC9M5M02",
+      "AC9M6M02"
+    ],
+    "nsw": [
+      "MA2-2DS-03",
+      "MA3-2DS-02"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "Students often mix up area and perimeter because they use the same rectangle and the same numbers. Showing that one can change while the other stays the same separates them.",
+  "coreIdeaMd": "- **Perimeter** is the distance around a shape. It is a **length**, measured in cm or m.\n- **Area** is the amount of surface inside. It is measured in **square units**, cm² or m².\n\nCovering with square tiles makes area concrete before any formula. The formula for a rectangle (length × width) is just a fast way of counting the rows of squares.",
+  "workedExampleMd": "**Three rectangles, each with a perimeter of 20 cm.**\n\n| Rectangle | Perimeter | Area |\n|---|---|---|\n| 8 cm by 2 cm | 20 cm | 16 cm² |\n| 7 cm by 3 cm | 20 cm | 21 cm² |\n| 6 cm by 4 cm | 20 cm | 24 cm² |\n\nThe 7 by 3 rectangle as rows of square centimetres:\n\n```visual\n{\"type\": \"array\", \"rows\": 3, \"cols\": 7, \"caption\": \"3 rows of 7 squares: 21 cm²\"}\n```\n\nSame perimeter, different areas. Ask: \"Which rectangle would make the biggest garden from 20 m of fencing?\"",
+  "misconceptionIds": [
+    "mis-area-perimeter-confused"
+  ],
+  "checkItems": [
+    {
+      "id": "pri-meas-01-q1",
+      "stemMd": "A rectangle is 5 cm long and 3 cm wide. What is its area in cm²?",
+      "type": "numeric",
+      "answer": "15",
+      "feedbackCorrect": "Yes. 3 rows of 5 squares is $15$ cm².",
+      "feedbackIncorrect": "Area counts the squares inside: 3 rows of 5 squares, so $5 \\times 3 = 15$ cm².",
+      "wrongAnswers": [
+        {
+          "answer": "16",
+          "misconceptionId": "mis-area-perimeter-confused",
+          "feedback": "16 cm is the perimeter, the distance around the edge ($5 + 3 + 5 + 3$). Area counts the squares inside: $5 \\times 3 = 15$ cm²."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Give groups 24 square tiles and ask them to make as many different rectangles as they can, recording the perimeter of each. Ask what they notice.",
+  "reflectPrompt": "How do your students currently tell area and perimeter apart? Is it a rule, or do they picture something?",
+  "reviewedBy": null
+}

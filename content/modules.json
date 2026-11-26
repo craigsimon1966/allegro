@@ -118,6 +118,18 @@
         "pri-attention-01",
         "pri-number-01"
       ]
+    },
+    {
+      "id": "mod-primary-number",
+      "title": "Primary maths, Years 3 to 6",
+      "summary": "Fractions, multiplication, decimals, area and chance: the ideas students need before Year 7.",
+      "unitIds": [
+        "pri-frac-01",
+        "pri-mult-01",
+        "pri-pv-01",
+        "pri-meas-01",
+        "pri-chance-01"
+      ]
     }
   ]
 }
