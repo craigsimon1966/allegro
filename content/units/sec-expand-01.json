@@ -1,0 +1,66 @@
+{
+  "id": "sec-expand-01",
+  "moduleId": "mod-years-9-10",
+  "title": "Expanding brackets with the area model",
+  "domain": "CK",
+  "tags": [
+    "algebra.techniques"
+  ],
+  "audience": [
+    "out_of_field",
+    "early_career",
+    "secondary",
+    "casual"
+  ],
+  "yearLevels": [
+    "9",
+    "10"
+  ],
+  "durationMinutes": 6,
+  "format": [
+    "text",
+    "worked_example"
+  ],
+  "difficulty": 2,
+  "curriculumRefs": {
+    "ac9": [
+      "AC9M9A02",
+      "AC9M10A01"
+    ],
+    "nsw": [
+      "MA5-ALG-C-01"
+    ]
+  },
+  "aitslStandards": [],
+  "hook": "$(x + 4)^2 = x^2 + 16$ is one of the most common errors in Years 9 and 10. The area model shows the missing middle terms instead of just telling students they're there.",
+  "coreIdeaMd": "Expanding means **every term in one bracket multiplies every term in the other**.\n\n- Draw a rectangle with one bracket along the top and the other down the side. Each cell is one product.\n- Add the cells and collect like terms.\n- $(x + 4)^2$ means $(x + 4)(x + 4)$: four cells, not two.\n\nThe area model links straight back to multiplying numbers by partitioning, which students met in primary school. Show that link.",
+  "workedExampleMd": "**Expand $(x + 5)(x - 2)$.**\n\n```visual\n{\"type\": \"area_model\", \"rows\": [\"x\", \"5\"], \"cols\": [\"x\", \"-2\"]}\n```\n\n1. Top row: $x \\times x = x^2$ and $x \\times (-2) = -2x$.\n2. Bottom row: $5 \\times x = 5x$ and $5 \\times (-2) = -10$.\n3. Add the four cells: $x^2 - 2x + 5x - 10$.\n4. Collect like terms: $x^2 + 3x - 10$.\n\n**Check:** substitute $x = 3$. $(3 + 5)(3 - 2) = 8$, and $9 + 9 - 10 = 8$. ✓",
+  "misconceptionIds": [
+    "mis-square-binomial"
+  ],
+  "checkItems": [
+    {
+      "id": "sec-expand-01-q1",
+      "stemMd": "Expand $(x + 4)^2$.",
+      "type": "mcq",
+      "options": [
+        "$x^2 + 8x + 16$",
+        "$x^2 + 16$",
+        "$x^2 + 4x + 16$"
+      ],
+      "answer": "$x^2 + 8x + 16$",
+      "feedbackCorrect": "Yes. $(x + 4)(x + 4)$ gives four cells: $x^2$, $4x$, $4x$ and $16$.",
+      "feedbackIncorrect": "Write it as $(x + 4)(x + 4)$ and draw the area model. The cells are $x^2$, $4x$, $4x$ and $16$, so $x^2 + 8x + 16$.",
+      "wrongAnswers": [
+        {
+          "answer": "$x^2 + 16$",
+          "misconceptionId": "mis-square-binomial",
+          "feedback": "Squaring each term leaves out two cells. $(x + 4)^2$ is $(x + 4)(x + 4)$, which has four cells: $x^2 + 4x + 4x + 16 = x^2 + 8x + 16$. Check with $x = 1$: $5^2 = 25$, but $1 + 16 = 17$."
+        }
+      ]
+    }
+  ],
+  "tryTomorrow": "Ask students to test $(x + 3)^2 = x^2 + 9$ by substituting $x = 2$. When it fails, have them draw the area model to find what is missing.",
+  "reflectPrompt": "When your students expand brackets, can they explain where each term comes from, or are they following a pattern?",
+  "reviewedBy": null
+}

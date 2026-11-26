@@ -144,6 +144,16 @@
         "sec-meas-01",
         "sec-stat-01"
       ]
+    },
+    {
+      "id": "mod-years-9-10",
+      "title": "Years 9 and 10: algebra and trigonometry",
+      "summary": "Expanding brackets, linear or exponential, and choosing a trigonometric ratio.",
+      "unitIds": [
+        "sec-expand-01",
+        "sec-nonlin-01",
+        "sec-trig-01"
+      ]
     }
   ]
 }

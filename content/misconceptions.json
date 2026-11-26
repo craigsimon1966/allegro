@@ -191,6 +191,30 @@
       "whyItHappens": "Children compare rows by length, which works only when every picture is the same size and starts from the same line.",
       "howToRespond": "Ask them to count the pictures in each row and compare the counts. Then redraw the graph with same-sized pictures to see why it matters.",
       "diagnosticQuestion": "Show a picture graph where the longest row has the fewest pictures. Ask which group is biggest."
+    },
+    {
+      "id": "mis-square-binomial",
+      "topicTag": "algebra.techniques",
+      "studentSays": "(x + 4) squared is x squared plus 16.",
+      "whyItHappens": "Students apply the power to each term separately, as if squaring were like multiplying a bracket by a number, and lose the two middle terms.",
+      "howToRespond": "Ask them to substitute a value, such as x = 1, into both forms. When they differ, write the square as two brackets and draw the area model to find the missing cells.",
+      "diagnosticQuestion": "Is (x + 3) squared equal to x squared + 9? Test it with x = 2, then expand it."
+    },
+    {
+      "id": "mis-exponential-as-linear",
+      "topicTag": "algebra.non-linear",
+      "studentSays": "5, 10, 20, 40: it goes up by 10, so the next is 50.",
+      "whyItHappens": "Students look for a constant difference by habit, because linear patterns are what they have met most.",
+      "howToRespond": "Ask them to list the differences and check whether they are equal. Then try the ratios. Name the two types: equal differences mean linear, equal ratios mean exponential.",
+      "diagnosticQuestion": "Is 3, 6, 12, 24 linear or exponential? How do you know?"
+    },
+    {
+      "id": "mis-trig-side-labels",
+      "topicTag": "measurement.trigonometry",
+      "studentSays": "The 8 is the side next to the angle, so I'll use sin.",
+      "whyItHappens": "Students label the sides by position on the page or by habit, instead of from the marked angle, so opposite and adjacent get mixed up or the hypotenuse is missed.",
+      "howToRespond": "Have them mark the angle, then the right angle, then label H first (opposite the right angle), then O, then A. Practise labelling separately from calculating.",
+      "diagnosticQuestion": "Label the sides of a right-angled triangle from each of its two acute angles. What changes?"
     }
   ]
 }
