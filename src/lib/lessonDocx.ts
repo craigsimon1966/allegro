@@ -19,7 +19,7 @@ import {
 import { blockMinutes } from '@shared/lesson';
 import type { Lesson, LessonPack, PackItem } from '@shared/schemas';
 import { blocks, inline, type Block, type Inline } from '@shared/markdownBlocks';
-import { curriculumRows } from '@shared/curriculum';
+import { curriculumRows, yearLabel } from '@shared/curriculum';
 import { LEVEL_NAMES, packLevels, slideRange, slidesByBlock } from '@shared/lessonPack';
 import { PRINT } from '@/lib/printColours';
 import { describeVisual, parseVisual } from '@shared/visuals';
@@ -250,7 +250,7 @@ export function lessonDocument(
     }),
     para([
       { text: pack ? 'Teacher guide · ' : '' },
-      { text: `Year ${lesson.year_level}, ${lesson.duration_minutes} minutes` },
+      { text: `${yearLabel(lesson.year_level)}, ${lesson.duration_minutes} minutes` },
     ]),
     ...curriculumRows(lesson.curriculum_refs, state, [lesson.year_level]).map((r) =>
       para(
@@ -493,7 +493,7 @@ export function worksheetDocument(
       children: [new TextRun({ text: pack.worksheet.title || lesson.title, font: FONT })],
     }),
     para([
-      { text: `Year ${lesson.year_level}` },
+      { text: yearLabel(lesson.year_level) },
       ...(level !== 'all' ? [{ text: `  ·  ${LEVEL_NAMES[level]}`, bold: true }] : []),
     ]),
     nameLine(),

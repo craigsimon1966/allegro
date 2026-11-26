@@ -1,6 +1,7 @@
 import PptxGenJS from 'pptxgenjs';
 import type { Lesson, LessonPack, PackSlide } from '@shared/schemas';
 import { blocks, inline, runsText, type Block, type Inline } from '@shared/markdownBlocks';
+import { yearLabel } from '@shared/curriculum';
 import { describeVisual, parseVisual } from '@shared/visuals';
 import { PRINT } from '@/lib/printColours';
 import { visualImage } from '@/lib/visualCache';
@@ -198,7 +199,7 @@ function drawSlide(pres: PptxGenJS, s: PackSlide, lesson: Lesson) {
       fit: 'shrink',
       margin: 0,
     });
-    slide.addText(runsText(inline(s.body_md || `Year ${lesson.year_level}`)), {
+    slide.addText(runsText(inline(s.body_md || yearLabel(lesson.year_level))), {
       x: 1,
       y: 3.05,
       w: W - 2,

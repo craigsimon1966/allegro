@@ -295,8 +295,47 @@ test('while the AI builds the week, the screen shows progress and time left', as
   await expect(page.getByRole('progressbar', { name: 'Building your week' })).toBeVisible();
   await expect(page.getByText(/seconds left/)).toBeVisible();
   await expect(page.getByRole('status')).toHaveText(/Reading your needs|Choosing units/);
+  // Longer than the old 3-second wait for a heading, so the tab name must still catch up.
+  await page.waitForTimeout(4000);
   release();
   // The AI failed, so the rules week appears.
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByRole('progressbar')).toHaveCount(0);
+  await expect(page).toHaveTitle('This week · Allegro Learning');
+  await expect(page.getByRole('heading', { level: 1, name: 'This week' })).toBeFocused();
+});
+
+test('a WA teacher switching from Year 11 to 12 gets a topic from the Year 12 list', async ({
+  page,
+}) => {
+  await page.route('**/api/diagnose', (r) =>
+    r.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(tammyDiagnosis),
+    }),
+  );
+  let sentTopic = '';
+  await page.route('**/api/lesson', async (r) => {
+    sentTopic = (r.request().postDataJSON() as { topicTag?: string }).topicTag ?? '';
+    await r.abort();
+  });
+  await startOwn(page);
+  await page.getByLabel('State or territory').selectOption('WA');
+  await page
+    .getByLabel('Tell us more about your situation')
+    .fill('Year 11 Mathematics Applications, measurement next week.');
+  await page.getByRole('button', { name: /Show me what I need/ }).click();
+  await expect(page).toHaveURL(/\/needs$/);
+  await page.goto('/plan');
+  const year = page.getByLabel('Year level');
+  const topic = page.getByLabel(/^Topic for/);
+  await year.selectOption('11');
+  // Measurement is a Year 11 unit in WA Applications, not Year 12.
+  await topic.selectOption('senior.measurement');
+  await year.selectOption('12');
+  await expect(topic).not.toHaveValue('senior.measurement');
+  const shown = await topic.inputValue();
+  await page.getByRole('button', { name: /Draft my lesson/ }).click();
+  await expect.poll(() => sentTopic).toBe(shown);
 });

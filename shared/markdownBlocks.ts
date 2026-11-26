@@ -1,6 +1,8 @@
 // Turns Markdown (with $maths$) into plain blocks for Word documents: the content review
 // (TECH_SPEC 10.3) and lesson downloads. Kept small and pure so it can be unit tested.
 
+import { protectDollars } from './dollars';
+
 export type Inline = {
   text: string;
   bold?: boolean;
@@ -29,6 +31,8 @@ export function plainMaths(tex: string): string {
       return `${wrap(a)}/${wrap(b)}`;
     });
   return s
+    .replace(/\\dollar(\{\})?/g, '$')
+    .replace(/\\\$/g, '$')
     .replace(/\\times/g, '×')
     .replace(/\\div/g, '÷')
     .replace(/\\square/g, '□')
@@ -43,24 +47,28 @@ export function plainMaths(tex: string): string {
 }
 
 /** Bold, italic and maths inside one line. */
-export function inline(md: string): Inline[] {
+export function inline(source: string): Inline[] {
+  const md = protectDollars(source);
   const out: Inline[] = [];
-  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|\$([^$]+)\$/g;
+  // A `\$` in words is a dollar sign, not the start of maths.
+  const words = (t: string) => t.replace(/\\\$/g, '$');
+  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|(?<!\\)\$([^$]+)\$/g;
   let last = 0;
   for (const m of md.matchAll(re)) {
-    if (m.index! > last) out.push({ text: md.slice(last, m.index) });
+    if (m.index! > last) out.push({ text: words(md.slice(last, m.index)) });
     if (m[1] !== undefined) out.push(...inline(m[1]).map((r) => ({ ...r, bold: true })));
-    else if (m[2] !== undefined) out.push({ text: m[2], italic: true });
+    else if (m[2] !== undefined) out.push({ text: words(m[2]), italic: true });
     else out.push({ text: plainMaths(m[3]!), tex: m[3]! });
     last = m.index! + m[0].length;
   }
-  if (last < md.length) out.push({ text: md.slice(last) });
+  if (last < md.length) out.push({ text: words(md.slice(last)) });
   return out.filter((r) => r.text.length);
 }
 
 export const runsText = (runs: Inline[]) => runs.map((r) => r.text).join('');
 
-export function blocks(md: string): Block[] {
+export function blocks(source: string): Block[] {
+  const md = protectDollars(source);
   const out: Block[] = [];
   const lines = md.split('\n');
   let i = 0;

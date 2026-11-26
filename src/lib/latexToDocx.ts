@@ -45,6 +45,7 @@ const SYMBOLS: Record<string, string> = {
   rightarrow: '→',
   '%': '%',
   $: '$',
+  dollar: '$',
   ',': ' ',
   ';': ' ',
   quad: '  ',

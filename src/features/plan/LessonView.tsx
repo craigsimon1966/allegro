@@ -21,7 +21,7 @@ import { MarginNote } from '@/components/MarginNote';
 import { AI_DISCLOSURE } from '@/components/AIBlock';
 import { blockMinutes } from '@shared/lesson';
 import { tagById } from '@shared/tags';
-import { builtForLine, curriculumRows } from '@shared/curriculum';
+import { builtForLine, curriculumRows, yearLabel } from '@shared/curriculum';
 import { roleShort } from '@shared/profile';
 import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { useTeacherProfile } from '@/lib/useTeacherProfile';
@@ -47,7 +47,7 @@ function toMarkdown(s: SavedLesson, state?: string): string {
   const l = s.lesson;
   return [
     `# ${l.title}`,
-    `Year ${l.year_level}, ${l.duration_minutes} minutes`,
+    `${yearLabel(l.year_level)}, ${l.duration_minutes} minutes`,
     curriculumRows(l.curriculum_refs, state, [l.year_level])
       .map((r) => `${r.label}: ${r.codes.map((c) => `${c.code} (${c.text})`).join('; ')}.`)
       .join(' '),
@@ -410,7 +410,7 @@ export default function LessonView() {
         <MarginLayout className="lg:min-w-0 lg:flex-1">
           <div className="lesson-print">
             <Label>
-              {tagById(saved.inputs.topicTag)?.label ?? 'Lesson'} · Year {lesson.year_level} ·{' '}
+              {tagById(saved.inputs.topicTag)?.label ?? 'Lesson'} · {yearLabel(lesson.year_level)} ·{' '}
               {lesson.duration_minutes} min
             </Label>
             <h1 className="mt-1 text-[30px] leading-tight">{lesson.title}</h1>
