@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { UNITS } from '../../shared/catalogue';
 import { buildPathway, orderNeeds, unitFitsYears, type PathwayItem } from '../../shared/pathway';
-import { Role } from '../../shared/schemas';
-import { ROLE_PROMPT } from '../../shared/profile';
+import { Role, Situation } from '../../shared/schemas';
+import { ROLE_PROMPT, situationFacts } from '../../shared/profile';
 import { yearLabel } from '../../shared/curriculum';
 import { findLikelyStudentNames } from '../../shared/pii';
 import { APPROVED_SOURCES, sourcesFor } from '../../shared/sources';
@@ -38,7 +38,10 @@ export const PathwayRequestSchema = z.object({
     .min(1)
     .max(8),
   hoursPerWeek: z.number().min(0.25).max(20),
-  teachingDays: z.array(z.number().int().min(1).max(5)).max(5),
+  teachingDaysPerWeek: z.number().int().min(1).max(5).nullable().optional(),
+  situations: z.array(Situation).max(6).optional(),
+  confidentYears: z.array(z.string().max(10)).max(13).optional(),
+  newToYears: z.array(z.string().max(10)).max(13).optional(),
   weekStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   yearLevels: z.array(z.string().max(20)).max(13).optional(),
   state: z.enum(STATE_IDS).optional(),
@@ -82,6 +85,12 @@ export function userMessage(req: PathwayRequest): string {
       ? `- Year levels taught: ${req.yearLevels.map(yearLabel).join(', ')}. Only choose units for these years.`
       : '',
     req.role ? `- The teacher is ${ROLE_PROMPT[req.role]}` : '',
+    ...situationFacts({
+      situations: req.situations,
+      confidentYears: req.confidentYears,
+      newToYears: req.newToYears,
+      daysPerWeek: req.teachingDaysPerWeek,
+    }),
     req.locationType && req.locationType !== 'unknown'
       ? `- School location: ${req.locationType}`
       : '',
@@ -89,15 +98,11 @@ export function userMessage(req: PathwayRequest): string {
       ? "- Concern ratings are the teacher's own (5 is a big concern). Put the biggest concerns first."
       : '',
   ].filter(Boolean);
-  const days = req.teachingDays.length
-    ? `Teaching days (1 is Monday): ${req.teachingDays.join(', ')}`
-    : 'Teaching days: not given';
   return [
     curriculumContext(req.state),
     facts.length ? `Fixed facts from the teacher (follow them exactly):\n${facts.join('\n')}` : '',
     `Needs (most urgent first):\n${needs}`,
     `Time for learning this week: ${Math.round(req.hoursPerWeek * 60)} minutes`,
-    days,
   ]
     .filter(Boolean)
     .join('\n\n');
@@ -112,9 +117,10 @@ export function finishPathway(
     needs: req.needs,
     units: UNITS,
     hoursPerWeek: req.hoursPerWeek,
-    teachingDays: req.teachingDays,
+    teachingDaysPerWeek: req.teachingDaysPerWeek ?? null,
     weekStart: req.weekStart,
     yearLevels: req.yearLevels,
+    focusYears: req.newToYears,
   };
   const items = buildPathway(input, reply?.items ?? []);
   const fromAi =

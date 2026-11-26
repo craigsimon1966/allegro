@@ -6,6 +6,15 @@ import { STATE_IDS } from './states';
 
 export const Domain = z.enum(['CK', 'PK', 'PCK', 'ASSESSMENT', 'WELLBEING', 'CONTEXT']);
 export const Role = z.enum(['out_of_field', 'early_career', 'casual', 'experienced', 'leader']);
+/** Where the teacher is in their career and what is new to them (chosen on "Tell us about you"). */
+export const Situation = z.enum([
+  'early_career',
+  'out_of_field',
+  'new_stage',
+  'harder_course',
+  'returning',
+  'casual_cover',
+]);
 export const Priority = z.enum(['now', 'soon', 'later']);
 
 export const NeedSchema = z.object({
@@ -142,8 +151,15 @@ export const GuidedSchema = z.object({
   locationType: z.enum(['metro', 'regional', 'rural', 'remote', 'unknown']).optional(),
   weeks: z.number().int().min(1).max(52).nullable().optional(),
   hoursPerWeek: z.number().min(0.5).max(5).optional(),
-  /** 1 = Monday ... 5 = Friday */
+  /** How many days a week they teach, 1 to 5. Learning goes on the other days. */
+  teachingDaysPerWeek: z.number().int().min(1).max(5).optional(),
+  /** Old profiles only: the weekdays they taught (1 = Monday). Read as a count; see daysPerWeek. */
   teachingDays: z.array(z.number().int().min(1).max(5)).max(5).optional(),
+  /** Their situation, any that apply. */
+  situations: z.array(Situation).max(6).optional(),
+  /** Year levels they are confident teaching, and year levels that are new to them. */
+  confidentYears: z.array(z.string().max(10)).max(13).optional(),
+  newToYears: z.array(z.string().max(10)).max(13).optional(),
 });
 
 export const DiagnoseRequestSchema = z.object({

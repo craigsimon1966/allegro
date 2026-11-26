@@ -11,6 +11,7 @@ import {
 import { PERSONAS, personaById } from '@shared/personas';
 import { DiagnosisSchema } from '@shared/schemas';
 import { TAG_IDS, filterTags } from '@shared/tags';
+import { daysPerWeek, normaliseGuided, situationFacts, teacherProfile } from '@shared/profile';
 
 describe('student name detection', () => {
   it('flags a full name next to a word about students', () => {
@@ -101,7 +102,7 @@ describe('personas', () => {
       for (const n of p.cachedDiagnosis.needs)
         expect(filterTags(n.catalogue_tags)).toEqual(n.catalogue_tags);
     }
-    expect(personaById('tammy')?.guided.teachingDays).toEqual([1, 3, 4]);
+    expect(personaById('tammy')?.guided.teachingDaysPerWeek).toBe(3);
   });
 });
 
@@ -112,5 +113,32 @@ describe('teacher facts are fixed', () => {
     expect(tags).not.toContain('algebra.linear');
     expect(tags).not.toContain('number.proportional');
     expect(d.context.year_levels).toEqual(['2']);
+  });
+});
+
+describe('teacher situation and days a week', () => {
+  it('counts the weekdays in an old profile', () => {
+    expect(normaliseGuided({ teachingDays: [1, 3, 4] })).toEqual({ teachingDaysPerWeek: 3 });
+    expect(normaliseGuided({ teachingDaysPerWeek: 2 })).toEqual({ teachingDaysPerWeek: 2 });
+    expect(daysPerWeek({ teachingDays: [1, 2] })).toBe(2);
+    expect(daysPerWeek({})).toBeNull();
+  });
+
+  it('turns situations into fixed facts and a role', () => {
+    const facts = situationFacts({
+      situations: ['new_stage'],
+      confidentYears: ['1', '2'],
+      newToYears: ['5', '6'],
+      daysPerWeek: 3,
+    }).join('\n');
+    expect(facts).toMatch(/new to this year level or stage/);
+    expect(facts).toMatch(/Confident teaching: Year 1, Year 2/);
+    expect(facts).toMatch(/New to teaching: Year 5, Year 6/);
+    expect(facts).toMatch(/teach 3 days a week/);
+    expect(facts).not.toMatch(/—/);
+    expect(teacherProfile({ situations: ['casual_cover'] }, null).role).toBe('casual');
+    expect(teacherProfile({ role: 'leader', situations: ['casual_cover'] }, null).role).toBe(
+      'leader',
+    );
   });
 });

@@ -1,6 +1,6 @@
 import { STATE_IDS } from './states';
 import { z } from 'zod';
-import { LessonSchema, Role, type Lesson, type LessonBlock } from './schemas';
+import { LessonSchema, Role, Situation, type Lesson, type LessonBlock } from './schemas';
 import { MISCONCEPTIONS, UNITS } from './catalogue';
 import { checkRefs, topicRefs } from './curriculum';
 import demoLessonFile from '../content/lessons/demo-tammy-linear.json';
@@ -19,6 +19,9 @@ export const LessonRequestSchema = z.object({
   /** The teacher's role and situation from their profile, so the plan fits them, not a generic teacher. */
   role: Role.optional(),
   situation: z.string().max(600).optional(),
+  situations: z.array(Situation).max(6).optional(),
+  confidentYears: z.array(z.string().max(10)).max(13).optional(),
+  newToYears: z.array(z.string().max(10)).max(13).optional(),
 });
 export type LessonRequest = z.infer<typeof LessonRequestSchema>;
 

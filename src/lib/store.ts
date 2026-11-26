@@ -6,6 +6,7 @@ import type { DiagnosticResult } from '@shared/diagnostics';
 import type { PathwayItem } from '@shared/pathway';
 import type { Lesson, LessonPack } from '@shared/schemas';
 import type { LessonRequest } from '@shared/lesson';
+import { normaliseGuided } from '@shared/profile';
 
 // App state (TECH_SPEC 3.1). Demo mode keeps everything here and in localStorage (SPEC 12.1).
 // localStorage can be missing or throw (private windows, blocked storage), so every access is guarded.
@@ -218,7 +219,17 @@ export const useAppStore = create<State>()(
         })),
       reset: () => set({ mode: 'anonymous', personaId: null, demoSessionId: null, ...empty }),
     }),
-    { name: 'allegro-demo', storage: createJSONStorage(() => safeStorage), version: 1 },
+    {
+      name: 'allegro-demo',
+      storage: createJSONStorage(() => safeStorage),
+      version: 2,
+      // Version 2: "days you teach" became a count, so old weekday lists are counted.
+      migrate: (persisted) => {
+        const s = persisted as Partial<State> | null;
+        if (s?.intake?.guided) s.intake = { ...s.intake, guided: normaliseGuided(s.intake.guided) };
+        return s as State;
+      },
+    },
   ),
 );
 
