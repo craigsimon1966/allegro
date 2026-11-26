@@ -25,6 +25,18 @@ export function AppShell({ children, step, setup = false, backTo }: Props) {
     <div className="flex min-h-screen">
       <Sidebar step={step} />
       <main id="main" className={`min-w-0 flex-1 ${setup ? 'pb-8' : 'pb-36'} lg:pb-0`}>
+        {/* Phone and tablet: the logo heads every app screen (laptop has it in the sidebar). */}
+        <div className="no-print flex items-center border-b border-rule px-4 py-2 lg:hidden">
+          <Link to="/" className="inline-flex min-h-tap items-center no-underline">
+            <img
+              src="/brand/logo-green.svg"
+              alt="Allegro Learning home"
+              width={147}
+              height={36}
+              className="h-8 w-auto"
+            />
+          </Link>
+        </div>
         {setup && step !== undefined && (
           <div className="flex items-center gap-3 border-b-2 border-rule-strong px-4 py-3 lg:hidden">
             {backTo && (

@@ -1,0 +1,1 @@
+- The Allegro logo now heads every app screen on phones and tablets, as the sidebar already does on laptops. It links home and is left off printed lessons.

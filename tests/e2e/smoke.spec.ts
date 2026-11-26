@@ -44,3 +44,12 @@ test('no white text on sage anywhere on the landing page', async ({ page }) => {
   });
   expect(offenders).toEqual([]);
 });
+
+test('the Allegro logo heads app screens on phones as well as laptops', async ({ page }) => {
+  await page.route('**/api/**', (r) => r.abort());
+  await page.goto('/demo');
+  await page.getByRole('button', { name: /Tammy/ }).click();
+  await page.goto('/pathway');
+  const logos = page.getByRole('link', { name: 'Allegro Learning home' });
+  await expect(logos.filter({ visible: true })).toHaveCount(1);
+});
