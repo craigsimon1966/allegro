@@ -273,6 +273,41 @@ describe('POST /api/lesson-pack', () => {
     expect(pack.slides[0]!.kind).toBe('title');
     expect(pack.slides[1]!.writing_space).toBe(true);
   });
+  it('runs steps and slides as two calls, and builds only the failed half from the lesson', async () => {
+    const systems: string[] = [];
+    const complete: Completer = async (args: CompleteArgs) => {
+      systems.push(args.system);
+      if (args.system.includes('# Lesson pack: smart board slides'))
+        return { text: '{"slides": [', stopReason: 'max_tokens', outputTokens: 6000 };
+      expect(args.maxTokens).toBe(8000);
+      return {
+        text: JSON.stringify({
+          steps: [{ block_id: 'b2', do: ['Warm up'], say: [], ask: [], watch_for: [] }],
+          worksheet: {
+            title: 'T',
+            instructions: 'Show working.',
+            sections: [
+              {
+                heading: 'Core',
+                level: 'core',
+                block_id: 'b8',
+                items: [{ prompt_md: 'Q', answer_md: 'A', space: 'short' }],
+              },
+            ],
+          },
+          exit_ticket: [],
+        }),
+      };
+    };
+    const res = await handleLessonPack(post('/api/lesson-pack', { lesson }), {}, { complete });
+    expect(res.status).toBe(200);
+    const pack = LessonPackSchema.parse(await res.json());
+    expect(systems).toHaveLength(2);
+    expect(pack.plain).toEqual(['slides']);
+    expect(pack.steps[0]!.do).toEqual(['Warm up']);
+    expect(pack.slides.length).toBeGreaterThan(5);
+    expect(pack.slides[0]!.kind).toBe('title');
+  });
   it('says the AI is unavailable when the model fails', async () => {
     const complete: Completer = async () => {
       throw new Error('down');

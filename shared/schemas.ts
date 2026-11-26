@@ -130,7 +130,17 @@ export const LessonPackSchema = z.object({
   }),
   exit_ticket: z.array(PackItemSchema).max(3),
   slides: z.array(PackSlideSchema).min(1).max(18),
+  /** Parts built from the lesson text because the AI could not draft them. */
+  plain: z.array(z.enum(['guide', 'slides'])).optional(),
 });
+
+/** The two AI replies that make a pack: steps and worksheets, and slides. */
+export const PackGuidePartSchema = LessonPackSchema.pick({
+  steps: true,
+  worksheet: true,
+  exit_ticket: true,
+});
+export const PackSlidesPartSchema = LessonPackSchema.pick({ slides: true });
 
 export const ApiErrorCode = z.enum([
   'rate_limited',
