@@ -5,7 +5,7 @@ import { AIBlock } from '@/components/AIBlock';
 import { Button } from '@/components/Button';
 import { MarginLayout } from '@/components/MarginLayout';
 import { SectionRule } from '@/components/Label';
-import { DOMAIN_LABELS, TAGS, tagById } from '@shared/tags';
+import { DOMAIN_LABELS, NEED_TAGS, tagById } from '@shared/tags';
 import { RESULT_LABELS, itemsForTag } from '@shared/diagnostics';
 import { loadLatestFromSupabase, saveNeedEdit } from '@/lib/api';
 import { useAppStore, type TeacherNeed } from '@/lib/store';
@@ -79,7 +79,7 @@ export default function Needs() {
     needs.filter((n) => n.status === 'active').flatMap((n) => n.catalogue_tags),
   );
   // Only topics taught in the teacher's years can be added.
-  const addable = TAGS.filter(
+  const addable = NEED_TAGS.filter(
     (t) =>
       !usedTags.has(t.id) &&
       (!profile.years.length || profile.years.some((y) => topicFitsYear(t.id, y))),

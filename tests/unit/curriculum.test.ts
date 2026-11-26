@@ -13,7 +13,8 @@ import {
   topicRefs,
 } from '@shared/curriculum';
 import { curriculumRefsFor } from '@shared/lesson';
-import { TAGS } from '@shared/tags';
+import { NEED_TAGS, TAGS, filterTags } from '@shared/tags';
+import { UNITS } from '@shared/catalogue';
 
 describe('official curriculum lists', () => {
   it('has every AC v9 maths year, with codes that name their own year', () => {
@@ -100,10 +101,33 @@ describe('topics and the years they are taught in', () => {
       expect.arrayContaining(['algebra.linear', 'algebra.foundations', 'number.proportional']),
     );
     expect(ids('8')).not.toContain('primary.early-number');
-    expect(ids('1')).toEqual(['primary.early-number']);
+    expect(ids('1')).toContain('primary.early-number');
+    expect(ids('1')).not.toContain('algebra.linear');
     expect(ids('9')).not.toContain('number.proportional');
-    expect(ids('4')).toEqual([]);
+    expect(ids('4')).toContain('number.fractions');
+    expect(ids('10')).toContain('algebra.linear');
     expect(topicFitsYear('pk.routines', '4')).toBe(true);
+  });
+
+  it('offers at least 5 maths topics in every year from Foundation to Year 10', () => {
+    for (const y of YEAR_LEVELS) {
+      const maths = lessonTopicsFor(y).filter((t) => t.domain === 'CK');
+      expect(maths.length, `Year ${y}`).toBeGreaterThanOrEqual(5);
+    }
+  });
+
+  it('marks a topic lesson-only exactly when no learning unit uses it', () => {
+    for (const t of TAGS) {
+      const hasUnit = UNITS.some((u) => u.tags.includes(t.id));
+      expect(Boolean(t.lessonOnly), `${t.id}: set lessonOnly to ${!hasUnit}`).toBe(!hasUnit);
+    }
+  });
+
+  it('keeps lesson-only topics out of needs', () => {
+    const lessonOnly = TAGS.filter((t) => t.lessonOnly).map((t) => t.id);
+    expect(lessonOnly.length).toBeGreaterThan(0);
+    expect(NEED_TAGS.some((t) => t.lessonOnly)).toBe(false);
+    expect(filterTags([...lessonOnly, 'algebra.linear'])).toEqual(['algebra.linear']);
   });
 });
 

@@ -1,0 +1,3 @@
+- Plan a lesson now offers at least 5 maths topics in every year from Foundation to Year 10 (Years 7 and 8 have 6). Fifteen new topics, plus linear relationships extended to Year 10, each mapped to official AC v9 and NSW codes for its years.
+- New topics are "lesson-only" until their learning unit lands: they appear in Plan a lesson but a need can't point to them, so a teacher's week never has a need with nothing to learn. A test fails if the flag and the units disagree.
+- A lesson request now lists that year's official AC v9 content for the topic and asks the AI to pick one focus from it, so broad topics (for example area, volume and angles) stay within the year.

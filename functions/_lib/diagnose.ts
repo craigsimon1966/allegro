@@ -4,7 +4,7 @@ import {
   type Diagnosis,
   type DiagnoseRequest,
 } from '../../shared/schemas';
-import { TAGS, filterTags } from '../../shared/tags';
+import { NEED_TAGS, filterTags } from '../../shared/tags';
 import { topicFitsYear, yearLabel } from '../../shared/curriculum';
 import { stateById } from '../../shared/states';
 import type { Guided } from '../../shared/schemas';
@@ -140,7 +140,7 @@ export async function handleDiagnose(
     );
 
   const model = mainModel(env);
-  const tagList = TAGS.map(
+  const tagList = NEED_TAGS.map(
     (t) =>
       `- ${t.id} (${t.domain}${t.yearLevels.length ? `, ${t.yearLevels.map(yearLabel).join(', ')}` : ', any year'}): ${t.label}`,
   ).join('\n');
