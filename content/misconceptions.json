@@ -135,6 +135,30 @@
       "whyItHappens": "People expect short runs to look like the long-run balance, so a streak feels like it must be corrected.",
       "howToRespond": "Ask: \"Does the coin know what it landed on last time?\" Then run a class experiment, pooling many flips, and look at how often a streak was followed by a change.",
       "diagnosticQuestion": "A fair dice has rolled 6 three times in a row. Is the next roll more likely, less likely, or just as likely to be a 6?"
+    },
+    {
+      "id": "mis-subtract-negative",
+      "topicTag": "number.integers",
+      "studentSays": "-4 - (-7) is -11.",
+      "whyItHappens": "Students see two minus signs and a 7 and combine them as one move left, because they treat subtraction as always making numbers smaller.",
+      "howToRespond": "Use a number line: subtracting is the opposite move to adding, so subtracting a negative moves right. Check with the difference: how far is it from -7 up to -4?",
+      "diagnosticQuestion": "Work out 2 - (-6) and show the move on a number line."
+    },
+    {
+      "id": "mis-slant-height",
+      "topicTag": "measurement.area-volume-angles",
+      "studentSays": "The area is half of 8 times 6, because 6 is the side going up.",
+      "whyItHappens": "Students learn the formula as a rule about two given numbers, without picturing the perpendicular height as the distance straight up from the base.",
+      "howToRespond": "Ask students to mark the right angle where the height meets the base. Show that two copies make a parallelogram whose height is the same perpendicular distance.",
+      "diagnosticQuestion": "A triangle has a base of 12 cm, sides of 9 cm and 10 cm, and a perpendicular height of 7 cm. Which numbers do you need for its area?"
+    },
+    {
+      "id": "mis-median-unsorted",
+      "topicTag": "statistics.probability",
+      "studentSays": "The median of 3, 8, 5, 6, 23 is 5, because it's in the middle.",
+      "whyItHappens": "Students remember that the median is the middle value but skip the step of putting the data in order first.",
+      "howToRespond": "Ask them to write the data in order before circling the middle. Then ask whether the median should change if you shuffle the list.",
+      "diagnosticQuestion": "Find the median of 14, 9, 21, 6, 17. Does it matter what order they were written in?"
     }
   ]
 }

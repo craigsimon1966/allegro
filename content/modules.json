@@ -130,6 +130,16 @@
         "pri-meas-01",
         "pri-chance-01"
       ]
+    },
+    {
+      "id": "mod-years-7-8",
+      "title": "Years 7 and 8: number, measurement and data",
+      "summary": "Negative numbers, triangle area and choosing the right average.",
+      "unitIds": [
+        "sec-int-01",
+        "sec-meas-01",
+        "sec-stat-01"
+      ]
     }
   ]
 }
