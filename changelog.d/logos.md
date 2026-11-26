@@ -1,0 +1,2 @@
+- The demo and sign-in page now shows Craig's Allegro Learning logo exactly as supplied (`public/brand/logo-sage.svg`, his "Allegro Logo.svg" trimmed to the artwork), in place of the old placeholder mark and "Allegro Learning" text.
+- The four-circle mark drawn in code (product marks on the landing page and the waiting animation) now uses the circle positions and size of Craig's icon, not the old square grid.

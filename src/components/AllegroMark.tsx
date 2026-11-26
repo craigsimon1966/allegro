@@ -13,16 +13,19 @@ interface Props {
 }
 
 // Clockwise from top-left: Equip, Embed, Evaluate, Elevate (SPEC 10.4, decided 27 Oct 2026).
+// Centres and radius are fitted to Craig's brand icon (public/brand/icon.svg, viewBox 375), so this
+// mark is the same four circles as the logo, not a simplified grid.
 const CIRCLES: { product: Exclude<Product, 'all'>; cx: number; cy: number }[] = [
-  { product: 'equip', cx: 15, cy: 15 },
-  { product: 'embed', cx: 29, cy: 15 },
-  { product: 'evaluate', cx: 29, cy: 29 },
-  { product: 'elevate', cx: 15, cy: 29 },
+  { product: 'equip', cx: 136.6, cy: 133 },
+  { product: 'embed', cx: 235.9, cy: 132 },
+  { product: 'evaluate', cx: 239.5, cy: 239.8 },
+  { product: 'elevate', cx: 132.2, cy: 236.4 },
 ];
+const R = 73.7;
 
 /**
- * The four-circle Allegro mark. Built from the simple circle geometry used in the design
- * reference screens until the cleaned brand SVGs arrive (spec-issues G1).
+ * The four-circle Allegro mark, drawn in code (not an image) so a circle can be filled for a
+ * product and the circles can fill in turn while something loads.
  */
 export function AllegroMark({
   product = 'all',
@@ -37,7 +40,7 @@ export function AllegroMark({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 44 44"
+      viewBox="54 54 268 268"
       style={{ color: colour }}
       className={[loading ? 'allegro-mark-loading' : '', className ?? ''].join(' ').trim()}
       role={label ? 'img' : undefined}
@@ -51,10 +54,11 @@ export function AllegroMark({
           data-product={c.product}
           cx={c.cx}
           cy={c.cy}
-          r={11}
+          r={R}
           fill={!loading && c.product === product ? colour : 'none'}
           stroke={colour}
-          strokeWidth={2.5}
+          strokeWidth={Math.max(1.5, size / 24)}
+          vectorEffect="non-scaling-stroke"
         />
       ))}
     </svg>
