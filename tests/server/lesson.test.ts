@@ -151,6 +151,11 @@ describe('POST /api/lesson', () => {
     expect(y11).toContain('MST-11-03');
     expect(y11).not.toContain('MST-12-S2-03');
     expect(curriculumFocus('senior.financial', '12')).toContain('annuities');
+    const sa = curriculumFocus('senior.financial', '12', 'SA');
+    expect(sa).toContain('SACE General Mathematics');
+    expect(sa).toContain('Models for borrowing');
+    expect(sa).not.toContain('MST-');
+    expect(curriculumFocus('senior.financial', '12', 'VIC')).toBe('');
   });
   it('refuses a topic that is not taught in the chosen year, before any AI call', async () => {
     let called = false;

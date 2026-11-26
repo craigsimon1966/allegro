@@ -199,7 +199,7 @@ export default function PlanForm() {
               ) : (
                 <p id="topic" className="mt-1" role="status">
                   {isSeniorYear(yearLevel) && !seniorCourseFor(state)
-                    ? `Allegro has senior lesson topics for NSW Mathematics Standard so far. The senior course for your state is coming. Choose another year level.`
+                    ? `Allegro has senior lesson topics for NSW, South Australia, the Northern Territory and Tasmania so far. The senior course for your state is coming. Choose another year level.`
                     : `Allegro doesn't have lesson topics for ${yearLabel(yearLevel)} yet. Choose another year level.`}
                 </p>
               )}
