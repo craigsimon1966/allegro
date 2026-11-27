@@ -30,6 +30,14 @@
     "nsw": [
       "MA5-NLI-C-01",
       "MA5-NLI-C-02"
+    ],
+    "vic": [
+      "VC2M10A11",
+      "VC2M10A14",
+      "VC2M10A15"
+    ],
+    "wa": [
+      "Year 10 Linear and non-linear patterns and relationships"
     ]
   },
   "aitslStandards": [],

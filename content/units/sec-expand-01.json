@@ -29,6 +29,16 @@
     ],
     "nsw": [
       "MA5-ALG-C-01"
+    ],
+    "vic": [
+      "VC2M9A02",
+      "VC2M10A01",
+      "VC2M10A02",
+      "VC2M10A04"
+    ],
+    "wa": [
+      "Year 9 Algebraic techniques",
+      "Year 10 Algebraic techniques"
     ]
   },
   "aitslStandards": [],

@@ -1,5 +1,6 @@
 // The official maths curriculum lists, and the checks every code passes before a teacher sees it.
-// content/curriculum/*.json come from ACARA and NESA via scripts/curriculum-import.ts, never by hand.
+// content/curriculum/*.json come from ACARA and NESA via scripts/curriculum-import.ts, from the
+// VCAA and SCSA Word documents via scripts/state-curriculum-import.ts, never typed by hand.
 // A code is shown only when it is in the official list AND it belongs to the teacher's year
 // (or, for NSW outcomes, the stage that covers that year). Anything else, including -TODO
 // placeholders and codes a model might make up, is dropped.
@@ -7,6 +8,8 @@ import ac9File from '../content/curriculum/ac9-maths.json';
 import nswFile from '../content/curriculum/nsw-maths.json';
 import seniorFile from '../content/curriculum/senior-maths.json';
 import seniorPdfFile from '../content/curriculum/senior-maths-pdf.json';
+import vicFile from '../content/curriculum/vic-maths.json';
+import waFile from '../content/curriculum/wa-maths.json';
 import { TAGS, tagById } from './tags';
 import { stateById } from './states';
 
@@ -36,6 +39,26 @@ export interface CurriculumRefs {
   nsw: string[];
   /** Senior general maths outside NSW (SACE, TASC), named by each document's own numbering. */
   senior?: string[];
+  /** Victorian Curriculum 2.0 Mathematics content descriptions (VC2M codes). */
+  vic?: string[];
+  /**
+   * WA Curriculum Mathematics (SCSA). The WA document has no codes, so each entry is named the
+   * way the document organises it: year level and sub-strand, e.g. "Year 8 Algebraic techniques".
+   */
+  wa?: string[];
+}
+export interface VicCode {
+  code: string;
+  year: string;
+  strand: string;
+  text: string;
+}
+export interface WaEntry {
+  code: string;
+  year: string;
+  strand: string;
+  substrand: string;
+  text: string;
 }
 export interface SeniorOutcome {
   code: string;
@@ -51,6 +74,10 @@ const AC9_BY_CODE = new Map(AC9.map((c) => [c.code, c]));
 const NSW_BY_CODE = new Map(NSW.map((c) => [c.code, c]));
 export const SENIOR: SeniorOutcome[] = [...seniorFile, ...seniorPdfFile];
 const SENIOR_BY_CODE = new Map(SENIOR.map((c) => [c.code, c]));
+export const VIC: VicCode[] = vicFile;
+export const WA: WaEntry[] = waFile;
+const VIC_BY_CODE = new Map(VIC.map((c) => [c.code, c]));
+const WA_BY_CODE = new Map(WA.map((c) => [c.code, c]));
 
 export const YEAR_LEVELS = ['F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const;
 
@@ -82,7 +109,8 @@ export function yearsLabel(years: string[]): string {
     (a, b) => PLAN_YEARS.indexOf(a as never) - PLAN_YEARS.indexOf(b as never),
   );
   const rest = ys.filter((y) => y !== 'F');
-  const nums = rest.length === 1 ? `Year ${rest[0]}` : rest.length ? `Years ${rest.join(', ')}` : '';
+  const nums =
+    rest.length === 1 ? `Year ${rest[0]}` : rest.length ? `Years ${rest.join(', ')}` : '';
   if (!ys.includes('F')) return nums;
   return nums ? `Foundation and ${nums}` : 'Foundation';
 }
@@ -115,6 +143,20 @@ export function checkNsw(code: string, years: string[] | null): CheckedCode | nu
   return { code: c.code, level: c.stage, text: c.text };
 }
 
+/** A Victorian Curriculum 2.0 code, checked against the VCAA list and the teacher's years. */
+export function checkVic(code: string, years: string[] | null): CheckedCode | null {
+  const c = VIC_BY_CODE.get(code);
+  if (!c || !fitsYears([c.year], years)) return null;
+  return { code: c.code, level: yearLabel(c.year), text: c.text };
+}
+
+/** A WA Curriculum entry (year and sub-strand), checked against the SCSA list and the years. */
+export function checkWa(code: string, years: string[] | null): CheckedCode | null {
+  const c = WA_BY_CODE.get(code);
+  if (!c || !fitsYears([c.year], years)) return null;
+  return { code: c.code, level: c.year === 'F' ? 'Pre-primary' : `Year ${c.year}`, text: c.text };
+}
+
 /** A senior outcome outside NSW, checked against the official list, the state and the year. */
 export function checkSenior(
   code: string,
@@ -131,7 +173,13 @@ export function checkSenior(
 export function checkRefs(
   refs: CurriculumRefs,
   years: string[] | null,
-): { ac9: CheckedCode[]; nsw: CheckedCode[]; senior: CheckedCode[] } {
+): {
+  ac9: CheckedCode[];
+  nsw: CheckedCode[];
+  senior: CheckedCode[];
+  vic: CheckedCode[];
+  wa: CheckedCode[];
+} {
   const keep = (codes: string[], check: (c: string, y: string[] | null) => CheckedCode | null) => {
     const seen = new Set<string>();
     return codes.flatMap((c) => {
@@ -144,13 +192,16 @@ export function checkRefs(
     ac9: keep(refs.ac9, checkAc9),
     nsw: keep(refs.nsw, checkNsw),
     senior: keep(refs.senior ?? [], checkSenior),
+    vic: keep(refs.vic ?? [], checkVic),
+    wa: keep(refs.wa ?? [], checkWa),
   };
 }
 
 /**
  * The curriculum rows to show. AC v9 for every state (it is what every state's maths builds on);
- * the NSW syllabus row too for NSW teachers. Victoria and WA see AC v9 only until their own codes
- * are looked up, so no placeholder ever reaches the screen. Rows with nothing valid are left out.
+ * then the state's own curriculum for NSW (NESA syllabus), Victoria (Victorian Curriculum 2.0)
+ * and WA (WA Curriculum). Only checked entries show, so no placeholder ever reaches the screen.
+ * Rows with nothing valid are left out.
  */
 export function curriculumRows(
   refs: CurriculumRefs,
@@ -162,6 +213,8 @@ export function curriculumRows(
   // With no state chosen, NSW, as before (the demo teachers are all in NSW).
   const s = stateById(state)?.id ?? 'NSW';
   if (s === 'NSW') rows.push({ label: 'NSW syllabus', codes: checked.nsw });
+  if (s === 'VIC') rows.push({ label: 'Victorian Curriculum 2.0', codes: checked.vic });
+  if (s === 'WA') rows.push({ label: 'WA Curriculum', codes: checked.wa });
   const senior = checked.senior.filter((c) => SENIOR_BY_CODE.get(c.code)?.states.includes(s));
   if (senior.length) rows.push({ label: seniorCourseFor(s) ?? 'Senior course', codes: senior });
   return rows.filter((r) => r.codes.length > 0);
@@ -207,7 +260,13 @@ export function lessonTopicsFor(year: string, state?: string | null) {
 /** A topic's codes (content/tags.json), for lessons. Checking against the year happens on display. */
 export function topicRefs(tagId: string): CurriculumRefs {
   const c = (tagById(tagId) as { curriculum?: CurriculumRefs } | undefined)?.curriculum;
-  return { ac9: c?.ac9 ?? [], nsw: c?.nsw ?? [], senior: c?.senior ?? [] };
+  return {
+    ac9: c?.ac9 ?? [],
+    nsw: c?.nsw ?? [],
+    senior: c?.senior ?? [],
+    vic: c?.vic ?? [],
+    wa: c?.wa ?? [],
+  };
 }
 
 /** "Year 8, NSW Stage 4" or "Year 8, Queensland": the line that says who a plan was built for. */

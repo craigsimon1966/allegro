@@ -82,10 +82,17 @@ describe('groundLesson', () => {
     expect(g.curriculum_refs).toEqual({
       ac9: ['AC9M8A02', 'AC9M8A03', 'AC9M8A04'],
       nsw: ['MA4-LIN-C-01'],
+      vic: ['VC2M8A02', 'VC2M8A03', 'VC2M8A05'],
+      wa: [
+        'Year 8 Linear and non-linear patterns and relationships',
+        'Year 8 Linear and non-linear equations and inequalities',
+      ],
     });
     const y9 = groundLesson({ ...aiLesson, year_level: '9' }, 'algebra.linear');
     expect(y9.curriculum_refs.ac9.every((c) => c.startsWith('AC9M9'))).toBe(true);
     expect(y9.curriculum_refs.nsw.every((c) => c.startsWith('MA5-'))).toBe(true);
+    expect(y9.curriculum_refs.vic?.every((c) => c.startsWith('VC2M9'))).toBe(true);
+    expect(y9.curriculum_refs.wa?.every((c) => c.startsWith('Year 9 '))).toBe(true);
   });
   it('marks every other block as an AI draft that needs a maths check, with no em dashes', () => {
     for (const b of g.blocks.filter((b) => b.type !== 'misconceptions')) {
@@ -156,6 +163,15 @@ describe('POST /api/lesson', () => {
     expect(sa).toContain('Models for borrowing');
     expect(sa).not.toContain('MST-');
     expect(curriculumFocus('senior.financial', '12', 'VIC')).toBe('');
+    // Victoria and WA see their own curriculum's wording for the year.
+    const vic = curriculumFocus('algebra.linear', '8', 'VIC');
+    expect(vic).toContain('Victorian Curriculum 2.0');
+    expect(vic).toContain('VC2M8A02');
+    expect(vic).not.toContain('AC9M');
+    const wa = curriculumFocus('algebra.linear', '8', 'WA');
+    expect(wa).toContain('WA Curriculum');
+    expect(wa).toContain('Year 8 Linear and non-linear patterns and relationships');
+    expect(curriculumFocus('algebra.linear', '8', 'QLD')).toContain('AC9M8A02');
   });
   it('refuses a topic that is not taught in the chosen year, before any AI call', async () => {
     let called = false;

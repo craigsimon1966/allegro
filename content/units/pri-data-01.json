@@ -31,6 +31,16 @@
     "nsw": [
       "MAE-DATA-01",
       "MA1-DATA-01"
+    ],
+    "vic": [
+      "VC2MFST01",
+      "VC2M1ST02",
+      "VC2M2ST02"
+    ],
+    "wa": [
+      "Pre-primary Statistics",
+      "Year 1 Statistics",
+      "Year 2 Statistics"
     ]
   },
   "aitslStandards": [],

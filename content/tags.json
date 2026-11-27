@@ -19,7 +19,27 @@
           "AC9M9A06",
           "AC9M10A02"
         ],
-        "nsw": ["MA4-LIN-C-01", "MA5-LIN-C-01", "MA5-LIN-C-02"]
+        "nsw": ["MA4-LIN-C-01", "MA5-LIN-C-01", "MA5-LIN-C-02"],
+        "vic": [
+          "VC2M7A04",
+          "VC2M7A05",
+          "VC2M8A02",
+          "VC2M8A03",
+          "VC2M8A05",
+          "VC2M9A03",
+          "VC2M9A04",
+          "VC2M9A06",
+          "VC2M9A07",
+          "VC2M10A08",
+          "VC2M10A09"
+        ],
+        "wa": [
+          "Year 7 Linear and non-linear patterns and relationships",
+          "Year 8 Linear and non-linear patterns and relationships",
+          "Year 8 Linear and non-linear equations and inequalities",
+          "Year 9 Linear and non-linear patterns and relationships",
+          "Year 10 Linear and non-linear equations and inequalities"
+        ]
       }
     },
     {
@@ -29,7 +49,14 @@
       "yearLevels": ["7", "8"],
       "curriculum": {
         "ac9": ["AC9M7A01", "AC9M7A02", "AC9M7A03", "AC9M8A01"],
-        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01"]
+        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01"],
+        "vic": ["VC2M7A01", "VC2M7A02", "VC2M7A03", "VC2M8A01"],
+        "wa": [
+          "Year 7 Algebraic techniques",
+          "Year 7 Linear and non-linear equations and inequalities",
+          "Year 8 Algebraic techniques",
+          "Year 8 Linear and non-linear equations and inequalities"
+        ]
       }
     },
     {
@@ -48,7 +75,25 @@
           "AC9M8M07",
           "AC9M8N05"
         ],
-        "nsw": ["MA4-RAT-C-01", "MA4-FRC-C-01"]
+        "nsw": ["MA4-RAT-C-01", "MA4-FRC-C-01"],
+        "vic": [
+          "VC2M7N03",
+          "VC2M7N06",
+          "VC2M7N07",
+          "VC2M7N09",
+          "VC2M7N10",
+          "VC2M7M06",
+          "VC2M8M05",
+          "VC2M8M07",
+          "VC2M8N05",
+          "VC2M8N06"
+        ],
+        "wa": [
+          "Year 7 Understanding number",
+          "Year 7 Calculating with number",
+          "Year 8 Understanding number",
+          "Year 8 Calculating with number"
+        ]
       }
     },
     {
@@ -68,7 +113,28 @@
           "AC9M9A02",
           "AC9M9A03"
         ],
-        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01", "MA4-LIN-C-01", "MA5-ALG-C-01", "MA5-LIN-C-01"]
+        "nsw": ["MA4-ALG-C-01", "MA4-EQU-C-01", "MA4-LIN-C-01", "MA5-ALG-C-01", "MA5-LIN-C-01"],
+        "vic": [
+          "VC2M7A01",
+          "VC2M7A02",
+          "VC2M7A03",
+          "VC2M7A05",
+          "VC2M8A01",
+          "VC2M8A02",
+          "VC2M8A05",
+          "VC2M9A02",
+          "VC2M9A03",
+          "VC2M9A04"
+        ],
+        "wa": [
+          "Year 7 Algebraic techniques",
+          "Year 7 Linear and non-linear equations and inequalities",
+          "Year 7 Linear and non-linear patterns and relationships",
+          "Year 8 Algebraic techniques",
+          "Year 8 Linear and non-linear patterns and relationships",
+          "Year 9 Algebraic techniques",
+          "Year 9 Linear and non-linear patterns and relationships"
+        ]
       }
     },
     {
@@ -114,7 +180,15 @@
       "yearLevels": ["F", "1", "2"],
       "curriculum": {
         "ac9": ["AC9MFN02", "AC9MFN04", "AC9M1N02", "AC9M1N04", "AC9M2N02"],
-        "nsw": ["MAE-CSQ-02", "MAE-RWN-01", "MA1-CSQ-01", "MA1-RWN-02"]
+        "nsw": ["MAE-CSQ-02", "MAE-RWN-01", "MA1-CSQ-01", "MA1-RWN-02"],
+        "vic": ["VC2MFN02", "VC2MFN04", "VC2M1N02", "VC2M1N04", "VC2M2N02"],
+        "wa": [
+          "Pre-primary Understanding number",
+          "Year 1 Understanding number",
+          "Year 1 Calculating with number",
+          "Year 2 Understanding number",
+          "Year 2 Calculating with number"
+        ]
       }
     },
     {
@@ -134,7 +208,26 @@
           "AC9M2A03",
           "AC9M2N05"
         ],
-        "nsw": ["MAE-FG-01", "MAE-FG-02", "MA1-FG-01"]
+        "nsw": ["MAE-FG-01", "MAE-FG-02", "MA1-FG-01"],
+        "vic": [
+          "VC2MFA01",
+          "VC2MFN06",
+          "VC2M1A01",
+          "VC2M1A02",
+          "VC2M1N03",
+          "VC2M1N06",
+          "VC2M2A01",
+          "VC2M2A03",
+          "VC2M2N05"
+        ],
+        "wa": [
+          "Pre-primary Patterns and relationships",
+          "Pre-primary Understanding number",
+          "Year 1 Patterns and relationships",
+          "Year 1 Understanding number",
+          "Year 2 Patterns and relationships",
+          "Year 2 Understanding number"
+        ]
       }
     },
     {
@@ -153,7 +246,28 @@
           "AC9M2M03",
           "AC9M2M04"
         ],
-        "nsw": ["MAE-GM-02", "MAE-NSM-01", "MAE-NSM-02", "MA1-GM-02", "MA1-NSM-01", "MA1-NSM-02"]
+        "nsw": ["MAE-GM-02", "MAE-NSM-01", "MAE-NSM-02", "MA1-GM-02", "MA1-NSM-01", "MA1-NSM-02"],
+        "vic": [
+          "VC2MFM01",
+          "VC2MFM02",
+          "VC2M1M01",
+          "VC2M1M02",
+          "VC2M1M03",
+          "VC2M2M01",
+          "VC2M2M03",
+          "VC2M2M04"
+        ],
+        "wa": [
+          "Pre-primary Two-dimensional space and structures",
+          "Pre-primary Three-dimensional space and structures",
+          "Pre-primary Non-spatial measurement",
+          "Year 1 Two-dimensional space and structures",
+          "Year 1 Three-dimensional space and structures",
+          "Year 1 Non-spatial measurement",
+          "Year 2 Two-dimensional space and structures",
+          "Year 2 Three-dimensional space and structures",
+          "Year 2 Non-spatial measurement"
+        ]
       }
     },
     {
@@ -163,7 +277,16 @@
       "yearLevels": ["F", "1", "2"],
       "curriculum": {
         "ac9": ["AC9MFSP01", "AC9MFSP02", "AC9M1SP01", "AC9M1SP02", "AC9M2SP01", "AC9M2SP02"],
-        "nsw": ["MAE-2DS-01", "MAE-3DS-01", "MAE-GM-01", "MA1-2DS-01", "MA1-3DS-01", "MA1-GM-01"]
+        "nsw": ["MAE-2DS-01", "MAE-3DS-01", "MAE-GM-01", "MA1-2DS-01", "MA1-3DS-01", "MA1-GM-01"],
+        "vic": ["VC2MFSP01", "VC2MFSP02", "VC2M1SP01", "VC2M1SP02", "VC2M2SP01", "VC2M2SP02"],
+        "wa": [
+          "Pre-primary Two-dimensional space and structures",
+          "Pre-primary Three-dimensional space and structures",
+          "Year 1 Two-dimensional space and structures",
+          "Year 1 Three-dimensional space and structures",
+          "Year 2 Two-dimensional space and structures",
+          "Year 2 Three-dimensional space and structures"
+        ]
       }
     },
     {
@@ -173,7 +296,9 @@
       "yearLevels": ["F", "1", "2"],
       "curriculum": {
         "ac9": ["AC9MFST01", "AC9M1ST01", "AC9M1ST02", "AC9M2ST01", "AC9M2ST02"],
-        "nsw": ["MAE-DATA-01", "MA1-DATA-01", "MA1-DATA-02"]
+        "nsw": ["MAE-DATA-01", "MA1-DATA-01", "MA1-DATA-02"],
+        "vic": ["VC2MFST01", "VC2M1ST01", "VC2M1ST02", "VC2M2ST01", "VC2M2ST02"],
+        "wa": ["Pre-primary Statistics", "Year 1 Statistics", "Year 2 Statistics"]
       }
     },
     {
@@ -193,7 +318,28 @@
           "AC9M6N04",
           "AC9M6N06"
         ],
-        "nsw": ["MA2-RN-01", "MA2-RN-02", "MA2-AR-01", "MA3-RN-01", "MA3-RN-02"]
+        "nsw": ["MA2-RN-01", "MA2-RN-02", "MA2-AR-01", "MA3-RN-01", "MA3-RN-02"],
+        "vic": [
+          "VC2M3N02",
+          "VC2M3N04",
+          "VC2M3N06",
+          "VC2M4N01",
+          "VC2M4N07",
+          "VC2M5N01",
+          "VC2M5N08",
+          "VC2M6N04",
+          "VC2M6N06"
+        ],
+        "wa": [
+          "Year 3 Understanding number",
+          "Year 3 Calculating with number",
+          "Year 4 Understanding number",
+          "Year 4 Calculating with number",
+          "Year 5 Understanding number",
+          "Year 5 Calculating with number",
+          "Year 6 Understanding number",
+          "Year 6 Calculating with number"
+        ]
       }
     },
     {
@@ -215,7 +361,30 @@
           "AC9M6N02",
           "AC9M6A02"
         ],
-        "nsw": ["MA2-MR-01", "MA2-MR-02", "MA3-MR-01", "MA3-MR-02"]
+        "nsw": ["MA2-MR-01", "MA2-MR-02", "MA3-MR-01", "MA3-MR-02"],
+        "vic": [
+          "VC2M3A03",
+          "VC2M3N05",
+          "VC2M4A02",
+          "VC2M4N05",
+          "VC2M4N06",
+          "VC2M5A01",
+          "VC2M5N02",
+          "VC2M5N06",
+          "VC2M5N07",
+          "VC2M6N02",
+          "VC2M6A02"
+        ],
+        "wa": [
+          "Year 3 Understanding number",
+          "Year 4 Understanding number",
+          "Year 4 Calculating with number",
+          "Year 5 Understanding number",
+          "Year 5 Calculating with number",
+          "Year 6 Understanding number",
+          "Year 6 Calculating with number",
+          "Year 6 Understanding equalities and inequalities"
+        ]
       }
     },
     {
@@ -235,7 +404,26 @@
           "AC9M6N05",
           "AC9M6N07"
         ],
-        "nsw": ["MA2-PF-01", "MA3-RQF-01", "MA3-RQF-02", "MA3-RN-03"]
+        "nsw": ["MA2-PF-01", "MA3-RQF-01", "MA3-RQF-02", "MA3-RN-03"],
+        "vic": [
+          "VC2M3N03",
+          "VC2M4N03",
+          "VC2M4N04",
+          "VC2M5N03",
+          "VC2M5N04",
+          "VC2M5N05",
+          "VC2M6N03",
+          "VC2M6N05",
+          "VC2M6N07"
+        ],
+        "wa": [
+          "Year 3 Understanding number",
+          "Year 4 Understanding number",
+          "Year 5 Understanding number",
+          "Year 5 Calculating with number",
+          "Year 6 Understanding number",
+          "Year 6 Calculating with number"
+        ]
       }
     },
     {
@@ -254,7 +442,23 @@
           "AC9M6M02",
           "AC9M6M04"
         ],
-        "nsw": ["MA2-GM-02", "MA2-GM-03", "MA2-2DS-03", "MA3-2DS-02", "MA3-2DS-03", "MA3-GM-03"]
+        "nsw": ["MA2-GM-02", "MA2-GM-03", "MA2-2DS-03", "MA3-2DS-02", "MA3-2DS-03", "MA3-GM-03"],
+        "vic": [
+          "VC2M3M02",
+          "VC2M3M05",
+          "VC2M4M02",
+          "VC2M4M04",
+          "VC2M5M02",
+          "VC2M5M04",
+          "VC2M6M02",
+          "VC2M6M04"
+        ],
+        "wa": [
+          "Year 3 Two-dimensional space and structures",
+          "Year 4 Two-dimensional space and structures",
+          "Year 5 Two-dimensional space and structures",
+          "Year 6 Two-dimensional space and structures"
+        ]
       }
     },
     {
@@ -280,6 +484,26 @@
           "MA3-DATA-01",
           "MA3-DATA-02",
           "MA3-CHAN-01"
+        ],
+        "vic": [
+          "VC2M3ST02",
+          "VC2M3P01",
+          "VC2M4ST01",
+          "VC2M4P01",
+          "VC2M5ST02",
+          "VC2M5P01",
+          "VC2M6ST01",
+          "VC2M6P01"
+        ],
+        "wa": [
+          "Year 3 Statistics",
+          "Year 3 Probability",
+          "Year 4 Statistics",
+          "Year 4 Probability",
+          "Year 5 Statistics",
+          "Year 5 Probability",
+          "Year 6 Statistics",
+          "Year 6 Probability"
         ]
       }
     },
@@ -290,7 +514,14 @@
       "yearLevels": ["7", "8"],
       "curriculum": {
         "ac9": ["AC9M7N07", "AC9M8N04"],
-        "nsw": ["MA4-INT-C-01"]
+        "nsw": ["MA4-INT-C-01"],
+        "vic": ["VC2M7N08", "VC2M8N04"],
+        "wa": [
+          "Year 7 Understanding number",
+          "Year 7 Calculating with number",
+          "Year 8 Understanding number",
+          "Year 8 Calculating with number"
+        ]
       }
     },
     {
@@ -310,7 +541,24 @@
           "AC9M8M03",
           "AC9M8M06"
         ],
-        "nsw": ["MA4-ARE-C-01", "MA4-VOL-C-01", "MA4-LEN-C-01", "MA4-ANG-C-01", "MA4-PYT-C-01"]
+        "nsw": ["MA4-ARE-C-01", "MA4-VOL-C-01", "MA4-LEN-C-01", "MA4-ANG-C-01", "MA4-PYT-C-01"],
+        "vic": [
+          "VC2M7M01",
+          "VC2M7M02",
+          "VC2M7M03",
+          "VC2M7M04",
+          "VC2M7M05",
+          "VC2M8M01",
+          "VC2M8M02",
+          "VC2M8M03",
+          "VC2M8M06"
+        ],
+        "wa": [
+          "Year 7 Two-dimensional space and structures",
+          "Year 7 Three-dimensional space and structures",
+          "Year 8 Two-dimensional space and structures",
+          "Year 8 Three-dimensional space and structures"
+        ]
       }
     },
     {
@@ -340,6 +588,26 @@
           "MA5-DAT-C-01",
           "MA5-DAT-C-02",
           "MA5-PRO-C-01"
+        ],
+        "vic": [
+          "VC2M7ST01",
+          "VC2M7ST02",
+          "VC2M7P01",
+          "VC2M8ST02",
+          "VC2M8P01",
+          "VC2M8P02",
+          "VC2M9ST03",
+          "VC2M9P01",
+          "VC2M9P02",
+          "VC2M10ST01",
+          "VC2M10ST02",
+          "VC2M10P01"
+        ],
+        "wa": [
+          "Year 7 Probability and statistics",
+          "Year 8 Probability and statistics",
+          "Year 9 Probability and statistics",
+          "Year 10 Probability and statistics"
         ]
       }
     },
@@ -350,7 +618,14 @@
       "yearLevels": ["9", "10"],
       "curriculum": {
         "ac9": ["AC9M9A01", "AC9M9A02", "AC9M10A01"],
-        "nsw": ["MA5-ALG-C-01", "MA5-IND-C-01", "MA5-EQU-C-01"]
+        "nsw": ["MA5-ALG-C-01", "MA5-IND-C-01", "MA5-EQU-C-01"],
+        "vic": ["VC2M9A01", "VC2M9A02", "VC2M10A01", "VC2M10A02", "VC2M10A04"],
+        "wa": [
+          "Year 9 Algebraic techniques",
+          "Year 9 Linear and non-linear equations and inequalities",
+          "Year 10 Algebraic techniques",
+          "Year 10 Linear and non-linear equations and inequalities"
+        ]
       }
     },
     {
@@ -360,7 +635,14 @@
       "yearLevels": ["9", "10"],
       "curriculum": {
         "ac9": ["AC9M9A04", "AC9M9A06", "AC9M10A03", "AC9M10A04"],
-        "nsw": ["MA5-NLI-C-01", "MA5-NLI-C-02"]
+        "nsw": ["MA5-NLI-C-01", "MA5-NLI-C-02"],
+        "vic": ["VC2M9A05", "VC2M9A07", "VC2M10A11", "VC2M10A14", "VC2M10A15"],
+        "wa": [
+          "Year 9 Linear and non-linear patterns and relationships",
+          "Year 9 Linear and non-linear equations and inequalities",
+          "Year 10 Linear and non-linear patterns and relationships",
+          "Year 10 Linear and non-linear equations and inequalities"
+        ]
       }
     },
     {
@@ -370,7 +652,12 @@
       "yearLevels": ["9", "10"],
       "curriculum": {
         "ac9": ["AC9M9M03", "AC9M9SP01", "AC9M10M03"],
-        "nsw": ["MA5-TRG-C-01", "MA5-TRG-C-02"]
+        "nsw": ["MA5-TRG-C-01", "MA5-TRG-C-02"],
+        "vic": ["VC2M9M03", "VC2M9SP01", "VC2M10M03"],
+        "wa": [
+          "Year 9 Two-dimensional space and structures",
+          "Year 10 Two-dimensional space and structures"
+        ]
       }
     },
     {

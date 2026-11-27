@@ -112,6 +112,8 @@ export const LessonSchema = z.object({
     ac9: z.array(z.string()),
     nsw: z.array(z.string()),
     senior: z.array(z.string()).optional(),
+    vic: z.array(z.string()).optional(),
+    wa: z.array(z.string()).optional(),
   }),
   blocks: z.array(LessonBlockSchema),
 });

@@ -33,6 +33,16 @@
     "nsw": [
       "MA2-2DS-03",
       "MA3-2DS-02"
+    ],
+    "vic": [
+      "VC2M4M02",
+      "VC2M5M02",
+      "VC2M6M02"
+    ],
+    "wa": [
+      "Year 4 Two-dimensional space and structures",
+      "Year 5 Two-dimensional space and structures",
+      "Year 6 Two-dimensional space and structures"
     ]
   },
   "aitslStandards": [],

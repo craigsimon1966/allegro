@@ -85,6 +85,8 @@ export function curriculumRefsFor(topicTag: string, yearLevel: string) {
       ac9: [...t.ac9, ...units.flatMap((u) => u.curriculumRefs.ac9)],
       nsw: [...t.nsw, ...units.flatMap((u) => u.curriculumRefs.nsw)],
       senior: t.senior ?? [],
+      vic: [...(t.vic ?? []), ...units.flatMap((u) => u.curriculumRefs.vic ?? [])],
+      wa: [...(t.wa ?? []), ...units.flatMap((u) => u.curriculumRefs.wa ?? [])],
     },
     [yearLevel],
   );
@@ -92,6 +94,8 @@ export function curriculumRefsFor(topicTag: string, yearLevel: string) {
     ac9: checked.ac9.map((c) => c.code),
     nsw: checked.nsw.map((c) => c.code),
     ...(checked.senior.length ? { senior: checked.senior.map((c) => c.code) } : {}),
+    ...(checked.vic.length ? { vic: checked.vic.map((c) => c.code) } : {}),
+    ...(checked.wa.length ? { wa: checked.wa.map((c) => c.code) } : {}),
   };
 }
 

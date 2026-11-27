@@ -28,6 +28,15 @@
     "nsw": [
       "MA4-LIN-C-01",
       "MA5-LIN-C-01"
+    ],
+    "vic": [
+      "VC2M8A02",
+      "VC2M9A03",
+      "VC2M9A04"
+    ],
+    "wa": [
+      "Year 8 Linear and non-linear patterns and relationships",
+      "Year 9 Linear and non-linear patterns and relationships"
     ]
   },
   "aitslStandards": [],

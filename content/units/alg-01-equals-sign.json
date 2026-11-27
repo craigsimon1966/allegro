@@ -28,6 +28,14 @@
     "nsw": [
       "MA4-EQU-C-01",
       "MA4-ALG-C-01"
+    ],
+    "vic": [
+      "VC2M7A03",
+      "VC2M8A01"
+    ],
+    "wa": [
+      "Year 7 Linear and non-linear equations and inequalities",
+      "Year 8 Linear and non-linear equations and inequalities"
     ]
   },
   "aitslStandards": [],

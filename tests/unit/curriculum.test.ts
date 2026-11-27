@@ -4,11 +4,15 @@ import {
   NSW,
   SENIOR,
   SENIOR_YEARS,
+  VIC,
+  WA,
   YEAR_LEVELS,
   builtForLine,
   checkAc9,
   checkNsw,
   checkSenior,
+  checkVic,
+  checkWa,
   curriculumRows,
   lessonTopicsFor,
   nswStageFor,
@@ -56,6 +60,59 @@ describe('official curriculum lists', () => {
   });
 });
 
+describe('Victorian and WA curriculum lists', () => {
+  it('has VCAA codes that name their own year, with official wording', () => {
+    expect(VIC.length).toBeGreaterThanOrEqual(100);
+    for (const c of VIC) {
+      expect(c.code).toMatch(/^VC2M(F|10|[1-9])(N|A|M|SP|ST|P)\d\d$/);
+      expect(c.code.startsWith(`VC2M${c.year}`)).toBe(true);
+      expect(c.text.length).toBeGreaterThan(10);
+      expect(c.text).not.toMatch(/\\|<|TODO/);
+    }
+    expect(checkVic('VC2M8A02', ['8'])?.text).toMatch(/^graph linear relations/);
+    expect(checkVic('VC2M8A02', ['9'])).toBeNull();
+    expect(checkVic('VC2M8A99', null)).toBeNull();
+  });
+
+  it('names WA entries by year level and sub-strand, as the SCSA document does', () => {
+    expect(WA.length).toBeGreaterThanOrEqual(50);
+    for (const c of WA) {
+      const year = c.year === 'F' ? 'Pre-primary' : `Year ${c.year}`;
+      expect(c.code).toBe(`${year} ${c.substrand}`);
+      expect(c.text.length).toBeGreaterThan(10);
+      expect(c.text).not.toMatch(/optional|TODO/i);
+    }
+    expect(checkWa('Year 8 Algebraic techniques', ['8'])?.level).toBe('Year 8');
+    expect(checkWa('Pre-primary Statistics', ['F'])?.level).toBe('Pre-primary');
+    expect(checkWa('Year 8 Algebraic techniques', ['9'])).toBeNull();
+  });
+
+  it('every unit and topic code for Victoria and WA is official and fits its years', () => {
+    for (const u of UNITS) {
+      for (const c of u.curriculumRefs.vic ?? [])
+        expect(checkVic(c, u.yearLevels), `${u.id} ${c}`).not.toBeNull();
+      for (const c of u.curriculumRefs.wa ?? [])
+        expect(checkWa(c, u.yearLevels), `${u.id} ${c}`).not.toBeNull();
+    }
+    for (const t of TAGS) {
+      const refs = topicRefs(t.id);
+      for (const c of refs.vic ?? [])
+        expect(checkVic(c, t.yearLevels), `${t.id} ${c}`).not.toBeNull();
+      for (const c of refs.wa ?? [])
+        expect(checkWa(c, t.yearLevels), `${t.id} ${c}`).not.toBeNull();
+    }
+  });
+
+  it('gives every lesson topic Victorian and WA content in each year it is offered', () => {
+    for (const y of YEAR_LEVELS)
+      for (const t of lessonTopicsFor(y)) {
+        const refs = curriculumRefsFor(t.id, y);
+        expect(refs.vic?.length, `${t.id} Year ${y} has no Victorian code`).toBeGreaterThan(0);
+        expect(refs.wa?.length, `${t.id} Year ${y} has no WA entry`).toBeGreaterThan(0);
+      }
+  });
+});
+
 describe('checking a code before it is shown', () => {
   it('rejects placeholders, made-up codes and codes from another year', () => {
     expect(checkAc9('AC9-TODO', null)).toBeNull();
@@ -78,6 +135,26 @@ describe('checking a code before it is shown', () => {
       expect(rows.map((r) => r.label)).toEqual(['AC v9']);
       expect(JSON.stringify(rows)).not.toContain('TODO');
     }
+  });
+
+  it('shows the Victorian and WA curriculum rows to teachers in those states only', () => {
+    const refs = {
+      ac9: ['AC9M8A02'],
+      nsw: ['MA4-LIN-C-01'],
+      vic: ['VC2M8A02', 'VC2-TODO', 'VC2M9A03'],
+      wa: ['Year 8 Linear and non-linear patterns and relationships', 'WA-TODO'],
+    };
+    const vic = curriculumRows(refs, 'VIC', ['8']);
+    expect(vic.map((r) => r.label)).toEqual(['AC v9', 'Victorian Curriculum 2.0']);
+    expect(vic[1]!.codes.map((c) => c.code)).toEqual(['VC2M8A02']);
+    const wa = curriculumRows(refs, 'WA', ['8']);
+    expect(wa.map((r) => r.label)).toEqual(['AC v9', 'WA Curriculum']);
+    expect(wa[1]!.codes[0]!.text).toMatch(/^Use a table of values/);
+    expect(curriculumRows(refs, 'QLD', ['8']).map((r) => r.label)).toEqual(['AC v9']);
+    expect(curriculumRows(refs, 'NSW', ['8']).map((r) => r.label)).toEqual([
+      'AC v9',
+      'NSW syllabus',
+    ]);
   });
 
   it('leaves out a row when nothing in it passes', () => {

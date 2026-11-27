@@ -29,6 +29,16 @@
     ],
     "nsw": [
       "MA4-INT-C-01"
+    ],
+    "vic": [
+      "VC2M7N08",
+      "VC2M8N04"
+    ],
+    "wa": [
+      "Year 7 Understanding number",
+      "Year 7 Calculating with number",
+      "Year 8 Understanding number",
+      "Year 8 Calculating with number"
     ]
   },
   "aitslStandards": [],

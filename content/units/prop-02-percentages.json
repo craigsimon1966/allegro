@@ -28,6 +28,17 @@
     ],
     "nsw": [
       "MA4-FRC-C-01"
+    ],
+    "vic": [
+      "VC2M7N06",
+      "VC2M7N07",
+      "VC2M7N10",
+      "VC2M8N05",
+      "VC2M8N06"
+    ],
+    "wa": [
+      "Year 7 Calculating with number",
+      "Year 8 Calculating with number"
     ]
   },
   "aitslStandards": [],
