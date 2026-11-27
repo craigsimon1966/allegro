@@ -9,6 +9,7 @@ import {
   resultFor,
   type DiagnosticResult,
 } from '@shared/diagnostics';
+import { useContentVersion } from '@/lib/contentReview';
 
 // "Check yourself" (SPEC 7.4). Feedback per item, then a plain-language result. Never a score out of 100.
 
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export function DiagnosticCheck({ tag, topic, selfRating, onDone, onClose }: Props) {
+  useContentVersion(); // re-render when reviewer edits load
   const items = itemsForTag(tag);
   const baseId = useId();
   const [i, setI] = useState(0);

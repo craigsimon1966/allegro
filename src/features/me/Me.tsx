@@ -7,6 +7,7 @@ import { Button } from '@/components/Button';
 import { supabase } from '@/lib/supabase';
 import { useAppStore } from '@/lib/store';
 import { personaById } from '@shared/personas';
+import { loadReviewRole } from '@/lib/contentReview';
 
 // The "Me" tab: who you are in Allegro, how to sign out or leave the demo, and where your
 // settings and privacy information live. Not defined in the specs (see docs/decisions.md).
@@ -32,10 +33,14 @@ export default function Me() {
   const reset = useAppStore((s) => s.reset);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string | null>(null);
+  const [reviewer, setReviewer] = useState(false);
 
   useEffect(() => {
     if (mode !== 'signed_in' || !supabase) return;
     void supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
+    void loadReviewRole()
+      .then((r) => setReviewer(Boolean(r?.isReviewer)))
+      .catch(() => undefined);
   }, [mode]);
 
   if (mode === 'anonymous') return <Navigate to="/demo" replace />;
@@ -93,6 +98,19 @@ export default function Me() {
         <div className="mt-8 max-w-prose">
           <SectionRule>Settings and information</SectionRule>
           <ul>
+            {reviewer && (
+              <li className="border-b border-rule">
+                <Link
+                  to="/review"
+                  className="flex min-h-tap flex-col justify-center py-2 no-underline"
+                >
+                  <span className="font-bold text-green-700 underline">Content review</span>
+                  <span className="text-[13px] text-muted">
+                    Approve, edit or flag draft units, questions and curriculum codes
+                  </span>
+                </Link>
+              </li>
+            )}
             {LINKS.map((l) => ({
               ...l,
               note:

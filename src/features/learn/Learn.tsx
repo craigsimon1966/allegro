@@ -31,6 +31,7 @@ import { CurriculumCodes } from '@/components/CurriculumCodes';
 import { AIBlock } from '@/components/AIBlock';
 import { ApiError, explain, saveUnitProgress } from '@/lib/api';
 import { Thumbs } from '@/features/feedback/Thumbs';
+import { useContentVersion } from '@/lib/contentReview';
 
 // Micro-unit player (SPEC 7.6): hook, core idea, worked example, misconception, check,
 // try tomorrow, reflect. One section per page, with a progress bar.
@@ -355,6 +356,7 @@ function buildPages(
 
 export default function Learn() {
   const { unitId = '' } = useParams();
+  useContentVersion(); // re-render when reviewer edits or approvals load
   const navigate = useNavigate();
   const mode = useAppStore((s) => s.mode);
   const profile = useTeacherProfile();

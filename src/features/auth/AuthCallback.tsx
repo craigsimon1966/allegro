@@ -4,6 +4,7 @@ import { AllegroMark } from '@/components/AllegroMark';
 import { supabase } from '@/lib/supabase';
 import { useAppStore } from '@/lib/store';
 import { loadLatestFromSupabase } from '@/lib/api';
+import { takeNext } from '@/lib/nextPath';
 
 /**
  * /auth/callback (TECH_SPEC 6.1). supabase-js exchanges the PKCE code from the URL on load;
@@ -30,7 +31,7 @@ export default function AuthCallback() {
       }
       setSignedIn();
       const returning = await loadLatestFromSupabase().catch(() => false);
-      navigate(returning ? '/needs' : '/start', { replace: true });
+      navigate(takeNext() ?? (returning ? '/needs' : '/start'), { replace: true });
     })();
   }, [navigate, setSignedIn]);
 
