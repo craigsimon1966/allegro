@@ -6,6 +6,7 @@ import { MarginNote } from '@/components/MarginNote';
 import { supabase } from '@/lib/supabase';
 import { loadLatestFromSupabase } from '@/lib/api';
 import { useAppStore } from '@/lib/store';
+import { takeNext } from '@/lib/nextPath';
 
 /**
  * Email sign-in (TECH_SPEC 6.1). The email has a 6-digit code and a link; either works.
@@ -40,7 +41,7 @@ export function SignInForm() {
   const carryOn = async () => {
     setSignedIn();
     const returning = await loadLatestFromSupabase().catch(() => false);
-    navigate(returning ? '/needs' : '/start');
+    navigate(takeNext() ?? (returning ? '/needs' : '/start'));
   };
 
   const signOut = async () => {

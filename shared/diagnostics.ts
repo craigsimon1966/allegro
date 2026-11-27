@@ -9,6 +9,8 @@ export interface DiagnosticItem extends CheckItem {
 export type DiagnosticResult = 'solid' | 'refresh' | 'start_here';
 
 export const DIAGNOSTICS: DiagnosticItem[] = diagnosticsFile.items as DiagnosticItem[];
+/** The file as it is in the repo (DIAGNOSTICS can hold reviewer edits in the browser). */
+export const BASE_DIAGNOSTICS: readonly DiagnosticItem[] = [...DIAGNOSTICS];
 
 export const itemsForTag = (tag: string) => DIAGNOSTICS.filter((d) => d.topicTag === tag);
 

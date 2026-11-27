@@ -27,6 +27,9 @@ const Leader = lazy(() => import('@/features/leader/Leader'));
 const Survey = lazy(() => import('@/features/feedback/Survey'));
 const AdminFeedback = lazy(() => import('@/features/admin/AdminFeedback'));
 const Me = lazy(() => import('@/features/me/Me'));
+const ReviewQueue = lazy(() => import('@/features/content-review/ReviewQueue'));
+const ReviewItemPage = lazy(() => import('@/features/content-review/ReviewItemPage'));
+const Reviewers = lazy(() => import('@/features/content-review/Reviewers'));
 
 function Loading() {
   return (
@@ -60,6 +63,9 @@ export const routes = [
   { path: '/leader', element: lazyPage(<Leader />) },
   { path: '/survey', element: lazyPage(<Survey />) },
   { path: '/admin/feedback', element: lazyPage(<AdminFeedback />) },
+  { path: '/review', element: lazyPage(<ReviewQueue />) },
+  { path: '/review/reviewers', element: lazyPage(<Reviewers />) },
+  { path: '/review/:kind/:id', element: lazyPage(<ReviewItemPage />) },
   { path: '*', element: <Placeholder title="Page not found" /> },
 ];
 

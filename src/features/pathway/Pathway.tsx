@@ -21,6 +21,7 @@ import { aiPathway, loadLatestFromSupabase, loadPathwayFromSupabase, savePathway
 import { useAppStore, type ReadingPick } from '@/lib/store';
 import { AIProgress } from '@/components/AIProgress';
 import { Thumbs } from '@/features/feedback/Thumbs';
+import { useContentVersion } from '@/lib/contentReview';
 
 /** Rough typical wait for the AI's week. The call gives up at 45 seconds and uses rules. */
 const AI_WEEK_SECONDS = 25;
@@ -39,6 +40,7 @@ function formatDay(iso: string) {
 }
 
 export default function Pathway() {
+  useContentVersion(); // re-render when reviewer approvals load (Draft labels)
   const mode = useAppStore((s) => s.mode);
   const diagnosis = useAppStore((s) => s.diagnosis);
   const intake = useAppStore((s) => s.intake);
