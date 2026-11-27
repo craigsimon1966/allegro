@@ -1,0 +1,471 @@
+[
+  {
+    "code": "Pre-primary Understanding number",
+    "year": "F",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Say, read, write and order numbers to 20, from any starting point. Count collections to 20; Subitise, partition and compare small collections; Explore grouping and sharing of small collections"
+  },
+  {
+    "code": "Pre-primary Patterns and relationships",
+    "year": "F",
+    "strand": "Number and algebra",
+    "substrand": "Patterns and relationships",
+    "text": "Copy and continue repeating patterns in everyday environments using a range of materials, sounds and movement"
+  },
+  {
+    "code": "Pre-primary Two-dimensional space and structures",
+    "year": "F",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Sort, name and represent familiar two-dimensional shapes and recognise them within the environment; Explore and directly compare the length of everyday items to say which is longer and explain reasoning; Show and describe position and movement in familiar locations"
+  },
+  {
+    "code": "Pre-primary Three-dimensional space and structures",
+    "year": "F",
+    "strand": "Measurement and geometry",
+    "substrand": "Three-dimensional space and structures",
+    "text": "Explore familiar three-dimensional objects in the environment; Explore capacity and directly compare containers to say which holds more and explain reasoning"
+  },
+  {
+    "code": "Pre-primary Non-spatial measurement",
+    "year": "F",
+    "strand": "Measurement and geometry",
+    "substrand": "Non-spatial measurement",
+    "text": "Explore mass and directly compare everyday items by hefting; Sequence days of the week and times of the day, making connections to routines, and compare duration of familiar events using everyday language"
+  },
+  {
+    "code": "Pre-primary Statistics",
+    "year": "F",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Collect, group and compare data using objects and images to answer questions"
+  },
+  {
+    "code": "Year 1 Understanding number",
+    "year": "1",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Say, read, write and order numbers to 120 and recognise the repetition of the 0–9 sequence of digits. Skip count collections by twos, fives and tens from zero; Explore different ways to represent and partition collections up to 100, including in groups of 10, using concrete materials; Explore partitions of numbers with small collections using part-part-whole relationships; Explore different ways to equally group or share collections; Explore and create a half by dividing a physical whole into two equal parts or a collection into two equal quantities, using the language of sharing and grouping"
+  },
+  {
+    "code": "Year 1 Patterns and relationships",
+    "year": "1",
+    "strand": "Number and algebra",
+    "substrand": "Patterns and relationships",
+    "text": "Continue and create repeating patterns. Explore and label repeating patterns to show how many of each element is in a repeat unit (core)"
+  },
+  {
+    "code": "Year 1 Calculating with number",
+    "year": "1",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Manipulate collections to add and subtract quantities to 20 and beyond, exploring a range of strategies"
+  },
+  {
+    "code": "Year 1 Two-dimensional space and structures",
+    "year": "1",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Name and classify familiar two-dimensional shapes based on sides and vertices using informal language; Directly and indirectly compare lengths, including by counting uniform informal units; Give and follow directions within familiar locations"
+  },
+  {
+    "code": "Year 1 Three-dimensional space and structures",
+    "year": "1",
+    "strand": "Measurement and geometry",
+    "substrand": "Three-dimensional space and structures",
+    "text": "Recognise, sort and name familiar three-dimensional objects and identify the two-dimensional shapes that comprise them; Directly and indirectly compare the capacities of a pair of containers"
+  },
+  {
+    "code": "Year 1 Non-spatial measurement",
+    "year": "1",
+    "strand": "Measurement and geometry",
+    "substrand": "Non-spatial measurement",
+    "text": "Directly compare the masses of two objects by hefting and using balance scales; Read the time on digital clocks and make connections to routines. Explore and describe duration informally in years, months, weeks, days, hours, minutes and seconds"
+  },
+  {
+    "code": "Year 1 Statistics",
+    "year": "1",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Answer simple questions of interest by collecting and comparing categorical data to record frequencies"
+  },
+  {
+    "code": "Year 2 Understanding number",
+    "year": "2",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Read, write and order numbers to at least 1020, including on a number line. Recognise the repetition of the 0–99 sequence of digits and the role of zero. Skip count forwards and backwards by twos, threes, fives and tens from any starting point; Explore different ways to represent and partition two- and three-digit numbers, including in groups of 10 and 10 groups of 10 to make 100, using concrete materials, numbers and symbols; Explore the relationship between addition and subtraction with small collections using part-part-whole knowledge, numbers and symbols; Recall addition and subtraction facts to 10; Explore multiplication and division using repeated addition, equal grouping and arrays; Recognise, describe and create halves, quarters and eighths by repeatedly halving a physical whole or a collection"
+  },
+  {
+    "code": "Year 2 Patterns and relationships",
+    "year": "2",
+    "strand": "Number and algebra",
+    "substrand": "Patterns and relationships",
+    "text": "Recognise and continue increasing or decreasing additive patterns with collections and numbers, and identify missing elements in a pattern"
+  },
+  {
+    "code": "Year 2 Calculating with number",
+    "year": "2",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Add and subtract one- and two-digit numbers, using a range of strategies"
+  },
+  {
+    "code": "Year 2 Two-dimensional space and structures",
+    "year": "2",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Identify and draw two-dimensional shapes and describe their similarities and differences using formal spatial language; Estimate, measure and compare lengths by choosing appropriate uniform informal units and placing end to end without gaps or overlaps; Explore and directly compare the areas of two shapes by superimposing one over the other; Explore quarter-, half- and full turns in everyday situations; Locate positions and pathways on simple maps of familiar locations"
+  },
+  {
+    "code": "Year 2 Three-dimensional space and structures",
+    "year": "2",
+    "strand": "Measurement and geometry",
+    "substrand": "Three-dimensional space and structures",
+    "text": "Manipulate, visualise and name familiar three-dimensional objects, informally describe features and connect to common uses; Estimate, measure and compare the capacities of different containers using uniform informal units"
+  },
+  {
+    "code": "Year 2 Non-spatial measurement",
+    "year": "2",
+    "strand": "Measurement and geometry",
+    "substrand": "Non-spatial measurement",
+    "text": "Estimate and compare masses of objects using balance scales and uniform informal units; Tell time to the hour, half- and quarter-hour on analogue and digital clocks. Identify the date and determine the duration between two events in days using a calendar"
+  },
+  {
+    "code": "Year 2 Statistics",
+    "year": "2",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Describe and interpret real-life data represented in lists, tables and one-to-one block and picture graphs; Choose and answer questions of interest by collecting and comparing categorical data. Display data using lists, tables and one-to-one block and picture graphs"
+  },
+  {
+    "code": "Year 3 Understanding number",
+    "year": "3",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Read, write and order numbers to at least four digits, including on a number line. Recognise the repetition of the 0–999 sequence of digits; Represent and partition numbers up to four digits, including groups of 10 (tens), 10 groups of 10 (hundreds) and beyond, using concrete materials and number sentences. Recognise that the value of a digit is determined by its place in a number; Represent and explain the relationship between addition and subtraction using part-part-whole models and number sentences; Recall addition and subtraction facts to 20; Explore and represent the relationship between multiplication and division using diagrams, arrays and number sentences; Recall multiplication facts of 2, 3, 4, 5 and 10, and related division facts; Recognise, represent and describe unit fractions 1/2,1/3,1/4, 1/5 and 1/10.Combine unit fractions with the same denominator to create a complete whole"
+  },
+  {
+    "code": "Year 3 Calculating with number",
+    "year": "3",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Add and subtract two- and three-digit numbers using a range of strategies; Explore additive estimation strategies to evaluate the reasonableness of a calculation in familiar contexts"
+  },
+  {
+    "code": "Year 3 Two-dimensional space and structures",
+    "year": "3",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Explore one-step slides (translations) and flips (reflections) of familiar two-dimensional shapes, make connections to line symmetry and describe the movement of the shape; Estimate, measure and order lengths in uniform units, including millimetres, centimetres and metres; Compare the areas of two shapes indirectly, using uniform informal units, without gaps and overlaps; Identify angles as measures of turn between two lines that intersect and directly compare angle sizes in everyday situations; Create and interpret simple maps to show positions and pathways, considering the relative position of key features"
+  },
+  {
+    "code": "Year 3 Probability",
+    "year": "3",
+    "strand": "Probability and statistics",
+    "substrand": "Probability",
+    "text": "Describe familiar events using the language of chance. Identify and list possible outcomes of everyday chance events; Identify the likelihood of outcomes for planned, equally likely, repeated chance experiments. Conduct the experiments and recognise variation in the results"
+  },
+  {
+    "code": "Year 3 Statistics",
+    "year": "3",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Describe and interpret real-life data represented in dot plots and column graphs with scale intervals of one; In a real-world context, explore questions of interest by collecting categorical or discrete numerical data through observation or surveys. Organise and represent data in dot plots, tables and column graphs and interpret to answer a question"
+  },
+  {
+    "code": "Year 4 Understanding number",
+    "year": "4",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Read, write and order numbers to at least six digits. Recognise the significance of the final digit to determine odd and even numbers; Read and write decimal numbers up to two decimal places; Represent numbers up to five digits using place value and non-standard partitions with equations. Recognise the multiplicative (10 times as many) place value relationship between adjacent places from right to left; Represent and explain the relationship between one whole being shared equally among 10 as 0.1 or 1/10 and being shared equally among 100 as 0.01 or 1/100 using concrete materials; Represent and explain the relationship between multiplication and division using arrays and equations; Recall multiplication facts up to 10 × 10, and related division facts; Explore and represent common equivalent fractions and make connections to their decimal representation"
+  },
+  {
+    "code": "Year 4 Calculating with number",
+    "year": "4",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Add and subtract whole numbers up to four digits using flexible and efficient strategies; Multiply two-digit numbers by one- and two-digit numbers, and divide whole numbers by one-digit numbers, where there is no remainder, using flexible and efficient strategies; Explore a range of additive estimation strategies for different situations, including using knowledge of odd and even numbers"
+  },
+  {
+    "code": "Year 4 Two-dimensional space and structures",
+    "year": "4",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Explore, visualise, describe and create two-dimensional shapes that result from combining or splitting familiar shapes; Estimate, measure and compare the perimeter of two-dimensional shapes, using scaled instruments and appropriate informal or formal units; Estimate, measure and compare the areas of rectangles using uniform informal square units in arrays; Indirectly compare angles and identify as being equal to, greater than or less than a right angle; Create or interpret grid maps, describe positions and pathways, and explore scales and legends"
+  },
+  {
+    "code": "Year 4 Probability",
+    "year": "4",
+    "strand": "Probability and statistics",
+    "substrand": "Probability",
+    "text": "Order the likelihood of everyday chance events. Identify when events are not affected by previous events; Predict the likelihood of outcomes of unequally likely, repeated chance experiments. Conduct the experiments, describe variation and compare to the prediction"
+  },
+  {
+    "code": "Year 4 Statistics",
+    "year": "4",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Describe and interpret real-life data represented in many-to-one pictographs and column graphs; In a real-world context, pose questions and collect categorical or discrete numerical data, checking for accuracy and consistency. Organise and represent data in pictographs and column graphs, and interpret the data to communicate findings in terms of the context"
+  },
+  {
+    "code": "Year 5 Understanding number",
+    "year": "5",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Read, write and order seven-digit numbers and beyond; Read, write, compare and order decimal numbers, including on a number line; Represent and partition numbers up to seven digits. Use the multiplicative place value relationship between adjacent places to explain the value of a digit; Represent and partition decimal numbers. Use the multiplicative place value relationship between adjacent places to explain the value of a digit; Explore, identify and represent factors and multiples of whole numbers in arrays and explain reasoning; Count by unit fractions, locate and represent on number lines and extend to mixed numerals; Identify the use of percentages in everyday situations and recognise that 100% represents a complete whole, which is equal to one"
+  },
+  {
+    "code": "Year 5 Calculating with number",
+    "year": "5",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Add and subtract any whole numbers using flexible and efficient strategies; Add and subtract fractions with the same denominator using flexible and efficient strategies; Multiply larger whole numbers by one- and two-digit numbers and divide whole numbers by one-digit numbers, including those with remainders, using flexible and efficient strategies; Explore multiplicative estimation strategies and their appropriateness in different situations"
+  },
+  {
+    "code": "Year 5 Two-dimensional space and structures",
+    "year": "5",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Explore line and rotational symmetry in two-dimensional shapes; Choose and use appropriate metric units and part units to estimate and measure lengths; Describe and test a sequence of steps to determine the perimeter of rectangles; Identify dimensions of a metric square unit. Estimate, measure and compare areas using metric square units; Estimate, measure and construct angles in degrees using a protractor. Classify acute, right, obtuse, reflex and straight angles; Use directional language, grid references and grid coordinates to describe positions and pathways"
+  },
+  {
+    "code": "Year 5 Probability",
+    "year": "5",
+    "strand": "Probability and statistics",
+    "substrand": "Probability",
+    "text": "Compare a range of everyday chance events, grouping into those with outcomes that are equally likely or not equally likely; Conduct repeated chance experiments with equally likely outcomes, including with the use of digital tools. Represent results as fractions, compare with others and discuss variation"
+  },
+  {
+    "code": "Year 5 Statistics",
+    "year": "5",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Describe and interpret line graphs that show how real-life continuous data changes over time; In a real-world context, pose and refine questions, and collect categorical or discrete numerical data. Organise and make choices to represent data. Interpret and communicate findings in terms of the context, and reflect on variation and accuracy"
+  },
+  {
+    "code": "Year 6 Understanding number",
+    "year": "6",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Investigate the use of positive and negative integers to represent everyday situations. Read, write and order integers on a number line; Represent and explain the multiplicative place value relationship between places in any number, including decimals; Explore, identify and represent square, prime and composite numbers in arrays and explain reasoning; Order common fractions with the same and related denominators, including mixed numerals, using diagrams and number lines; Connect commonly used percentages, including 10%, 25% and 50%, to fractions and decimals, including on a number line"
+  },
+  {
+    "code": "Year 6 Understanding equalities and inequalities",
+    "year": "6",
+    "strand": "Number and algebra",
+    "substrand": "Understanding equalities and inequalities",
+    "text": "Complete, check and construct statements of equality and inequality involving the four operations, including the use of brackets and order of operations, and explain reasoning"
+  },
+  {
+    "code": "Year 6 Calculating with number",
+    "year": "6",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Choose and use flexible and efficient strategies to calculate with whole numbers, involving any of the four operations, and explore the use of the order of operations; Add and subtract fractions with related denominators, using flexible and efficient strategies, based on knowledge of equivalence; Add and subtract decimals to two decimal places, using flexible and efficient strategies; Multiply decimals by whole numbers and multiply and divide decimals by powers of 10, using flexible and efficient strategies; Determine a familiar fraction, decimal or percentage of a whole number; Use estimation and rounding to make reasonable evaluations and justify results"
+  },
+  {
+    "code": "Year 6 Two-dimensional space and structures",
+    "year": "6",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Explore, visualise and describe translations, reflections or rotations of two-dimensional shapes; Convert between units of length by connecting metric units to the decimal system and extend to units of mass and capacity; Describe and test a sequence of steps to determine the area of rectangles based on dimensions; Investigate angles in a right angle, on a straight line, angles at a point and vertically opposite angles, to determine unknown angles and explain reasoning; Explore the Cartesian plane as the intersection of two number lines at zero, using the coordinate system to locate points in all four quadrants"
+  },
+  {
+    "code": "Year 6 Probability",
+    "year": "6",
+    "strand": "Probability and statistics",
+    "substrand": "Probability",
+    "text": "Order everyday chance events and phrases on a scale from 0 to 1, where 0 represents an event that is certain not to happen (impossible) and 1 represents an event that is certain to happen; Conduct repeated chance experiments and simulations with equally likely or unequally likely outcomes, including with the use of digital tools, for an increasing number of trials. Compare expected and observed frequencies in terms of variation as the number of trials increase"
+  },
+  {
+    "code": "Year 6 Statistics",
+    "year": "6",
+    "strand": "Probability and statistics",
+    "substrand": "Statistics",
+    "text": "Describe and interpret a range of displays for real-life numerical data, including side-by-side column graphs, using mode, range and shape; Describe how the features of real-life data displays may influence an audience; In a real-world context involving continuous and discrete numerical data, use the following process analyse the situation to pose a question choose the most appropriate way to collect data to ensure accuracy and consistency, and make choices to represent data, including line graphs and side-by-side column graphs interpret and communicate findings in terms of the context and describe reasons for variation"
+  },
+  {
+    "code": "Year 7 Understanding number",
+    "year": "7",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Explore and represent equivalent fractions with related and unrelated denominators, visually and numerically; Explore and explain relationships between fractions, decimals and percentages; Draw and label, or use a given number line, to locate, order and compare with equality and inequality symbols, fractions, terminating decimals, percentages and integers; Explore to extend addition and subtraction of positive integers to include negative integers; Explore and interpret multiplication and division of positive fractions, visually and numerically; Explore and interpret multiplication and division of positive decimals, visually and numerically; Use place value understanding to explore rounding decimals to a specified number of decimal places; Extend the use of associative, commutative and distributive laws, additive and multiplicative partitioning, inverse operations, order of operations, equality and inequality to validate a range of mental and written strategies involving the four operations on whole numbers, positive fractions and decimals, and addition and subtraction of integers; Explore and explain the use of ratios and fractions to compare numbers and quantities. Make connections between equivalent fractions and between equivalent ratios"
+  },
+  {
+    "code": "Year 7 Calculating with number",
+    "year": "7",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Convert between fractions, decimals and percentages using flexible and efficient strategies; Determine percentages of quantities and express one quantity as a percentage of another using flexible and efficient strategies; Add and subtract integers using flexible and efficient strategies; Add and subtract positive fractions with related and unrelated denominators using flexible and efficient strategies; Multiply and divide positive fractions using flexible and efficient strategies; Multiply and divide positive decimals using flexible and efficient strategies; Use appropriate rounding, estimation strategies and context to check reasonableness of solutions"
+  },
+  {
+    "code": "Year 7 Algebraic techniques",
+    "year": "7",
+    "strand": "Number and algebra",
+    "substrand": "Algebraic techniques",
+    "text": "Represent in expanded form, evaluate, and compare numbers expressed in index notation, including powers of 10; Extend knowledge of factors to represent natural numbers as products of prime factors using index notation as appropriate; Explore and explain connections between square numbers and square roots, cube numbers and cube roots, as products of repeated factors; Use real-world contexts or concrete materials to introduce the concept of a variable to represent a number using a letter. Create simple algebraic expressions and evaluate by substituting a given value for the variable/s; Extend and apply the associative and commutative laws and properties of numbers to include variables"
+  },
+  {
+    "code": "Year 7 Linear and non-linear equations and inequalities",
+    "year": "7",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear equations and inequalities",
+    "text": "Solve simple linear equations involving up to two operations and verify the solution by substitution"
+  },
+  {
+    "code": "Year 7 Linear and non-linear patterns and relationships",
+    "year": "7",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear patterns and relationships",
+    "text": "Explore, describe and represent concrete and real-world, linear and non-linear growing patterns using a table of values and a graph. Determine unknown values in the pattern"
+  },
+  {
+    "code": "Year 7 Two-dimensional space and structures",
+    "year": "7",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Establish and apply relationships between lengths of sides, perimeter and area for squares, rectangles and triangles. Generalise and apply formulas, using appropriate units; Explore and explain efficient strategies to determine the perimeter and area of irregular or composite shapes composed of squares and rectangles; Explore and establish connections and conversions between units of area; Explore, identify, define, name, label and apply the language, notation and conventions of geometry for points, lines, angles and polygons; Investigate, identify and describe corresponding, alternate and co-interior angles formed when two parallel lines are crossed by a transversal. Use relationships to determine unknown angles and explain reasoning; Demonstrate that the interior angle sum of a triangle is 180°; Explore to classify and name triangles according to their side and angle properties. Use the properties to determine unknown angles in triangles and explain reasoning; Plot coordinates on the Cartesian plane and explore, visualise, predict and determine image coordinates after translation or reflection across the axes, or rotation about the origin"
+  },
+  {
+    "code": "Year 7 Three-dimensional space and structures",
+    "year": "7",
+    "strand": "Measurement and geometry",
+    "substrand": "Three-dimensional space and structures",
+    "text": "Move flexibly between building and drawing rectangular and composite rectangular prisms from different views; Establish and apply relationships between the number of identical layers of cubic units, the number of cubic units in each identical layer and volume for rectangular prisms and composite rectangular prisms. Generalise and apply the formula, using appropriate units"
+  },
+  {
+    "code": "Year 7 Probability and statistics",
+    "year": "7",
+    "strand": "Probability and statistics",
+    "substrand": "Probability and statistics",
+    "text": "Construct sample spaces for single-stage chance experiments, assign probabilities to the outcomes and predict frequencies for different numbers of trials; Conduct repeated single-stage chance experiments and simulations to produce datasets, including through the use of digital tools, for an increasingly large number of trials. Discuss and describe variation and estimated probabilities for outcomes, and compare to predictions and theoretical probability, where appropriate; Explore and determine the mean, mode, median and range for sets of data and justify, using the context, which measure best reflects the dataset; Represent primary categorical and numerical data in a Venn diagram, calculate related relative frequencies and interpret results; Represent collected data in a stem-and-leaf plot, describe the shape and spread including outliers, and compare to dot plots or column graphs. Use the data to estimate probabilities of specific outcomes; Critically analyse statistical statements made in the media and other real-life situations, that relate to the averages of mean, mode and median. Investigate the impact of chance variation on the dataset from which the averages were determined"
+  },
+  {
+    "code": "Year 8 Understanding number",
+    "year": "8",
+    "strand": "Number and algebra",
+    "substrand": "Understanding number",
+    "text": "Investigate, define, identify and use correct notation for rational and irrational numbers, including terminating, recurring and rounded decimals; Draw and label, or use a given number line, to locate, order and compare with equality and inequality symbols, rational and irrational numbers, including numbers written in index form and percentages; Explore to extend multiplicative thinking with positive integers to include multiplication and division of negative integers; Extend the use of associative, commutative and distributive laws, additive and multiplicative partitioning, inverse operations, order of operations, equality and inequality to validate a range of mental and written strategies involving the four operations on any rational number; Explore and apply proportional reasoning to determine unknown numbers in equivalent ratios and fractions; Identify, interpret, compare and use familiar rates, including those represented as graphs that show a quantity varying over time"
+  },
+  {
+    "code": "Year 8 Calculating with number",
+    "year": "8",
+    "strand": "Number and algebra",
+    "substrand": "Calculating with number",
+    "text": "Calculate percentage increases and decreases, using knowledge of fractions and decimals to improve efficiency; Multiply and divide integers using flexible and efficient strategies; Use flexible and efficient strategies for calculations involving the four operations with rational numbers, including those written in index form, using rounding, estimation or the context to check reasonableness of results"
+  },
+  {
+    "code": "Year 8 Algebraic techniques",
+    "year": "8",
+    "strand": "Number and algebra",
+    "substrand": "Algebraic techniques",
+    "text": "Develop and apply the index laws for numbers in index form with positive-integer and zero indices; Extend and apply knowledge of additive and multiplicative partitioning, order of operations and the associative and commutative laws of numbers, to create or simplify algebraic expressions involving the four operations; Extend and apply knowledge of the distributive law with numbers to algebraically expand and factorise expressions with a common numerical factor"
+  },
+  {
+    "code": "Year 8 Linear and non-linear equations and inequalities",
+    "year": "8",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear equations and inequalities",
+    "text": "Solve linear equations involving up to three operations, including those with negative coefficients or requiring collection of like terms, and verify the solution by substitution; Determine and explain why there are two solutions to a quadratic equation of the form x²=k if k>0"
+  },
+  {
+    "code": "Year 8 Linear and non-linear patterns and relationships",
+    "year": "8",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear patterns and relationships",
+    "text": "Use a table of values to move flexibly between the equation of a line represented by y=mx+c and its graph and make connections between the algebraic and graphical solution of the equation. Explore and explain similarities and differences between multiple lines on the same axes"
+  },
+  {
+    "code": "Year 8 Two-dimensional space and structures",
+    "year": "8",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Establish and apply relationships between lengths of sides, perpendicular lengths, lengths of diagonals, perimeter and area for parallelograms, trapeziums, rhombuses and kites. Generalise and apply formulas, using appropriate units; Identify, describe and explore the relationship between the radius, diameter and circumference of a circle and use this to establish and apply formulas to determine perimeter and area, using appropriate units; Investigate in order to establish, define and use Pythagoras’ theorem to determine the length of an unknown side in a right-angled triangle; Explore, identify, classify and establish properties of quadrilaterals, including the interior angle sum. Use this to determine unknown sides and angles in quadrilaterals and explain reasoning; Recognise and identify equal corresponding sides and equal corresponding angles of congruent figures. Explore, visualise, predict and determine the translation, reflection, rotation, or combination of these transformations, to match one congruent figure to another"
+  },
+  {
+    "code": "Year 8 Three-dimensional space and structures",
+    "year": "8",
+    "strand": "Measurement and geometry",
+    "substrand": "Three-dimensional space and structures",
+    "text": "Explore in order to visualise and draw cross-sections of different solids and use this to identify prisms; Establish and apply relationships between the area of a uniform cross-section, the length perpendicular to that uniform cross-section and the volume of right prisms. Generalise, apply formulas and use this to connect to capacity if required, using appropriate units; Explore and establish connections and conversions between units of volume and between units of volume and capacity"
+  },
+  {
+    "code": "Year 8 Probability and statistics",
+    "year": "8",
+    "strand": "Probability and statistics",
+    "substrand": "Probability and statistics",
+    "text": "Construct sample spaces, such as lists, simple tree diagrams, tables or arrays, to show all possible outcomes for two events. Assign probabilities to outcomes and events including those involving ‘and’, ‘not’, ‘at least’, exclusive ‘or’ and inclusive ‘or’; Recognise that complementary events have a combined probability of one and use this relationship to calculate probabilities; Conduct repeated chance experiments and simulations for two events to produce datasets, including through the use of digital tools, for a large number of trials. Discuss, explain and compare variation and estimated probabilities for simple and compound events; Analyse data represented in stem-and-leaf plots, column graphs and frequency tables to determine the mean, mode/s, median and range. Describe the effect of any outliers on the statistical measures; Use secondary data represented in two-way tables and Venn diagrams to describe events, including those that are mutually exclusive. Estimate related probabilities and make predictions as appropriate; Investigate and explain techniques for data collection, including census, survey, experiment and observation, and explain the practicalities and implications of obtaining data through these techniques; Explore, analyse and compare variation between results from same size random samples drawn from the same population. Identify and explain how chance variation impacts on data validity, reliability and conclusions drawn; Critically analyse visual representations and tables in the media and other real-life situations to identify misleading or inaccurate features and interpretations. Recognise the impact of the validity and reliability of the data used"
+  },
+  {
+    "code": "Year 9 Algebraic techniques",
+    "year": "9",
+    "strand": "Number and algebra",
+    "substrand": "Algebraic techniques",
+    "text": "Extend and apply index laws with positive-integer indices and the zero index to variable bases, and simplify where appropriate; Extend and apply index laws with numerical expressions of base-10 to include negative-integer indices. Develop the relationship between these negative indices and equivalent fractions and decimals; Explore and apply the distributive law to expand and factorise algebraic expressions with a common algebraic factor, including collecting like terms where appropriate; Explore and apply the distributive law to expand binomial products, collecting like terms where appropriate"
+  },
+  {
+    "code": "Year 9 Linear and non-linear equations and inequalities",
+    "year": "9",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear equations and inequalities",
+    "text": "Solve linear equations involving brackets and/or a variable on each side of the equation, and verify the solution by substitution; Determine and explain why there are up to two solutions to a quadratic equation of the form ax²=k and verify the possible solution/s by substitution"
+  },
+  {
+    "code": "Year 9 Linear and non-linear patterns and relationships",
+    "year": "9",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear patterns and relationships",
+    "text": "Use the Cartesian plane to explore finding the distance, gradient and midpoint between two points; Move flexibly between the equation of a line, represented by y=mx+c, and its graph using the gradient and y-intercept. Graph the equation of a line represented in ax+by=c form; Identify rates as direct proportion, represent algebraically and graphically, and use both forms to predict unknown values and interpret in the context of the situation; Use a table of values to plot points and graph quadratic functions of the form y=ax², describe key features and make connections to the algebraic solution/s of ax²=k"
+  },
+  {
+    "code": "Year 9 Two-dimensional space and structures",
+    "year": "9",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Explore, explain and use efficient strategies to determine the perimeter and area of composite shapes involving triangles, quadrilaterals and/or circles, (including sectors), using appropriate units; Use Pythagoras’ theorem to determine the perimeter and area of shapes involving right-angled triangles, in both exact and decimal approximation form. Investigate and apply the converse of Pythagoras’ theorem to establish whether a triangle is right-angled; Explore to identify and describe conditions for triangles to be congruent. Use this to determine unknown sides or angles in pairs of congruent triangles and explain reasoning; Construct similar figures by enlargement and reduction, and use this to establish, explain and apply properties of similar figures; Use similarity to investigate and explain the constancy of the sine, cosine and tangent ratios for a given angle in right-angled triangles. Choose and use a trigonometric ratio to determine the length of an unknown side or the size of an unknown angle; Apply the properties of similarity to determine scales, lengths and angles of real-life figures from scale drawings, maps, plans and photographs"
+  },
+  {
+    "code": "Year 9 Probability and statistics",
+    "year": "9",
+    "strand": "Probability and statistics",
+    "substrand": "Probability and statistics",
+    "text": "Construct sample spaces to show outcomes for two-stage chance experiments both with and without replacement. Assign probabilities to outcomes and make informal connections to independent and dependent events; Conduct repeated two-stage chance experiments and simulations, both with and without replacement, to produce datasets, including through the use of digital tools. Discuss, compare and interpret variation and estimated probabilities for compound events; Analyse data with multiple variables represented in tables. Describe using statistical measures and relative frequencies to make inferences; Explore, choose and create graphical or visual representations and justify choice with regards to context, purpose, data type and intended audience; Interpret and compare multiple datasets represented in back-to-back stem-and-leaf plots and histograms with consideration of shape, spread and centre; Describe different sampling methods and analyse how the different methods can affect the results of surveys. Identify and explain how chance variation impacts on the data validity, reliability and conclusions drawn from surveys; Critically analyse statistics in the media and other real-life situations relating to data samples, including the effect of chance variation on sample analyses"
+  },
+  {
+    "code": "Year 10 Algebraic techniques",
+    "year": "10",
+    "strand": "Number and algebra",
+    "substrand": "Algebraic techniques",
+    "text": "Extend and apply index laws with positive-integer indices and variable bases, to include negative-integer indices; Substitute values into real-life linear, quadratic or simple exponential formulas to determine unknowns using digital tools; Extend and apply knowledge of the expansion of binomial products to explore the factorisation of monic quadratics"
+  },
+  {
+    "code": "Year 10 Linear and non-linear equations and inequalities",
+    "year": "10",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear equations and inequalities",
+    "text": "Solve one-variable linear inequalities involving brackets and/or a variable on each side. Represent the solution on a number line and verify the solution by substitution; Determine the solution to linear simultaneous equations in the forms y=mx+c or ax+by=c graphically and verify the solution by substitution"
+  },
+  {
+    "code": "Year 10 Linear and non-linear patterns and relationships",
+    "year": "10",
+    "strand": "Number and algebra",
+    "substrand": "Linear and non-linear patterns and relationships",
+    "text": "Use a table of values to plot points and graph quadratic functions of the form y=ax²+c. Identify and relate key graphical and algebraic features and make connections to the graphical and algebraic solution/s of ax²+c=k. Use digital tools to explore the shapes, features and related solutions to more complex quadratic functions; Use a table of values to plot points and graph exponential functions of the form y=aˣ where a>0. Identify and relate key graphical and algebraic features and use these to determine graphical solutions of related equations. Use digital tools to explore the shapes, features and related solutions to more complex exponential functions; Identify and distinguish between linear, quadratic and exponential functions represented by equations, tables of values and graphs"
+  },
+  {
+    "code": "Year 10 Two-dimensional space and structures",
+    "year": "10",
+    "strand": "Measurement and geometry",
+    "substrand": "Two-dimensional space and structures",
+    "text": "Use Pythagoras’ theorem and/or trigonometry to determine unknown sides and angles in right-angled triangles involving angles of elevation and depression; Explore to identify and describe conditions for triangles to be similar. Use this to determine unknown sides and angles in pairs of similar triangles and explain reasoning; Investigate, explore and determine the effect on the perimeter and area of shapes when they are enlarged or reduced by a scale factor"
+  },
+  {
+    "code": "Year 10 Probability and statistics",
+    "year": "10",
+    "strand": "Probability and statistics",
+    "substrand": "Probability and statistics",
+    "text": "Choose and construct appropriate sample spaces to show outcomes for two- and three-stage chance experiments both with and without replacement. Assign probabilities to events involving conditional statements, such as ‘if ... then’, ‘given’, ‘of’, ‘knowing that’; Conduct repeated chance experiments and simulations to model conditional probability and produce datasets using digital tools. Discuss, compare and analyse variation and estimated probabilities for conditional events; Analyse bivariate data represented in a two-way table using proportions and comment on possible association between categorical variables; Represent secondary data in two-way tables or Venn diagrams and assign probabilities to outcomes involving conditional statements; Represent the relationship between bivariate data in a scatter plot and draw a trend line by eye if appropriate. Use the graph and context to describe any association in terms of strength, direction, linearity and outliers. Make predictions and recognise and explain any limitations of the model; Represent and analyse boxplots. Explain differences between multiple boxplot datasets in terms of shape, spread and centre. Compare or match the shapes of boxplots to distributions depicting the same data; Critically analyse the claims, inferences and conclusions of statistical reports in the media and other real-life situations, and identify potential sources of bias"
+  }
+]

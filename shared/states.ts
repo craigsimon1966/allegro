@@ -1,7 +1,7 @@
 // Australian states and territories, and the maths curriculum each one teaches from.
 // NSW, Victoria and WA publish their own versions; the others use the Australian Curriculum v9.
-// Codes are never invented: a state's codes show as a -TODO placeholder until a person checks
-// them (docs/curriculum-todo.md).
+// Codes are never invented: every code shown comes from that authority's official list
+// (content/curriculum/), and docs/curriculum-todo.md tracks which matches a person has checked.
 
 export type StateId = 'NSW' | 'VIC' | 'QLD' | 'WA' | 'SA' | 'TAS' | 'ACT' | 'NT';
 
@@ -12,8 +12,6 @@ export interface StateInfo {
   curriculum: string;
   /** Short label for the curriculum row on a lesson plan. */
   label: string;
-  /** Placeholder until that state's codes are looked up. Null when it is AC v9 itself. */
-  placeholder: string | null;
 }
 
 export const STATES: StateInfo[] = [
@@ -22,56 +20,48 @@ export const STATES: StateInfo[] = [
     name: 'New South Wales',
     curriculum: 'NSW Mathematics K–10 Syllabus (NESA)',
     label: 'NSW syllabus',
-    placeholder: 'NSW-TODO',
   },
   {
     id: 'VIC',
     name: 'Victoria',
     curriculum: 'Victorian Curriculum F–10 Version 2.0 (VCAA)',
     label: 'Victorian Curriculum 2.0',
-    placeholder: 'VC2-TODO',
   },
   {
     id: 'QLD',
     name: 'Queensland',
     curriculum: 'Australian Curriculum v9',
     label: 'AC v9',
-    placeholder: null,
   },
   {
     id: 'WA',
     name: 'Western Australia',
     curriculum: 'Western Australian Curriculum (SCSA)',
     label: 'WA Curriculum',
-    placeholder: 'WA-TODO',
   },
   {
     id: 'SA',
     name: 'South Australia',
     curriculum: 'Australian Curriculum v9',
     label: 'AC v9',
-    placeholder: null,
   },
   {
     id: 'TAS',
     name: 'Tasmania',
     curriculum: 'Australian Curriculum v9',
     label: 'AC v9',
-    placeholder: null,
   },
   {
     id: 'ACT',
     name: 'Australian Capital Territory',
     curriculum: 'Australian Curriculum v9',
     label: 'AC v9',
-    placeholder: null,
   },
   {
     id: 'NT',
     name: 'Northern Territory',
     curriculum: 'Australian Curriculum v9',
     label: 'AC v9',
-    placeholder: null,
   },
 ];
 

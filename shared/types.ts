@@ -3,7 +3,13 @@
 export type Domain = 'CK' | 'PK' | 'PCK' | 'ASSESSMENT' | 'WELLBEING' | 'CONTEXT';
 export type Format = 'text' | 'worked_example' | 'video' | 'reflective_task' | 'interactive';
 export type Audience =
-  'out_of_field' | 'early_career' | 'casual' | 'experienced' | 'leader' | 'primary' | 'secondary';
+  | 'out_of_field'
+  | 'early_career'
+  | 'casual'
+  | 'experienced'
+  | 'leader'
+  | 'primary'
+  | 'secondary';
 
 /** Feedback for one likely wrong answer, tied to the misconception behind it. */
 export interface WrongAnswerFeedback {
@@ -57,7 +63,7 @@ export interface MicroUnit {
   format: Format[];
   difficulty: 1 | 2 | 3;
   /** Codes from the official lists in content/curriculum/ (checked by shared/curriculum.ts). Never invented. */
-  curriculumRefs: { ac9: string[]; nsw: string[] };
+  curriculumRefs: { ac9: string[]; nsw: string[]; vic?: string[]; wa?: string[] };
   aitslStandards: string[];
   hook: string;
   coreIdeaMd: string;

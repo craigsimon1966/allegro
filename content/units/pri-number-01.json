@@ -33,6 +33,17 @@
       "MAE-CSQ-02",
       "MAE-RWN-01",
       "MA1-CSQ-01"
+    ],
+    "vic": [
+      "VC2MFN02",
+      "VC2MFN04",
+      "VC2M1N02",
+      "VC2M2N02"
+    ],
+    "wa": [
+      "Pre-primary Understanding number",
+      "Year 1 Understanding number",
+      "Year 2 Understanding number"
     ]
   },
   "aitslStandards": [],

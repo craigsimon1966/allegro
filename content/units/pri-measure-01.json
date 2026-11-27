@@ -31,6 +31,16 @@
     "nsw": [
       "MAE-GM-02",
       "MA1-GM-02"
+    ],
+    "vic": [
+      "VC2MFM01",
+      "VC2M1M02",
+      "VC2M2M01"
+    ],
+    "wa": [
+      "Pre-primary Two-dimensional space and structures",
+      "Year 1 Two-dimensional space and structures",
+      "Year 2 Two-dimensional space and structures"
     ]
   },
   "aitslStandards": [],

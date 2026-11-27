@@ -34,6 +34,18 @@
     "nsw": [
       "MA2-CHAN-01",
       "MA3-CHAN-01"
+    ],
+    "vic": [
+      "VC2M3P02",
+      "VC2M4P02",
+      "VC2M5P01",
+      "VC2M6P01"
+    ],
+    "wa": [
+      "Year 3 Probability",
+      "Year 4 Probability",
+      "Year 5 Probability",
+      "Year 6 Probability"
     ]
   },
   "aitslStandards": [],

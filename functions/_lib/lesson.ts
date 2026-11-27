@@ -16,9 +16,11 @@ import {
 } from '../../shared/lesson';
 import { UNITS } from '../../shared/catalogue';
 import { tagById } from '../../shared/tags';
-import { curriculumContext } from '../../shared/states';
+import { curriculumContext, stateById } from '../../shared/states';
 import {
   checkAc9,
+  checkVic,
+  checkWa,
   checkNsw,
   checkSenior,
   isSeniorYear,
@@ -92,7 +94,7 @@ export function referenceFor(topicTag: string): string {
 }
 
 /**
- * The official AC v9 content for this topic in this year, so a broad topic (for example area,
+ * The official content for this topic in this year (AC v9, or the Victorian or WA curriculum), so a broad topic (for example area,
  * volume and angles) is narrowed to what this year actually teaches.
  */
 export function curriculumFocus(topicTag: string, yearLevel: string, state?: string): string {
@@ -114,8 +116,23 @@ export function curriculumFocus(topicTag: string, yearLevel: string, state?: str
       ? `Course: NSW Mathematics Standard (Stage 6). The official ${yearLabel(yearLevel)} outcomes in this topic. Choose one focus from this list that fits a single lesson:\n${outcomes.join('\n')}`
       : '';
   }
-  const lines = curriculumRefsFor(topicTag, yearLevel)
-    .ac9.map((c) => checkAc9(c, [yearLevel]))
+  const refs = curriculumRefsFor(topicTag, yearLevel);
+  const s = stateById(state)?.id;
+  // Victoria and WA plan from their own curriculum, so the model sees that wording.
+  const own =
+    s === 'VIC'
+      ? {
+          name: 'Victorian Curriculum 2.0',
+          items: (refs.vic ?? []).map((c) => checkVic(c, [yearLevel])),
+        }
+      : s === 'WA'
+        ? { name: 'WA Curriculum', items: (refs.wa ?? []).map((c) => checkWa(c, [yearLevel])) }
+        : null;
+  const ownLines = own?.items.flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : [])) ?? [];
+  if (own && ownLines.length)
+    return `What ${yearLabel(yearLevel)} learns in this topic (${own.name}). Choose one focus from this list that fits a single lesson:\n${ownLines.join('\n')}`;
+  const lines = refs.ac9
+    .map((c) => checkAc9(c, [yearLevel]))
     .flatMap((c) => (c ? [`- ${c.code}: ${c.text}`] : []));
   return lines.length
     ? `What ${yearLabel(yearLevel)} learns in this topic (AC v9). Choose one focus from this list that fits a single lesson:\n${lines.join('\n')}`

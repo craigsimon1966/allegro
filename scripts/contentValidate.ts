@@ -79,7 +79,12 @@ const UnitSchema = z.object({
   durationMinutes: z.number().int(),
   format: z.array(z.enum(['text', 'worked_example', 'video', 'reflective_task', 'interactive'])),
   difficulty: z.union([z.literal(1), z.literal(2), z.literal(3)]),
-  curriculumRefs: z.object({ ac9: z.array(z.string()), nsw: z.array(z.string()) }),
+  curriculumRefs: z.object({
+    ac9: z.array(z.string()),
+    nsw: z.array(z.string()),
+    vic: z.array(z.string()).optional(),
+    wa: z.array(z.string()).optional(),
+  }),
   aitslStandards: z.array(z.string()),
   hook: z.string().min(1),
   coreIdeaMd: z.string().min(1),

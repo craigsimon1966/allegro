@@ -31,6 +31,16 @@
     "nsw": [
       "MAE-FG-02",
       "MA1-FG-01"
+    ],
+    "vic": [
+      "VC2MFN06",
+      "VC2M1N03",
+      "VC2M2N05"
+    ],
+    "wa": [
+      "Pre-primary Understanding number",
+      "Year 1 Understanding number",
+      "Year 2 Understanding number"
     ]
   },
   "aitslStandards": [],

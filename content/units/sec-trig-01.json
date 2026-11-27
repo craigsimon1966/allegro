@@ -30,6 +30,15 @@
     ],
     "nsw": [
       "MA5-TRG-C-01"
+    ],
+    "vic": [
+      "VC2M9SP01",
+      "VC2M9M03",
+      "VC2M10M03"
+    ],
+    "wa": [
+      "Year 9 Two-dimensional space and structures",
+      "Year 10 Two-dimensional space and structures"
     ]
   },
   "aitslStandards": [],

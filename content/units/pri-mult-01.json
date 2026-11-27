@@ -33,6 +33,16 @@
     "nsw": [
       "MA2-MR-01",
       "MA3-MR-01"
+    ],
+    "vic": [
+      "VC2M3N05",
+      "VC2M4N06",
+      "VC2M5N06"
+    ],
+    "wa": [
+      "Year 3 Understanding number",
+      "Year 4 Calculating with number",
+      "Year 5 Calculating with number"
     ]
   },
   "aitslStandards": [],

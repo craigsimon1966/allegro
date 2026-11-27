@@ -29,6 +29,15 @@
     ],
     "nsw": [
       "MA4-ALG-C-01"
+    ],
+    "vic": [
+      "VC2M7A01",
+      "VC2M7A02",
+      "VC2M8A01"
+    ],
+    "wa": [
+      "Year 7 Algebraic techniques",
+      "Year 8 Algebraic techniques"
     ]
   },
   "aitslStandards": [],
